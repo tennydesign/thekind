@@ -14,7 +14,7 @@ pod 'Firebase/Storage'
 pod 'GoogleSignIn'
 pod 'NVActivityIndicatorView'
 pod 'AWSRekognition'
-
+pod 'Mapbox-iOS-SDK', '~> 4.7'
 
   target 'TheKindTests' do
     inherit! :search_paths

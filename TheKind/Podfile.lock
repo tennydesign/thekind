@@ -83,6 +83,7 @@ PODS:
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.1)
   - leveldb-library (1.20)
+  - Mapbox-iOS-SDK (4.7.1)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -99,6 +100,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - GoogleSignIn
+  - Mapbox-iOS-SDK (~> 4.7)
   - NVActivityIndicatorView
 
 SPEC REPOS:
@@ -119,6 +121,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMSessionFetcher
     - leveldb-library
+    - Mapbox-iOS-SDK
     - nanopb
     - NVActivityIndicatorView
 
@@ -139,9 +142,10 @@ SPEC CHECKSUMS:
   GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  Mapbox-iOS-SDK: f9292a75e8cd5eb828f4432623bfc48aac42146a
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: ec34a7b88c51fab270004a1a1f32116e711010cd
 
-PODFILE CHECKSUM: 8d4f67acb4f3e51cccce62c8e3cd094ffd2b1d92
+PODFILE CHECKSUM: 4215656332602cd6b806df2f2504bb318bf2840b
 
 COCOAPODS: 1.5.3
