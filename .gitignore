@@ -1,0 +1,6 @@
+## Ignore for THEKIND
+## Fonts
+*ttf
+
+# Cocoapods
+Pods/

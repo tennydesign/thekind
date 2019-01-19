@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BadgePhotoSetupView" customModule="TheKind" customModuleProvider="target">
+            <connections>
+                <outlet property="mainView" destination="iN0-l3-epB" id="D1d-h6-mdz"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="mainView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ah2-Au-MyT" userLabel="TakeASelfieView">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hkt-dr-YFx">
+                            <rect key="frame" x="123.5" y="255.5" width="128" height="156"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="128" id="79c-RY-6IY"/>
+                                <constraint firstAttribute="height" constant="156" id="VGZ-zt-uPs"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="takeSelfie_white"/>
+                            <connections>
+                                <action selector="selfieButtonClicked:" destination="-1" eventType="touchUpInside" id="PHH-Ug-4fI"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Hkt-dr-YFx" firstAttribute="centerX" secondItem="Ah2-Au-MyT" secondAttribute="centerX" id="c2v-IL-Eoy"/>
+                        <constraint firstItem="Hkt-dr-YFx" firstAttribute="centerY" secondItem="Ah2-Au-MyT" secondAttribute="centerY" id="dN3-wX-gc4"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="jgj-w2-rfD"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Ah2-Au-MyT" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Kxs-PL-7WJ"/>
+                <constraint firstItem="Ah2-Au-MyT" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="WLI-FZ-ciO"/>
+                <constraint firstItem="Ah2-Au-MyT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="cXw-Hq-weF"/>
+                <constraint firstItem="Ah2-Au-MyT" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="nAV-eg-aKR"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="takeSelfie_white" width="166" height="205"/>
+    </resources>
+</document>

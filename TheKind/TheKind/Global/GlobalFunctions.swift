@@ -1,0 +1,109 @@
+//
+//  GlobalFunctions.swift
+//  TheKind
+//
+//  Created by Tenny on 31/08/18.
+//  Copyright © 2018 tenny. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+func returnActionTriggerView(by tag: Int) -> KindActionTriggerView? {
+    guard let targetView = UIApplication.shared.keyWindow?.viewWithTag(tag) as? KindActionTriggerView else {return nil}
+    return targetView
+}
+
+func returnDesiredDestinationFrame(by tag: Int) -> CGPoint? {
+    guard let targetView = UIApplication.shared.keyWindow?.viewWithTag(tag) else {return nil}
+    return targetView.frame.origin
+}
+
+func navigateBetweenViews(from currentView: UIView, to nextView: UIView, delay: Double? = nil, duration: Double? = nil) {
+    
+    nextView.alpha = 0
+    nextView.isHidden = false
+    
+    UIView.animate(withDuration: duration ?? 0.5, delay: delay ?? 0, options: .curveEaseOut, animations: {
+        currentView.alpha = 0
+    }) { (completed) in
+        currentView.isHidden = true
+        UIView.animate(withDuration: duration ?? 0.5, animations: {
+            nextView.alpha = 1
+        })
+    }
+}
+
+func estimateFrameFromText(_ text: String, bounding: CGSize, fontSize: CGFloat, fontName: String) -> CGRect {
+    let size = bounding
+    let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+    return NSString(string: text).boundingRect(with: size, options: options, attributes: [kCTFontAttributeName as NSAttributedString.Key : UIFont.init(name: fontName, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize)], context: nil)
+}
+
+
+
+
+func viewTransitionUsingAlpha(_ originView: UIView, _ destinationView: UIView,_ unloadOrigin: Bool) {
+    destinationView.isHidden = false
+    originView.isUserInteractionEnabled = false
+    destinationView.isUserInteractionEnabled = true
+    
+    UIView.animate(withDuration: 0.5, animations: {
+        originView.alpha = 0.0
+        destinationView.alpha = 1.0
+    }) { (success) in
+        if unloadOrigin {
+            originView.removeFromSuperview()
+        }
+    }
+}
+
+
+func viewTransitionUsingAlphaAndSkatingX(_ originView: UIView, _ destinationView: UIView, left: Bool,_ slideAmount: CGFloat) {
+    destinationView.isHidden = false
+    originView.isUserInteractionEnabled = false
+    destinationView.isUserInteractionEnabled = true
+    let slideDirection:CGFloat = left ? slideAmount : (0 - slideAmount)
+    // increasing this will increase starter position of incoming view. 2 is pretty subtle and smooth
+    let incomingWindowDistanceFactor:CGFloat = 2
+    UIView.animate(withDuration: 0.3, animations: {
+        originView.transform = CGAffineTransform(translationX: slideDirection, y: originView.frame.origin.y)
+        originView.alpha = 0.0
+    }) { (success) in
+        if !left {
+            destinationView.transform = CGAffineTransform(translationX: (incomingWindowDistanceFactor * slideAmount), y: 0)
+        }
+        UIView.animate(withDuration: 0.4, delay: 0.2, options: .curveEaseOut, animations: {
+            destinationView.transform = .identity
+            destinationView.alpha = 1.0
+        })
+    }
+}
+
+// Just a delay function to make sure I don't write a dispatch every time
+
+public func delay(bySeconds seconds: Double, dispatchLevel: DispatchLevel = .main, closure: @escaping () -> Void) {
+    let dispatchTime = DispatchTime.now() + seconds
+    dispatchLevel.dispatchQueue.asyncAfter(deadline: dispatchTime, execute: closure)
+}
+
+public enum DispatchLevel {
+    case main, userInteractive, userInitiated, utility, background
+    var dispatchQueue: DispatchQueue {
+        switch self {
+        case .main:                 return DispatchQueue.main
+        case .userInteractive:      return DispatchQueue.global(qos: .userInteractive)
+        case .userInitiated:        return DispatchQueue.global(qos: .userInitiated)
+        case .utility:              return DispatchQueue.global(qos: .utility)
+        case .background:           return DispatchQueue.global(qos: .background)
+        }
+    }
+}
+
+func random() -> CGFloat {
+    return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+}
+
+func random(min: CGFloat, max: CGFloat) -> CGFloat {
+    return random() * (max - min) + min
+}
