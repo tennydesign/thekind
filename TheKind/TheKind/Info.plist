@@ -67,5 +67,9 @@
 	<string>pk.eyJ1IjoidGVubnlkZXNpZ24iLCJhIjoiY2pyMnYzZjZpMDNmejQ5cG53cGU2bTdhaCJ9.kny4qAtWLWbVBV1pVKy0JA</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Shows your location and circles on the map.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Shows your location and circles on the map.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Shows your location and circles on the map.</string>
 </dict>
 </plist>

@@ -9,6 +9,6 @@
 import Foundation
 import MapKit
 
-extension MainViewController: MKMapViewDelegate {
+extension MainViewController {
     
 }

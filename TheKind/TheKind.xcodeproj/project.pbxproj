@@ -378,7 +378,7 @@
 			path = "Main stage";
 			sourceTree = "<group>";
 		};
-		A07075F621EFFC940013380D /* JoinOrCreateCircleFlow */ = {
+		A07075F621EFFC940013380D /* MapView */ = {
 			isa = PBXGroup;
 			children = (
 				A07075F721F001650013380D /* Old */,
@@ -386,7 +386,7 @@
 				A070760021F2CEAB0013380D /* MapView.xib */,
 				A070760221F2CEC70013380D /* MapView.swift */,
 			);
-			path = JoinOrCreateCircleFlow;
+			path = MapView;
 			sourceTree = "<group>";
 		};
 		A07075F721F001650013380D /* Old */ = {
@@ -517,7 +517,7 @@
 				A002F47821B9EFAE006E8660 /* Jung Chat */,
 				A0301D652190B1CA00E023F7 /* GameBoardFlow */,
 				A002F47721B9EF41006E8660 /* userProfilingFlow */,
-				A07075F621EFFC940013380D /* JoinOrCreateCircleFlow */,
+				A07075F621EFFC940013380D /* MapView */,
 			);
 			path = View;
 			sourceTree = "<group>";

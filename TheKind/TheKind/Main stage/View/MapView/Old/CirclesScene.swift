@@ -24,11 +24,11 @@ class CirclesScene: SKScene, SKPhysicsContactDelegate {
     override func sceneDidLoad() {
         createCircle(qty: 20)
         
-        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-        self.physicsBody!.isDynamic = true
-        self.physicsBody!.pinned = true
-        self.physicsBody!.categoryBitMask = 4294967295
-        self.physicsBody!.restitution = 1
+//        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+//        self.physicsBody!.isDynamic = true
+//        self.physicsBody!.pinned = true
+//        self.physicsBody!.categoryBitMask = 4294967295
+//        self.physicsBody!.restitution = 1
         //self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.03)
       }
 
