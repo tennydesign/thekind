@@ -14,6 +14,19 @@ func returnActionTriggerView(by tag: Int) -> KindActionTriggerView? {
     return targetView
 }
 
+
+func formatLabelTextWithLineSpacing(text: String) -> NSAttributedString {
+    let attr = NSMutableAttributedString(string: text)
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.lineSpacing = 3.2
+    paragraphStyle.hyphenationFactor = 1
+    paragraphStyle.alignment = .center
+    paragraphStyle.lineBreakMode = .byWordWrapping
+    attr.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attr.length))
+    return attr
+}
+
+
 func returnDesiredDestinationFrame(by tag: Int) -> CGPoint? {
     guard let targetView = UIApplication.shared.keyWindow?.viewWithTag(tag) else {return nil}
     return targetView.frame.origin

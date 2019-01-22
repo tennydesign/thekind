@@ -265,8 +265,8 @@ class JungChatLogger: UIView {
         
         leftLabel.userResponseOptionSnippet = userResponseOptions.0
         rightLabel.userResponseOptionSnippet = userResponseOptions.1
-        rightLabel.attributedText = formatOptionsLabelText(text: userResponseOptions.1.message)
-        leftLabel.attributedText = formatOptionsLabelText(text: userResponseOptions.0.message)
+        rightLabel.attributedText = formatLabelTextWithLineSpacing(text: userResponseOptions.1.message)
+        leftLabel.attributedText = formatLabelTextWithLineSpacing(text: userResponseOptions.0.message)
         rightLabel.userOptionId = userResponseOptions.1.id
         leftLabel.userOptionId = userResponseOptions.0.id
         rightLabel.actionView = userResponseOptions.1.actionView
@@ -334,16 +334,6 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
         return attr
     }
 
-    func formatOptionsLabelText(text: String) -> NSAttributedString {
-        let attr = NSMutableAttributedString(string: text)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 3.2
-        paragraphStyle.hyphenationFactor = 1
-        paragraphStyle.alignment = .center
-        paragraphStyle.lineBreakMode = .byWordWrapping
-        attr.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attr.length))
-        return attr
-    }
     
     func alphaMessageRatio(indexPath: IndexPath) -> CGFloat {
     

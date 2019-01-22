@@ -56,8 +56,8 @@
 		A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07075FC21F158B60013380D /* MapPhotoSnapper.swift */; };
 		A07075FF21F2AC220013380D /* ext_MainControllerMapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07075FE21F2AC220013380D /* ext_MainControllerMapKit.swift */; };
 		A070760121F2CEAB0013380D /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A070760021F2CEAB0013380D /* MapView.xib */; };
-		A070760321F2CEC70013380D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A070760221F2CEC70013380D /* MapView.swift */; };
 		A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1721F53B0F00DDEC6C /* ports.geojson */; };
+		A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */; };
 		A0A69F1C2186687C00AA5C61 /* AcylicalHand-Small.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */; };
 		A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */; };
 		A0B6B29821CD599B00C58B3F /* AcylicalHand-Tall.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0B6B29721CD599B00C58B3F /* AcylicalHand-Tall.ttf */; };
@@ -149,8 +149,8 @@
 		A07075FC21F158B60013380D /* MapPhotoSnapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPhotoSnapper.swift; sourceTree = "<group>"; };
 		A07075FE21F2AC220013380D /* ext_MainControllerMapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ext_MainControllerMapKit.swift; sourceTree = "<group>"; };
 		A070760021F2CEAB0013380D /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
-		A070760221F2CEC70013380D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		A0A45E1721F53B0F00DDEC6C /* ports.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ports.geojson; sourceTree = "<group>"; };
+		A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapActionTriggerView.swift; sourceTree = "<group>"; };
 		A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Small.ttf"; sourceTree = "<group>"; };
 		A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		A0B6B29721CD599B00C58B3F /* AcylicalHand-Tall.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Tall.ttf"; sourceTree = "<group>"; };
@@ -386,7 +386,7 @@
 				A07075F721F001650013380D /* Old */,
 				A07075FE21F2AC220013380D /* ext_MainControllerMapKit.swift */,
 				A070760021F2CEAB0013380D /* MapView.xib */,
-				A070760221F2CEC70013380D /* MapView.swift */,
+				A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */,
 			);
 			path = MapView;
 			sourceTree = "<group>";
@@ -836,13 +836,13 @@
 				A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */,
 				A07075FF21F2AC220013380D /* ext_MainControllerMapKit.swift in Sources */,
 				A0320B4D212B63C2008A96E2 /* LoginOptionsView.swift in Sources */,
-				A070760321F2CEC70013380D /* MapView.swift in Sources */,
 				A017CDD42190E1B6002B7D9D /* xt_GameBoardScene.swift in Sources */,
 				A05150F621E4002800795172 /* UserNameView.swift in Sources */,
 				A0320B53212B69DD008A96E2 /* LoginOrCreateNewUser.swift in Sources */,
 				A03D77F321B7518A00DCF627 /* JungTalkBox.swift in Sources */,
 				A0D960CD21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift in Sources */,
 				A002F49121BDD01F006E8660 /* LandingViewControllerViewModel.swift in Sources */,
+				A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */,
 				A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */,
 				A02D71A521C6BC7200EBBD12 /* OnBoardingViewController.swift in Sources */,
 				A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */,

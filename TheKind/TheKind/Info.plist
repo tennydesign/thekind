@@ -33,8 +33,16 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MGLMapboxAccessToken</key>
+	<string>pk.eyJ1IjoidGVubnlkZXNpZ24iLCJhIjoiY2pyMnYzZjZpMDNmejQ5cG53cGU2bTdhaCJ9.kny4qAtWLWbVBV1pVKy0JA</string>
 	<key>NSCameraUsageDescription</key>
 	<string>I need the camera</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Shows your location and circles on the map.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Shows your location and circles on the map.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Shows your location and circles on the map.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AcylicalHand-Small-SVG.ttf</string>
@@ -63,13 +71,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>MGLMapboxAccessToken</key>
-	<string>pk.eyJ1IjoidGVubnlkZXNpZ24iLCJhIjoiY2pyMnYzZjZpMDNmejQ5cG53cGU2bTdhaCJ9.kny4qAtWLWbVBV1pVKy0JA</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Shows your location and circles on the map.</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Shows your location and circles on the map.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Shows your location and circles on the map.</string>
 </dict>
 </plist>

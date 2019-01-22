@@ -32,7 +32,7 @@ class MapActionTriggerView: KindActionTriggerView {
     @IBOutlet var enterCircleView: UIView!
     @IBOutlet var labelCircleName: UILabel!
     @IBOutlet var enterCircleButton: UIButton!
-    @IBOutlet var mapView: MGLMapView!
+    @IBOutlet var mapBoxView: MGLMapView!
     @IBOutlet var mainView: UIView!
     var locationManager: CLLocationManager?
     
@@ -54,24 +54,24 @@ class MapActionTriggerView: KindActionTriggerView {
         Bundle.main.loadNibNamed("MapView", owner: self, options: nil)
         addSubview(mainView)
         
-        mapView.styleURL = MGLStyle.darkStyleURL
-        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mapView.tintColor = .lightGray
+        mapBoxView.styleURL = MGLStyle.darkStyleURL
+        mapBoxView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        mapBoxView.tintColor = .lightGray
         
         
-        mapView.delegate = self
+        mapBoxView.delegate = self
         locationManager?.delegate = self
         self.talkbox?.delegate = self
         
-        mapView.maximumZoomLevel = 18
+        mapBoxView.maximumZoomLevel = 18
         
         
        delay(bySeconds: 1) {
             if let coordinate = self.locationManager?.location?.coordinate {
-                 self.mapView.setCenter(coordinate, zoomLevel: 14, animated: true)
+                 self.mapBoxView.setCenter(coordinate, zoomLevel: 14, animated: true)
             } else {
                 // TODO: Eliminate this - Only for testing purposes.
-                 self.mapView.setCenter(CLLocationCoordinate2D(latitude: 45.52954,
+                 self.mapBoxView.setCenter(CLLocationCoordinate2D(latitude: 45.52954,
                                                          longitude: -122.72317),
                                   zoomLevel: 14, animated: false)
             }
@@ -112,7 +112,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             pointAnnotations.append(point)
         }
         
-        mapView.addAnnotations(pointAnnotations)
+        mapBoxView.addAnnotations(pointAnnotations)
     }
     
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
