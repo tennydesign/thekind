@@ -13,16 +13,11 @@ import MapKit
 // TODO: Refactor this.
 
 
-
-
 struct CircleAnnotationSet {
     var coordinate: CLLocationCoordinate2D
     var circleName: String?
     var isPrivate: Bool
 }
-
-
-
 
 
 class MapActionTriggerView: KindActionTriggerView {
@@ -32,7 +27,11 @@ class MapActionTriggerView: KindActionTriggerView {
     @IBOutlet var enterCircleView: UIView!
     @IBOutlet var labelCircleName: UILabel!
     @IBOutlet var enterCircleButton: UIButton!
-    @IBOutlet var mapBoxView: MGLMapView!
+    @IBOutlet var mapBoxView: MGLMapView! {
+        didSet {
+            mapBoxView.maximumZoomLevel = 18
+        }
+    }
     @IBOutlet var mainView: UIView!
     var locationManager: CLLocationManager?
     
@@ -62,8 +61,6 @@ class MapActionTriggerView: KindActionTriggerView {
         mapBoxView.delegate = self
         locationManager?.delegate = self
         self.talkbox?.delegate = self
-        
-        mapBoxView.maximumZoomLevel = 18
         
         
        delay(bySeconds: 1) {
@@ -108,10 +105,12 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         for circle in circleDataset {
             let point = MGLPointAnnotation()
             point.coordinate = circle.coordinate
+            //TODO: Without a name shouldn't be displayed.
             point.title = circle.circleName ?? "---"//"\(coordinate.latitude), \(coordinate.longitude)"
             pointAnnotations.append(point)
         }
         
+    
         mapBoxView.addAnnotations(pointAnnotations)
     }
     
@@ -122,7 +121,8 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         }
         
         // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
-        let reuseIdentifier = "\(annotation.coordinate.longitude)"
+        guard let titleName = annotation.title else {return nil}
+        let reuseIdentifier = titleName! + "-" + String(annotation.coordinate.longitude)
         
         // For better performance, always try to reuse existing annotations.
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier) as? CircleAnnotationView
@@ -134,70 +134,84 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         }
         
         //TODO: guard let returning  nil if no title.
-        annotationView?.circleName = annotation.title ?? "---"
+        annotationView?.circleName = titleName!
         annotationView?.alpha = 0.9
         return annotationView
     }
     
     func mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView) {
         
-        if let annotationView = annotationView as? CircleAnnotationView {
-            selectedAnnotation = annotationView
-            mapView.setCenter((annotationView.annotation?.coordinate)!, zoomLevel: 18,animated: true)
+        guard let annotationView = annotationView as? CircleAnnotationView else {return}
             
-            //Filling label.
-            labelCircleName.attributedText = formatLabelTextWithLineSpacing(text: annotationView.circleName ?? "---")
-            
-            UIView.animate(withDuration: 1, animations: {
-                //scaling
-                annotationView.transform = CGAffineTransform(scaleX: 6, y: 6)
-                annotationView.alpha = 0.32
-                
-            }) { (Completed) in
-                if !annotationView.transform.isIdentity {
-                    UIView.animate(withDuration: 0.3, animations: {
-                        // presenting button and label
-                        self.enterCircleView.alpha = 1
-                        self.enterCircleView.isUserInteractionEnabled = true
-                    })
-                } else {
-                    // just to deal with the Map bug of clicking too close to the edge
-                    annotationView.setSelected(false, animated: false)
-                    self.enterCircleView.isUserInteractionEnabled = false
-                }
-            }
-        }
+        //Get the selected annotation for deactivating it in case map-moves: mapView(_ mapView: MGLMapView, regionWillChangeAnimated animated: Bool)
+        selectedAnnotation = annotationView
+        guard let coordinates = annotationView.annotation?.coordinate else {return}
+        mapView.setCenter(coordinates, zoomLevel: 18,animated: true)
+
+        guard let name = annotationView.circleName else {return}
+        labelCircleName.attributedText = formatLabelTextWithLineSpacing(text: name)
+        
+        activateOnSelection(annotationView)
+
     }
     
     
     func mapView(_ mapView: MGLMapView, didDeselect annotationView: MGLAnnotationView) {
-        if let annotationView = annotationView as? CircleAnnotationView {
-            mapView.setCenter((annotationView.annotation?.coordinate)!, zoomLevel: 14,animated: true)
-            self.enterCircleView.alpha = 0
-            UIView.animate(withDuration: 1) {
-                annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                annotationView.alpha = 0.9
-                annotationView.button.alpha = 0
+        guard let annotationView = annotationView as? CircleAnnotationView else {return}
+        mapView.setZoomLevel(14, animated: true)
+        
+        deActivateOnDeselection(annotationView, completion: nil)
+    
+    }
+    
+    fileprivate func activateOnSelection(_ annotationView: CircleAnnotationView) {
+        // If all went fine with coordinate and name, animate.
+        UIView.animate(withDuration: 1, animations: {
+            //scaling
+            annotationView.transform = CGAffineTransform(scaleX: 6, y: 6)
+            annotationView.alpha = 0.32
+            
+        }) { (Completed) in
+            // If full transform happened. (sometimes a bug in the map cuts off the animation)
+            if !annotationView.transform.isIdentity {
+                UIView.animate(withDuration: 0.3, animations: {
+                    // presenting button and label
+                    self.enterCircleView.alpha = 1
+                    self.enterCircleView.isUserInteractionEnabled = true
+                })
+            } else {
+                // If it did cut off, cancel interaction.
+                annotationView.setSelected(false, animated: false)
                 self.enterCircleView.isUserInteractionEnabled = false
             }
-            selectedAnnotation = nil
         }
+    }
+    
+    fileprivate func deActivateOnDeselection(_ annotationView: CircleAnnotationView, completion: (()->())?) {
+        self.enterCircleView.alpha = 0
+        UIView.animate(withDuration: 1, animations: {
+            annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            annotationView.alpha = 0.9
+            annotationView.button.alpha = 0
+            self.enterCircleView.isUserInteractionEnabled = false
+        }) { (completed) in
+            if let completion = completion {
+                completion()
+            }
+        }
+        
+        
     }
     
     func mapView(_ mapView: MGLMapView, regionWillChangeAnimated animated: Bool) {
         self.enterCircleView.alpha = 0
-        if let annotation = selectedAnnotation {
-            UIView.animate(withDuration: 1, animations: {
-                annotation.transform = CGAffineTransform(scaleX: 1, y: 1)
-                annotation.alpha = 0.9
-                annotation.button.alpha = 0
-                self.enterCircleView.isUserInteractionEnabled = false
-                annotation.setSelected(false, animated: false)
-            }) { (completed) in
-                
+        // If there is an active annotation and this annotation is REALLY open.
+        if let annotationView = selectedAnnotation, !annotationView.transform.isIdentity {
+            deActivateOnDeselection(annotationView) {
+                annotationView.setSelected(false, animated: false)
+                self.selectedAnnotation = nil
             }
         }
-        
     }
     
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {

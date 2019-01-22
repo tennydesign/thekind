@@ -97,8 +97,7 @@ class JungTalkBox {
     func executeSnippetAction(_ snippet: SnippetProtocol) {
         guard let tag = snippet.actionView?.rawValue else {return}
         
- 
-        //TODO: Find a way to pass the completion handler here.
+
         if snippet.action == .fadeInView {
             returnActionTriggerView(by: tag)?.fadeInView()
         }
