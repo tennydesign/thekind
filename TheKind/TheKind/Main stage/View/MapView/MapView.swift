@@ -14,9 +14,14 @@ class MapView: KindActionTriggerView, MGLMapViewDelegate, CLLocationManagerDeleg
     var mainViewController: MainViewController?
     var talkbox: JungTalkBox?
     
+    @IBOutlet var labelCircleName: UILabel!
+    @IBOutlet var privateButton: UIButton!
+    @IBOutlet var joinButton: UIButton!
     @IBOutlet var mapView: MGLMapView!
     @IBOutlet var mainView: UIView!
     var locationManager: CLLocationManager?
+    
+    var selectedAnnotation: CircleAnnotationView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,6 +47,7 @@ class MapView: KindActionTriggerView, MGLMapViewDelegate, CLLocationManagerDeleg
         locationManager?.delegate = self
         self.talkbox?.delegate = self
         
+        mapView.maximumZoomLevel = 18
         
        delay(bySeconds: 1) {
             if let coordinate = self.locationManager?.location?.coordinate {
@@ -97,44 +103,134 @@ class MapView: KindActionTriggerView, MGLMapViewDelegate, CLLocationManagerDeleg
         
         // If there’s no reusable annotation view available, initialize a new one.
         if annotationView == nil {
-            annotationView = circleAnnotation(reuseIdentifier: reuseIdentifier)
-            annotationView!.bounds = CGRect(x: 0, y: 0, width: 80, height: 80)
-            
-            // Set the annotation view’s background color to a value determined by its longitude.
-            annotationView!.backgroundColor = UIColor.clear
+            annotationView = CircleAnnotationView(reuseIdentifier: reuseIdentifier)
+            annotationView!.bounds = CGRect(x: 0, y: 0, width: 30, height: 30)
             
         }
         
+        annotationView?.alpha = 0.9
         return annotationView
     }
     
-    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        return true
+    func mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView) {
+        if let annotationView = annotationView as? CircleAnnotationView {
+            selectedAnnotation = annotationView
+            mapView.setCenter((annotationView.annotation?.coordinate)!, zoomLevel: 18,animated: true)
+            UIView.animate(withDuration: 1, animations: {
+                annotationView.transform = CGAffineTransform(scaleX: 6, y: 6)
+                annotationView.alpha = 0.32
+            }) { (Completed) in
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.privateButton.alpha = 1
+                    self.labelCircleName.alpha = 1
+                })
+            }
+        }
     }
+    
+    func mapView(_ mapView: MGLMapView, didDeselect annotationView: MGLAnnotationView) {
+        if let annotationView = annotationView as? CircleAnnotationView {
+            mapView.setCenter((annotationView.annotation?.coordinate)!, zoomLevel: 14,animated: true)
+            self.privateButton.alpha = 0
+            self.labelCircleName.alpha = 0
+            UIView.animate(withDuration: 1) {
+                annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                annotationView.alpha = 0.9
+                annotationView.button.alpha = 0
+            }
+            selectedAnnotation = nil
+        }
+    }
+    
+    func mapView(_ mapView: MGLMapView, regionWillChangeAnimated animated: Bool) {
+        self.privateButton.alpha = 0
+        self.labelCircleName.alpha = 0
+        if let annotation = selectedAnnotation {
+            UIView.animate(withDuration: 1, animations: {
+                annotation.transform = CGAffineTransform(scaleX: 1, y: 1)
+                annotation.alpha = 0.9
+                annotation.button.alpha = 0
+            }) { (completed) in
+                
+            }
+        }
+
+    }
+    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        return false
+    }
+    
+
 
 }
 
 
-class circleAnnotation: MGLAnnotationView {
+class CircleAnnotationView: MGLAnnotationView {
+    
+    let button = UIButton(type: .system)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+        
+    }
+    
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        commonInit()
+    }
+    
+    override init(annotation: MGLAnnotation?, reuseIdentifier: String?) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+    }
+    
+    
+    
+    func commonInit() {
+        //TODO: ADD BUTTON FOR "KEY" AND "JOIN"
+       
+        //button.setImage(#imageLiteral(resourceName: "privatekey"), for: .normal)
+//        button.setBackgroundImage(#imageLiteral(resourceName: "privatekey"), for: .normal)
+//        button.frame = CGRect(x: 0, y: 0, width: 64, height: 38)
+//        self.addSubview(button)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+//        button.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+//        button.widthAnchor.constraint(equalToConstant: 64).isActive = true
+//        button.heightAnchor.constraint(equalToConstant: 38).isActive = true
+//
+//        button.alpha = 0
+        
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         // Use CALayer’s corner radius to turn this view into a circle.
         layer.cornerRadius = bounds.width / 2
-        layer.borderWidth = 2
-        layer.borderColor = UIColor(r: 176, g: 38, b: 65).cgColor
-        alpha = 0.9
+        layer.backgroundColor = UIColor(r: 176, g: 38, b: 65).cgColor
+        layer.borderColor = UIColor.clear.cgColor
+        layer.borderWidth = 0
+
     }
+
     
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Animate the border width in/out, creating an iris effect.
-        let animation = CABasicAnimation(keyPath: "borderWidth")
-        animation.duration = 0.4
-        layer.borderWidth = selected ? bounds.width / 1 : 2
-        layer.add(animation, forKey: "borderWidth")
+
+ 
+//        // Animate the border width in/out, creating an iris effect.
+//        let animation = CABasicAnimation(keyPath: "borderWidth")
+//        animation.duration = 0.4
+//        layer.borderWidth = selected ? bounds.width / 1 : 2
+//        layer.add(animation, forKey: "borderWidth")
+//
+
     }
+    
     
 }

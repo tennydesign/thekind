@@ -57,6 +57,7 @@
 		A07075FF21F2AC220013380D /* ext_MainControllerMapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07075FE21F2AC220013380D /* ext_MainControllerMapKit.swift */; };
 		A070760121F2CEAB0013380D /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A070760021F2CEAB0013380D /* MapView.xib */; };
 		A070760321F2CEC70013380D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A070760221F2CEC70013380D /* MapView.swift */; };
+		A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1721F53B0F00DDEC6C /* ports.geojson */; };
 		A0A69F1C2186687C00AA5C61 /* AcylicalHand-Small.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */; };
 		A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */; };
 		A0B6B29821CD599B00C58B3F /* AcylicalHand-Tall.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0B6B29721CD599B00C58B3F /* AcylicalHand-Tall.ttf */; };
@@ -149,6 +150,7 @@
 		A07075FE21F2AC220013380D /* ext_MainControllerMapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ext_MainControllerMapKit.swift; sourceTree = "<group>"; };
 		A070760021F2CEAB0013380D /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
 		A070760221F2CEC70013380D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		A0A45E1721F53B0F00DDEC6C /* ports.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ports.geojson; sourceTree = "<group>"; };
 		A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Small.ttf"; sourceTree = "<group>"; };
 		A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		A0B6B29721CD599B00C58B3F /* AcylicalHand-Tall.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Tall.ttf"; sourceTree = "<group>"; };
@@ -426,6 +428,7 @@
 			children = (
 				A0C5D226212A4A7500BF1B0C /* AppDelegate.swift */,
 				A002F47221B9BE61006E8660 /* TheKind.entitlements */,
+				A0A45E1721F53B0F00DDEC6C /* ports.geojson */,
 				A0C5D230212A4A7600BF1B0C /* Assets.xcassets */,
 				A002F47621B9EED6006E8660 /* Extensions */,
 				A002F47521B9EEC0006E8660 /* Global */,
@@ -662,6 +665,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */,
 				A070760121F2CEAB0013380D /* MapView.xib in Resources */,
 				A07075F921F0019C0013380D /* CirclesScene.sks in Resources */,
 				A0120E6621C6E345000454EC /* BadgePhotoSetupView.xib in Resources */,
