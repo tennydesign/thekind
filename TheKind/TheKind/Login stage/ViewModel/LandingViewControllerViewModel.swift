@@ -13,6 +13,8 @@ import Firebase
 class LandingViewControllerViewModel {
     
  //   var bindableToLoginView = Bindable<LoginView>()
+    // a bind is like an estilingue. Client will fire, this will fire back to client .bind closure
+    // after somework.
     var bindableIsFormValid = Bindable<Bool>()
     
     var password: String? {

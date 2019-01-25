@@ -84,6 +84,13 @@
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_curtain_5" translatesAutoresizingMaskIntoConstraints="NO" id="TdV-gj-duV" userLabel="bottom_curtain_slice">
                                         <rect key="frame" x="0.0" y="-7" width="375" height="366"/>
                                     </imageView>
+                                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mcZ-Xj-H4Q" userLabel="CircleDetailsHost" customClass="BottomViewMap" customModule="TheKind" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="268"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="268" id="ZwN-nm-WpU"/>
+                                        </constraints>
+                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Psy-SE-XbL" userLabel="jungChatWindow">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="188"/>
                                         <subviews>
@@ -108,6 +115,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="mcZ-Xj-H4Q" firstAttribute="leading" secondItem="9pt-Di-eiT" secondAttribute="leading" id="04k-EM-bCG"/>
                                     <constraint firstItem="Psy-SE-XbL" firstAttribute="top" secondItem="9pt-Di-eiT" secondAttribute="top" id="4z9-bI-V71"/>
                                     <constraint firstItem="TdV-gj-duV" firstAttribute="centerY" secondItem="9pt-Di-eiT" secondAttribute="centerY" constant="-7" id="5BO-3b-OTf"/>
                                     <constraint firstItem="uFA-4x-IUP" firstAttribute="height" secondItem="9pt-Di-eiT" secondAttribute="height" id="AdD-0b-LOW"/>
@@ -124,6 +132,8 @@
                                     <constraint firstItem="TdV-gj-duV" firstAttribute="centerX" secondItem="9pt-Di-eiT" secondAttribute="centerX" id="gfv-wL-iZo"/>
                                     <constraint firstAttribute="height" constant="366" id="hb2-dB-WlU"/>
                                     <constraint firstItem="TdV-gj-duV" firstAttribute="width" secondItem="9pt-Di-eiT" secondAttribute="width" id="k4X-Te-Azd"/>
+                                    <constraint firstAttribute="trailing" secondItem="mcZ-Xj-H4Q" secondAttribute="trailing" id="uEO-uT-0TV"/>
+                                    <constraint firstItem="mcZ-Xj-H4Q" firstAttribute="top" secondItem="9pt-Di-eiT" secondAttribute="top" id="weR-dZ-Pgd"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGE-Wo-HLs" userLabel="top_curtain">
@@ -200,13 +210,15 @@
                         <outlet property="bottomCurtainView" destination="9pt-Di-eiT" id="odJ-9c-K3I"/>
                         <outlet property="bottom_curtain_bottom_constraint" destination="Tez-TZ-ad9" id="rks-5O-K5d"/>
                         <outlet property="chatMask" destination="Thy-bB-cDC" id="Uj5-c3-kKp"/>
+                        <outlet property="circleDetailsHost" destination="mcZ-Xj-H4Q" id="vUu-2F-e0h"/>
                         <outlet property="dobOnboardingViewHost" destination="YKl-rU-KWD" id="VUh-Qx-9sG"/>
                         <outlet property="gameBoardViewHost" destination="7RB-H1-Tgr" id="ELY-2q-Ix2"/>
                         <outlet property="hudView" destination="A4g-0r-7jc" id="4VZ-nG-9oi"/>
                         <outlet property="hudWindow" destination="xyb-mU-8lf" id="6sJ-uX-hjl"/>
                         <outlet property="jungChatLogger" destination="4FF-H6-M6b" id="XFY-Ae-FN5"/>
                         <outlet property="jungChatWindow" destination="Psy-SE-XbL" id="94Q-OO-Vc1"/>
-                        <outlet property="mapView" destination="0eo-O7-Oer" id="XGp-SU-UVl"/>
+                        <outlet property="mapViewHost" destination="0eo-O7-Oer" id="9Vj-Nh-jT4"/>
+                        <outlet property="topCurtainView" destination="aGE-Wo-HLs" id="Ap2-30-Rio"/>
                         <outlet property="top_curtain_top_constraint" destination="Wxt-lx-of8" id="KPL-vz-GuB"/>
                         <outlet property="userNameViewHost" destination="cym-tF-rfj" id="B9a-r3-Hig"/>
                     </connections>

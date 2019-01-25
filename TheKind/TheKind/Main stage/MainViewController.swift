@@ -14,7 +14,8 @@ import FirebaseAuth
 class MainViewController: UIViewController {
 
     var isOnboarding: Bool!
-    
+    var minBottomCurtainPosition: CGFloat!
+    var maxBottomCurtainPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
     @IBOutlet var hudWindow: UIView!
     @IBOutlet var jungChatWindow: UIView!
@@ -49,11 +50,16 @@ class MainViewController: UIViewController {
         }
     }
     
- 
-    @IBOutlet var mapView: UIView! {
+    @IBOutlet var mapViewHost: MapActionTriggerView! {
         didSet {
-            mapView.isHidden = true
-            mapView.alpha = 0
+            mapViewHost.isHidden = true
+            mapViewHost.alpha = 0
+        }
+    }
+    
+    @IBOutlet var circleDetailsHost: BottomViewMap! {
+        didSet {
+            circleDetailsHost.alpha = 0
         }
     }
     
@@ -63,7 +69,8 @@ class MainViewController: UIViewController {
     @IBOutlet var bottom_curtain_bottom_constraint: NSLayoutConstraint!
 
     @IBOutlet var bottomCurtainView: UIView!
-
+    @IBOutlet weak var topCurtainView: UIView!
+    
     
     @IBOutlet var hudView: HUDview!
     @IBOutlet var jungChatLogger: JungChatLogger!
@@ -81,11 +88,13 @@ class MainViewController: UIViewController {
         jungChatLogger.mainViewController = self
         badgePhotoSetupViewHost.mainViewController = self
         userNameViewHost.mainViewController = self
-
+        mapViewHost.mainViewController = self
+        
         jungChatLogger.talkbox = talkbox
         badgePhotoSetupViewHost.talkbox = talkbox
         dobOnboardingViewHost.talkbox = talkbox
         userNameViewHost.talkbox = talkbox
+        
 
         loggedUserEmail = Auth.auth().currentUser?.email
         
@@ -95,6 +104,9 @@ class MainViewController: UIViewController {
         delay(bySeconds: 1) {
             self.presentJungIntro() // using this routine to test scripts before deploying them.
         }
+        
+        minBottomCurtainPosition = bottom_curtain_bottom_constraint.constant
+        maxBottomCurtainPosition = bottom_curtain_bottom_constraint.constant + maxSlideBottomCurtainPosition
        
     }
     
@@ -110,7 +122,26 @@ class MainViewController: UIViewController {
 
     }
     
-    
+    func moveBottomCurtain(distance: CGFloat, completion: (()->())?) {
+       
+        // To make sure it nevers go over the limit
+        bottom_curtain_bottom_constraint.constant += distance
+        if bottom_curtain_bottom_constraint.constant > maxBottomCurtainPosition {
+            bottom_curtain_bottom_constraint.constant = maxBottomCurtainPosition
+        }
+        else if bottom_curtain_bottom_constraint.constant < minBottomCurtainPosition {
+             bottom_curtain_bottom_constraint.constant = minBottomCurtainPosition
+        }
+        
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+        }) { (completed) in
+            if let completion = completion {
+                completion()
+            }
+        }
+        
+    }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent // .default
     }

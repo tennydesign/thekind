@@ -14,7 +14,16 @@ class LoginOrCreateNewUser: UIView,UITextFieldDelegate {
     @IBOutlet var joinButton: KindButton!
     @IBOutlet var LoginOrCreateNewUser: UIView!
     @IBOutlet var emailTextField: KindTextField!
-    @IBOutlet var passwordTextField: KindTextField!
+    @IBOutlet var passwordTextField: KindTextField! {
+        didSet {
+            //TODO: Implement password suggestion
+//            let createNewPasswordTextField = UITextField()
+//            let newPasswordReqs = UITextInputPasswordRules(descriptor: "required: lower; required: digit; max-consecutive: 3; minlength: 12;”)
+//                createNewPasswordTextField.passwordRules = newPasswordReqs
+//            // Now, when iOS suggests a new password - these rules will be used to generate it
+            //https://medium.com/the-traveled-ios-developers-guide/ios-12-notable-uikit-additions-b50beb0e3729
+        }
+    }
     @IBOutlet var newUser: KindButton!
     
     override init(frame: CGRect) {

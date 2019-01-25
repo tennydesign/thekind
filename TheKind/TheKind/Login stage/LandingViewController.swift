@@ -75,6 +75,7 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
     
     
     func setupViewModelObservers() {
+        //return from viewmodel.
         landingViewControllerViewModel.bindableIsFormValid.bind { [unowned self](isFormValid) in
             guard let isFormValid = isFormValid else {return}
             self.loginOrCreateNewUser.toggleButtonControl(isFormValid)

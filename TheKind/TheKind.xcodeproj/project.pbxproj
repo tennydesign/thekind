@@ -58,6 +58,9 @@
 		A070760121F2CEAB0013380D /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A070760021F2CEAB0013380D /* MapView.xib */; };
 		A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1721F53B0F00DDEC6C /* ports.geojson */; };
 		A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */; };
+		A0A45E1C21F8D6B700DDEC6C /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E1B21F8D6B700DDEC6C /* MapViewModel.swift */; };
+		A0A45E1F21F92D6B00DDEC6C /* bottomViewMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1E21F92D6B00DDEC6C /* bottomViewMap.xib */; };
+		A0A45E2121F92D7900DDEC6C /* BottomViewMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E2021F92D7900DDEC6C /* BottomViewMap.swift */; };
 		A0A69F1C2186687C00AA5C61 /* AcylicalHand-Small.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */; };
 		A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */; };
 		A0B6B29821CD599B00C58B3F /* AcylicalHand-Tall.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0B6B29721CD599B00C58B3F /* AcylicalHand-Tall.ttf */; };
@@ -151,6 +154,9 @@
 		A070760021F2CEAB0013380D /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
 		A0A45E1721F53B0F00DDEC6C /* ports.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ports.geojson; sourceTree = "<group>"; };
 		A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapActionTriggerView.swift; sourceTree = "<group>"; };
+		A0A45E1B21F8D6B700DDEC6C /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		A0A45E1E21F92D6B00DDEC6C /* bottomViewMap.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = bottomViewMap.xib; sourceTree = "<group>"; };
+		A0A45E2021F92D7900DDEC6C /* BottomViewMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewMap.swift; sourceTree = "<group>"; };
 		A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Small.ttf"; sourceTree = "<group>"; };
 		A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		A0B6B29721CD599B00C58B3F /* AcylicalHand-Tall.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Tall.ttf"; sourceTree = "<group>"; };
@@ -383,10 +389,12 @@
 		A07075F621EFFC940013380D /* MapView */ = {
 			isa = PBXGroup;
 			children = (
+				A0A45E1D21F92B7B00DDEC6C /* BottomVIew */,
 				A07075F721F001650013380D /* Old */,
 				A07075FE21F2AC220013380D /* ext_MainControllerMapKit.swift */,
 				A070760021F2CEAB0013380D /* MapView.xib */,
 				A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */,
+				A0A45E1B21F8D6B700DDEC6C /* MapViewModel.swift */,
 			);
 			path = MapView;
 			sourceTree = "<group>";
@@ -398,6 +406,15 @@
 				A07075FA21F001BD0013380D /* CirclesScene.swift */,
 			);
 			path = Old;
+			sourceTree = "<group>";
+		};
+		A0A45E1D21F92B7B00DDEC6C /* BottomVIew */ = {
+			isa = PBXGroup;
+			children = (
+				A0A45E1E21F92D6B00DDEC6C /* bottomViewMap.xib */,
+				A0A45E2021F92D7900DDEC6C /* BottomViewMap.swift */,
+			);
+			path = BottomVIew;
 			sourceTree = "<group>";
 		};
 		A0C5D21A212A4A7500BF1B0C = {
@@ -665,6 +682,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0A45E1F21F92D6B00DDEC6C /* bottomViewMap.xib in Resources */,
 				A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */,
 				A070760121F2CEAB0013380D /* MapView.xib in Resources */,
 				A07075F921F0019C0013380D /* CirclesScene.sks in Resources */,
@@ -839,6 +857,7 @@
 				A017CDD42190E1B6002B7D9D /* xt_GameBoardScene.swift in Sources */,
 				A05150F621E4002800795172 /* UserNameView.swift in Sources */,
 				A0320B53212B69DD008A96E2 /* LoginOrCreateNewUser.swift in Sources */,
+				A0A45E1C21F8D6B700DDEC6C /* MapViewModel.swift in Sources */,
 				A03D77F321B7518A00DCF627 /* JungTalkBox.swift in Sources */,
 				A0D960CD21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift in Sources */,
 				A002F49121BDD01F006E8660 /* LandingViewControllerViewModel.swift in Sources */,
@@ -853,6 +872,7 @@
 				A02D719F21C42FA300EBBD12 /* ChooseKindCardView.swift in Sources */,
 				A0120E6421C6DFAE000454EC /* SwipeCardsViewController.swift in Sources */,
 				A05150F821E44A9400795172 /* KindUser.swift in Sources */,
+				A0A45E2121F92D7900DDEC6C /* BottomViewMap.swift in Sources */,
 				A0015A30218CE8DF001DDA20 /* MainViewController.swift in Sources */,
 				A0B6B29C21D1786900C58B3F /* JungTalkBoxModel.swift in Sources */,
 				A0F223A621B88DB10096C25D /* KindButton.swift in Sources */,
