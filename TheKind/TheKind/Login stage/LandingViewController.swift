@@ -79,6 +79,7 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
         
         loginTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         self.loginWindow.addGestureRecognizer(loginTapGesture)
+        self.view.addGestureRecognizer(loginTapGesture)
 
         setupViewModelObservers()
     }

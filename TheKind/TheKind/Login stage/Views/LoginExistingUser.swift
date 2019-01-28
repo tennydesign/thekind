@@ -14,12 +14,7 @@ class LoginExistingUser: UIView,UITextFieldDelegate,loginValidationProtocol {
     @IBOutlet var joinButton: KindButton!
     @IBOutlet var LoginOrCreateNewUser: UIView!
     @IBOutlet var emailTextField: KindTextField!
-    @IBOutlet var passwordTextField: KindTextField! {
-        didSet {
-            //TODO: Test first and then delete this one.
-            passwordTextField.passwordRules = UITextInputPasswordRules(descriptor: "required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;")
-        }
-    }
+    @IBOutlet var passwordTextField: KindTextField!
 
     
     override init(frame: CGRect) {
@@ -67,25 +62,7 @@ class LoginExistingUser: UIView,UITextFieldDelegate,loginValidationProtocol {
         landingViewController?.switchViewsInsideController(toViewName: LandingVCViews.loginOptions, originView: self, removeOriginFromSuperView: false)
 
     }
-    
-//    @IBAction func createNewUser(_ sender: UIButton) {
-//        guard let email = emailTextField.text, email.count > 0 else {return}
-//        guard let password = passwordTextField.text, password.count > 0 else {return}
-//
-//        landingViewController?.createNewUser(email: email, password: password, completion: { [unowned self](err) in
-//            if let err = err {
-//                print("something wrong when creating user:", err)
-//                return
-//            }
-//
-//            KindUser.loggedUserEmail = email
-//            KindUser.loggedUserName = String(email.split(separator: "@").first ?? "")
-//            self.navigateAfterFadingOut()
-//        })
-//
-//        landingViewController?.dismissKeyboard()
-//    }
-    
+
     @IBAction func join(_ sender: UIButton) {
         guard let email = emailTextField.text, email.count > 0 else {return}
         guard let password = passwordTextField.text, password.count > 0 else {return}
