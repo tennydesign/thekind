@@ -33,11 +33,10 @@ class OnBoardingViewController: UIViewController {
     
     }
 
-    func segueToMainStoryboard(callerClassName: String) {
-        print(callerClassName)
+    func goToMainStoryboard() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "MainViewController")
-        present(vc, animated: false, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 
 }

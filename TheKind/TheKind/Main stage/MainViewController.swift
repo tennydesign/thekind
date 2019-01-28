@@ -57,7 +57,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    @IBOutlet var circleDetailsHost: BottomViewMap! {
+    @IBOutlet var circleDetailsHost: CircleDetailView! {
         didSet {
             circleDetailsHost.alpha = 0
         }

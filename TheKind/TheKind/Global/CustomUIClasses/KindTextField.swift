@@ -20,6 +20,14 @@ class KindTextField: UITextField {
         commonInit()
     }
     
+    override var textContentType: UITextContentType! {
+        didSet {
+            if textContentType == UITextContentType.newPassword {
+                passwordRules = UITextInputPasswordRules(descriptor: "required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;")
+            }
+        }
+    }
+    
     func commonInit() {
         borderStyle = .none
         layer.borderWidth = 1
@@ -27,6 +35,7 @@ class KindTextField: UITextField {
         layer.cornerRadius = 10
         textColor = UIColor(r: 237, g: 237, b: 237)
         layer.masksToBounds = true
+    
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {

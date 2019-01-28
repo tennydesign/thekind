@@ -84,7 +84,7 @@
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_curtain_5" translatesAutoresizingMaskIntoConstraints="NO" id="TdV-gj-duV" userLabel="bottom_curtain_slice">
                                         <rect key="frame" x="0.0" y="-7" width="375" height="366"/>
                                     </imageView>
-                                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mcZ-Xj-H4Q" userLabel="CircleDetailsHost" customClass="BottomViewMap" customModule="TheKind" customModuleProvider="target">
+                                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mcZ-Xj-H4Q" userLabel="CircleDetailsHost" customClass="CircleDetailView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="268"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>

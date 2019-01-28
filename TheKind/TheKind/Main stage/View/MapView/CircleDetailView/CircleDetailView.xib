@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BottomViewMap" customModule="TheKind" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CircleDetailView" customModule="TheKind" customModuleProvider="target">
             <connections>
                 <outlet property="chanceLabel" destination="eNZ-cy-ZVU" id="Mna-yv-0D7"/>
                 <outlet property="mainView" destination="iN0-l3-epB" id="yYI-KQ-mbD"/>
@@ -85,10 +85,7 @@
                     </constraints>
                 </stackView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNZ-cy-ZVU">
-                    <rect key="frame" x="116" y="96" width="143" height="12"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="12" id="3kF-WX-FRN"/>
-                    </constraints>
+                    <rect key="frame" x="116" y="91.5" width="143" height="16.5"/>
                     <attributedString key="attributedText">
                         <fragment content="54%">
                             <attributes>
@@ -113,7 +110,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvX-xo-smP" userLabel="PowerUpBarFrame">
-                    <rect key="frame" x="110.5" y="83" width="154.5" height="10"/>
+                    <rect key="frame" x="110.5" y="78.5" width="154.5" height="10"/>
                     <subviews>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mFj-XG-J6Y" userLabel="PowerUpBar">
                             <rect key="frame" x="0.0" y="0.0" width="154.5" height="10"/>
@@ -131,7 +128,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AT&amp;T PARK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MIo-4J-jve">
-                    <rect key="frame" x="110.5" y="57.5" width="154.5" height="21.5"/>
+                    <rect key="frame" x="110.5" y="53" width="154.5" height="21.5"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21.5" id="Kzn-Ya-O1w"/>
                         <constraint firstAttribute="width" constant="154.5" id="cKK-NB-KL7"/>

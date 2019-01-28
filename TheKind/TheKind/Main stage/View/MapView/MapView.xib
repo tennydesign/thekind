@@ -13,7 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapActionTriggerView">
             <connections>
                 <outlet property="enterCircleButton" destination="rZn-YL-TVN" id="lfW-ub-b59"/>
-                <outlet property="enterCircleView" destination="aMQ-OI-6tS" id="gR6-dD-W9a"/>
+                <outlet property="insideExpandedCircleView" destination="aMQ-OI-6tS" id="gR6-dD-W9a"/>
                 <outlet property="labelCircleName" destination="YfK-0s-khr" id="yhB-zI-IBK"/>
                 <outlet property="mainView" destination="iN0-l3-epB" id="2vz-8v-61c"/>
                 <outlet property="mapBoxView" destination="6C4-Ce-GiV" id="W3Q-BH-nKA"/>

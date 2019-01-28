@@ -90,7 +90,7 @@ class ChooseKindCardView: UIView {
                 kindImage.frame = desiredCardFrame
                 
             }, completion: { (completed) in
-                self.onBoardingViewController?.segueToMainStoryboard(callerClassName: "")
+                self.onBoardingViewController?.goToMainStoryboard()
             })
         }
     }

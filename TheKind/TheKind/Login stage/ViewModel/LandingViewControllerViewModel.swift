@@ -30,7 +30,9 @@ class LandingViewControllerViewModel {
     }
     
     func checkFormValidity() {
-        let isFormValid = password?.isEmpty == false && email?.isEmpty == false
+
+        let isFormValid = password?.isEmpty == false
+            && email?.isEmpty == false && email?.isEmail() == true
         bindableIsFormValid.value = isFormValid
     }
     

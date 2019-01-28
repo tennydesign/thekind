@@ -10,17 +10,10 @@ import UIKit
 
 class LoginOptionsView: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
     var landingViewController: LandingViewController?
     
     @IBOutlet var loginOptionsView: UIView!
+    @IBOutlet var newUserButton: KindButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,7 +33,15 @@ class LoginOptionsView: UIView {
         
     }
     @IBAction func loginWithEmailClicked(_ sender: UIButton) {
-        landingViewController?.switchViewsInsideController(toViewName: LandingVCViews.emailLogin, originView: self, removeOriginFromSuperView: false)
+        if sender.titleLabel?.text == "Create new user" {
+            //TODO: Send them to create new user view.
+            landingViewController?.choosenLoginView = landingViewController?.createNewUser
+            landingViewController?.switchViewsInsideController(toViewName: LandingVCViews.createNewUser, originView: self, removeOriginFromSuperView: false)
+        } else {
+            landingViewController?.choosenLoginView = landingViewController?.loginExistingUser
+            landingViewController?.switchViewsInsideController(toViewName: LandingVCViews.existingUser, originView: self, removeOriginFromSuperView: false)
+        }
+
     }
     
     @IBAction func GoogleLoginClicked(_ sender: KindButton) {

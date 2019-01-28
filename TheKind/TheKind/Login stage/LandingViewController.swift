@@ -10,18 +10,32 @@ import UIKit
 import GoogleSignIn
 import FirebaseAuth
 
+protocol loginValidationProtocol {
+    func toggleButtonControl(_ active: Bool)
+}
+
 class LandingViewController: UIViewController,UITextFieldDelegate {
     
+    
+    let KEYBOARDSHOWSLIDEAMOUNT: CGFloat = -66
     //== HOSTS
     @IBOutlet var loginWindow: UIView!
 
     //== Content Views (as they appear in the enum)
     @IBOutlet var loginOptions: LoginOptionsView!
-    @IBOutlet var loginOrCreateNewUser: LoginOrCreateNewUser! {
+    @IBOutlet var loginExistingUser: LoginExistingUser! {
         didSet {
-            loginOrCreateNewUser.alpha = 0
+            loginExistingUser.alpha = 0
         }
     }
+    
+    @IBOutlet var createNewUser: CreateNewUser! {
+        didSet {
+            createNewUser.alpha = 0
+        }
+    }
+    
+    var choosenLoginView: loginValidationProtocol?
     
     // ===  Supporting and layout views
     @IBOutlet var jung: UIImageView!
@@ -55,7 +69,8 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
 
         loginOptions.landingViewController = self
-        loginOrCreateNewUser.landingViewController = self
+        loginExistingUser.landingViewController = self
+        createNewUser.landingViewController = self
         
         setupKeyboardObservers()
         
@@ -78,7 +93,8 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
         //return from viewmodel.
         landingViewControllerViewModel.bindableIsFormValid.bind { [unowned self](isFormValid) in
             guard let isFormValid = isFormValid else {return}
-            self.loginOrCreateNewUser.toggleButtonControl(isFormValid)
+            guard let loginView = self.choosenLoginView else {return}
+            loginView.toggleButtonControl(isFormValid)
         }
     }
   
@@ -92,7 +108,8 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
     @objc func handleKeyboardDidShow(notification: Notification) {
         print("keyboard did show")
         UIView.animate(withDuration: 0.3) {
-            self.loginOrCreateNewUser.transform = CGAffineTransform(translationX: 0, y: -35)
+            self.loginExistingUser.transform = CGAffineTransform(translationX: 0, y: self.KEYBOARDSHOWSLIDEAMOUNT)
+            self.createNewUser.transform = CGAffineTransform(translationX: 0, y: self.KEYBOARDSHOWSLIDEAMOUNT)
         }
         
     }
@@ -100,7 +117,8 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
     @objc func handleKeyboardDidHide() {
         print("keyboard did hide")
         UIView.animate(withDuration: 0.3) {
-            self.loginOrCreateNewUser.transform = .identity
+            self.loginExistingUser.transform = .identity
+            self.createNewUser.transform = .identity
         }
 
     }
@@ -113,12 +131,6 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
          view.endEditing(true)
     }
     
-   func segueToMainStoryboard(callerClassName: String) {
-        print(callerClassName)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "MainViewController")
-        present(vc, animated: false, completion: nil)
-    }
 }
 
 // MARK: === LOGIN WITH FIREBASE
@@ -148,8 +160,7 @@ extension LandingViewController: GIDSignInDelegate,GIDSignInUIDelegate {
         }
     }
     
-    // === THIS IS SITTING HERE FOR NOW CAUSE IT NEEDS UIVIEWCONTROLLER
-    func switchToAnotherStoryboard() {
+     func goToOnboading() {
         let storyboard = UIStoryboard(name: "OnBoarding", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "OnBoardingViewController")
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
@@ -171,7 +182,7 @@ extension LandingViewController: GIDSignInDelegate,GIDSignInUIDelegate {
                 KindUser.loggedUserName = name
             }
             
-            switchToAnotherStoryboard()
+            goToOnboading()
             
 
         }
@@ -198,7 +209,7 @@ extension LandingViewController: GIDSignInDelegate,GIDSignInUIDelegate {
 // == ANIMATIONS
 
 enum LandingVCViews {
-    case emailLogin, loginOptions
+    case existingUser, loginOptions, createNewUser
 }
 
 extension LandingViewController {
@@ -206,15 +217,17 @@ extension LandingViewController {
     func switchViewsInsideController(toViewName: LandingVCViews, originView: UIView, removeOriginFromSuperView: Bool) {
         let slideAmount:CGFloat = 40
         var destinationView: UIView
-        
         // Do all the prep to transition here.
         switch toViewName {
-        case .emailLogin:
-            destinationView = loginOrCreateNewUser
+        case .existingUser:
+            destinationView = loginExistingUser
             viewTransitionUsingAlphaAndSkatingX(originView, destinationView, left: false, slideAmount)
         case .loginOptions:
             destinationView = loginOptions
             viewTransitionUsingAlphaAndSkatingX(originView, destinationView, left: true, slideAmount)
+        case .createNewUser:
+            destinationView = createNewUser
+            viewTransitionUsingAlphaAndSkatingX(originView, destinationView, left: false, slideAmount)
         }
     }
 

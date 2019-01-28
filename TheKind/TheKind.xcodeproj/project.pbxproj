@@ -40,8 +40,8 @@
 		A031885921C33A76008D1198 /* HUDview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A031885821C33A76008D1198 /* HUDview.swift */; };
 		A0320B4B212B6363008A96E2 /* LoginOptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0320B4A212B6363008A96E2 /* LoginOptionsView.xib */; };
 		A0320B4D212B63C2008A96E2 /* LoginOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0320B4C212B63C2008A96E2 /* LoginOptionsView.swift */; };
-		A0320B4F212B69BA008A96E2 /* LoginOrCreateNewUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0320B4E212B69BA008A96E2 /* LoginOrCreateNewUser.xib */; };
-		A0320B53212B69DD008A96E2 /* LoginOrCreateNewUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0320B52212B69DD008A96E2 /* LoginOrCreateNewUser.swift */; };
+		A0320B4F212B69BA008A96E2 /* LoginExistingUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0320B4E212B69BA008A96E2 /* LoginExistingUser.xib */; };
+		A0320B53212B69DD008A96E2 /* LoginExistingUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0320B52212B69DD008A96E2 /* LoginExistingUser.swift */; };
 		A0320B56212B8AB6008A96E2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0320B55212B8AB6008A96E2 /* Extensions.swift */; };
 		A0320B5D212E1596008A96E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0320B5C212E1596008A96E2 /* GoogleService-Info.plist */; };
 		A0320B5F212F2873008A96E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0320B5E212F2873008A96E2 /* Main.storyboard */; };
@@ -51,22 +51,23 @@
 		A05150F421E3FFFC00795172 /* UserNameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A05150F321E3FFFC00795172 /* UserNameView.xib */; };
 		A05150F621E4002800795172 /* UserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F521E4002800795172 /* UserNameView.swift */; };
 		A05150F821E44A9400795172 /* KindUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F721E44A9400795172 /* KindUser.swift */; };
-		A07075F921F0019C0013380D /* CirclesScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A07075F821F0019C0013380D /* CirclesScene.sks */; };
-		A07075FB21F001BD0013380D /* CirclesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07075FA21F001BD0013380D /* CirclesScene.swift */; };
 		A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07075FC21F158B60013380D /* MapPhotoSnapper.swift */; };
-		A07075FF21F2AC220013380D /* ext_MainControllerMapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07075FE21F2AC220013380D /* ext_MainControllerMapKit.swift */; };
 		A070760121F2CEAB0013380D /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A070760021F2CEAB0013380D /* MapView.xib */; };
 		A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1721F53B0F00DDEC6C /* ports.geojson */; };
 		A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */; };
-		A0A45E1C21F8D6B700DDEC6C /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E1B21F8D6B700DDEC6C /* MapViewModel.swift */; };
-		A0A45E1F21F92D6B00DDEC6C /* bottomViewMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1E21F92D6B00DDEC6C /* bottomViewMap.xib */; };
-		A0A45E2121F92D7900DDEC6C /* BottomViewMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E2021F92D7900DDEC6C /* BottomViewMap.swift */; };
+		A0A45E1C21F8D6B700DDEC6C /* MapViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E1B21F8D6B700DDEC6C /* MapViewViewModel.swift */; };
+		A0A45E1F21F92D6B00DDEC6C /* CircleDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1E21F92D6B00DDEC6C /* CircleDetailView.xib */; };
+		A0A45E2121F92D7900DDEC6C /* CircleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E2021F92D7900DDEC6C /* CircleDetailView.swift */; };
+		A0A45E2321FB7FB200DDEC6C /* CircleAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E2221FB7FB200DDEC6C /* CircleAnnotationModel.swift */; };
 		A0A69F1C2186687C00AA5C61 /* AcylicalHand-Small.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */; };
 		A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */; };
 		A0B6B29821CD599B00C58B3F /* AcylicalHand-Tall.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0B6B29721CD599B00C58B3F /* AcylicalHand-Tall.ttf */; };
 		A0B6B29A21CD5BEC00C58B3F /* AcrylicHand-Serif.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0B6B29921CD5BEC00C58B3F /* AcrylicHand-Serif.ttf */; };
 		A0B6B29C21D1786900C58B3F /* JungTalkBoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B6B29B21D1786900C58B3F /* JungTalkBoxModel.swift */; };
 		A0B6B29E21D1BADA00C58B3F /* ext_MainControllerBadgePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B6B29D21D1BADA00C58B3F /* ext_MainControllerBadgePhoto.swift */; };
+		A0C5C06921FE8CC300846B82 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C5C06821FE8CC300846B82 /* AuthenticationServices.framework */; };
+		A0C5C06B21FF58CE00846B82 /* CreateNewUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0C5C06A21FF58CE00846B82 /* CreateNewUser.xib */; };
+		A0C5C06D21FF5A1300846B82 /* CreateNewUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5C06C21FF5A1300846B82 /* CreateNewUser.swift */; };
 		A0C5D227212A4A7500BF1B0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5D226212A4A7500BF1B0C /* AppDelegate.swift */; };
 		A0C5D22C212A4A7500BF1B0C /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0C5D22A212A4A7500BF1B0C /* Login.storyboard */; };
 		A0C5D22F212A4A7500BF1B0C /* TheKind.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A0C5D22D212A4A7500BF1B0C /* TheKind.xcdatamodeld */; };
@@ -136,8 +137,8 @@
 		A031885821C33A76008D1198 /* HUDview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDview.swift; sourceTree = "<group>"; };
 		A0320B4A212B6363008A96E2 /* LoginOptionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginOptionsView.xib; sourceTree = "<group>"; };
 		A0320B4C212B63C2008A96E2 /* LoginOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginOptionsView.swift; sourceTree = "<group>"; };
-		A0320B4E212B69BA008A96E2 /* LoginOrCreateNewUser.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginOrCreateNewUser.xib; sourceTree = "<group>"; };
-		A0320B52212B69DD008A96E2 /* LoginOrCreateNewUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginOrCreateNewUser.swift; sourceTree = "<group>"; };
+		A0320B4E212B69BA008A96E2 /* LoginExistingUser.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginExistingUser.xib; sourceTree = "<group>"; };
+		A0320B52212B69DD008A96E2 /* LoginExistingUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginExistingUser.swift; sourceTree = "<group>"; };
 		A0320B55212B8AB6008A96E2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A0320B5C212E1596008A96E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A0320B5E212F2873008A96E2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -147,22 +148,23 @@
 		A05150F321E3FFFC00795172 /* UserNameView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserNameView.xib; sourceTree = "<group>"; };
 		A05150F521E4002800795172 /* UserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameView.swift; sourceTree = "<group>"; };
 		A05150F721E44A9400795172 /* KindUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindUser.swift; sourceTree = "<group>"; };
-		A07075F821F0019C0013380D /* CirclesScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CirclesScene.sks; sourceTree = "<group>"; };
-		A07075FA21F001BD0013380D /* CirclesScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesScene.swift; sourceTree = "<group>"; };
 		A07075FC21F158B60013380D /* MapPhotoSnapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPhotoSnapper.swift; sourceTree = "<group>"; };
-		A07075FE21F2AC220013380D /* ext_MainControllerMapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ext_MainControllerMapKit.swift; sourceTree = "<group>"; };
 		A070760021F2CEAB0013380D /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
 		A0A45E1721F53B0F00DDEC6C /* ports.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ports.geojson; sourceTree = "<group>"; };
 		A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapActionTriggerView.swift; sourceTree = "<group>"; };
-		A0A45E1B21F8D6B700DDEC6C /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
-		A0A45E1E21F92D6B00DDEC6C /* bottomViewMap.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = bottomViewMap.xib; sourceTree = "<group>"; };
-		A0A45E2021F92D7900DDEC6C /* BottomViewMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewMap.swift; sourceTree = "<group>"; };
+		A0A45E1B21F8D6B700DDEC6C /* MapViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewViewModel.swift; sourceTree = "<group>"; };
+		A0A45E1E21F92D6B00DDEC6C /* CircleDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircleDetailView.xib; sourceTree = "<group>"; };
+		A0A45E2021F92D7900DDEC6C /* CircleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleDetailView.swift; sourceTree = "<group>"; };
+		A0A45E2221FB7FB200DDEC6C /* CircleAnnotationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnnotationModel.swift; sourceTree = "<group>"; };
 		A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Small.ttf"; sourceTree = "<group>"; };
 		A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		A0B6B29721CD599B00C58B3F /* AcylicalHand-Tall.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Tall.ttf"; sourceTree = "<group>"; };
 		A0B6B29921CD5BEC00C58B3F /* AcrylicHand-Serif.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcrylicHand-Serif.ttf"; sourceTree = "<group>"; };
 		A0B6B29B21D1786900C58B3F /* JungTalkBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungTalkBoxModel.swift; sourceTree = "<group>"; };
 		A0B6B29D21D1BADA00C58B3F /* ext_MainControllerBadgePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ext_MainControllerBadgePhoto.swift; sourceTree = "<group>"; };
+		A0C5C06821FE8CC300846B82 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
+		A0C5C06A21FF58CE00846B82 /* CreateNewUser.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateNewUser.xib; sourceTree = "<group>"; };
+		A0C5C06C21FF5A1300846B82 /* CreateNewUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewUser.swift; sourceTree = "<group>"; };
 		A0C5D223212A4A7500BF1B0C /* TheKind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheKind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C5D226212A4A7500BF1B0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0C5D22B212A4A7500BF1B0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0C5C06921FE8CC300846B82 /* AuthenticationServices.framework in Frameworks */,
 				9B618D537AEDFA98E89FACB1 /* Pods_TheKind.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,7 +224,6 @@
 			children = (
 				A002F48D21BDC9D6006E8660 /* Bindable.swift */,
 				A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */,
-				A05150F721E44A9400795172 /* KindUser.swift */,
 				A0F223A921B88E370096C25D /* CustomUIClasses */,
 				A07075FC21F158B60013380D /* MapPhotoSnapper.swift */,
 			);
@@ -358,8 +360,10 @@
 			children = (
 				A0320B4C212B63C2008A96E2 /* LoginOptionsView.swift */,
 				A0320B4A212B6363008A96E2 /* LoginOptionsView.xib */,
-				A0320B52212B69DD008A96E2 /* LoginOrCreateNewUser.swift */,
-				A0320B4E212B69BA008A96E2 /* LoginOrCreateNewUser.xib */,
+				A0320B52212B69DD008A96E2 /* LoginExistingUser.swift */,
+				A0320B4E212B69BA008A96E2 /* LoginExistingUser.xib */,
+				A0C5C06C21FF5A1300846B82 /* CreateNewUser.swift */,
+				A0C5C06A21FF58CE00846B82 /* CreateNewUser.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -369,6 +373,7 @@
 			children = (
 				A0C5D22A212A4A7500BF1B0C /* Login.storyboard */,
 				A0C5D2C6212B511E00BF1B0C /* LandingViewController.swift */,
+				A0C5C06721FE808500846B82 /* Model */,
 				A002F48F21BDCE74006E8660 /* ViewModel */,
 				A0320B54212B6BFD008A96E2 /* Views */,
 			);
@@ -381,7 +386,6 @@
 				A0320B5E212F2873008A96E2 /* Main.storyboard */,
 				A0015A2F218CE8DF001DDA20 /* MainViewController.swift */,
 				A0F223B121B8A75E0096C25D /* View */,
-				A0F223B021B8A7420096C25D /* Model */,
 			);
 			path = "Main stage";
 			sourceTree = "<group>";
@@ -389,32 +393,46 @@
 		A07075F621EFFC940013380D /* MapView */ = {
 			isa = PBXGroup;
 			children = (
-				A0A45E1D21F92B7B00DDEC6C /* BottomVIew */,
-				A07075F721F001650013380D /* Old */,
-				A07075FE21F2AC220013380D /* ext_MainControllerMapKit.swift */,
 				A070760021F2CEAB0013380D /* MapView.xib */,
 				A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */,
-				A0A45E1B21F8D6B700DDEC6C /* MapViewModel.swift */,
+				A0A45E2521FBA78F00DDEC6C /* ViewModel */,
+				A0A45E2421FBA78300DDEC6C /* Model */,
+				A0A45E1D21F92B7B00DDEC6C /* CircleDetailView */,
 			);
 			path = MapView;
 			sourceTree = "<group>";
 		};
-		A07075F721F001650013380D /* Old */ = {
+		A0A45E1D21F92B7B00DDEC6C /* CircleDetailView */ = {
 			isa = PBXGroup;
 			children = (
-				A07075F821F0019C0013380D /* CirclesScene.sks */,
-				A07075FA21F001BD0013380D /* CirclesScene.swift */,
+				A0A45E1E21F92D6B00DDEC6C /* CircleDetailView.xib */,
+				A0A45E2021F92D7900DDEC6C /* CircleDetailView.swift */,
 			);
-			path = Old;
+			path = CircleDetailView;
 			sourceTree = "<group>";
 		};
-		A0A45E1D21F92B7B00DDEC6C /* BottomVIew */ = {
+		A0A45E2421FBA78300DDEC6C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A0A45E1E21F92D6B00DDEC6C /* bottomViewMap.xib */,
-				A0A45E2021F92D7900DDEC6C /* BottomViewMap.swift */,
+				A0A45E2221FB7FB200DDEC6C /* CircleAnnotationModel.swift */,
 			);
-			path = BottomVIew;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A0A45E2521FBA78F00DDEC6C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A0A45E1B21F8D6B700DDEC6C /* MapViewViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A0C5C06721FE808500846B82 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A05150F721E44A9400795172 /* KindUser.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A0C5D21A212A4A7500BF1B0C = {
@@ -523,13 +541,6 @@
 			path = CustomUIClasses;
 			sourceTree = "<group>";
 		};
-		A0F223B021B8A7420096C25D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		A0F223B121B8A75E0096C25D /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -558,6 +569,7 @@
 		EE223811CB917A91F51D52ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0C5C06821FE8CC300846B82 /* AuthenticationServices.framework */,
 				3B1E1BED9EB781D5EF5F6D34 /* Pods_TheKind.framework */,
 				683D8697A3469632EC3E58EE /* Pods_TheKindTests.framework */,
 				B8682BB931DD38851E48BFF3 /* Pods_TheKindUITests.framework */,
@@ -640,7 +652,13 @@
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 1000;
 						SystemCapabilities = {
+							com.apple.AutoFillCredentialProvider = {
+								enabled = 1;
+							};
 							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.SafariKeychain = {
 								enabled = 1;
 							};
 						};
@@ -682,17 +700,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0A45E1F21F92D6B00DDEC6C /* bottomViewMap.xib in Resources */,
+				A0A45E1F21F92D6B00DDEC6C /* CircleDetailView.xib in Resources */,
 				A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */,
 				A070760121F2CEAB0013380D /* MapView.xib in Resources */,
-				A07075F921F0019C0013380D /* CirclesScene.sks in Resources */,
 				A0120E6621C6E345000454EC /* BadgePhotoSetupView.xib in Resources */,
 				A0301D692190B33200E023F7 /* gameboardScene.sks in Resources */,
 				A02B24D321E0318500737ACC /* DobOnboardingView.xib in Resources */,
 				A0D086EB215EA61300011A54 /* AcylicalHand-Small-SVG.ttf in Resources */,
+				A0C5C06B21FF58CE00846B82 /* CreateNewUser.xib in Resources */,
 				A0320B5F212F2873008A96E2 /* Main.storyboard in Resources */,
 				A0C5D234212A4A7600BF1B0C /* LaunchScreen.storyboard in Resources */,
-				A0320B4F212B69BA008A96E2 /* LoginOrCreateNewUser.xib in Resources */,
+				A0320B4F212B69BA008A96E2 /* LoginExistingUser.xib in Resources */,
 				A0120E6221C6DF99000454EC /* SwipeCards.storyboard in Resources */,
 				A05150F421E3FFFC00795172 /* UserNameView.xib in Resources */,
 				A02D71A121C4300E00EBBD12 /* ChooseKindCardView.xib in Resources */,
@@ -852,15 +870,15 @@
 				A002F48321B9EFAE006E8660 /* KindJungOptionLabel.swift in Sources */,
 				A0320B56212B8AB6008A96E2 /* Extensions.swift in Sources */,
 				A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */,
-				A07075FF21F2AC220013380D /* ext_MainControllerMapKit.swift in Sources */,
 				A0320B4D212B63C2008A96E2 /* LoginOptionsView.swift in Sources */,
 				A017CDD42190E1B6002B7D9D /* xt_GameBoardScene.swift in Sources */,
 				A05150F621E4002800795172 /* UserNameView.swift in Sources */,
-				A0320B53212B69DD008A96E2 /* LoginOrCreateNewUser.swift in Sources */,
-				A0A45E1C21F8D6B700DDEC6C /* MapViewModel.swift in Sources */,
+				A0320B53212B69DD008A96E2 /* LoginExistingUser.swift in Sources */,
+				A0A45E1C21F8D6B700DDEC6C /* MapViewViewModel.swift in Sources */,
 				A03D77F321B7518A00DCF627 /* JungTalkBox.swift in Sources */,
 				A0D960CD21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift in Sources */,
 				A002F49121BDD01F006E8660 /* LandingViewControllerViewModel.swift in Sources */,
+				A0A45E2321FB7FB200DDEC6C /* CircleAnnotationModel.swift in Sources */,
 				A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */,
 				A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */,
 				A02D71A521C6BC7200EBBD12 /* OnBoardingViewController.swift in Sources */,
@@ -872,18 +890,18 @@
 				A02D719F21C42FA300EBBD12 /* ChooseKindCardView.swift in Sources */,
 				A0120E6421C6DFAE000454EC /* SwipeCardsViewController.swift in Sources */,
 				A05150F821E44A9400795172 /* KindUser.swift in Sources */,
-				A0A45E2121F92D7900DDEC6C /* BottomViewMap.swift in Sources */,
+				A0A45E2121F92D7900DDEC6C /* CircleDetailView.swift in Sources */,
 				A0015A30218CE8DF001DDA20 /* MainViewController.swift in Sources */,
 				A0B6B29C21D1786900C58B3F /* JungTalkBoxModel.swift in Sources */,
 				A0F223A621B88DB10096C25D /* KindButton.swift in Sources */,
 				A0B6B29E21D1BADA00C58B3F /* ext_MainControllerBadgePhoto.swift in Sources */,
 				A02B24D521E031AA00737ACC /* dobOnboardingView.swift in Sources */,
-				A07075FB21F001BD0013380D /* CirclesScene.swift in Sources */,
 				A002F48121B9EFAE006E8660 /* JungChatLogger.swift in Sources */,
 				A031885921C33A76008D1198 /* HUDview.swift in Sources */,
 				A0C5D227212A4A7500BF1B0C /* AppDelegate.swift in Sources */,
 				A02A5D0A21CB2E9400F26463 /* KindActionTriggerView.swift in Sources */,
 				A0301D6E2190C00C00E023F7 /* GameBoard.swift in Sources */,
+				A0C5C06D21FF5A1300846B82 /* CreateNewUser.swift in Sources */,
 				A002F49521BF57D3006E8660 /* ChooseDriverView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

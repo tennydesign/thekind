@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateNewUser" customModule="TheKind" customModuleProvider="target">
+            <connections>
+                <outlet property="createUserBtn" destination="GEy-R2-RwT" id="lw6-mk-crE"/>
+                <outlet property="emailTextField" destination="q5U-y7-Qhn" id="FiM-Vb-bbq"/>
+                <outlet property="mainView" destination="iN0-l3-epB" id="z5l-BE-n2w"/>
+                <outlet property="passwordTextField" destination="s1q-Ov-nOJ" id="VhJ-QW-WGo"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="mainView">
+            <rect key="frame" x="0.0" y="0.0" width="246" height="353"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view alpha="0.89999997615814209" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H0I-IV-gWw" userLabel="Backdrop">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <viewLayoutGuide key="safeArea" id="EFR-RJ-XLL"/>
+                </view>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="oDd-uF-6AM">
+                    <rect key="frame" x="8" y="68.5" width="230" height="176"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="q5U-y7-Qhn" customClass="KindTextField" customModule="TheKind" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="230" height="52"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="230" id="NBo-AO-nJ4"/>
+                                <constraint firstAttribute="height" constant="52" id="wZ7-Eg-Hxl"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="username"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
+                                    <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s1q-Ov-nOJ" customClass="KindTextField" customModule="TheKind" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="62" width="230" height="52"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="230" id="8tg-lP-Qbg"/>
+                                <constraint firstAttribute="height" constant="52" id="bAf-He-UJ8"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
+                                    <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
+                                    <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEy-R2-RwT" customClass="KindButton" customModule="TheKind" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="124" width="230" height="52"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="52" id="If7-ya-CtX"/>
+                                <constraint firstAttribute="width" constant="230" id="bST-sf-0ic"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                            <state key="normal" title="Create user" backgroundImage="pink_textfield"/>
+                            <connections>
+                                <action selector="createUserClicked:" destination="-1" eventType="touchUpInside" id="EmY-AZ-6Yr"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="230" id="wEx-XS-028"/>
+                    </constraints>
+                </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Ru-yZ-wqZ">
+                    <rect key="frame" x="52" y="254.5" width="152" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="152" id="SGX-Ax-UV2"/>
+                        <constraint firstAttribute="height" constant="30" id="SkU-zt-FY2"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                    <state key="normal" title="Back to login options">
+                        <color key="titleColor" red="0.45882352939999999" green="0.45882352939999999" blue="0.45882352939999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="backToLoginOptionsClicked:" destination="-1" eventType="touchUpInside" id="HKb-Uh-zpD"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="oDd-uF-6AM" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-20" id="T6T-Xs-axq"/>
+                <constraint firstItem="8Ru-yZ-wqZ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="5" id="Vrf-3C-VDo"/>
+                <constraint firstItem="oDd-uF-6AM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="khO-yg-eVX"/>
+                <constraint firstItem="8Ru-yZ-wqZ" firstAttribute="top" secondItem="oDd-uF-6AM" secondAttribute="bottom" constant="10" id="nSY-YK-8T8"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="pink_textfield" width="230" height="52"/>
+    </resources>
+</document>

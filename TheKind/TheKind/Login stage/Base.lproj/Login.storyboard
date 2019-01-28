@@ -23,13 +23,17 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y1j-dm-Wv0" userLabel="LoginWindow">
-                                <rect key="frame" x="37.5" y="117" width="300" height="353"/>
+                                <rect key="frame" x="37.5" y="157" width="300" height="353"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phM-vc-CFf" userLabel="LoginOptions" customClass="LoginOptionsView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="353"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrW-Xf-wS0" userLabel="LoginOrCreateNewUser" customClass="LoginOrCreateNewUser" customModule="TheKind" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrW-Xf-wS0" userLabel="LoginOrCreateNewUser" customClass="LoginExistingUser" customModule="TheKind" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="353"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g43-ID-L4m" userLabel="CreateNewUser" customClass="CreateNewUser" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="353"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
@@ -39,6 +43,7 @@
                                     <constraint firstItem="phM-vc-CFf" firstAttribute="centerY" secondItem="Y1j-dm-Wv0" secondAttribute="centerY" id="8jA-G7-oXr"/>
                                     <constraint firstItem="xrW-Xf-wS0" firstAttribute="height" secondItem="Y1j-dm-Wv0" secondAttribute="height" id="9gn-P2-tU0"/>
                                     <constraint firstAttribute="width" constant="300" id="9mj-th-0ls"/>
+                                    <constraint firstItem="g43-ID-L4m" firstAttribute="centerY" secondItem="Y1j-dm-Wv0" secondAttribute="centerY" id="ALE-0R-8Dd"/>
                                     <constraint firstItem="xrW-Xf-wS0" firstAttribute="centerX" secondItem="Y1j-dm-Wv0" secondAttribute="centerX" id="Bw4-gs-qyr"/>
                                     <constraint firstItem="phM-vc-CFf" firstAttribute="height" secondItem="Y1j-dm-Wv0" secondAttribute="height" id="Ctn-W8-RN6"/>
                                     <constraint firstItem="xrW-Xf-wS0" firstAttribute="centerY" secondItem="Y1j-dm-Wv0" secondAttribute="centerY" id="DiV-6J-BGF"/>
@@ -46,6 +51,9 @@
                                     <constraint firstItem="phM-vc-CFf" firstAttribute="centerX" secondItem="Y1j-dm-Wv0" secondAttribute="centerX" id="Yuo-3i-pA6"/>
                                     <constraint firstItem="phM-vc-CFf" firstAttribute="width" secondItem="Y1j-dm-Wv0" secondAttribute="width" id="gcj-gD-C0m"/>
                                     <constraint firstAttribute="height" constant="353" id="iYb-Uv-lHg"/>
+                                    <constraint firstItem="g43-ID-L4m" firstAttribute="height" secondItem="Y1j-dm-Wv0" secondAttribute="height" id="swO-nw-tgz"/>
+                                    <constraint firstItem="g43-ID-L4m" firstAttribute="centerX" secondItem="Y1j-dm-Wv0" secondAttribute="centerX" id="woU-Zy-59U"/>
+                                    <constraint firstItem="g43-ID-L4m" firstAttribute="width" secondItem="Y1j-dm-Wv0" secondAttribute="width" id="zkg-PB-bMn"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I1x-3V-KyO" userLabel="bottom_curtain">
@@ -118,7 +126,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0iE-Ay-CKl" secondAttribute="bottom" constant="14" id="dBS-vF-g1U"/>
                             <constraint firstItem="ugi-BI-2eP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="f48-eU-iKQ"/>
                             <constraint firstItem="I1x-3V-KyO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fOx-4W-uqL"/>
-                            <constraint firstItem="Y1j-dm-Wv0" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-40" id="l6x-6b-Xdn"/>
+                            <constraint firstItem="Y1j-dm-Wv0" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="l6x-6b-Xdn"/>
                             <constraint firstItem="iPY-gm-Grn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="l9U-db-S9j"/>
                             <constraint firstItem="ugi-BI-2eP" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="-120" id="wcm-Qm-IqE"/>
                         </constraints>
@@ -127,9 +135,10 @@
                     <connections>
                         <outlet property="bottom_curtainView" destination="I1x-3V-KyO" id="FFs-4Z-Xuw"/>
                         <outlet property="bottom_curtain_bottom_constraint" destination="Bwy-f4-gpy" id="R3g-Ij-V0e"/>
+                        <outlet property="createNewUser" destination="g43-ID-L4m" id="u8W-AG-DFY"/>
                         <outlet property="jung" destination="0iE-Ay-CKl" id="qga-5G-zML"/>
+                        <outlet property="loginExistingUser" destination="xrW-Xf-wS0" id="rNy-yP-Mcu"/>
                         <outlet property="loginOptions" destination="phM-vc-CFf" id="bun-OF-ifB"/>
-                        <outlet property="loginOrCreateNewUser" destination="xrW-Xf-wS0" id="rNy-yP-Mcu"/>
                         <outlet property="loginWindow" destination="Y1j-dm-Wv0" id="jw9-UZ-kqk"/>
                         <outlet property="loginWindowCenterYConstraint" destination="l6x-6b-Xdn" id="BR2-dk-8cc"/>
                         <outlet property="top_curtainView" destination="ugi-BI-2eP" id="fNY-WJ-Fvr"/>

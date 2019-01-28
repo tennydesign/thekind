@@ -7,8 +7,8 @@
 //
 
 import UIKit
-
-class LoginOrCreateNewUser: UIView,UITextFieldDelegate {
+// TODO: Separate Login Or Create New user
+class LoginExistingUser: UIView,UITextFieldDelegate,loginValidationProtocol {
 
     var landingViewController: LandingViewController?
     @IBOutlet var joinButton: KindButton!
@@ -16,15 +16,11 @@ class LoginOrCreateNewUser: UIView,UITextFieldDelegate {
     @IBOutlet var emailTextField: KindTextField!
     @IBOutlet var passwordTextField: KindTextField! {
         didSet {
-            //TODO: Implement password suggestion
-//            let createNewPasswordTextField = UITextField()
-//            let newPasswordReqs = UITextInputPasswordRules(descriptor: "required: lower; required: digit; max-consecutive: 3; minlength: 12;”)
-//                createNewPasswordTextField.passwordRules = newPasswordReqs
-//            // Now, when iOS suggests a new password - these rules will be used to generate it
-            //https://medium.com/the-traveled-ios-developers-guide/ios-12-notable-uikit-additions-b50beb0e3729
+            //TODO: Test first and then delete this one.
+            passwordTextField.passwordRules = UITextInputPasswordRules(descriptor: "required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;")
         }
     }
-    @IBOutlet var newUser: KindButton!
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,7 +33,7 @@ class LoginOrCreateNewUser: UIView,UITextFieldDelegate {
     }
     
     func commonInit() {
-        Bundle.main.loadNibNamed("LoginOrCreateNewUser", owner: self, options: nil)
+        Bundle.main.loadNibNamed("LoginExistingUser", owner: self, options: nil)
         addSubview(LoginOrCreateNewUser)
         LoginOrCreateNewUser.frame = self.bounds
         LoginOrCreateNewUser.autoresizingMask = [.flexibleHeight,.flexibleWidth]
@@ -46,17 +42,14 @@ class LoginOrCreateNewUser: UIView,UITextFieldDelegate {
         passwordTextField.addTarget(self, action: #selector(handleTyping), for: .editingChanged)
         
         joinButton.disableButton()
-        newUser.disableButton()
 
     }
     
     func toggleButtonControl(_ active: Bool) {
         if active {
             self.joinButton.enableButton()
-            self.newUser.enableButton()
         } else {
             self.joinButton.disableButton()
-            self.newUser.disableButton()
         }
     }
 
@@ -75,23 +68,23 @@ class LoginOrCreateNewUser: UIView,UITextFieldDelegate {
 
     }
     
-    @IBAction func createNewUser(_ sender: UIButton) {
-        guard let email = emailTextField.text, email.count > 0 else {return}
-        guard let password = passwordTextField.text, password.count > 0 else {return}
-        
-        landingViewController?.createNewUser(email: email, password: password, completion: { [unowned self](err) in
-            if let err = err {
-                print("something wrong when creating user:", err)
-                return
-            }
-            
-            KindUser.loggedUserEmail = email
-            KindUser.loggedUserName = String(email.split(separator: "@").first ?? "")
-            self.navigateAfterFadingOut()
-        })
-        
-        landingViewController?.dismissKeyboard()
-    }
+//    @IBAction func createNewUser(_ sender: UIButton) {
+//        guard let email = emailTextField.text, email.count > 0 else {return}
+//        guard let password = passwordTextField.text, password.count > 0 else {return}
+//
+//        landingViewController?.createNewUser(email: email, password: password, completion: { [unowned self](err) in
+//            if let err = err {
+//                print("something wrong when creating user:", err)
+//                return
+//            }
+//
+//            KindUser.loggedUserEmail = email
+//            KindUser.loggedUserName = String(email.split(separator: "@").first ?? "")
+//            self.navigateAfterFadingOut()
+//        })
+//
+//        landingViewController?.dismissKeyboard()
+//    }
     
     @IBAction func join(_ sender: UIButton) {
         guard let email = emailTextField.text, email.count > 0 else {return}
@@ -122,7 +115,7 @@ class LoginOrCreateNewUser: UIView,UITextFieldDelegate {
 
             
             // call function to move to OnboardingStoryboard.
-            self.landingViewController?.switchToAnotherStoryboard()
+            self.landingViewController?.goToOnboading()
             self.removeFromSuperview()
             
 
