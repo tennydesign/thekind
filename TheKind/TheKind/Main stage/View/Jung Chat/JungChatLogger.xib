@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AcylicalHand-Small.ttf">
+            <string>AcrylicHandSans-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JungChatLogger" customModule="TheKind" customModuleProvider="target">
             <connections>
@@ -31,7 +36,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="7dT-VQ-BOy">
-                            <rect key="frame" x="17" y="9" width="341" height="137"/>
+                            <rect key="frame" x="17" y="15" width="341" height="137"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="137" id="Vdc-nn-PPB"/>
@@ -43,42 +48,28 @@
                                 <inset key="sectionInset" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
-                        <label opaque="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfN-ey-Vla" customClass="KindJungOptionLabel" customModule="TheKind" customModuleProvider="target">
-                            <rect key="frame" x="17" y="157" width="125" height="63"/>
+                        <label opaque="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAKE ANOTHER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfN-ey-Vla" customClass="KindJungOptionLabel" customModule="TheKind" customModuleProvider="target">
+                            <rect key="frame" x="25" y="157" width="125" height="63"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="63" id="5kv-KZ-XCc"/>
                                 <constraint firstAttribute="width" constant="125" id="T6c-d9-m1h"/>
                             </constraints>
-                            <attributedString key="attributedText">
-                                <fragment content="Yeah... cool please do!">
-                                    <attributes>
-                                        <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <font key="NSFont" size="13" name="AcrylicHandSans-Regular"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
-                                    </attributes>
-                                </fragment>
-                            </attributedString>
+                            <fontDescription key="fontDescription" name="AcrylicHandSans-Regular" family="Acrylic Hand Sans" pointSize="12"/>
+                            <color key="textColor" red="0.90196078431372551" green="0.14509803921568626" blue="0.396078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKD-xW-40i" customClass="KindJungOptionLabel" customModule="TheKind" customModuleProvider="target">
-                            <rect key="frame" x="233" y="157" width="125" height="63"/>
+                        <label opaque="NO" tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No. Keep it in SociaL mode. PleasE." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKD-xW-40i" customClass="KindJungOptionLabel" customModule="TheKind" customModuleProvider="target">
+                            <rect key="frame" x="225" y="157" width="125" height="63"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="63" id="PqM-7F-2ZX"/>
                                 <constraint firstAttribute="width" constant="125" id="Ye8-6q-3zk"/>
                             </constraints>
-                            <attributedString key="attributedText">
-                                <fragment content="No. Keep it in SociaL mode. PleasE.">
-                                    <attributes>
-                                        <color key="NSColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
-                                        <font key="NSFont" size="13" name="AcrylicHandSans-Regular"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
-                                    </attributes>
-                                </fragment>
-                            </attributedString>
+                            <fontDescription key="fontDescription" name="AcrylicHandSans-Regular" family="Acrylic Hand Sans" pointSize="12"/>
+                            <color key="textColor" red="0.90196078431372551" green="0.14509803921568626" blue="0.396078431372549" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Zb-m6-dcN" userLabel="Jung Loading Animator" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
-                            <rect key="frame" x="145" y="148" width="81" height="81"/>
+                            <rect key="frame" x="147" y="148" width="81" height="81"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="81" id="Sje-an-e2d"/>
@@ -91,37 +82,37 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Jung" translatesAutoresizingMaskIntoConstraints="NO" id="gFN-uh-qgM" userLabel="Jung">
-                            <rect key="frame" x="146" y="149" width="79" height="79"/>
+                        <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newEye" translatesAutoresizingMaskIntoConstraints="NO" id="gFN-uh-qgM" userLabel="Jung">
+                            <rect key="frame" x="163.5" y="169" width="48" height="33"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="79" id="aN0-aX-BgE"/>
-                                <constraint firstAttribute="width" constant="79" id="dtx-cA-cPv"/>
+                                <constraint firstAttribute="height" constant="33" id="aN0-aX-BgE"/>
+                                <constraint firstAttribute="width" constant="48" id="dtx-cA-cPv"/>
                             </constraints>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7kP-Zp-pCJ" userLabel="HoldToAnswerViewBar">
-                            <rect key="frame" x="167.5" y="221" width="40" height="2"/>
-                            <color key="backgroundColor" red="1" green="0.1764705882352941" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                            <rect key="frame" x="159.5" y="211" width="56" height="1"/>
+                            <color key="backgroundColor" red="0.90064877271652222" green="0.14752364158630371" blue="0.39424765110015869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="40" id="9C6-oT-JKf"/>
-                                <constraint firstAttribute="height" constant="2" id="wJB-qt-8NY"/>
+                                <constraint firstAttribute="width" constant="56" id="9C6-oT-JKf"/>
+                                <constraint firstAttribute="height" constant="1" id="wJB-qt-8NY"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="7dT-VQ-BOy" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" id="4t7-OA-drE"/>
-                        <constraint firstItem="gFN-uh-qgM" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" constant="-2" id="Dds-zJ-ZaS"/>
+                        <constraint firstItem="gFN-uh-qgM" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" id="Dds-zJ-ZaS"/>
                         <constraint firstItem="7kP-Zp-pCJ" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" id="IfC-1u-FeF"/>
                         <constraint firstAttribute="trailing" secondItem="7dT-VQ-BOy" secondAttribute="trailing" constant="17" id="LAB-yP-LdO"/>
                         <constraint firstItem="8Zb-m6-dcN" firstAttribute="centerX" secondItem="gFN-uh-qgM" secondAttribute="centerX" id="LyB-zB-gSx"/>
                         <constraint firstItem="7dT-VQ-BOy" firstAttribute="leading" secondItem="9xs-vB-b1j" secondAttribute="leading" constant="17" id="NSM-2r-LLv"/>
-                        <constraint firstItem="gFN-uh-qgM" firstAttribute="centerY" secondItem="lfN-ey-Vla" secondAttribute="centerY" id="asK-GX-AWv"/>
-                        <constraint firstItem="cKD-xW-40i" firstAttribute="centerY" secondItem="gFN-uh-qgM" secondAttribute="centerY" id="h4K-GW-tkk"/>
-                        <constraint firstItem="7kP-Zp-pCJ" firstAttribute="bottom" secondItem="gFN-uh-qgM" secondAttribute="bottom" constant="-5" id="i7D-Ah-qrq"/>
-                        <constraint firstItem="cKD-xW-40i" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" constant="108" id="lCb-dp-F7M"/>
-                        <constraint firstItem="gFN-uh-qgM" firstAttribute="centerY" secondItem="8Zb-m6-dcN" secondAttribute="centerY" id="nhf-dW-y0J"/>
-                        <constraint firstItem="gFN-uh-qgM" firstAttribute="top" secondItem="7dT-VQ-BOy" secondAttribute="bottom" constant="3" id="oK9-rm-ivh"/>
-                        <constraint firstItem="lfN-ey-Vla" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" constant="-108" id="pEf-VR-6ka"/>
+                        <constraint firstItem="gFN-uh-qgM" firstAttribute="centerY" secondItem="lfN-ey-Vla" secondAttribute="centerY" constant="-3" id="asK-GX-AWv"/>
+                        <constraint firstItem="cKD-xW-40i" firstAttribute="centerY" secondItem="gFN-uh-qgM" secondAttribute="centerY" constant="3" id="h4K-GW-tkk"/>
+                        <constraint firstItem="7kP-Zp-pCJ" firstAttribute="bottom" secondItem="gFN-uh-qgM" secondAttribute="bottom" constant="10" id="i7D-Ah-qrq"/>
+                        <constraint firstItem="cKD-xW-40i" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" constant="100" id="lCb-dp-F7M"/>
+                        <constraint firstItem="gFN-uh-qgM" firstAttribute="centerY" secondItem="8Zb-m6-dcN" secondAttribute="centerY" constant="-3" id="nhf-dW-y0J"/>
+                        <constraint firstItem="gFN-uh-qgM" firstAttribute="top" secondItem="7dT-VQ-BOy" secondAttribute="bottom" constant="17" id="oK9-rm-ivh"/>
+                        <constraint firstItem="lfN-ey-Vla" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" constant="-100" id="pEf-VR-6ka"/>
                         <constraint firstAttribute="bottom" secondItem="lfN-ey-Vla" secondAttribute="bottom" constant="10" id="u9z-jw-pHh"/>
                     </constraints>
                 </view>
@@ -139,6 +130,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Jung" width="82.55999755859375" height="83"/>
+        <image name="newEye" width="48" height="33"/>
     </resources>
 </document>

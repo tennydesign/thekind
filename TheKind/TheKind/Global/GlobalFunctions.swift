@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-var maxSlideBottomCurtainPosition: CGFloat = 90.0
+let MAXSLIDEFORBOTTOMPANEL: CGFloat = 90.0
+let PRIMARYFONT = "Acrylic Hand Sans"
 
 func returnActionTriggerView(by tag: Int) -> KindActionTriggerView? {
     guard let targetView = UIApplication.shared.keyWindow?.viewWithTag(tag) as? KindActionTriggerView else {return nil}

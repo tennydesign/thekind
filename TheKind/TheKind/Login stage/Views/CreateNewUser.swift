@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-//HERE:
+
 class CreateNewUser: UIView,loginValidationProtocol,UITextFieldDelegate {
     var landingViewController: LandingViewController?
     @IBOutlet var emailTextField: KindTextField!

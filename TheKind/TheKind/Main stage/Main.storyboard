@@ -150,10 +150,10 @@
                                         </constraints>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyb-mU-8lf" userLabel="HUD window">
-                                        <rect key="frame" x="0.0" y="100" width="375" height="130"/>
+                                        <rect key="frame" x="0.0" y="90" width="375" height="140"/>
                                         <subviews>
                                             <view tag="12" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4g-0r-7jc" userLabel="HUD view" customClass="HUDview" customModule="TheKind" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                         </subviews>
@@ -161,7 +161,7 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="A4g-0r-7jc" secondAttribute="trailing" id="0jS-B1-i1V"/>
                                             <constraint firstItem="A4g-0r-7jc" firstAttribute="leading" secondItem="xyb-mU-8lf" secondAttribute="leading" id="BOt-cE-LLK"/>
-                                            <constraint firstAttribute="height" constant="130" id="Eff-1P-rs9"/>
+                                            <constraint firstAttribute="height" constant="140" id="Eff-1P-rs9"/>
                                             <constraint firstItem="A4g-0r-7jc" firstAttribute="top" secondItem="xyb-mU-8lf" secondAttribute="top" id="tcw-iB-WOF"/>
                                             <constraint firstAttribute="bottom" secondItem="A4g-0r-7jc" secondAttribute="bottom" id="zeU-6i-Vqh"/>
                                         </constraints>

@@ -10,6 +10,7 @@ import UIKit
 import GoogleSignIn
 import FirebaseAuth
 
+// This protocol allows the same toggleButtonControl call to all login types (existing, new)
 protocol loginValidationProtocol {
     func toggleButtonControl(_ active: Bool)
 }
@@ -82,6 +83,10 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
         self.view.addGestureRecognizer(loginTapGesture)
 
         setupViewModelObservers()
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     override func viewDidDisappear(_ animated: Bool) {

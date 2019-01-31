@@ -67,7 +67,6 @@ class HUDview: KindActionTriggerView {
     // animate and remove it.
     // Only adjusts curtains after its gone. <----
     fileprivate func receiveViewInTrasitionAnimateAndRemoveIt() {
-        //11
         delay(bySeconds: 1) {
             UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
                 UIApplication.shared.keyWindow!.viewWithTag(11)?.alpha = 0

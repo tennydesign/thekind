@@ -9,6 +9,8 @@
 import UIKit
 import NVActivityIndicatorView
 
+//HERE: TALK ANIMATIO IS CUTTING OFF.
+
 class JungChatLogger: UIView {
 
     
@@ -32,12 +34,13 @@ class JungChatLogger: UIView {
             refreshAndScrollCollectionView()
         }
     }
+
     
     var mostRecentChatMessageIndex: Int {
         return jungChatLoggerCollectionView.numberOfItems(inSection: 0)  - 1
     }
    
-    let targetStretcherValue: CGFloat = 40.0
+    let targetStretcherValue: CGFloat = 56.0
     
     // This is setup on init by the main view controller.
     var talkbox: JungTalkBox! {
@@ -76,7 +79,7 @@ class JungChatLogger: UIView {
         refreshAndScrollCollectionView()
         
         //PROGRESS VIEW
-        HoldToAnswerViewWidthAnchor.constant = 0
+        HoldToAnswerViewWidthAnchor.constant = targetStretcherValue // 0
         layoutIfNeeded()
         
         if self.messagesCollection.isEmpty {initializeJungChat()}
@@ -90,7 +93,7 @@ class JungChatLogger: UIView {
     }
     
     var animationCount: Int = 0
-    var tempoInBetweenPosts: Double = 0.5
+    var tempoInBetweenPosts: Double = 2.3
     var delayJungPostInSecs: Double = 0
     
     
@@ -99,7 +102,7 @@ class JungChatLogger: UIView {
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
                 self.leftAnswerLabel.alpha = 1
                 self.rightAnswerLabel.alpha = 1
-                
+                self.holdToAnswerBar.alpha = 1
             }) { (completed) in
                 guard let completion = completion else {return}
                 completion()
@@ -108,6 +111,7 @@ class JungChatLogger: UIView {
             UIView.animate(withDuration: 0.5, animations: {
                 self.leftAnswerLabel.alpha = 0
                 self.rightAnswerLabel.alpha = 0
+                self.holdToAnswerBar.alpha = 0
                 
             }) { (completed) in
                 guard let completion = completion else {return}
@@ -123,12 +127,10 @@ class JungChatLogger: UIView {
             var labelsUpdated = false
             // 1 - Hide labels.
             self.hideOptionLabels(true, completion: {
-                // 2 - update labels.
+                // 2 - update (or don't touch) labels.
                 labelsUpdated = self.updateOptionLabels(jungRoutine.userResponseOptions, rightLabel: self.rightAnswerLabel, leftLabel: self.leftAnswerLabel)
                 
-                // 2 - After label work is complete. Start and tempo the animator if Jung is chatting. This is to avoid Label concurrency (two routines coming fast with label pairs, it happened during tests).
-                // It is unlikely it will happen in production as Jung's speech speed is much lower. But... this is 100% safe even for speeded up tests.
-                
+                // 2 - After label work is complete. Start and tempo the animator if Jung is chatting.
                 if jungRoutine.sender == .Jung {
                     self.startLoadingAnimator(for: jungRoutine.snippets.count)
                     // gives animation a sec start appearance before posting starts.
@@ -186,9 +188,7 @@ class JungChatLogger: UIView {
     
     func stopLoadingAnimator() {
         if self.animationCount == 0 {
-            delay(bySeconds: 0.3) {
-                self.jungLoadingAnimator.stopAnimating()
-            }
+            self.jungLoadingAnimator.stopAnimating()
         }
     }
     
@@ -207,14 +207,14 @@ class JungChatLogger: UIView {
     
     fileprivate func postWithFailSafeBarControl(_ userResponseOption: Snippet?) {
         
-        HoldToAnswerViewWidthAnchor.constant = targetStretcherValue
+        HoldToAnswerViewWidthAnchor.constant = 0//targetStretcherValue
        // starts to expand
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
             self.layoutIfNeeded()
         }) { (completed) in
             // post message only if indicator is full.
-            if self.HoldToAnswerViewWidthAnchor.constant == self.targetStretcherValue {
-               
+            if self.HoldToAnswerViewWidthAnchor.constant == 0{//self.targetStretcherValue {
+                self.holdToAnswerBar.alpha = 0
                 guard let snippet = userResponseOption else {return}
                 // retrieve and display routine for Option chosen
                 self.talkbox.displayRoutine(for: snippet)
@@ -243,7 +243,7 @@ class JungChatLogger: UIView {
             }
         case .ended:
             // animate holder back to zero on lift.
-            self.HoldToAnswerViewWidthAnchor.constant = 0
+            self.HoldToAnswerViewWidthAnchor.constant = targetStretcherValue//0
             UIView.animate(withDuration: 0.3) {
                 self.layoutIfNeeded()
             }
@@ -265,6 +265,7 @@ class JungChatLogger: UIView {
         
         leftLabel.userResponseOptionSnippet = userResponseOptions.0
         rightLabel.userResponseOptionSnippet = userResponseOptions.1
+        //HERE: !!!ßß
         rightLabel.attributedText = formatLabelTextWithLineSpacing(text: userResponseOptions.1.message)
         leftLabel.attributedText = formatLabelTextWithLineSpacing(text: userResponseOptions.0.message)
         rightLabel.userOptionId = userResponseOptions.1.id
@@ -302,7 +303,7 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         var rowSize: CGSize = CGSize(width: collectionView.frame.width - 10, height: 38)
-        let boundaries:CGRect = estimateFrameFromText(messagesCollection[indexPath.row], bounding: rowSize, fontSize: 12, fontName: "Acrylic Hand Sans")
+        let boundaries:CGRect = estimateFrameFromText(messagesCollection[indexPath.row], bounding: rowSize, fontSize: 12, fontName: PRIMARYFONT)
         rowSize = CGSize(width: collectionView.frame.width - 10 , height: boundaries.size.height + 10)
 
         return rowSize
@@ -331,6 +332,14 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
         paragraphStyle.alignment = .left
         paragraphStyle.lineBreakMode = .byWordWrapping
         attr.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attr.length))
+        
+        // Color if its player's text.
+        if text == leftAnswerLabel.attributedText?.string || text == rightAnswerLabel.attributedText?.string {
+            attr.addAttribute(.foregroundColor, value: UIColor(r: 230, g: 37, b: 101), range: NSMakeRange(0, attr.length))
+        }
+        
+        attr.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attr.length))
+        
         return attr
     }
 
@@ -349,9 +358,5 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
         }
     }
     
-
-    
-    
-
-    
 }
+

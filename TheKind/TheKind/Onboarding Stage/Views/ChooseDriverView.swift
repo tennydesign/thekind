@@ -44,7 +44,7 @@ class ChooseDriverView: UIView {
         pickerView.delegate = self
         pickerView.dataSource = self
 
-        lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 18, fontName: "Acrylic Hand Sans")).width
+        lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)).width
 
     }
     
@@ -76,7 +76,7 @@ extension ChooseDriverView: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let selected = pickerData[row]
-        let size: CGRect = estimateFrameFromText(selected, bounding: boudingRect, fontSize: 18, fontName: "Acrylic Hand Sans")
+        let size: CGRect = estimateFrameFromText(selected, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)
         lineAnimationBasedOnTextSize(size)
     }
 
@@ -104,7 +104,7 @@ extension ChooseDriverView: UIPickerViewDelegate, UIPickerViewDataSource {
         }
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.white,
-            .font:  UIFont.init(name: "Acrylic Hand Sans", size: 18)!]
+            .font:  UIFont.init(name: PRIMARYFONT, size: 18)!]
         pickerLabel.attributedText = NSAttributedString(string: pickerData[row], attributes: attributes)
         return pickerLabel
     }

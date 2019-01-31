@@ -54,6 +54,13 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
     
     
     override func talk() {
+        let txt = "Ok.-Now tell me what year you were born.-Choose from the options above."
+        let actions: [KindActionType] = [.none, .none,.activate]
+        let actionViews: [ActionViewName] = [.none,.none, .DobOnboardingView]
+        
+        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Confirm this year.", actionViews: (.none,.DobOnboardingView))
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
     
     override func activate() {
@@ -125,7 +132,7 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         }
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.white,
-            .font:  UIFont.init(name: "Acrylic Hand Sans", size: 24)!]
+            .font:  UIFont.init(name: PRIMARYFONT, size: 24)!]
         pickerLabel.attributedText = NSAttributedString(string: String(pickerData[row]), attributes: attributes)
 
         pickerLabel.transform = CGAffineTransform(rotationAngle: rotationAngle)

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// TODO: Separate Login Or Create New user
+
 class LoginExistingUser: UIView,UITextFieldDelegate,loginValidationProtocol {
 
     var landingViewController: LandingViewController?

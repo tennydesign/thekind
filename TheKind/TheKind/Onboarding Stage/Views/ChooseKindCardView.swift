@@ -9,9 +9,7 @@
 
 import UIKit
 
-// TODO: ADJUST SCREEN FOR X-FAMILY
 class ChooseKindCardView: UIView {
-    
     
     var onBoardingViewController: OnBoardingViewController?
 
@@ -24,7 +22,7 @@ class ChooseKindCardView: UIView {
     @IBOutlet var leftarrow: UIImageView!
     @IBOutlet var swipeTo: UIImageView!
 
-    @IBOutlet var ChooseKindCard: UIView!
+    @IBOutlet var chooseKindCard: UIView!
 
     @IBOutlet var leftArrowConstraintX: NSLayoutConstraint!
 
@@ -50,12 +48,14 @@ class ChooseKindCardView: UIView {
     
     func commonInit() {
         Bundle.main.loadNibNamed("ChooseKindCardView", owner: self, options: nil)
-        addSubview(ChooseKindCard)
+        addSubview(chooseKindCard)
         
         // Just to make sure view is loaded before shooting the animation queue.
         delay(bySeconds: 1, closure: {
                 self.animateExplainerArrow()
             })
+        
+        print("status bar: \(UIApplication.shared.statusBarFrame.height)")
     }
     
     override func awakeFromNib() {
@@ -75,7 +75,7 @@ class ChooseKindCardView: UIView {
     }
     
     fileprivate func kindDeckCardScreenTransition(_ currentCardFrame: CGRect, _ desiredCardFrame: CGRect, _ imageName: String) {
-        //let kindImage = UIImageView(image: #imageLiteral(resourceName: "Entertainer_large"))
+        
         let kindImage = UIImageView(image: UIImage(named: imageName))
         kindImage.contentMode = .scaleAspectFit
         kindImage.frame = CGRect(x: currentCardFrame.origin.x, y: currentCardFrame.origin.y, width: currentCardFrame.width, height: currentCardFrame.height)
@@ -122,7 +122,7 @@ extension ChooseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
         let currentCardFrame: CGRect = CGRect(x: cardLocation.x, y: cardLocation.y, width: cell.imageFrame.bounds.width, height: cell.imageFrame.bounds.height)
         
 
-        //TODO: This 30 bothers me... its the Y for the transition. 20 + 10 (STATUS BAR)
+        //This is the CGRECT of the card in the HUD (HUDView.xib)
         let desiredCardFrame: CGRect = CGRect(x: 162, y: 30, width: 51, height: 70)
 
         // transition. Hardcoded for now for imagename

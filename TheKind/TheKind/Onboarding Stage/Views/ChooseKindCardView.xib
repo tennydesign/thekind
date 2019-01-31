@@ -17,8 +17,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChooseKindCardView" customModule="TheKind" customModuleProvider="target">
             <connections>
-                <outlet property="ChooseKindCard" destination="iN0-l3-epB" id="f6W-dp-czu"/>
                 <outlet property="chooseCardView" destination="IGt-CQ-adm" id="EEc-FF-cVg"/>
+                <outlet property="chooseKindCard" destination="iN0-l3-epB" id="f6W-dp-czu"/>
                 <outlet property="explainerView" destination="0Nt-Ax-tLP" id="NA3-qg-Lt4"/>
                 <outlet property="kindCollectionView" destination="8a1-t0-nIt" id="OHY-dh-qBV"/>
                 <outlet property="kindInfoView" destination="Z6N-3S-i44" id="289-Ln-Rrw"/>
@@ -30,11 +30,11 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="ChooseKindCardView">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="mainView">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IGt-CQ-adm" userLabel="mainView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IGt-CQ-adm" userLabel="cardCollection">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <collectionView contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8a1-t0-nIt">
@@ -65,7 +65,7 @@
                                         <constraint firstAttribute="width" constant="246" id="GGb-Pe-BVs"/>
                                         <constraint firstAttribute="height" constant="108" id="TYn-XA-eTb"/>
                                     </constraints>
-                                    <mutableString key="text">nw_protocol_boringssl_get_output_frames(1301) [C2.1:2][åç] get output frames failed, state 8196
+                                    <string key="text">nw_protocol_boringssl_get_output_frames(1301) [C2.1:2][åç] get output frames failed, state 8196
 2018-12-12 16:29:59.015515-0800 TheKind[22985:1052274] TIC Read Status [2:0x0]: 1:57
 2018-12-12 16:29:59.015672-0800 TheKind[22985:1052274] TIC Read Status [2:0x0]: 1:57
 2018-12-12 16:30:13.944359-0800 TheKind[22985:1052275] [BoringSSL] nw_protocol_boringssl_get_output_frames(1301) [C3.1:2][0x7fd931e22040] get output frames failed, state 8196
@@ -73,7 +73,7 @@
 2018-12-12 16:30:13.944851-0800 TheKind[22985:1052275] TIC Read Status [3:0x0]: 1:57
 2018-12-12 16:30:13.944949-0800 TheKind[22985:1052275] TIC Read Status [3:0x0]: 1:57
 2018-12-12 16:30:14.276068-0800 TheKind[22985:1052263] [BoringSSL] nw_protocol_boringssl_get_output_frames(1301) [C4.1:2][0x7fd931d03bb0] get output frames failed, state 8196
-2018-12-12 16:30:14.276219-0800 TheKind[22985:1052263] [BoringSSL] nw_protocol_boringssl_get_output_frames(1301) [C4.1:2</mutableString>
+2018-12-12 16:30:14.276219-0800 TheKind[22985:1052263] [BoringSSL] nw_protocol_boringssl_get_output_frames(1301) [C4.1:2</string>
                                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                     <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>

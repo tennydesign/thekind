@@ -189,7 +189,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         return false
     }
     
-         // Starting HERE:
+
     fileprivate func activateOnSelection(_ annotationView: CircleAnnotationView, completion: (()->())?) {
         UIView.animate(withDuration: 1, animations: {
             //scaling
@@ -199,7 +199,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         }) { (Completed) in
             // If full transform happened. (sometimes a bug in the map cuts off the animation)
             if !annotationView.transform.isIdentity {
-                self.mainViewController?.moveBottomCurtain(distance: self.MOVEDRAWERDISTANCE) {
+                self.mainViewController?.moveMapBottomPanel(distance: self.MOVEDRAWERDISTANCE) {
                     print("done activateOnSelection")
                     //check if scale is 100% open otherwise won't show detailsview
                     if annotationView.transform.a == self.MAXSCIRCLESCALE {
@@ -235,7 +235,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         }) { (completed) in
             delay(bySeconds: 0.5, closure: {
                 self.mainViewController?.circleDetailsHost.alpha = 0
-                self.mainViewController?.moveBottomCurtain(distance: -self.MOVEDRAWERDISTANCE) {
+                self.mainViewController?.moveMapBottomPanel(distance: -self.MOVEDRAWERDISTANCE) {
                     
                     // completed.
                     if let completion = completion {

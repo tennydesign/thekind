@@ -8,8 +8,6 @@
 
 import UIKit
 
-//TODO: REFACTOR IT AND FIX THE WORKFLOW BETWEEN TALK RIGHT CLICK.
-
 class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     
     var mainViewController: MainViewController?
@@ -72,7 +70,7 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     fileprivate func adaptLineToTextSize(_ textField: UITextField) {
         let textBoundingSize = textField.frame.size
         guard let text = textField.text else {return}
-        let frameForText = estimateFrameFromText(text, bounding: textBoundingSize, fontSize: 21, fontName: "Acrylic Hand Sans")
+        let frameForText = estimateFrameFromText(text, bounding: textBoundingSize, fontSize: 21, fontName: PRIMARYFONT)
         
         lineWidth.constant = frameForText.width + 16
         UIView.animate(withDuration: 1) {

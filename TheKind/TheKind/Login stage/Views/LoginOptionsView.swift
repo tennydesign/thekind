@@ -34,7 +34,6 @@ class LoginOptionsView: UIView {
     }
     @IBAction func loginWithEmailClicked(_ sender: UIButton) {
         if sender.titleLabel?.text == "Create new user" {
-            //TODO: Send them to create new user view.
             landingViewController?.choosenLoginView = landingViewController?.createNewUser
             landingViewController?.switchViewsInsideController(toViewName: LandingVCViews.createNewUser, originView: self, removeOriginFromSuperView: false)
         } else {

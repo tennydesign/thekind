@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class OnBoardingViewController: UIViewController {
 
     @IBOutlet var chooseKindCardView: ChooseKindCardView! {
@@ -33,10 +34,14 @@ class OnBoardingViewController: UIViewController {
     
     }
 
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     func goToMainStoryboard() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "MainViewController")
-        present(vc, animated: true, completion: nil)
+        present(vc, animated: false, completion: nil)
     }
 
 }

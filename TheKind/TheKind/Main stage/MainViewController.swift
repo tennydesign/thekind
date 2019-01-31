@@ -11,11 +11,12 @@ import NVActivityIndicatorView
 import AWSRekognition
 import FirebaseAuth
 
+//HERE: Starting here.
 class MainViewController: UIViewController {
 
     var isOnboarding: Bool!
-    var minBottomCurtainPosition: CGFloat!
-    var maxBottomCurtainPosition: CGFloat!
+    var minMapBottomPanelPosition: CGFloat!
+    var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
     @IBOutlet var hudWindow: UIView!
     @IBOutlet var jungChatWindow: UIView!
@@ -105,8 +106,8 @@ class MainViewController: UIViewController {
             self.presentJungIntro() // using this routine to test scripts before deploying them.
         }
         
-        minBottomCurtainPosition = bottom_curtain_bottom_constraint.constant
-        maxBottomCurtainPosition = bottom_curtain_bottom_constraint.constant + maxSlideBottomCurtainPosition
+        minMapBottomPanelPosition = bottom_curtain_bottom_constraint.constant
+        maxMapBottomPanelPosition = bottom_curtain_bottom_constraint.constant + MAXSLIDEFORBOTTOMPANEL
        
     }
     
@@ -122,15 +123,19 @@ class MainViewController: UIViewController {
 
     }
     
-    func moveBottomCurtain(distance: CGFloat, completion: (()->())?) {
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
+    func moveMapBottomPanel(distance: CGFloat, completion: (()->())?) {
        
         // To make sure it nevers go over the limit
         bottom_curtain_bottom_constraint.constant += distance
-        if bottom_curtain_bottom_constraint.constant > maxBottomCurtainPosition {
-            bottom_curtain_bottom_constraint.constant = maxBottomCurtainPosition
+        if bottom_curtain_bottom_constraint.constant > maxMapBottomPanelPosition {
+            bottom_curtain_bottom_constraint.constant = maxMapBottomPanelPosition
         }
-        else if bottom_curtain_bottom_constraint.constant < minBottomCurtainPosition {
-             bottom_curtain_bottom_constraint.constant = minBottomCurtainPosition
+        else if bottom_curtain_bottom_constraint.constant < minMapBottomPanelPosition {
+             bottom_curtain_bottom_constraint.constant = minMapBottomPanelPosition
         }
         
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -150,23 +155,23 @@ class MainViewController: UIViewController {
 
 
 
-//var introSnippets : [Snippet] = [Snippet(message: "Hi Tenny my name is JUNG.", action: .activate, id: 1, actionView: ActionViewName.BadgePhotoSetupView),
-//                                  Snippet(message: "You say it like 'YUNG'.", action: .none,id: 2, actionView: nil),
-//                                  Snippet(message: "Think of me like a friend that can introduce you to other people.", action: .none,id: 2, actionView: nil),
-//                                  Snippet(message: "... or kinds like I like to call.", action: .none,id: 2, actionView: nil),
-//                                  Snippet(message: "Whenever you join a circle I can introduce you to someone", action: .none, id: 4, actionView: nil),
-//                                  Snippet(message: "That is... if you want of course.", action: .none, id: 6, actionView: nil),
-//                                  Snippet(message: "But first let's take a selfie.", action: .fadeInView, id: 7, actionView: ActionViewName.BadgePhotoSetupView),
-//                                  Snippet(message: "Nothing to worry. No one will ever swipe your photo. I promise", action: .none, id: 7, actionView: nil)]
+var introSnippets : [Snippet] = [Snippet(message: "Hi Tenny my name is JUNG.", action: .none, id: 1, actionView: nil),
+                                  Snippet(message: "You say it like 'YUNG'.", action: .none,id: 2, actionView: nil),
+                                  Snippet(message: "Think of me like a friend that can introduce you to other people.", action: .none,id: 2, actionView: nil),
+                                  Snippet(message: "... or kinds like I like to call.", action: .none,id: 2, actionView: nil),
+                                  Snippet(message: "Whenever you join a circle I can introduce you to someone", action: .none, id: 4, actionView: nil),
+                                  Snippet(message: "That is... if you want of course.", action: .none, id: 6, actionView: nil),
+                                  Snippet(message: "But first let's take a selfie.", action: .fadeInView, id: 7, actionView: ActionViewName.BadgePhotoSetupView),
+                                  Snippet(message: "Nothing to worry. No one will ever swipe your photo. I promise", action: .none, id: 7, actionView: nil)]
 
-var introSnippets : [Snippet] = [Snippet(message: "Hi Tenny my name is JUNG.", action: .activate, id: 1, actionView: ActionViewName.MapView),
-                                 Snippet(message: "You say it like 'YUNG'.", action: .none,id: 2, actionView: nil),
-                                 Snippet(message: "Think of me like a friend that can introduce you to other people.", action: .none,id: 2, actionView: nil),
-                                 Snippet(message: "... or kinds like I like to call.", action: .none,id: 2, actionView: nil),
-                                 Snippet(message: "Whenever you join a circle I can introduce you to someone", action: .none, id: 4, actionView: nil),
-                                 Snippet(message: "That is... if you want of course.", action: .none, id: 6, actionView: nil),
-                                 Snippet(message: "But first let's take a selfie.", action: .none, id: 7, actionView: ActionViewName.none),
-                                 Snippet(message: "Nothing to worry. No one will ever swipe your photo. I promise", action: .none, id: 7, actionView: nil)]
+//var introSnippets : [Snippet] = [Snippet(message: "Hi Tenny my name is JUNG.", action: .activate, id: 1, actionView: ActionViewName.MapView),
+//                                 Snippet(message: "You say it like 'YUNG'.", action: .none,id: 2, actionView: nil),
+//                                 Snippet(message: "Think of me like a friend that can introduce you to other people.", action: .none,id: 2, actionView: nil),
+//                                 Snippet(message: "... or kinds like I like to call.", action: .none,id: 2, actionView: nil),
+//                                 Snippet(message: "Whenever you join a circle I can introduce you to someone", action: .none, id: 4, actionView: nil),
+//                                 Snippet(message: "That is... if you want of course.", action: .none, id: 6, actionView: nil),
+//                                 Snippet(message: "But first let's take a selfie.", action: .none, id: 7, actionView: ActionViewName.none),
+//                                 Snippet(message: "Nothing to worry. No one will ever swipe your photo. I promise", action: .none, id: 7, actionView: nil)]
 
 
 
