@@ -9,8 +9,6 @@
 import UIKit
 import NVActivityIndicatorView
 
-//HERE: TALK ANIMATIO IS CUTTING OFF.
-
 class JungChatLogger: UIView {
 
     
@@ -265,7 +263,6 @@ class JungChatLogger: UIView {
         
         leftLabel.userResponseOptionSnippet = userResponseOptions.0
         rightLabel.userResponseOptionSnippet = userResponseOptions.1
-        //HERE: !!!ßß
         rightLabel.attributedText = formatLabelTextWithLineSpacing(text: userResponseOptions.1.message)
         leftLabel.attributedText = formatLabelTextWithLineSpacing(text: userResponseOptions.0.message)
         rightLabel.userOptionId = userResponseOptions.1.id
@@ -302,9 +299,9 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var rowSize: CGSize = CGSize(width: collectionView.frame.width - 10, height: 38)
+        var rowSize: CGSize = CGSize(width: collectionView.frame.width, height: 55)
         let boundaries:CGRect = estimateFrameFromText(messagesCollection[indexPath.row], bounding: rowSize, fontSize: 12, fontName: PRIMARYFONT)
-        rowSize = CGSize(width: collectionView.frame.width - 10 , height: boundaries.size.height + 10)
+        rowSize = CGSize(width: collectionView.frame.width, height: boundaries.size.height + 10)
 
         return rowSize
     }

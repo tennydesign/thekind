@@ -20,13 +20,13 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DsQ-K0-hBg">
-                        <rect key="frame" x="50.5" y="0.0" width="276" height="390"/>
+                        <rect key="frame" x="160" y="141.5" width="57" height="107"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Wr-Si-I3f" userLabel="imageFrame">
-                                <rect key="frame" x="0.0" y="0.0" width="276" height="390"/>
+                                <rect key="frame" x="0.0" y="0.0" width="57" height="107"/>
                                 <subviews>
-                                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Entertainer_large" translatesAutoresizingMaskIntoConstraints="NO" id="FiE-F4-y4k">
-                                        <rect key="frame" x="0.0" y="0.0" width="276" height="390"/>
+                                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hud_kind_icon" translatesAutoresizingMaskIntoConstraints="NO" id="FiE-F4-y4k">
+                                        <rect key="frame" x="0.0" y="0.0" width="57" height="107"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -40,12 +40,12 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="276" id="06P-b0-qRX"/>
+                            <constraint firstAttribute="width" constant="57" id="06P-b0-qRX"/>
                             <constraint firstAttribute="bottom" secondItem="5Wr-Si-I3f" secondAttribute="bottom" id="5DL-bZ-Imk"/>
                             <constraint firstItem="5Wr-Si-I3f" firstAttribute="top" secondItem="DsQ-K0-hBg" secondAttribute="top" id="LIf-Hz-9eP"/>
                             <constraint firstAttribute="trailing" secondItem="5Wr-Si-I3f" secondAttribute="trailing" id="LTm-0B-j0H"/>
                             <constraint firstItem="5Wr-Si-I3f" firstAttribute="leading" secondItem="DsQ-K0-hBg" secondAttribute="leading" id="T2Q-L9-EB0"/>
-                            <constraint firstAttribute="height" constant="390" id="qVg-vm-HYH"/>
+                            <constraint firstAttribute="height" constant="107" id="qVg-vm-HYH"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -64,6 +64,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Entertainer_large" width="198" height="278"/>
+        <image name="hud_kind_icon" width="28" height="53"/>
     </resources>
 </document>

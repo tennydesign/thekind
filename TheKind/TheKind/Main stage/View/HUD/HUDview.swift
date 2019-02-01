@@ -11,6 +11,7 @@ import UIKit
 
 class HUDview: KindActionTriggerView {
 
+    @IBOutlet weak var hudControls: UIView!
     var mainViewController: MainViewController?
     @IBOutlet var viewForKindCard: UIView!
     @IBOutlet var hudView: UIView!
@@ -34,35 +35,28 @@ class HUDview: KindActionTriggerView {
         commonInit()
     }
 
+    private var gradient: CAGradientLayer!
     
     fileprivate func commonInit() {
         Bundle.main.loadNibNamed("HUDview", owner: self, options: nil)
         addSubview(hudView)
         receiveViewInTrasitionAnimateAndRemoveIt()
         
-    
-        viewForKindCard.layer.shadowOpacity = 0.0
-        viewForKindCard.layer.shadowOffset = CGSize(width: 0, height: 2)
-        viewForKindCard.layer.shadowColor = UIColor(red: 255/255, green: 45/255, blue: 85/255, alpha: 1).cgColor
-        viewForKindCard.layer.shadowRadius = 14
-        
-        print(hudView.convert(viewForKindCard.frame.origin, to: nil))
-        
-        delay(bySeconds: 2) {
-            let animation = CABasicAnimation(keyPath: "shadowOpacity")
-            animation.fromValue = self.viewForKindCard.layer.shadowOpacity
-            animation.toValue = 0.9
-            animation.duration = 1.0
-            self.viewForKindCard.layer.shadowOpacity = 0.9
-            self.viewForKindCard.layer.add(animation, forKey: animation.keyPath)
 
+        gradient = CAGradientLayer()
+        gradient.frame = self.bounds
+        gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
+        gradient.locations = [0.3, 1]
+        layer.insertSublayer(gradient, at: 0)
 
-        }
-
-        
-   
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradient.frame = bounds
+    }
+    
+
     // Received view from another screeen.
     // animate and remove it.
     // Only adjusts curtains after its gone. <----
@@ -89,7 +83,7 @@ class HUDview: KindActionTriggerView {
     
     
     override func activate() {
-        UIView.animate(withDuration: 1.5, delay: 2, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
             self.viewForAvatar.alpha = 1
         }, completion: nil)
     }

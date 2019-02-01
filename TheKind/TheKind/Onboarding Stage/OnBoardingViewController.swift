@@ -11,6 +11,13 @@ import UIKit
 
 class OnBoardingViewController: UIViewController {
 
+    @IBOutlet var carouselView: CarouselView! {
+        didSet {
+            carouselView.alpha = 0
+            //carouselView.onBoardingViewController = self
+        }
+    }
+    
     @IBOutlet var chooseKindCardView: ChooseKindCardView! {
         didSet{
             chooseKindCardView.alpha = 0
@@ -23,11 +30,8 @@ class OnBoardingViewController: UIViewController {
             chooseDriverView.onBoardingViewController = self
         }
     }
-    @IBOutlet var pickYourKindWindow: UIView! {
-        didSet {
-
-        }
-    }
+    @IBOutlet var pickYourKindWindow: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         chooseKindCardView.isHidden = true
@@ -41,7 +45,8 @@ class OnBoardingViewController: UIViewController {
     func goToMainStoryboard() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "MainViewController")
-        present(vc, animated: false, completion: nil)
+        vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        present(vc, animated: true, completion: nil)
     }
 
 }

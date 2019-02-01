@@ -76,7 +76,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pt-Di-eiT" userLabel="bottom_curtain">
-                                <rect key="frame" x="0.0" y="481" width="375" height="366"/>
+                                <rect key="frame" x="0.0" y="471" width="375" height="366"/>
                                 <subviews>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_curtain_5" translatesAutoresizingMaskIntoConstraints="NO" id="uFA-4x-IUP" userLabel="bottom_curtain">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="366"/>
@@ -92,10 +92,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Psy-SE-XbL" userLabel="jungChatWindow">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="188"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="196"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4FF-H6-M6b" userLabel="Jung Chat View" customClass="JungChatLogger" customModule="TheKind" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="196"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                         </subviews>
@@ -104,8 +104,8 @@
                                             <constraint firstAttribute="trailing" secondItem="4FF-H6-M6b" secondAttribute="trailing" id="0EI-SR-2fa"/>
                                             <constraint firstItem="4FF-H6-M6b" firstAttribute="top" secondItem="Psy-SE-XbL" secondAttribute="top" id="5a2-ad-o7G"/>
                                             <constraint firstItem="4FF-H6-M6b" firstAttribute="leading" secondItem="Psy-SE-XbL" secondAttribute="leading" id="5pO-uy-q26"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="4FF-H6-M6b" secondAttribute="bottom" id="8VS-WF-AFF"/>
-                                            <constraint firstAttribute="height" constant="188" id="P3c-Vd-YYg"/>
+                                            <constraint firstItem="4FF-H6-M6b" firstAttribute="height" secondItem="Psy-SE-XbL" secondAttribute="height" id="O3S-by-RLr"/>
+                                            <constraint firstAttribute="height" constant="196" id="P3c-Vd-YYg"/>
                                         </constraints>
                                     </view>
                                     <imageView hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_curtain_5" translatesAutoresizingMaskIntoConstraints="NO" id="Thy-bB-cDC" userLabel="chatmask">
@@ -137,23 +137,13 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGE-Wo-HLs" userLabel="top_curtain">
-                                <rect key="frame" x="0.0" y="-90" width="375" height="230"/>
+                                <rect key="frame" x="0.0" y="-30" width="375" height="241"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="bottomLeft" insetsLayoutMarginsFromSafeArea="NO" image="top_huge_courtain" translatesAutoresizingMaskIntoConstraints="NO" id="k6l-2h-r9C" userLabel="top_curtain">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
-                                    </imageView>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5" contentMode="bottomLeft" insetsLayoutMarginsFromSafeArea="NO" image="top_huge_courtain" translatesAutoresizingMaskIntoConstraints="NO" id="PKy-ws-Vyr" userLabel="top_curtain_slice">
-                                        <rect key="frame" x="0.0" y="7" width="375" height="230"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="230" id="RoI-Cb-CHw"/>
-                                        </constraints>
-                                    </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyb-mU-8lf" userLabel="HUD window">
-                                        <rect key="frame" x="0.0" y="90" width="375" height="140"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
                                         <subviews>
                                             <view tag="12" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4g-0r-7jc" userLabel="HUD view" customClass="HUDview" customModule="TheKind" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                         </subviews>
@@ -161,26 +151,18 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="A4g-0r-7jc" secondAttribute="trailing" id="0jS-B1-i1V"/>
                                             <constraint firstItem="A4g-0r-7jc" firstAttribute="leading" secondItem="xyb-mU-8lf" secondAttribute="leading" id="BOt-cE-LLK"/>
-                                            <constraint firstAttribute="height" constant="140" id="Eff-1P-rs9"/>
+                                            <constraint firstAttribute="height" constant="241" id="Eff-1P-rs9"/>
+                                            <constraint firstItem="A4g-0r-7jc" firstAttribute="height" secondItem="xyb-mU-8lf" secondAttribute="height" id="HJg-uY-UYt"/>
                                             <constraint firstItem="A4g-0r-7jc" firstAttribute="top" secondItem="xyb-mU-8lf" secondAttribute="top" id="tcw-iB-WOF"/>
-                                            <constraint firstAttribute="bottom" secondItem="A4g-0r-7jc" secondAttribute="bottom" id="zeU-6i-Vqh"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="xyb-mU-8lf" secondAttribute="trailing" id="3fe-Ic-ewB"/>
-                                    <constraint firstAttribute="bottom" secondItem="k6l-2h-r9C" secondAttribute="bottom" id="4Q0-SI-ex3"/>
-                                    <constraint firstAttribute="bottom" secondItem="PKy-ws-Vyr" secondAttribute="bottom" constant="-7" id="4db-Eg-x1h"/>
-                                    <constraint firstAttribute="trailing" secondItem="PKy-ws-Vyr" secondAttribute="trailing" id="7lZ-VQ-WEk"/>
-                                    <constraint firstAttribute="trailing" secondItem="k6l-2h-r9C" secondAttribute="trailing" id="DCe-Zg-jeR"/>
                                     <constraint firstAttribute="bottom" secondItem="xyb-mU-8lf" secondAttribute="bottom" id="Fk8-52-sbf"/>
-                                    <constraint firstItem="PKy-ws-Vyr" firstAttribute="top" secondItem="aGE-Wo-HLs" secondAttribute="top" constant="7" id="HFR-fR-wL7"/>
-                                    <constraint firstItem="k6l-2h-r9C" firstAttribute="leading" secondItem="aGE-Wo-HLs" secondAttribute="leading" id="Hz3-yb-TpR"/>
-                                    <constraint firstItem="PKy-ws-Vyr" firstAttribute="leading" secondItem="aGE-Wo-HLs" secondAttribute="leading" id="Tue-uZ-5KS"/>
-                                    <constraint firstItem="k6l-2h-r9C" firstAttribute="top" secondItem="aGE-Wo-HLs" secondAttribute="top" id="Xzp-Co-vSW"/>
                                     <constraint firstItem="xyb-mU-8lf" firstAttribute="leading" secondItem="aGE-Wo-HLs" secondAttribute="leading" id="huI-NY-PaR"/>
-                                    <constraint firstAttribute="height" constant="230" id="ynu-sT-zFd"/>
+                                    <constraint firstAttribute="height" constant="241" id="ynu-sT-zFd"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -194,8 +176,8 @@
                             <constraint firstItem="1LH-Se-bVM" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="I7O-MS-38p"/>
                             <constraint firstItem="9pt-Di-eiT" firstAttribute="centerX" secondItem="OgW-vl-BuR" secondAttribute="centerX" id="Kh9-yk-aja"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="RlQ-Dt-6dI"/>
-                            <constraint firstAttribute="bottom" secondItem="9pt-Di-eiT" secondAttribute="bottom" constant="-180" id="Tez-TZ-ad9"/>
-                            <constraint firstItem="aGE-Wo-HLs" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" constant="-90" id="Wxt-lx-of8"/>
+                            <constraint firstAttribute="bottom" secondItem="9pt-Di-eiT" secondAttribute="bottom" constant="-170" id="Tez-TZ-ad9"/>
+                            <constraint firstItem="aGE-Wo-HLs" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" constant="-30" id="Wxt-lx-of8"/>
                             <constraint firstItem="9pt-Di-eiT" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="XRW-jI-Xj6"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" id="YUW-Uf-C8e"/>
                             <constraint firstItem="1LH-Se-bVM" firstAttribute="bottom" secondItem="adk-ga-bKs" secondAttribute="bottom" id="fs0-cS-csY"/>
@@ -230,6 +212,5 @@
     </scenes>
     <resources>
         <image name="bottom_curtain_5" width="375" height="358"/>
-        <image name="top_huge_courtain" width="375" height="463"/>
     </resources>
 </document>
