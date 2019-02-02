@@ -15,7 +15,7 @@ pod 'GoogleSignIn'
 pod 'NVActivityIndicatorView'
 pod 'AWSRekognition'
 pod 'Mapbox-iOS-SDK', '4.8.0-alpha.2'
-pod 'iCarousel'
+
 
   target 'TheKindTests' do
     inherit! :search_paths

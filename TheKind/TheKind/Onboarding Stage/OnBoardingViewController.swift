@@ -11,12 +11,7 @@ import UIKit
 
 class OnBoardingViewController: UIViewController {
 
-    @IBOutlet var carouselView: CarouselView! {
-        didSet {
-            carouselView.alpha = 0
-            //carouselView.onBoardingViewController = self
-        }
-    }
+
     
     @IBOutlet var chooseKindCardView: ChooseKindCardView! {
         didSet{

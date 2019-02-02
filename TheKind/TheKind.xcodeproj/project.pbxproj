@@ -55,8 +55,6 @@
 		A05150F421E3FFFC00795172 /* UserNameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A05150F321E3FFFC00795172 /* UserNameView.xib */; };
 		A05150F621E4002800795172 /* UserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F521E4002800795172 /* UserNameView.swift */; };
 		A05150F821E44A9400795172 /* KindUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F721E44A9400795172 /* KindUser.swift */; };
-		A052C3202203D8DE007CA492 /* CarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A052C31F2203D8DE007CA492 /* CarouselView.xib */; };
-		A052C3222203D8FA007CA492 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A052C3212203D8FA007CA492 /* CarouselView.swift */; };
 		A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07075FC21F158B60013380D /* MapPhotoSnapper.swift */; };
 		A070760121F2CEAB0013380D /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A070760021F2CEAB0013380D /* MapView.xib */; };
 		A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1721F53B0F00DDEC6C /* ports.geojson */; };
@@ -154,8 +152,6 @@
 		A05150F321E3FFFC00795172 /* UserNameView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserNameView.xib; sourceTree = "<group>"; };
 		A05150F521E4002800795172 /* UserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameView.swift; sourceTree = "<group>"; };
 		A05150F721E44A9400795172 /* KindUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindUser.swift; sourceTree = "<group>"; };
-		A052C31F2203D8DE007CA492 /* CarouselView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarouselView.xib; sourceTree = "<group>"; };
-		A052C3212203D8FA007CA492 /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		A07075FC21F158B60013380D /* MapPhotoSnapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPhotoSnapper.swift; sourceTree = "<group>"; };
 		A070760021F2CEAB0013380D /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
 		A0A45E1721F53B0F00DDEC6C /* ports.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ports.geojson; sourceTree = "<group>"; };
@@ -520,8 +516,6 @@
 				A002F49621BF5800006E8660 /* ChooseDriverView.xib */,
 				A02D719E21C42FA300EBBD12 /* ChooseKindCardView.swift */,
 				A02D71A021C4300E00EBBD12 /* ChooseKindCardView.xib */,
-				A052C31F2203D8DE007CA492 /* CarouselView.xib */,
-				A052C3212203D8FA007CA492 /* CarouselView.swift */,
 				A0D960CF21C1A7DA00DF1CB0 /* Cell */,
 			);
 			path = Views;
@@ -720,7 +714,6 @@
 				A05150F421E3FFFC00795172 /* UserNameView.xib in Resources */,
 				A02D71A121C4300E00EBBD12 /* ChooseKindCardView.xib in Resources */,
 				A031885721C33A57008D1198 /* HUDview.xib in Resources */,
-				A052C3202203D8DE007CA492 /* CarouselView.xib in Resources */,
 				A0B6B29A21CD5BEC00C58B3F /* AcrylicHand-Serif.ttf in Resources */,
 				A0320B5D212E1596008A96E2 /* GoogleService-Info.plist in Resources */,
 				A002F48621B9EFAE006E8660 /* JungChatLogger.xib in Resources */,
@@ -771,7 +764,6 @@
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
-				"${BUILT_PRODUCTS_DIR}/iCarousel/iCarousel.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -785,7 +777,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iCarousel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -903,7 +894,6 @@
 				A0034F7522039ACA00E9810B /* CircleAnnotationModel.swift in Sources */,
 				A0B6B29C21D1786900C58B3F /* JungTalkBoxModel.swift in Sources */,
 				A0F223A621B88DB10096C25D /* KindButton.swift in Sources */,
-				A052C3222203D8FA007CA492 /* CarouselView.swift in Sources */,
 				A0B6B29E21D1BADA00C58B3F /* ext_MainControllerBadgePhoto.swift in Sources */,
 				A02B24D521E031AA00737ACC /* dobOnboardingView.swift in Sources */,
 				A002F48121B9EFAE006E8660 /* JungChatLogger.swift in Sources */,

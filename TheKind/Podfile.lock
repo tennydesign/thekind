@@ -82,7 +82,6 @@ PODS:
   - GoogleUtilities/UserDefaults (5.3.7):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.1)
-  - iCarousel (1.8.3)
   - leveldb-library (1.20)
   - Mapbox-iOS-SDK (4.8.0-alpha.2)
   - nanopb (0.3.901):
@@ -101,7 +100,6 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - GoogleSignIn
-  - iCarousel
   - Mapbox-iOS-SDK (= 4.8.0-alpha.2)
   - NVActivityIndicatorView
 
@@ -122,7 +120,6 @@ SPEC REPOS:
     - GoogleToolboxForMac
     - GoogleUtilities
     - GTMSessionFetcher
-    - iCarousel
     - leveldb-library
     - Mapbox-iOS-SDK
     - nanopb
@@ -144,12 +141,11 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
   GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
-  iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   Mapbox-iOS-SDK: 621e599a8c0096600bc7116fb4f43a14aaaac8dc
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
 
-PODFILE CHECKSUM: 5afb53340d25ff18bea9d1cd4172a226fafdadc1
+PODFILE CHECKSUM: f974123b557b16aac3624c5ddce061182a8f57c6
 
 COCOAPODS: 1.5.3

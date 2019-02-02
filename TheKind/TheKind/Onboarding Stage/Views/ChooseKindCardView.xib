@@ -27,7 +27,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <collectionView contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8a1-t0-nIt">
-                            <rect key="frame" x="0.0" y="78.5" width="375" height="390"/>
+                            <rect key="frame" x="0.0" y="118.5" width="375" height="390"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="390" id="hes-5r-4QN"/>
@@ -40,10 +40,10 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6N-3S-i44" userLabel="KindInfoView">
-                            <rect key="frame" x="0.0" y="468.5" width="375" height="198.5"/>
+                            <rect key="frame" x="0.0" y="508.5" width="375" height="158.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQV-5h-Hvv">
+                        <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQV-5h-Hvv">
                             <rect key="frame" x="20" y="28" width="85" height="43"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="85" id="SR1-Bp-5hH"/>
@@ -61,7 +61,7 @@
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="leading" secondItem="IGt-CQ-adm" secondAttribute="leading" id="Gjv-m8-NrU"/>
                         <constraint firstItem="Z6N-3S-i44" firstAttribute="top" secondItem="8a1-t0-nIt" secondAttribute="bottom" id="HlS-yT-bYq"/>
                         <constraint firstItem="kQV-5h-Hvv" firstAttribute="top" secondItem="IGt-CQ-adm" secondAttribute="topMargin" id="IZL-uk-nnf"/>
-                        <constraint firstItem="8a1-t0-nIt" firstAttribute="centerY" secondItem="IGt-CQ-adm" secondAttribute="centerY" constant="-60" id="PLB-G5-b0F"/>
+                        <constraint firstItem="8a1-t0-nIt" firstAttribute="centerY" secondItem="IGt-CQ-adm" secondAttribute="centerY" constant="-20" id="PLB-G5-b0F"/>
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="centerX" secondItem="IGt-CQ-adm" secondAttribute="centerX" id="f9o-Ha-6et"/>
                         <constraint firstItem="Z6N-3S-i44" firstAttribute="leading" secondItem="IGt-CQ-adm" secondAttribute="leading" id="gxt-Ru-Ucq"/>
                         <constraint firstAttribute="bottom" secondItem="Z6N-3S-i44" secondAttribute="bottom" id="qbt-Ro-ecS"/>

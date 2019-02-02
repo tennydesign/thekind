@@ -9,7 +9,19 @@
 
 import UIKit
 
+
+
 class ChooseKindCardView: UIView {
+    
+    static var iconCellSize: CGSize = CGSize(width: 30, height: 30)
+    static var iconspacing:CGFloat = 90
+    
+    //This helps with the diff between the large one and the small ones
+    static var activeDistance: CGFloat = 160
+    static var zoomFactor: CGFloat = 3.5
+    
+    var colorCellAlpha:CGFloat = 10
+    var currentCellToTint: kindCollectioViewCell?
     
     var onBoardingViewController: OnBoardingViewController?
 
@@ -28,6 +40,8 @@ class ChooseKindCardView: UIView {
     }
     
     @IBOutlet var chooseCardView: UIView!
+    
+    var kindIconList: [UIImage] = [#imageLiteral(resourceName: "kind_shape_shifter"), #imageLiteral(resourceName: "kind_mountain"), #imageLiteral(resourceName: "kind_shape_shifter"),#imageLiteral(resourceName: "hud_kind_icon"), #imageLiteral(resourceName: "kind_mountain"), #imageLiteral(resourceName: "kind_shape_shifter"),#imageLiteral(resourceName: "hud_kind_icon"), #imageLiteral(resourceName: "kind_mountain"), #imageLiteral(resourceName: "kind_shape_shifter")]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,11 +77,18 @@ class ChooseKindCardView: UIView {
 extension ChooseKindCardView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return kindIconList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "kindCollectioViewCell", for: indexPath) as! kindCollectioViewCell
+        
+        
+        cell.icon.image = kindIconList[indexPath.row].withRenderingMode(.alwaysTemplate)
+        cell.icon_color.image = kindIconList[indexPath.row]
+        if indexPath.row == 0 {
+            cell.icon_color.alpha = 1
+        }
         
         return cell
     }
@@ -82,22 +103,36 @@ extension ChooseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
         
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        findCenterIndex()
-    }
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    
+    
+    
+    
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if scrollView.panGestureRecognizer.translation(in: scrollView.superview).x > 0 {
+            print("right")
+            
+        } else {
+            print("left")
+        }
+        
     }
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+       // let centerElementIndexPath = indexPathForCenterCell()
 
     }
     
     
-    private func findCenterIndex() {
+    private func indexPathForCenterCell() -> IndexPath? {
         let center = convert(self.kindCollectionView.center, to: self.kindCollectionView)
-        let index = kindCollectionView!.indexPathForItem(at: center)
-        print(index?.row ?? "index not found")
+        guard let indexPath = kindCollectionView!.indexPathForItem(at: center) else {return nil}
+        print(indexPath.row)
+        return indexPath
+        
     }
+
 
 }
 
@@ -105,15 +140,15 @@ extension ChooseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
 
 class ZoomAndSnapFlowLayout: UICollectionViewFlowLayout {
     
-    let activeDistance: CGFloat = 200
-    let zoomFactor: CGFloat = 0.8
+    let activeDistance: CGFloat = ChooseKindCardView.activeDistance
+    let zoomFactor: CGFloat = ChooseKindCardView.zoomFactor
     
     override init() {
         super.init()
         
         scrollDirection = .horizontal
-        minimumLineSpacing = 60
-        itemSize = CGSize(width: 54, height: 106)
+        minimumLineSpacing = ChooseKindCardView.iconspacing
+        itemSize = ChooseKindCardView.iconCellSize
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -141,6 +176,12 @@ class ZoomAndSnapFlowLayout: UICollectionViewFlowLayout {
             
             if distance.magnitude < activeDistance {
                 let zoom = 1 + zoomFactor * (1 - normalizedDistance.magnitude)
+                
+                // hack: To tint the cells. its actually an alpha
+                if let cell = collectionView.cellForItem(at: attributes.indexPath) as? kindCollectioViewCell {
+                    cell.icon_color.alpha = (1-normalizedDistance.magnitude*2)
+                }
+                
                 attributes.transform3D = CATransform3DMakeScale(zoom, zoom, 1)
                 attributes.zIndex = Int(zoom.rounded())
             }
@@ -220,3 +261,10 @@ class ZoomAndSnapFlowLayout: UICollectionViewFlowLayout {
 //
 //        // transition. Hardcoded for now for imagename
 //        //kindDeckCardScreenTransition(currentCardFrame, desiredCardFrame, "hud_kind_icon")
+
+
+
+//Really cool stuff
+// Get the position of the cell in the screen
+//        let realCellCenter = kindCollectionView.convert(cell.center, to: kindCollectionView.superview)
+

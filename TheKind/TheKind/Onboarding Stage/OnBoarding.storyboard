@@ -29,22 +29,14 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xK6-lo-u90" userLabel="CarouselViewHost" customClass="CarouselView" customModule="TheKind" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="k8j-nI-e4H" secondAttribute="bottom" id="1l8-RH-FDK"/>
-                                    <constraint firstAttribute="trailing" secondItem="xK6-lo-u90" secondAttribute="trailing" id="6rq-Jv-mxY"/>
                                     <constraint firstItem="k8j-nI-e4H" firstAttribute="top" secondItem="VLx-D2-ctd" secondAttribute="top" id="ERF-5G-9mD"/>
                                     <constraint firstAttribute="bottom" secondItem="gKg-yA-F7d" secondAttribute="bottom" id="SKg-iZ-ymH"/>
                                     <constraint firstItem="k8j-nI-e4H" firstAttribute="leading" secondItem="VLx-D2-ctd" secondAttribute="leading" id="WMu-ez-bTa"/>
                                     <constraint firstAttribute="trailing" secondItem="k8j-nI-e4H" secondAttribute="trailing" id="Wcf-Vy-YnX"/>
-                                    <constraint firstItem="xK6-lo-u90" firstAttribute="top" secondItem="VLx-D2-ctd" secondAttribute="top" id="YYe-xY-UvR"/>
-                                    <constraint firstItem="xK6-lo-u90" firstAttribute="leading" secondItem="VLx-D2-ctd" secondAttribute="leading" id="Zbj-hv-OLq"/>
-                                    <constraint firstAttribute="bottom" secondItem="xK6-lo-u90" secondAttribute="bottom" id="j9n-Ma-A7e"/>
                                     <constraint firstItem="gKg-yA-F7d" firstAttribute="top" secondItem="VLx-D2-ctd" secondAttribute="top" id="nUK-Vb-6ca"/>
                                     <constraint firstAttribute="trailing" secondItem="gKg-yA-F7d" secondAttribute="trailing" id="siZ-KR-YXp"/>
                                     <constraint firstItem="gKg-yA-F7d" firstAttribute="leading" secondItem="VLx-D2-ctd" secondAttribute="leading" id="xIv-gJ-991"/>
@@ -61,7 +53,6 @@
                         <viewLayoutGuide key="safeArea" id="5t9-qg-U3w"/>
                     </view>
                     <connections>
-                        <outlet property="carouselView" destination="xK6-lo-u90" id="p6Q-s5-1Qk"/>
                         <outlet property="chooseDriverView" destination="gKg-yA-F7d" id="o5Y-mI-Hwa"/>
                         <outlet property="chooseKindCardView" destination="k8j-nI-e4H" id="Ao4-cY-Tqg"/>
                         <outlet property="pickYourKindWindow" destination="VLx-D2-ctd" id="Zf5-72-2VV"/>
