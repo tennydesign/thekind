@@ -18,7 +18,8 @@ class HUDview: KindActionTriggerView {
     
     @IBOutlet var kindIconImageView: UIImageView! {
         didSet {
-            kindIconImageView.image = kindIconImageView.image?.withRenderingMode(.alwaysTemplate)
+            // To take the color away.
+            //kindIconImageView.image = kindIconImageView.image?.withRenderingMode(.alwaysTemplate)
         }
     }
     @IBOutlet var viewForAvatar: UIView!
@@ -45,7 +46,7 @@ class HUDview: KindActionTriggerView {
     fileprivate func commonInit() {
         Bundle.main.loadNibNamed("HUDview", owner: self, options: nil)
         addSubview(hudView)
-        receiveViewInTrasitionAnimateAndRemoveIt()
+        //receiveViewInTrasitionAnimateAndRemoveIt()
         
 
         gradient = CAGradientLayer()
@@ -62,19 +63,19 @@ class HUDview: KindActionTriggerView {
     }
     
 
-    // Received view from another screeen.
-    // animate and remove it.
-    // Only adjusts curtains after its gone. <----
-    fileprivate func receiveViewInTrasitionAnimateAndRemoveIt() {
-        delay(bySeconds: 1) {
-            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
-                UIApplication.shared.keyWindow!.viewWithTag(11)?.alpha = 0
-            }, completion: { (completed) in
-                UIApplication.shared.keyWindow!.viewWithTag(11)?.removeFromSuperview()
-                self.mainViewController?.adjustCurtains() // <----
-            })
-        }
-    }
+//    // Received view from another screeen.
+//    // animate and remove it.
+//    // Only adjusts curtains after its gone. <----
+//    fileprivate func receiveViewInTrasitionAnimateAndRemoveIt() {
+//        delay(bySeconds: 1) {
+//            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
+//                UIApplication.shared.keyWindow!.viewWithTag(11)?.alpha = 0
+//            }, completion: { (completed) in
+//                UIApplication.shared.keyWindow!.viewWithTag(11)?.removeFromSuperview()
+//                self.mainViewController?.adjustCurtains() // <----
+//            })
+//        }
+//    }
     
     
     override func rightOptionClicked() {
@@ -101,17 +102,4 @@ class HUDview: KindActionTriggerView {
     
     
 }
-
-
-
-
-
-//        kindImageView.layer.shadowOpacity = 0.4
-//        kindImageView.layer.cornerRadius = 11
-//        kindImageView.layer.shadowOffset = CGSize(width: 0, height: 2)
-//        kindImageView.layer.shadowRadius = 6
-//        kindImageView.layer.shadowColor = UIColor.white.cgColor
-
-//gets the position related to the UIViewController
-
 

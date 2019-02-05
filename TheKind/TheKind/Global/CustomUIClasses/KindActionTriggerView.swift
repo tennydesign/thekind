@@ -19,7 +19,6 @@ protocol KindActionTriggerViewProtocol {
 class KindActionTriggerView: UIView {
     
     var nextView: UIView?
-    
     // ===> POLYMORPHIC ACTIONS <===
     // There is a generic function shooting these guys.
     //
@@ -51,8 +50,6 @@ class KindActionTriggerView: UIView {
 
         }
     }
-    
-    
     
     func fadeOutView() {
         UIView.animate(withDuration: 0.7, animations: {

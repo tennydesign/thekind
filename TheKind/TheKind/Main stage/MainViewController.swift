@@ -11,18 +11,16 @@ import NVActivityIndicatorView
 import AWSRekognition
 import FirebaseAuth
 
-//HERE: Sera que eu preciso de -30 no HUD pra todos?
-
 class MainViewController: UIViewController {
 
     var isOnboarding: Bool!
-
+    @IBOutlet var bottomConstraintPanelMover: NSLayoutConstraint!
     var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
     @IBOutlet var hudWindow: UIView!
     @IBOutlet var jungChatWindow: UIView! {
         didSet{
-            //MExer aqui quando o mapa entra pra ajustar o chatbox
+            //If you want to adjust chatbox window independently of bottomPanel.
         }
     }
     
@@ -80,10 +78,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    
-    @IBOutlet var top_curtain_top_constraint: NSLayoutConstraint!
-    @IBOutlet var bottom_curtain_bottom_constraint: NSLayoutConstraint!
-
 
     @IBOutlet var bottomCurtainView: UIView!
     @IBOutlet weak var topCurtainView: UIView!
@@ -132,13 +126,20 @@ class MainViewController: UIViewController {
         
         chatMask.isHidden = false
         jungChatWindow.mask = chatMask
+
         
         delay(bySeconds: 1) {
             self.presentJungIntro() // using this routine to test scripts before deploying them.
+            if UIScreen.isPhoneXfamily {
+                UIView.animate(withDuration: 0.3) {
+                    self.hudView.hudControls.transform = CGAffineTransform.init(translationX: 0, y: 20)
+                    self.bottomCurtainView.transform = CGAffineTransform(translationX: 0, y: -20)
+                }
+                
+            }
         }
        
     }
-    
     
     
     func presentJungIntro() {
@@ -146,18 +147,14 @@ class MainViewController: UIViewController {
         talkbox.displayRoutine(routine: intro)
     }
     
-    func adjustCurtains() {
-         UIView.adjustCurtainsToScreen(topCurtain: self.top_curtain_top_constraint , bottomCurtain: self.bottom_curtain_bottom_constraint, view: self.view)
-
-    }
     
     override var prefersStatusBarHidden: Bool {
         return false
     }
     
     func moveBottomPanel(distance: CGFloat, completion: (()->())?) {
-       
-        bottom_curtain_bottom_constraint.constant = distance
+        //fix for iphoneX family
+        bottomConstraintPanelMover.constant = UIScreen.isPhoneXfamily ? distance-44.0 :distance
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         }) { (completed) in
@@ -167,6 +164,7 @@ class MainViewController: UIViewController {
         }
         
     }
+
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent // .default
@@ -177,7 +175,7 @@ class MainViewController: UIViewController {
 
 
 var introSnippets : [Snippet] = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
-                                  Snippet(message: "You say it like 'YUNG'.", action: .talk,id: 2, actionView: ActionViewName.UserNameView)]
+                                  Snippet(message: "You say it like 'YUNG'.", action: .talk,id: 2, actionView: ActionViewName.MapView)]
 
 
 

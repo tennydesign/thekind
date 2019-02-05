@@ -9,7 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 
-class JungChatLogger: UIView {
+class JungChatLogger: KindActionTriggerView {
 
     
     @IBOutlet var jungChatLoggerCollectionView: UICollectionView!
@@ -80,7 +80,7 @@ class JungChatLogger: UIView {
         HoldToAnswerViewWidthAnchor.constant = targetStretcherValue // 0
         layoutIfNeeded()
         
-        if self.messagesCollection.isEmpty {initializeJungChat()}
+        if self.messagesCollection.isEmpty {resetJungChat()}
   
         hideOptionLabels(true, completion: nil)
         
@@ -88,7 +88,7 @@ class JungChatLogger: UIView {
     
     }
     
-    fileprivate func initializeJungChat() {
+    func resetJungChat() {
         self.messagesCollection = ["","","","","",""]
     }
     
@@ -97,7 +97,7 @@ class JungChatLogger: UIView {
     var delayJungPostInSecs: Double = 0
     
     
-    fileprivate func hideOptionLabels(_ isHidden: Bool, completion: (()->())?) {
+    func hideOptionLabels(_ isHidden: Bool, completion: (()->())?) {
         if isHidden == false {
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
                 self.leftAnswerLabel.alpha = 1

@@ -147,7 +147,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGE-Wo-HLs" userLabel="top_curtain">
-                                <rect key="frame" x="0.0" y="-30" width="375" height="241"/>
+                                <rect key="frame" x="0.0" y="-28" width="375" height="241"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyb-mU-8lf" userLabel="HUD window">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
@@ -187,7 +187,7 @@
                             <constraint firstItem="9pt-Di-eiT" firstAttribute="centerX" secondItem="OgW-vl-BuR" secondAttribute="centerX" id="Kh9-yk-aja"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="RlQ-Dt-6dI"/>
                             <constraint firstAttribute="bottom" secondItem="9pt-Di-eiT" secondAttribute="bottom" constant="-180" id="Tez-TZ-ad9"/>
-                            <constraint firstItem="aGE-Wo-HLs" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" constant="-30" id="Wxt-lx-of8"/>
+                            <constraint firstItem="aGE-Wo-HLs" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" constant="-28" id="Wxt-lx-of8"/>
                             <constraint firstItem="9pt-Di-eiT" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="XRW-jI-Xj6"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" id="YUW-Uf-C8e"/>
                             <constraint firstItem="1LH-Se-bVM" firstAttribute="bottom" secondItem="adk-ga-bKs" secondAttribute="bottom" id="fs0-cS-csY"/>
@@ -200,10 +200,10 @@
                     <connections>
                         <outlet property="JungChatWindowY" destination="4z9-bI-V71" id="aPc-1d-Bxd"/>
                         <outlet property="badgePhotoSetupViewHost" destination="xZ8-CM-mff" id="fT2-DK-Ddp"/>
+                        <outlet property="bottomConstraintPanelMover" destination="Tez-TZ-ad9" id="32q-7x-x9J"/>
                         <outlet property="bottomCurtainImage" destination="uFA-4x-IUP" id="6fZ-4x-Lv0"/>
                         <outlet property="bottomCurtainImageBase" destination="TdV-gj-duV" id="T84-OR-plr"/>
                         <outlet property="bottomCurtainView" destination="9pt-Di-eiT" id="odJ-9c-K3I"/>
-                        <outlet property="bottom_curtain_bottom_constraint" destination="Tez-TZ-ad9" id="rks-5O-K5d"/>
                         <outlet property="chatMask" destination="Thy-bB-cDC" id="Uj5-c3-kKp"/>
                         <outlet property="chooseDriverView" destination="eTK-Ov-xyB" id="vp6-R0-bvz"/>
                         <outlet property="chooseKindCardViewHost" destination="bvV-Ka-rMx" id="hu6-9O-PPk"/>
@@ -215,7 +215,6 @@
                         <outlet property="jungChatWindow" destination="Psy-SE-XbL" id="94Q-OO-Vc1"/>
                         <outlet property="mapViewHost" destination="0eo-O7-Oer" id="9Vj-Nh-jT4"/>
                         <outlet property="topCurtainView" destination="aGE-Wo-HLs" id="Ap2-30-Rio"/>
-                        <outlet property="top_curtain_top_constraint" destination="Wxt-lx-of8" id="KPL-vz-GuB"/>
                         <outlet property="userNameViewHost" destination="cym-tF-rfj" id="B9a-r3-Hig"/>
                     </connections>
                 </viewController>

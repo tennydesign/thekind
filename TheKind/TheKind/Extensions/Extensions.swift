@@ -125,21 +125,6 @@ extension UIView {
         }
     }
     
-    static func adjustCurtainsToScreen(topCurtain: NSLayoutConstraint, bottomCurtain: NSLayoutConstraint, view: UIView) {
-
-        if UIScreen.isPhoneXfamily {
-            bottomCurtain.constant += 20
-            topCurtain.constant += 30
-        }  else {
-            topCurtain.constant += 30
-        }
-        
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            view.layoutIfNeeded()
-        }) { (completion) in
-            
-        }
-    }
     
     @discardableResult
     func anchor(top: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, trailing: NSLayoutXAxisAnchor?, padding: UIEdgeInsets = .zero, size: CGSize = .zero) -> AnchoredConstraints {

@@ -24,7 +24,8 @@ class CircleAnnotationModel {
         //TODO: FIRESTORE
         
         let annotations = [CircleAnnotationSet.init(coordinate: CLLocationCoordinate2D(latitude: 37.774997, longitude: -122.394977), circlePlotName: "Phil Coffee Berry", isPrivate: true),
-                CircleAnnotationSet.init(coordinate: CLLocationCoordinate2D(latitude: 37.774836, longitude: -122.387258), circlePlotName: "Marina", isPrivate: true)]
+                           CircleAnnotationSet.init(coordinate: CLLocationCoordinate2D(latitude: 37.774836, longitude: -122.387258), circlePlotName: "Marina", isPrivate: true),
+                           CircleAnnotationSet.init(coordinate: CLLocationCoordinate2D(latitude: 37.778491, longitude: -122.389246), circlePlotName: "Other Place", isPrivate: true)]
         completion(annotations)
     }
 }
