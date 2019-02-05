@@ -100,9 +100,7 @@ class MainViewController: UIViewController {
     
     let talkbox = JungTalkBox()
     
-    //SETUP First activated view.
-    let MAXSLIDEFORBOTTOMPANEL: CGFloat = 90.0
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -129,18 +127,23 @@ class MainViewController: UIViewController {
 
         
         delay(bySeconds: 1) {
+            self.adaptHUDAndPanelToIphoneXFamily()
             self.presentJungIntro() // using this routine to test scripts before deploying them.
-            if UIScreen.isPhoneXfamily {
-                UIView.animate(withDuration: 0.3) {
-                    self.hudView.hudControls.transform = CGAffineTransform.init(translationX: 0, y: 20)
-                    self.bottomCurtainView.transform = CGAffineTransform(translationX: 0, y: -20)
-                }
-                
-            }
         }
        
     }
     
+    
+    func adaptHUDAndPanelToIphoneXFamily() {
+        if UIScreen.isPhoneXfamily {
+            UIView.animate(withDuration: 0.3) {
+                self.hudView.hudControls.transform = CGAffineTransform.init(translationX: 0, y: 20)
+                self.bottomCurtainView.transform = CGAffineTransform(translationX: 0, y: -20)
+            }
+            
+        }
+
+    }
     
     func presentJungIntro() {
         let intro = JungRoutine(snippets: introSnippets, userResponseOptions: nil, sender: .Jung)
@@ -175,7 +178,7 @@ class MainViewController: UIViewController {
 
 
 var introSnippets : [Snippet] = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
-                                  Snippet(message: "You say it like 'YUNG'.", action: .talk,id: 2, actionView: ActionViewName.MapView)]
+                                  Snippet(message: "You say it like 'YUNG'.", action: .talk,id: 2, actionView: ActionViewName.ChooseKind)]
 
 
 

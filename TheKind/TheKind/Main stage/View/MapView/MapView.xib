@@ -12,7 +12,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapActionTriggerView">
             <connections>
-                <outlet property="bottomMapToMargin" destination="d5e-X8-nHg" id="YtC-Uf-VAq"/>
                 <outlet property="enterCircleButton" destination="rZn-YL-TVN" id="lfW-ub-b59"/>
                 <outlet property="insideExpandedCircleView" destination="aMQ-OI-6tS" id="gR6-dD-W9a"/>
                 <outlet property="insideExpandedCircleViewYConstraint" destination="dre-47-jhk" id="JHd-NL-aZT"/>

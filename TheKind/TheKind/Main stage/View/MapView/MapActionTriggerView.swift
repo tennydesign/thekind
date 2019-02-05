@@ -13,7 +13,6 @@ import MapKit
 class MapActionTriggerView: KindActionTriggerView {
 
     @IBOutlet var insideExpandedCircleViewYConstraint: NSLayoutConstraint!
-    @IBOutlet var bottomMapToMargin: NSLayoutConstraint!
     @IBOutlet var insideExpandedCircleView: UIView!
     @IBOutlet var labelCircleName: UILabel!
     @IBOutlet var enterCircleButton: UIButton!
@@ -34,11 +33,16 @@ class MapActionTriggerView: KindActionTriggerView {
     let mapViewViewModel = MapViewViewModel()
     let circleAnnotationModel = CircleAnnotationModel()
     
+    // INIT VALUES
     let MAXZOOMLEVEL: Double = 18
     let FLYOVERZOOMLEVEL: Double = 14
     let MAXSCIRCLESCALE: CGFloat = 6.0
     var openDrawerDistance: CGFloat = -180.0
     let hiddenDrawerDistance: CGFloat = -280
+    let iphoneXFamilyOpenDrawerAdj:CGFloat = 48
+    let iphoneXFamilyExpandedCircleInnerContentAdj: CGFloat = 10
+    let annotationBounds: CGRect = CGRect(x: 0, y: 0, width: 30, height: 30)
+    // ======
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,9 +65,8 @@ class MapActionTriggerView: KindActionTriggerView {
         mapBoxView.attributionButton.isHidden = true
         
         if UIScreen.isPhoneXfamily {
-            bottomMapToMargin.constant = 28
-            openDrawerDistance += 28
-            insideExpandedCircleViewYConstraint.constant = 28
+            openDrawerDistance += iphoneXFamilyOpenDrawerAdj
+            insideExpandedCircleViewYConstraint.constant = iphoneXFamilyExpandedCircleInnerContentAdj
             self.layoutIfNeeded()
         }
         
@@ -94,7 +97,6 @@ class MapActionTriggerView: KindActionTriggerView {
     }
     
     override func talk() {
- 
         clearJungChatLog()
         UIView.animate(withDuration: 0.4, animations: {
             self.mainViewController?.jungChatLogger.alpha = 0
@@ -173,7 +175,6 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
 
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
         // This example is only concerned with point annotations.
-        let annotationBounds = CGRect(x: 0, y: 0, width: 30, height: 30)
         
         guard let kindAnnotation = annotation as? KindPointAnnotation else {
             return nil

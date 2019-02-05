@@ -350,9 +350,9 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
         {
             return 1
         } else if (indexPath.row == mostRecentChatMessageIndex - 1) {
-            return 0.6
-        } else if (indexPath.row == mostRecentChatMessageIndex - 2){
             return 0.2
+        } else if (indexPath.row == mostRecentChatMessageIndex - 2){
+            return 0.1
         } else {
             return 0
         }

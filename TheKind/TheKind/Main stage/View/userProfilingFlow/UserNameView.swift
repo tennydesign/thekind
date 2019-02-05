@@ -70,9 +70,9 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     fileprivate func adaptLineToTextSize(_ textField: UITextField) {
         let textBoundingSize = textField.frame.size
         guard let text = textField.text else {return}
-        let frameForText = estimateFrameFromText(text, bounding: textBoundingSize, fontSize: 23, fontName: "")//PRIMARYFONT)
+        let frameForText = estimateFrameFromText(text, bounding: textBoundingSize, fontSize: 21, fontName: PRIMARYFONT)
         
-        lineWidth.constant = frameForText.width + 16
+        lineWidth.constant = frameForText.width
         UIView.animate(withDuration: 1) {
             self.layoutIfNeeded()
         }

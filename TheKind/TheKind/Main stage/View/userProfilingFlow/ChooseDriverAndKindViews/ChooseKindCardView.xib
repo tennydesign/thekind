@@ -9,13 +9,18 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AcylicalHand-Small.ttf">
+            <string>AcrylicHandSans-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChooseKindCardView" customModule="TheKind" customModuleProvider="target">
             <connections>
                 <outlet property="chooseCardView" destination="IGt-CQ-adm" id="EEc-FF-cVg"/>
                 <outlet property="chooseKindCard" destination="iN0-l3-epB" id="f6W-dp-czu"/>
                 <outlet property="kindCollectionView" destination="8a1-t0-nIt" id="OHY-dh-qBV"/>
-                <outlet property="kindInfoView" destination="Z6N-3S-i44" id="289-Ln-Rrw"/>
+                <outlet property="kindNameLabel" destination="ARb-vM-AwA" id="e6B-vO-zJz"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -39,20 +44,23 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6N-3S-i44" userLabel="KindInfoView">
-                            <rect key="frame" x="0.0" y="508.5" width="375" height="158.5"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </view>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Shape-shifter" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ARb-vM-AwA" userLabel="kindNameLabel">
+                            <rect key="frame" x="116" y="396.5" width="143" height="11.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="143" id="9Ur-pB-4es"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="AcrylicHandSans-Regular" family="Acrylic Hand Sans" pointSize="13"/>
+                            <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="leading" secondItem="IGt-CQ-adm" secondAttribute="leading" id="Gjv-m8-NrU"/>
-                        <constraint firstItem="Z6N-3S-i44" firstAttribute="top" secondItem="8a1-t0-nIt" secondAttribute="bottom" id="HlS-yT-bYq"/>
+                        <constraint firstItem="ARb-vM-AwA" firstAttribute="centerX" secondItem="IGt-CQ-adm" secondAttribute="centerX" id="L30-e3-GOo"/>
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="centerY" secondItem="IGt-CQ-adm" secondAttribute="centerY" constant="-20" id="PLB-G5-b0F"/>
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="centerX" secondItem="IGt-CQ-adm" secondAttribute="centerX" id="f9o-Ha-6et"/>
-                        <constraint firstItem="Z6N-3S-i44" firstAttribute="leading" secondItem="IGt-CQ-adm" secondAttribute="leading" id="gxt-Ru-Ucq"/>
-                        <constraint firstAttribute="bottom" secondItem="Z6N-3S-i44" secondAttribute="bottom" id="qbt-Ro-ecS"/>
-                        <constraint firstAttribute="trailing" secondItem="Z6N-3S-i44" secondAttribute="trailing" id="sfb-jt-U3E"/>
+                        <constraint firstItem="ARb-vM-AwA" firstAttribute="top" secondItem="8a1-t0-nIt" secondAttribute="bottom" constant="-112" id="pWU-2G-iHR"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="Hvw-Yx-ThL"/>
                 </view>

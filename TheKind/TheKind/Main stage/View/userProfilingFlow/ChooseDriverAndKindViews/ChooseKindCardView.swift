@@ -10,30 +10,43 @@
 import UIKit
 
 
+struct Kind {
+    var image: UIImage?
+    var name: String?
+    var id: Int?
+}
 
 class ChooseKindCardView: KindActionTriggerView {
     
+    // INIT VALUES
     static var iconCellSize: CGSize = CGSize(width: 30, height: 30)
     static var iconspacing:CGFloat = 90
-    
-    //This helps with the diff between the large one and the small ones
+        //This helps with the diff between the large one and the small ones
     static var activeDistance: CGFloat = 160
     static var zoomFactor: CGFloat = 3.5
+    //==============
     
+    @IBOutlet var kindNameLabel: UILabel! {
+        didSet {
+            kindNameLabel.alpha = 0
+        }
+    }
+    
+
     var talkbox: JungTalkBox?
-    var selected: Int = 0 {
+    var selectedIndex: Int = 0 {
         didSet {
             selectedKind()
         }
     }
     
-    var colorCellAlpha:CGFloat = 10
+
     var currentCellToTint: kindCollectioViewCell?
     
     var onBoardingViewController: OnBoardingViewController?
 
     let flowLayout = ZoomAndSnapFlowLayout()
-    @IBOutlet var kindInfoView: UIView!
+
     
     @IBOutlet var chooseKindCard: UIView!
 
@@ -48,7 +61,11 @@ class ChooseKindCardView: KindActionTriggerView {
     
     @IBOutlet var chooseCardView: UIView!
     
-    var kindIconList: [UIImage] = [#imageLiteral(resourceName: "kind_shape_shifter"), #imageLiteral(resourceName: "kind_mountain"), #imageLiteral(resourceName: "kind_shape_shifter"),#imageLiteral(resourceName: "hud_kind_icon"), #imageLiteral(resourceName: "kind_mountain"), #imageLiteral(resourceName: "kind_shape_shifter"),#imageLiteral(resourceName: "hud_kind_icon"), #imageLiteral(resourceName: "kind_mountain"), #imageLiteral(resourceName: "kind_shape_shifter")]
+    var kinds: [Kind] = [Kind.init(image: #imageLiteral(resourceName: "kind_shape_shifter"), name: "The Shape Shifter", id: 0),
+                         Kind.init(image: #imageLiteral(resourceName: "kind_mountain"), name: "The Founder", id: 1),
+                         Kind.init(image: #imageLiteral(resourceName: "AngelIcon"), name: "The Catalyst", id: 2),
+                         Kind.init(image: #imageLiteral(resourceName: "hud_kind_icon"), name: "The Entertainter", id: 3),
+                         Kind.init(image: #imageLiteral(resourceName: "TrailBlazerIcon"), name: "The Lover", id: 4)]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,13 +81,11 @@ class ChooseKindCardView: KindActionTriggerView {
         Bundle.main.loadNibNamed("ChooseKindCardView", owner: self, options: nil)
         addSubview(chooseKindCard)
         
+        fillAndPresentLabelWith(0)
         print("status bar: \(UIApplication.shared.statusBarFrame.height)")
     }
     
-    override func awakeFromNib() {
-       //
-    }
-    
+
     override func talk() {
         let txt = "Lastly...-Choose your kind."
         let actions: [KindActionType] = [.none, .activate]
@@ -106,13 +121,23 @@ class ChooseKindCardView: KindActionTriggerView {
     
     
     func selectedKind() {
-        let txt = "The \(selected) kind says...-You can transform anything and turn any ordinary situations into extraordinary ones."
-        let actions: [KindActionType] = [.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none]
+        guard let kindName = kinds[selectedIndex].name else {return}
+        let txt = "\(kindName) says: You can transform anything and turn any ordinary situations into extraordinary ones."
+        let actions: [KindActionType] = [.none]
+        let actionViews: [ActionViewName] = [.none]
         
-        let options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I identify with the \(selected) Kind", actionView: self)
+        let options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I identify with the \(selectedIndex) Kind", actionView: self)
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+    }
+    
+    fileprivate func fillAndPresentLabelWith(_ itemIndex: Int) {
+        guard let kindName = self.kinds[itemIndex].name else {return}
+        self.kindNameLabel.attributedText = formatLabelTextWithLineSpacing(text:kindName)
+        UIView.animate(withDuration: 0.5) {
+            self.kindNameLabel.alpha = 1
+        }
+        
     }
     
 
@@ -122,15 +147,15 @@ class ChooseKindCardView: KindActionTriggerView {
 extension ChooseKindCardView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return kindIconList.count
+        return kinds.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "kindCollectioViewCell", for: indexPath) as! kindCollectioViewCell
         
         
-        cell.icon.image = kindIconList[indexPath.row].withRenderingMode(.alwaysTemplate)
-        cell.icon_color.image = kindIconList[indexPath.row]
+        cell.icon.image = kinds[indexPath.row].image?.withRenderingMode(.alwaysTemplate)
+        cell.icon_color.image = kinds[indexPath.row].image
         if indexPath.row == 0 {
             cell.icon_color.alpha = 1
         }
@@ -138,23 +163,9 @@ extension ChooseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        UIView.animate(withDuration: 0.5, animations: {
-            self.alpha = 0
-        }) { (completed) in
-            self.onBoardingViewController?.goToMainStoryboard()
-        }
-        
-    }
-    
-    
-    
-    
-    
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+        kindNameLabel.alpha = 0
         if scrollView.panGestureRecognizer.translation(in: scrollView.superview).x > 0 {
             print("right")
             
@@ -164,17 +175,20 @@ extension ChooseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
         
     }
     
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let item = indexPathForCenterCell()?.row else {return}
-        if item != selected {
-            delay(bySeconds: 1) {
-                if !self.kindCollectionView.isDragging {
-                    self.selected = item
-                }
+
+        guard let itemIndex = indexPathForCenterCell()?.row else {return}
+
+        if itemIndex != selectedIndex {
+            if !self.kindCollectionView.isDragging {
+                self.fillAndPresentLabelWith(itemIndex)
+                self.selectedIndex = itemIndex
             }
-            
+        } else {
+            fillAndPresentLabelWith(itemIndex)
         }
-        
+            
     }
     
     
@@ -276,44 +290,6 @@ class ZoomAndSnapFlowLayout: UICollectionViewFlowLayout {
     
 }
 
-
-
-
-
-//    fileprivate func kindDeckCardScreenTransition(_ currentCardFrame: CGRect, _ desiredCardFrame: CGRect, _ imageName: String) {
-//
-//        let kindImage = UIImageView(image: UIImage(named: imageName))
-//        kindImage.contentMode = .scaleAspectFit
-//        kindImage.frame = CGRect(x: currentCardFrame.origin.x, y: currentCardFrame.origin.y, width: currentCardFrame.width, height: currentCardFrame.height)
-//        kindImage.translatesAutoresizingMaskIntoConstraints = true
-//        kindImage.tag = 11
-//        UIApplication.shared.keyWindow!.addSubview(kindImage)
-//
-//        UIView.animate(withDuration: 0.8, delay: 0, options: .curveEaseOut, animations: {
-//            self.alpha = 0
-//        }) { (completed) in
-//            UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
-//                kindImage.frame = desiredCardFrame
-//
-//            }, completion: { (completed) in
-//                self.onBoardingViewController?.goToMainStoryboard()
-//            })
-//        }
-//    }
-
-
-
-//        // get the position of the image related to the main app screen
-//        let cardLocation = cell.imageFrame.convert(cell.imageFrame.frame.origin, to: nil)
-//
-//        let currentCardFrame: CGRect = CGRect(x: cardLocation.x, y: cardLocation.y, width: cell.imageFrame.bounds.width, height: cell.imageFrame.bounds.height)
-//
-//
-//        //This is the CGRECT of the card in the HUD (HUDView.xib)
-//        //let desiredCardFrame: CGRect = CGRect(x: 31, y: 60, width: 28, height: 53)
-//
-//        // transition. Hardcoded for now for imagename
-//        //kindDeckCardScreenTransition(currentCardFrame, desiredCardFrame, "hud_kind_icon")
 
 
 
