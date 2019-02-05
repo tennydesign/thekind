@@ -16,6 +16,11 @@ class HUDview: KindActionTriggerView {
     @IBOutlet var viewForKindCard: UIView!
     @IBOutlet var hudView: UIView!
     
+    @IBOutlet var kindIconImageView: UIImageView! {
+        didSet {
+            kindIconImageView.image = kindIconImageView.image?.withRenderingMode(.alwaysTemplate)
+        }
+    }
     @IBOutlet var viewForAvatar: UIView!
     @IBOutlet var userPictureImageVIew: UIImageView!
     @IBOutlet var photoFrame: UIView! {
@@ -46,7 +51,7 @@ class HUDview: KindActionTriggerView {
         gradient = CAGradientLayer()
         gradient.frame = self.bounds
         gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
-        gradient.locations = [0.3, 1]
+        gradient.locations = [0.45, 1]
         layer.insertSublayer(gradient, at: 0)
 
     }

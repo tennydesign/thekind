@@ -12,6 +12,7 @@ import MapKit
 //REFACTOR THE UP AND DOWN FOR DRAWER
 class MapActionTriggerView: KindActionTriggerView {
 
+    @IBOutlet var bottomMapToMargin: NSLayoutConstraint!
     @IBOutlet var insideExpandedCircleView: UIView!
     @IBOutlet var labelCircleName: UILabel!
     @IBOutlet var enterCircleButton: UIButton!
@@ -35,7 +36,8 @@ class MapActionTriggerView: KindActionTriggerView {
     let MAXZOOMLEVEL: Double = 18
     let FLYOVERZOOMLEVEL: Double = 14
     let MAXSCIRCLESCALE: CGFloat = 6.0
-    let MOVEDRAWERDISTANCE: CGFloat = 90.0
+    var openDrawerDistance: CGFloat = -180.0
+    let hiddenDrawerDistance: CGFloat = -400
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,7 +56,14 @@ class MapActionTriggerView: KindActionTriggerView {
         mapBoxView.styleURL = MGLStyle.darkStyleURL
         mapBoxView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapBoxView.tintColor = .lightGray
+        mapBoxView.logoView.isHidden = true
+        mapBoxView.attributionButton.isHidden = true
         
+        if UIScreen.isPhoneXfamily {
+            bottomMapToMargin.constant = 28
+            openDrawerDistance += 20
+            self.layoutIfNeeded()
+        }
         
         mapBoxView.delegate = self
         locationManager?.delegate = self
@@ -78,7 +87,15 @@ class MapActionTriggerView: KindActionTriggerView {
     }
     
     override func talk() {
-        activate()
+        UIView.animate(withDuration: 0.4, animations: {
+            self.mainViewController?.jungChatLogger.alpha = 0
+        }) { (completed) in
+            self.mainViewController?.moveBottomPanel(distance: self.hiddenDrawerDistance) {
+                self.activate()
+            }
+        }
+        
+
     }
     
     override func activate() {
@@ -90,12 +107,27 @@ class MapActionTriggerView: KindActionTriggerView {
             self.talkbox?.delegate = self
             UIView.animate(withDuration: 1) {
                 self.alpha = 1
-                //self.mainViewController?.jungChatWindow.alpha = 0
-                //self.mainViewController?.topCurtainView.alpha = 0
             }
         }
     }
+    
+    func describeCircle(circleID: Int) {
+        // check ID and retrieve routine
+        let txt = "An Angel's heaven.-You have high chances of making friends here.-You need the key to enter this circle."
+        let actions: [KindActionType] = [.none, .none,.none]
+        let actionViews: [ActionViewName] = [.none,.none,.none]
+        let options = self.talkbox?.createUserOptions(opt1: "Back to map", opt2: "Join this circle.", actionView: self)
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+    }
+    
 
+    override func leftOptionClicked() {
+        guard let annotation = selectedAnnotation else {return}
+        deActivateOnDeselection(annotation) {
+            print("returned")
+            self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
+        }
+    }
 }
 
 extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
@@ -202,16 +234,18 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         }) { (Completed) in
             // If full transform happened. (sometimes a bug in the map cuts off the animation)
             if !annotationView.transform.isIdentity {
-                self.mainViewController?.moveMapBottomPanel(distance: self.MOVEDRAWERDISTANCE) {
+                self.mainViewController?.moveBottomPanel(distance: self.openDrawerDistance){
                     print("done activateOnSelection")
-                    //check if scale is 100% open otherwise won't show detailsview
+                    //check if scale is 100% open otherwise won't show Jung
                     if annotationView.transform.a == self.MAXSCIRCLESCALE {
-                        //push Jung chat window down a bit to accomodate the extra space.
-                        // stop incrementing and add and remove a std value
-                        self.mainViewController?.JungChatWindowY.constant = 70
-                        UIView.animate(withDuration: 0.6, animations: {
-                            self.mainViewController?.view.layoutIfNeeded()
-                        })
+                        UIView.animate(withDuration: 0.4, animations: {
+                            self.mainViewController?.jungChatLogger.alpha = 1
+                            if let id = annotationView.circleDetails?.circleId {
+                                self.describeCircle(circleID: id)
+                            }
+                        }) { (completed) in
+                           
+                        }
                     }
                     
                 }
@@ -242,11 +276,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             delay(bySeconds: 0.5, closure: {
                 
                 //self.mainViewController?.circleDetailsHost.alpha = 0
-                self.mainViewController?.moveMapBottomPanel(distance: -self.MOVEDRAWERDISTANCE) {
-                    self.mainViewController?.JungChatWindowY.constant = 10
-                    UIView.animate(withDuration: 0.6, animations: {
-                        self.mainViewController?.view.layoutIfNeeded()
-                    })
+                self.mainViewController?.moveBottomPanel(distance: self.hiddenDrawerDistance) {
                     if let completion = completion {
                         completion()
                     }

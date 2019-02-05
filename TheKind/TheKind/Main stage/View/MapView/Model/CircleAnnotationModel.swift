@@ -15,6 +15,7 @@ struct CircleAnnotationSet {
     var coordinate: CLLocationCoordinate2D
     var circlePlotName: String?
     var isPrivate: Bool
+    let circleId: Int = 0
 }
 
 class CircleAnnotationModel {

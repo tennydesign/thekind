@@ -131,7 +131,7 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         }
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.white,
-            .font:  UIFont.init(name: PRIMARYFONT, size: 24)!]
+            .font:  UIFont.systemFont(ofSize: 23, weight: UIFont.Weight.bold)]
         pickerLabel.attributedText = NSAttributedString(string: String(pickerData[row]), attributes: attributes)
 
         pickerLabel.transform = CGAffineTransform(rotationAngle: rotationAngle)

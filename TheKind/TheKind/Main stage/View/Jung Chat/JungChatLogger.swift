@@ -59,7 +59,6 @@ class JungChatLogger: UIView {
         commonInit()
     }
     
-
     
     func commonInit() {
         Bundle.main.loadNibNamed("JungChatLogger", owner: self, options: nil)
@@ -84,6 +83,8 @@ class JungChatLogger: UIView {
         if self.messagesCollection.isEmpty {initializeJungChat()}
   
         hideOptionLabels(true, completion: nil)
+        
+
     
     }
     

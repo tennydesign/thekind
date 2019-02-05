@@ -14,7 +14,7 @@ class ChooseDriverView: KindActionTriggerView {
     @IBOutlet var chooseDriverView: UIView!
     @IBOutlet var pickerView: UIPickerView!
     @IBOutlet var lineWidthAnchor: NSLayoutConstraint!
-    @IBOutlet var nextButton: UIButton!
+
     var talkbox: JungTalkBox?
 
     @IBOutlet var runOnView: UIView!
@@ -43,15 +43,10 @@ class ChooseDriverView: KindActionTriggerView {
         pickerView.delegate = self
         pickerView.dataSource = self
         pickerView.selectRow(0, inComponent: 0, animated: false)
-        lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)).width
+        lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 23, fontName: "")).width
 
     }
-    
-    
-    @IBAction func nextButtonClicked(_ sender: UIButton) {
-        //onBoardingViewController?.goToMainStoryboard()
-        onBoardingViewController?.switchViewsInsideController(toViewName: .chooseKindCard, originView: self, removeOriginFromSuperView: false)
-    }
+
     
     fileprivate func lineAnimationBasedOnTextSize(_ size: CGRect) {
         lineWidthAnchor.constant = size.width
@@ -102,7 +97,7 @@ extension ChooseDriverView: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selected = pickerData[row]
-        let size: CGRect = estimateFrameFromText(selected, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)
+        let size: CGRect = estimateFrameFromText(selected, bounding: boudingRect, fontSize: 23, fontName: "")
         lineAnimationBasedOnTextSize(size)
     }
 
@@ -130,7 +125,7 @@ extension ChooseDriverView: UIPickerViewDelegate, UIPickerViewDataSource {
         }
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.white,
-            .font:  UIFont.init(name: PRIMARYFONT, size: 18)!]
+            .font:  UIFont.systemFont(ofSize: 23, weight: UIFont.Weight.light)]
         pickerLabel.attributedText = NSAttributedString(string: pickerData[row], attributes: attributes)
         return pickerLabel
     }

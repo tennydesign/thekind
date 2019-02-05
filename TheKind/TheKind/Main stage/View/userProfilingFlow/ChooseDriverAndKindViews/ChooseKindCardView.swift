@@ -71,18 +71,12 @@ class ChooseKindCardView: KindActionTriggerView {
        //
     }
     
-    @IBAction func btnBack(_ sender: UIButton) {
-        onBoardingViewController?.switchViewsInsideController(toViewName: .chooseDriver, originView: self, removeOriginFromSuperView: false)
-        
-    }
-
     override func talk() {
         let txt = "Lastly...-Choose your kind."
         let actions: [KindActionType] = [.none, .activate]
         let actionViews: [ActionViewName] = [.none,.ChooseKind]
         
-        let options = self.talkbox?.createUserOptions(opt1: "Back to main driver..", opt2: "I am the \(selected) Kind", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }
     
     override func activate() {
@@ -112,9 +106,9 @@ class ChooseKindCardView: KindActionTriggerView {
     
     
     func selectedKind() {
-        let txt = "The \(selected) kind says...-Imagination, knowledge, and persuasion when combined can transform anything.-With grind and hacking combined you can turn any ordinary situation into an extraordinary one."
-        let actions: [KindActionType] = [.none,.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none,.none]
+        let txt = "The \(selected) kind says...-You can transform anything and turn any ordinary situations into extraordinary ones."
+        let actions: [KindActionType] = [.none,.none]
+        let actionViews: [ActionViewName] = [.none,.none]
         
         let options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I identify with the \(selected) Kind", actionView: self)
         

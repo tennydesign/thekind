@@ -9,11 +9,6 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="AcylicalHand-Small.ttf">
-            <string>AcrylicHandSans-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="dobOnboardingView" customModule="TheKind" customModuleProvider="target">
             <connections>
@@ -29,42 +24,28 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tZA-bB-klf">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
-                        <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lYV-hv-tmx">
-                            <rect key="frame" x="27" y="225" width="320" height="216"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </pickerView>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Z1v-PM-srN">
-                            <rect key="frame" x="128.5" y="352" width="118" height="23.5"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gO-2U-S2j" userLabel="line">
-                                    <rect key="frame" x="19" y="0.0" width="80" height="1"/>
-                                    <color key="backgroundColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="80" id="1Oz-sf-XRO"/>
-                                        <constraint firstAttribute="height" constant="1" id="fbS-wq-0Qc"/>
-                                    </constraints>
-                                </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year of birth" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oEr-8K-ecW">
-                                    <rect key="frame" x="0.0" y="11" width="118" height="12.5"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="118" id="NqX-k7-iC8"/>
-                                        <constraint firstAttribute="height" constant="12.5" id="qrd-Lh-S9h"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="AcrylicHandSans-Regular" family="Acrylic Hand Sans" pointSize="14"/>
-                                    <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lYV-hv-tmx">
+                            <rect key="frame" x="27.5" y="225.5" width="320" height="216"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="118" id="3RX-px-ARb"/>
-                                <constraint firstAttribute="height" constant="23.5" id="7QJ-m8-QTz"/>
+                                <constraint firstAttribute="height" constant="216" id="Ks1-eA-kqW"/>
+                                <constraint firstAttribute="width" constant="320" id="uYx-fc-uga"/>
                             </constraints>
-                        </stackView>
+                        </pickerView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gO-2U-S2j" userLabel="line">
+                            <rect key="frame" x="147.5" y="352.5" width="80" height="1"/>
+                            <color key="backgroundColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="1Oz-sf-XRO"/>
+                                <constraint firstAttribute="height" constant="1" id="fbS-wq-0Qc"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="Z1v-PM-srN" firstAttribute="centerY" secondItem="tZA-bB-klf" secondAttribute="centerY" constant="30" id="QqZ-8z-1Qf"/>
-                        <constraint firstItem="Z1v-PM-srN" firstAttribute="centerX" secondItem="tZA-bB-klf" secondAttribute="centerX" id="Ukq-kk-Nut"/>
+                        <constraint firstItem="5gO-2U-S2j" firstAttribute="centerX" secondItem="tZA-bB-klf" secondAttribute="centerX" id="SD3-4S-y1J"/>
+                        <constraint firstItem="lYV-hv-tmx" firstAttribute="centerX" secondItem="tZA-bB-klf" secondAttribute="centerX" id="UHD-pf-t4U"/>
+                        <constraint firstItem="5gO-2U-S2j" firstAttribute="top" secondItem="lYV-hv-tmx" secondAttribute="bottom" constant="-89" id="V8z-h2-ciR"/>
+                        <constraint firstItem="lYV-hv-tmx" firstAttribute="centerY" secondItem="tZA-bB-klf" secondAttribute="centerY" id="bmc-gZ-5B8"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="JWf-D9-5Ac"/>
                 </view>

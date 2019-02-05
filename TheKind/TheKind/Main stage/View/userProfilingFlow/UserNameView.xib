@@ -9,11 +9,6 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="AcylicalHand-Small.ttf">
-            <string>AcrylicHandSans-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserNameView" customModule="TheKind" customModuleProvider="target">
             <connections>
@@ -29,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qs7-sN-t4q" userLabel="userNameBox">
-                    <rect key="frame" x="0.0" y="309.5" width="375" height="128"/>
+                    <rect key="frame" x="0.0" y="269.5" width="375" height="128"/>
                     <subviews>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TENNYPINHEIRO" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gqT-71-Pl2" customClass="KindTransparentTextField" customModule="TheKind" customModuleProvider="target">
                             <rect key="frame" x="10" y="51" width="355" height="26"/>
@@ -38,7 +33,7 @@
                                 <constraint firstAttribute="height" constant="26" id="P0F-5I-w79"/>
                             </constraints>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <fontDescription key="fontDescription" name="AcrylicHandSans-Regular" family="Acrylic Hand Sans" pointSize="21"/>
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="23"/>
                             <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kpz-rd-hv4" userLabel="line">
@@ -65,7 +60,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="qs7-sN-t4q" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="DFw-a5-vww"/>
-                <constraint firstItem="qs7-sN-t4q" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="40" id="SqG-a5-gXJ"/>
+                <constraint firstItem="qs7-sN-t4q" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="SqG-a5-gXJ"/>
                 <constraint firstItem="qs7-sN-t4q" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dYW-xJ-HIz"/>
                 <constraint firstItem="qs7-sN-t4q" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="f4Z-Eo-NDA"/>
             </constraints>

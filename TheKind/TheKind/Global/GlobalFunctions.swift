@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-let MAXSLIDEFORBOTTOMPANEL: CGFloat = 90.0
+
 let PRIMARYFONT = "Acrylic Hand Sans"
 
 func returnActionTriggerView(by tag: Int) -> KindActionTriggerView? {

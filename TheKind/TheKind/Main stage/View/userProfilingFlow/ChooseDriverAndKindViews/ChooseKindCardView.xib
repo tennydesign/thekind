@@ -43,24 +43,11 @@
                             <rect key="frame" x="0.0" y="508.5" width="375" height="158.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
-                        <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQV-5h-Hvv">
-                            <rect key="frame" x="20" y="28" width="85" height="43"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="85" id="SR1-Bp-5hH"/>
-                                <constraint firstAttribute="height" constant="43" id="TNq-jP-ktE"/>
-                            </constraints>
-                            <state key="normal" image="&lt; back"/>
-                            <connections>
-                                <action selector="btnBack:" destination="-1" eventType="touchUpInside" id="vMy-aE-pbO"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="kQV-5h-Hvv" firstAttribute="leading" secondItem="IGt-CQ-adm" secondAttribute="leading" constant="20" id="Bnv-Eu-pie"/>
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="leading" secondItem="IGt-CQ-adm" secondAttribute="leading" id="Gjv-m8-NrU"/>
                         <constraint firstItem="Z6N-3S-i44" firstAttribute="top" secondItem="8a1-t0-nIt" secondAttribute="bottom" id="HlS-yT-bYq"/>
-                        <constraint firstItem="kQV-5h-Hvv" firstAttribute="top" secondItem="IGt-CQ-adm" secondAttribute="topMargin" id="IZL-uk-nnf"/>
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="centerY" secondItem="IGt-CQ-adm" secondAttribute="centerY" constant="-20" id="PLB-G5-b0F"/>
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="centerX" secondItem="IGt-CQ-adm" secondAttribute="centerX" id="f9o-Ha-6et"/>
                         <constraint firstItem="Z6N-3S-i44" firstAttribute="leading" secondItem="IGt-CQ-adm" secondAttribute="leading" id="gxt-Ru-Ucq"/>
@@ -81,7 +68,4 @@
             <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
         </view>
     </objects>
-    <resources>
-        <image name="&lt; back" width="55" height="12"/>
-    </resources>
 </document>

@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapActionTriggerView">
             <connections>
+                <outlet property="bottomMapToMargin" destination="d5e-X8-nHg" id="YtC-Uf-VAq"/>
                 <outlet property="enterCircleButton" destination="rZn-YL-TVN" id="lfW-ub-b59"/>
                 <outlet property="insideExpandedCircleView" destination="aMQ-OI-6tS" id="gR6-dD-W9a"/>
                 <outlet property="labelCircleName" destination="YfK-0s-khr" id="yhB-zI-IBK"/>
@@ -46,7 +47,7 @@
                     </constraints>
                 </view>
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMQ-OI-6tS" userLabel="EnterCircleView">
-                    <rect key="frame" x="104" y="283" width="167" height="121"/>
+                    <rect key="frame" x="104" y="288" width="167" height="121"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfK-0s-khr">
                             <rect key="frame" x="20" y="71" width="127" height="30"/>
@@ -94,7 +95,7 @@
                 <constraint firstItem="lZ4-AR-kv6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="NAF-ri-oKv"/>
                 <constraint firstItem="6C4-Ce-GiV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="bAe-uF-4c9"/>
                 <constraint firstItem="6C4-Ce-GiV" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="d5e-X8-nHg"/>
-                <constraint firstItem="aMQ-OI-6tS" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="10" id="dre-47-jhk"/>
+                <constraint firstItem="aMQ-OI-6tS" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="15" id="dre-47-jhk"/>
                 <constraint firstItem="lZ4-AR-kv6" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="eV2-gf-uVp"/>
                 <constraint firstItem="f05-9b-jrt" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="kRF-s1-lKc"/>
                 <constraint firstItem="6C4-Ce-GiV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qzy-wv-VcV"/>

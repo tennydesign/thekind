@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="hudControls" destination="kMP-A5-S8t" id="4c6-bf-0AT"/>
                 <outlet property="hudView" destination="iN0-l3-epB" id="jPe-iw-p3F"/>
+                <outlet property="kindIconImageView" destination="rOu-ac-IIP" id="Dky-zX-R0v"/>
                 <outlet property="photoFrame" destination="60A-On-gjo" id="Ytb-Lq-j9R"/>
                 <outlet property="userPictureImageVIew" destination="cH0-kM-N6P" id="hPm-Jp-wSx"/>
                 <outlet property="viewForAvatar" destination="8vQ-xq-ppk" id="5Dw-Sk-woB"/>
@@ -28,25 +29,26 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kMP-A5-S8t" userLabel="hudControls">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
                     <subviews>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HIt-8J-2dn" userLabel="viewForKindCard">
-                            <rect key="frame" x="31" y="60" width="28" height="53"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HIt-8J-2dn" userLabel="viewForKindCard">
+                            <rect key="frame" x="26" y="33" width="42" height="42"/>
                             <subviews>
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="12" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="hud_kind_icon" translatesAutoresizingMaskIntoConstraints="NO" id="rOu-ac-IIP" userLabel="kindimage">
-                                    <rect key="frame" x="0.0" y="0.0" width="28" height="53"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="42" height="42"/>
+                                    <color key="tintColor" cyan="0.0" magenta="0.0" yellow="0.0" black="0.0318042652027027" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="rOu-ac-IIP" firstAttribute="centerX" secondItem="HIt-8J-2dn" secondAttribute="centerX" id="Bff-6G-Avi"/>
-                                <constraint firstAttribute="width" constant="28" id="CRu-p5-X1X"/>
-                                <constraint firstItem="rOu-ac-IIP" firstAttribute="width" secondItem="HIt-8J-2dn" secondAttribute="width" id="ERc-3v-a7n"/>
-                                <constraint firstAttribute="height" constant="53" id="SS6-Tv-Npk"/>
-                                <constraint firstItem="rOu-ac-IIP" firstAttribute="height" secondItem="HIt-8J-2dn" secondAttribute="height" id="YOR-fN-y0Q"/>
-                                <constraint firstItem="rOu-ac-IIP" firstAttribute="centerY" secondItem="HIt-8J-2dn" secondAttribute="centerY" id="uTy-dM-YXO"/>
+                                <constraint firstAttribute="trailing" secondItem="rOu-ac-IIP" secondAttribute="trailing" id="4nF-vQ-hb2"/>
+                                <constraint firstAttribute="height" constant="42" id="ADA-bE-dk0"/>
+                                <constraint firstAttribute="width" constant="42" id="Skt-xX-hzj"/>
+                                <constraint firstItem="rOu-ac-IIP" firstAttribute="leading" secondItem="HIt-8J-2dn" secondAttribute="leading" id="ZaX-l1-3F6"/>
+                                <constraint firstAttribute="bottom" secondItem="rOu-ac-IIP" secondAttribute="bottom" id="oTj-kh-rWo"/>
+                                <constraint firstItem="rOu-ac-IIP" firstAttribute="top" secondItem="HIt-8J-2dn" secondAttribute="top" id="xzd-JI-xBz"/>
                             </constraints>
                         </view>
                         <view clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8vQ-xq-ppk" userLabel="viewForAvatar">
-                            <rect key="frame" x="297" y="60" width="52" height="52"/>
+                            <rect key="frame" x="304" y="28" width="52" height="52"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoArc" translatesAutoresizingMaskIntoConstraints="NO" id="DMl-s2-61A" userLabel="photoArc">
                                     <rect key="frame" x="0.0" y="0.0" width="52" height="52"/>
@@ -84,10 +86,10 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="8vQ-xq-ppk" secondAttribute="trailing" constant="26" id="GWH-j8-J0J"/>
-                        <constraint firstItem="HIt-8J-2dn" firstAttribute="leading" secondItem="kMP-A5-S8t" secondAttribute="leading" constant="31" id="gqA-dH-YKY"/>
-                        <constraint firstItem="8vQ-xq-ppk" firstAttribute="top" secondItem="kMP-A5-S8t" secondAttribute="top" constant="60" id="qZZ-QK-ffz"/>
-                        <constraint firstItem="HIt-8J-2dn" firstAttribute="top" secondItem="kMP-A5-S8t" secondAttribute="top" constant="60" id="wQV-yC-CCh"/>
+                        <constraint firstAttribute="trailing" secondItem="8vQ-xq-ppk" secondAttribute="trailing" constant="19" id="GWH-j8-J0J"/>
+                        <constraint firstItem="8vQ-xq-ppk" firstAttribute="centerY" secondItem="HIt-8J-2dn" secondAttribute="centerY" id="c0v-q6-CZI"/>
+                        <constraint firstItem="HIt-8J-2dn" firstAttribute="leading" secondItem="kMP-A5-S8t" secondAttribute="leading" constant="26" id="gqA-dH-YKY"/>
+                        <constraint firstItem="HIt-8J-2dn" firstAttribute="top" secondItem="kMP-A5-S8t" secondAttribute="top" constant="33" id="wQV-yC-CCh"/>
                     </constraints>
                 </view>
             </subviews>

@@ -11,11 +11,12 @@ import NVActivityIndicatorView
 import AWSRekognition
 import FirebaseAuth
 
-//HERE: Maybe MOVE UP the chatbox during the onboarding.
+//HERE: Sera que eu preciso de -30 no HUD pra todos?
+
 class MainViewController: UIViewController {
 
     var isOnboarding: Bool!
-    var minMapBottomPanelPosition: CGFloat!
+
     var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
     @IBOutlet var hudWindow: UIView!
@@ -89,7 +90,7 @@ class MainViewController: UIViewController {
     @IBOutlet var bottomCurtainImage: UIImageView! {
         didSet {
             bottomCurtainImage.image = bottomCurtainImage.image?.withRenderingMode(.alwaysTemplate)
-            bottomCurtainImage.tintColor = UIColor.black //(r: 6, g: 6, b: 6)
+            bottomCurtainImage.tintColor = UIColor.black
         }
     }
     @IBOutlet var bottomCurtainImageBase: UIImageView! {
@@ -106,6 +107,7 @@ class MainViewController: UIViewController {
     let talkbox = JungTalkBox()
     
     //SETUP First activated view.
+    let MAXSLIDEFORBOTTOMPANEL: CGFloat = 90.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,6 +126,7 @@ class MainViewController: UIViewController {
         userNameViewHost.talkbox = talkbox
         chooseDriverView.talkbox = talkbox
         chooseKindCardViewHost.talkbox = talkbox
+        mapViewHost.talkbox = talkbox
 
         loggedUserEmail = Auth.auth().currentUser?.email
         
@@ -133,9 +136,6 @@ class MainViewController: UIViewController {
         delay(bySeconds: 1) {
             self.presentJungIntro() // using this routine to test scripts before deploying them.
         }
-        
-        minMapBottomPanelPosition = bottom_curtain_bottom_constraint.constant
-        maxMapBottomPanelPosition = bottom_curtain_bottom_constraint.constant + MAXSLIDEFORBOTTOMPANEL
        
     }
     
@@ -155,17 +155,9 @@ class MainViewController: UIViewController {
         return false
     }
     
-    func moveMapBottomPanel(distance: CGFloat, completion: (()->())?) {
+    func moveBottomPanel(distance: CGFloat, completion: (()->())?) {
        
-        // To make sure it nevers go over the limit
-        bottom_curtain_bottom_constraint.constant += distance
-        if bottom_curtain_bottom_constraint.constant > maxMapBottomPanelPosition {
-            bottom_curtain_bottom_constraint.constant = maxMapBottomPanelPosition
-        }
-        else if bottom_curtain_bottom_constraint.constant < minMapBottomPanelPosition {
-             bottom_curtain_bottom_constraint.constant = minMapBottomPanelPosition
-        }
-        
+        bottom_curtain_bottom_constraint.constant = distance
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         }) { (completed) in
