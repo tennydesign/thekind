@@ -18,9 +18,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iPY-gm-Grn" userLabel="Backdrop">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iPY-gm-Grn" userLabel="Backdrop">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.023529411764705882" green="0.023529411764705882" blue="0.023529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y1j-dm-Wv0" userLabel="LoginWindow">
                                 <rect key="frame" x="37.5" y="157" width="300" height="353"/>
@@ -56,93 +56,24 @@
                                     <constraint firstItem="g43-ID-L4m" firstAttribute="width" secondItem="Y1j-dm-Wv0" secondAttribute="width" id="zkg-PB-bMn"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I1x-3V-KyO" userLabel="bottom_curtain">
-                                <rect key="frame" x="0.0" y="477" width="375" height="230"/>
-                                <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain2" translatesAutoresizingMaskIntoConstraints="NO" id="Paf-oG-PVL" userLabel="bottom_curtain">
-                                        <rect key="frame" x="0.0" y="-2.5" width="375" height="245"/>
-                                    </imageView>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain2" translatesAutoresizingMaskIntoConstraints="NO" id="o9A-Jd-7cz" userLabel="bottom_curtain_slice">
-                                        <rect key="frame" x="0.0" y="-7.5" width="375" height="245"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="Paf-oG-PVL" firstAttribute="centerY" secondItem="I1x-3V-KyO" secondAttribute="centerY" constant="5" id="5Nb-Bl-U1V"/>
-                                    <constraint firstItem="o9A-Jd-7cz" firstAttribute="height" secondItem="I1x-3V-KyO" secondAttribute="height" constant="15" id="93A-G0-ywN"/>
-                                    <constraint firstItem="Paf-oG-PVL" firstAttribute="width" secondItem="I1x-3V-KyO" secondAttribute="width" id="9B2-4A-sEm"/>
-                                    <constraint firstItem="Paf-oG-PVL" firstAttribute="centerX" secondItem="I1x-3V-KyO" secondAttribute="centerX" id="MGl-GA-rre"/>
-                                    <constraint firstItem="o9A-Jd-7cz" firstAttribute="centerY" secondItem="I1x-3V-KyO" secondAttribute="centerY" id="dYB-be-Nmk"/>
-                                    <constraint firstAttribute="height" constant="230" id="f2A-mg-RAS"/>
-                                    <constraint firstItem="Paf-oG-PVL" firstAttribute="height" secondItem="I1x-3V-KyO" secondAttribute="height" constant="15" id="fVg-eV-tzA"/>
-                                    <constraint firstItem="o9A-Jd-7cz" firstAttribute="centerX" secondItem="I1x-3V-KyO" secondAttribute="centerX" id="jeC-eX-rTA"/>
-                                    <constraint firstItem="o9A-Jd-7cz" firstAttribute="width" secondItem="I1x-3V-KyO" secondAttribute="width" id="y99-xz-JuL"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ugi-BI-2eP" userLabel="top_curtain">
-                                <rect key="frame" x="0.0" y="-120" width="375" height="230"/>
-                                <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="bottomLeft" insetsLayoutMarginsFromSafeArea="NO" image="top_huge_courtain" translatesAutoresizingMaskIntoConstraints="NO" id="xKO-OP-5rB" userLabel="top_curtain">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
-                                    </imageView>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5" contentMode="bottomLeft" insetsLayoutMarginsFromSafeArea="NO" image="top_huge_courtain" translatesAutoresizingMaskIntoConstraints="NO" id="68n-Q2-UAG" userLabel="top_curtain_slice">
-                                        <rect key="frame" x="0.0" y="-5" width="375" height="240"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="xKO-OP-5rB" secondAttribute="bottom" id="3S2-fj-qb7"/>
-                                    <constraint firstItem="xKO-OP-5rB" firstAttribute="leading" secondItem="ugi-BI-2eP" secondAttribute="leading" id="C85-sl-Use"/>
-                                    <constraint firstItem="xKO-OP-5rB" firstAttribute="top" secondItem="ugi-BI-2eP" secondAttribute="top" id="JNC-Bl-Wg6"/>
-                                    <constraint firstAttribute="trailing" secondItem="68n-Q2-UAG" secondAttribute="trailing" id="Zxi-tC-hOa"/>
-                                    <constraint firstItem="68n-Q2-UAG" firstAttribute="top" secondItem="ugi-BI-2eP" secondAttribute="top" constant="-5" id="iFp-5J-042"/>
-                                    <constraint firstItem="68n-Q2-UAG" firstAttribute="leading" secondItem="ugi-BI-2eP" secondAttribute="leading" id="k21-Xg-6iG"/>
-                                    <constraint firstAttribute="height" constant="230" id="pde-co-Si3"/>
-                                    <constraint firstAttribute="bottom" secondItem="68n-Q2-UAG" secondAttribute="bottom" constant="-5" id="rBj-TY-Mzz"/>
-                                    <constraint firstAttribute="trailing" secondItem="xKO-OP-5rB" secondAttribute="trailing" id="uho-Sk-pnr"/>
-                                </constraints>
-                            </view>
-                            <imageView alpha="0.14999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Jung" translatesAutoresizingMaskIntoConstraints="NO" id="0iE-Ay-CKl" userLabel="Jung">
-                                <rect key="frame" x="148" y="574" width="79" height="79"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="79" id="4bK-q9-jV1"/>
-                                    <constraint firstAttribute="height" constant="79" id="hfE-9p-hCv"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="0iE-Ay-CKl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7RG-py-Wje"/>
-                            <constraint firstAttribute="bottom" secondItem="I1x-3V-KyO" secondAttribute="bottom" constant="-40" id="Bwy-f4-gpy"/>
                             <constraint firstItem="Y1j-dm-Wv0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CkD-hz-DTv"/>
                             <constraint firstItem="iPY-gm-Grn" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Lhc-FU-odY"/>
-                            <constraint firstItem="I1x-3V-KyO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="M61-MY-Cx7"/>
                             <constraint firstItem="iPY-gm-Grn" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="TzB-P9-Vrc"/>
-                            <constraint firstItem="ugi-BI-2eP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="WUU-qr-fqN"/>
-                            <constraint firstItem="ugi-BI-2eP" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Y8k-1v-SBP"/>
-                            <constraint firstItem="I1x-3V-KyO" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="a1D-F2-fpn"/>
                             <constraint firstItem="iPY-gm-Grn" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="c5S-89-8TY"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0iE-Ay-CKl" secondAttribute="bottom" constant="14" id="dBS-vF-g1U"/>
-                            <constraint firstItem="ugi-BI-2eP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="f48-eU-iKQ"/>
-                            <constraint firstItem="I1x-3V-KyO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fOx-4W-uqL"/>
                             <constraint firstItem="Y1j-dm-Wv0" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="l6x-6b-Xdn"/>
                             <constraint firstItem="iPY-gm-Grn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="l9U-db-S9j"/>
-                            <constraint firstItem="ugi-BI-2eP" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="-120" id="wcm-Qm-IqE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="bottom_curtainView" destination="I1x-3V-KyO" id="FFs-4Z-Xuw"/>
-                        <outlet property="bottom_curtain_bottom_constraint" destination="Bwy-f4-gpy" id="R3g-Ij-V0e"/>
                         <outlet property="createNewUser" destination="g43-ID-L4m" id="u8W-AG-DFY"/>
-                        <outlet property="jung" destination="0iE-Ay-CKl" id="qga-5G-zML"/>
                         <outlet property="loginExistingUser" destination="xrW-Xf-wS0" id="rNy-yP-Mcu"/>
                         <outlet property="loginOptions" destination="phM-vc-CFf" id="bun-OF-ifB"/>
                         <outlet property="loginWindow" destination="Y1j-dm-Wv0" id="jw9-UZ-kqk"/>
                         <outlet property="loginWindowCenterYConstraint" destination="l6x-6b-Xdn" id="BR2-dk-8cc"/>
-                        <outlet property="top_curtainView" destination="ugi-BI-2eP" id="fNY-WJ-Fvr"/>
-                        <outlet property="top_curtain_top_constraint" destination="wcm-Qm-IqE" id="S6C-EQ-NIH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -150,9 +81,4 @@
             <point key="canvasLocation" x="34.399999999999999" y="-7.6461769115442282"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="Jung" width="82.55999755859375" height="83"/>
-        <image name="bottom_courtain2" width="375" height="188"/>
-        <image name="top_huge_courtain" width="375" height="463"/>
-    </resources>
 </document>

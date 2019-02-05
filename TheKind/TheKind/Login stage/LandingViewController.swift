@@ -39,13 +39,10 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
     var choosenLoginView: loginValidationProtocol?
     
     // ===  Supporting and layout views
-    @IBOutlet var jung: UIImageView!
-    @IBOutlet var bottom_curtainView: UIView!
-    @IBOutlet var top_curtainView: UIView!
+
     
     // == Constraints.
-    @IBOutlet var bottom_curtain_bottom_constraint: NSLayoutConstraint!
-    @IBOutlet var top_curtain_top_constraint: NSLayoutConstraint!
+
     @IBOutlet var loginWindowCenterYConstraint: NSLayoutConstraint!
     
     // == MVVM
@@ -167,8 +164,8 @@ extension LandingViewController: GIDSignInDelegate,GIDSignInUIDelegate {
     }
     
      func goToOnboading() {
-        let storyboard = UIStoryboard(name: "OnBoarding", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "OnBoardingViewController")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "MainViewController")
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         present(vc, animated: true, completion: nil)
     }

@@ -9,18 +9,17 @@
 import UIKit
 
 // TODO: ADJUST SCREEN FOR X-FAMILY
-class ChooseDriverView: UIView {
+class ChooseDriverView: KindActionTriggerView {
 
     @IBOutlet var chooseDriverView: UIView!
     @IBOutlet var pickerView: UIPickerView!
     @IBOutlet var lineWidthAnchor: NSLayoutConstraint!
     @IBOutlet var nextButton: UIButton!
-    
+    var talkbox: JungTalkBox?
 
     @IBOutlet var runOnView: UIView!
-
+    var selected: String = "Imagination."
     var onBoardingViewController: OnBoardingViewController?
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,13 +42,14 @@ class ChooseDriverView: UIView {
         addSubview(chooseDriverView)
         pickerView.delegate = self
         pickerView.dataSource = self
-
+        pickerView.selectRow(0, inComponent: 0, animated: false)
         lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)).width
 
     }
     
     
     @IBAction func nextButtonClicked(_ sender: UIButton) {
+        //onBoardingViewController?.goToMainStoryboard()
         onBoardingViewController?.switchViewsInsideController(toViewName: .chooseKindCard, originView: self, removeOriginFromSuperView: false)
     }
     
@@ -59,6 +59,32 @@ class ChooseDriverView: UIView {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
             self.layoutIfNeeded()
         }, completion: nil)
+    }
+    
+    override func talk() {
+        let txt = "Now...-What drives you the most?.-We all have a stronger one."
+        let actions: [KindActionType] = [.none, .activate, .none]
+        let actionViews: [ActionViewName] = [.none,.ChooseDriver, .none]
+        
+        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I identify with this one.", actionView: self)
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+    }
+    
+    override func activate() {
+        self.fadeInView()
+    }
+    
+    override func deactivate() {
+        self.fadeOutView()
+    }
+    
+    override func rightOptionClicked() {
+        let txt = "Ohhh \(selected)...-Great choice!"
+        let actions: [KindActionType] = [.deactivate,.talk]
+        let actionViews: [ActionViewName] = [.ChooseDriver,.ChooseKind]
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }
 }
 
@@ -75,7 +101,7 @@ extension ChooseDriverView: UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let selected = pickerData[row]
+        selected = pickerData[row]
         let size: CGRect = estimateFrameFromText(selected, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)
         lineAnimationBasedOnTextSize(size)
     }

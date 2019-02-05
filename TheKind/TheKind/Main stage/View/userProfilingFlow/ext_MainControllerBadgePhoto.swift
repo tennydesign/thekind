@@ -21,7 +21,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         let actionViews: [ActionViewName] = [.none,.HudView]
 
         // TODO: all should look like this one.
-        let options = self.talkbox.createUserOptions(opt1: "Take another", opt2: "Keep this one", actionViews: (.BadgePhotoSetupView,.BadgePhotoSetupView))
+        let options = self.talkbox.createUserOptions(opt1: "Take another one.", opt2: "Keep this one.", actionViews: (.BadgePhotoSetupView,.BadgePhotoSetupView))
 
 
         self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options), wait: 1)

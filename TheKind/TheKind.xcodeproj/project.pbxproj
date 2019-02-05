@@ -244,6 +244,7 @@
 				A0B6B29D21D1BADA00C58B3F /* ext_MainControllerBadgePhoto.swift */,
 				A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */,
 				A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */,
+				A0D960CA21C1A78900DF1CB0 /* ChooseDriverAndKindViews */,
 				A02B24D221E0318500737ACC /* DobOnboardingView.xib */,
 				A02B24D421E031AA00737ACC /* dobOnboardingView.swift */,
 				A05150F321E3FFFC00795172 /* UserNameView.xib */,
@@ -290,13 +291,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		A0120E5F21C6DCD6000454EC /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		A0120E6021C6DF68000454EC /* SwipeCards stage */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,8 +313,6 @@
 			children = (
 				A03A46A921C6C18200D90190 /* OnBoarding.storyboard */,
 				A02D71A421C6BC7200EBBD12 /* OnBoardingViewController.swift */,
-				A0120E5F21C6DCD6000454EC /* ViewModel */,
-				A0D960CA21C1A78900DF1CB0 /* Views */,
 			);
 			path = "Onboarding Stage";
 			sourceTree = "<group>";
@@ -397,18 +389,18 @@
 				A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */,
 				A0A45E2521FBA78F00DDEC6C /* ViewModel */,
 				A0A45E2421FBA78300DDEC6C /* Model */,
-				A0A45E1D21F92B7B00DDEC6C /* CircleDetailView */,
+				A0A45E1D21F92B7B00DDEC6C /* old */,
 			);
 			path = MapView;
 			sourceTree = "<group>";
 		};
-		A0A45E1D21F92B7B00DDEC6C /* CircleDetailView */ = {
+		A0A45E1D21F92B7B00DDEC6C /* old */ = {
 			isa = PBXGroup;
 			children = (
 				A0034F7622039AE600E9810B /* CircleDetailView.swift */,
 				A0034F7722039AE600E9810B /* CircleDetailView.xib */,
 			);
-			path = CircleDetailView;
+			path = old;
 			sourceTree = "<group>";
 		};
 		A0A45E2421FBA78300DDEC6C /* Model */ = {
@@ -468,9 +460,9 @@
 				A002F47621B9EED6006E8660 /* Extensions */,
 				A002F47521B9EEC0006E8660 /* Global */,
 				A0320B57212CDE75008A96E2 /* Login stage */,
-				A02D71A621C6BDDF00EBBD12 /* Onboarding Stage */,
 				A0320B58212DB6E6008A96E2 /* Main stage */,
 				A0120E6021C6DF68000454EC /* SwipeCards stage */,
+				A02D71A621C6BDDF00EBBD12 /* Onboarding Stage */,
 				A0C5D232212A4A7600BF1B0C /* LaunchScreen.storyboard */,
 				A0C5D235212A4A7600BF1B0C /* Info.plist */,
 				A0C5D22D212A4A7500BF1B0C /* TheKind.xcdatamodeld */,
@@ -509,7 +501,7 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		A0D960CA21C1A78900DF1CB0 /* Views */ = {
+		A0D960CA21C1A78900DF1CB0 /* ChooseDriverAndKindViews */ = {
 			isa = PBXGroup;
 			children = (
 				A002F49421BF57D3006E8660 /* ChooseDriverView.swift */,
@@ -518,7 +510,7 @@
 				A02D71A021C4300E00EBBD12 /* ChooseKindCardView.xib */,
 				A0D960CF21C1A7DA00DF1CB0 /* Cell */,
 			);
-			path = Views;
+			path = ChooseDriverAndKindViews;
 			sourceTree = "<group>";
 		};
 		A0D960CF21C1A7DA00DF1CB0 /* Cell */ = {

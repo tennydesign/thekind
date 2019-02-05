@@ -49,7 +49,9 @@ enum ActionViewName: Int {
         HudView = 12,
         DobOnboardingView = 101,
         UserNameView = 102,
-        MapView = 105, 
+        MapView = 105,
+        ChooseKind = 106,
+        ChooseDriver = 107,
         none = -1
 }
 

@@ -22,6 +22,7 @@ class JungChatLogger: UIView {
     @IBOutlet var HoldToAnswerViewWidthAnchor: NSLayoutConstraint!
 
     
+    @IBOutlet var heightCollectionViewConsraint: NSLayoutConstraint!
     @IBOutlet var holdToAnswerBar: UIView!
     var mainViewController: MainViewController?
     
@@ -91,7 +92,7 @@ class JungChatLogger: UIView {
     }
     
     var animationCount: Int = 0
-    var tempoInBetweenPosts: Double = 2.3
+    var tempoInBetweenPosts: Double = 1
     var delayJungPostInSecs: Double = 0
     
     
@@ -167,8 +168,9 @@ class JungChatLogger: UIView {
         var messageIndex = 0
         
         Timer.scheduledTimer(withTimeInterval: timeInterval ?? self.tempoInBetweenPosts, repeats: true){ t in
-            
-            self.postMessageToJungChat(message: jungSnippets[messageIndex].message)
+            if !jungSnippets[messageIndex].message.isEmpty {
+                self.postMessageToJungChat(message: jungSnippets[messageIndex].message)
+            }
             self.talkbox.executeSnippetAction(jungSnippets[messageIndex])
             self.animationCount -= 1
             // 3 - Stops timer
@@ -347,9 +349,9 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
         {
             return 1
         } else if (indexPath.row == mostRecentChatMessageIndex - 1) {
-            return 0.5
+            return 0.6
         } else if (indexPath.row == mostRecentChatMessageIndex - 2){
-            return 0.1
+            return 0.2
         } else {
             return 0
         }

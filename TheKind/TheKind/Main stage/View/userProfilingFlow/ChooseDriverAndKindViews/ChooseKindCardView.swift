@@ -11,7 +11,7 @@ import UIKit
 
 
 
-class ChooseKindCardView: UIView {
+class ChooseKindCardView: KindActionTriggerView {
     
     static var iconCellSize: CGSize = CGSize(width: 30, height: 30)
     static var iconspacing:CGFloat = 90
@@ -19,6 +19,13 @@ class ChooseKindCardView: UIView {
     //This helps with the diff between the large one and the small ones
     static var activeDistance: CGFloat = 160
     static var zoomFactor: CGFloat = 3.5
+    
+    var talkbox: JungTalkBox?
+    var selected: Int = 0 {
+        didSet {
+            selectedKind()
+        }
+    }
     
     var colorCellAlpha:CGFloat = 10
     var currentCellToTint: kindCollectioViewCell?
@@ -69,6 +76,50 @@ class ChooseKindCardView: UIView {
         
     }
 
+    override func talk() {
+        let txt = "Lastly...-Choose your kind."
+        let actions: [KindActionType] = [.none, .activate]
+        let actionViews: [ActionViewName] = [.none,.ChooseKind]
+        
+        let options = self.talkbox?.createUserOptions(opt1: "Back to main driver..", opt2: "I am the \(selected) Kind", actionView: self)
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+    }
+    
+    override func activate() {
+        self.fadeInView()
+        selectedKind()
+    }
+    
+    override func deactivate() {
+        self.fadeOutView()
+    }
+    override func rightOptionClicked() {
+        let txt = "So you are the Founder kind.-I realy like founders.-Creative disruptors."
+        let actions: [KindActionType] = [.none, .deactivate,.talk]
+        let actionViews: [ActionViewName] = [.none,.ChooseKind,.MapView]
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+    }
+    
+    override func leftOptionClicked() {
+        self.fadeOutView()
+        let txt = "Sure!"
+        let actions: [KindActionType] = [.talk]
+        let actionViews: [ActionViewName] = [.ChooseDriver]
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+    }
+    
+    
+    func selectedKind() {
+        let txt = "The \(selected) kind says...-Imagination, knowledge, and persuasion when combined can transform anything.-With grind and hacking combined you can turn any ordinary situation into an extraordinary one."
+        let actions: [KindActionType] = [.none,.none,.none]
+        let actionViews: [ActionViewName] = [.none,.none,.none]
+        
+        let options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I identify with the \(selected) Kind", actionView: self)
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+    }
     
 
 }
@@ -120,8 +171,16 @@ extension ChooseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-       // let centerElementIndexPath = indexPathForCenterCell()
-
+        guard let item = indexPathForCenterCell()?.row else {return}
+        if item != selected {
+            delay(bySeconds: 1) {
+                if !self.kindCollectionView.isDragging {
+                    self.selected = item
+                }
+            }
+            
+        }
+        
     }
     
     

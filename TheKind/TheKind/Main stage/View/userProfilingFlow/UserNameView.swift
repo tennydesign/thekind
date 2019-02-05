@@ -109,14 +109,14 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
             txt = "Can I call you \(KindUser.loggedUserName!)?-If that's not good please change above."
         } else {
              userNameTextField.text = "[Type your name]"
-             txt = "Hummm... I still don't know your name.-Please enter your name above"
+             txt = "Hummm... I tried but didn't find your name.-Please enter your name above"
         }
        
         adaptLineToTextSize(userNameTextField)
         
         let actions: [KindActionType] = [.none,.activate]
         let actionViews: [ActionViewName] = [.none,.UserNameView]
-        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I'm good with that.", actionViews: (.none,.UserNameView))
+        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I'm good with that.", actionView: self)
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: options))
         
     }
@@ -130,12 +130,12 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         self.talkbox?.delegate = nil
     }
     
-     override func rightOptionClicked() {
+    override func rightOptionClicked() {
         var txt: String = ""
         
         if let username = userNameTextField.text, !(username.trimmingCharacters(in: .whitespaces).isEmpty) {
             KindUser.loggedUserName = username
-            txt = "Great, \(KindUser.loggedUserName ?? username) you are all set.-Welcome to The Kind.-Create a circle or join a circle."
+            txt = "Great, \(KindUser.loggedUserName ?? username) nice to meet you.-Welcome to The Kind."
             // SAVE USERNAME TO FIRESTORE.
             // PROCEED ON COMPLETED
         } else {
@@ -143,11 +143,12 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
             return
         }
         
-        let actions: [KindActionType] = [.none,.none,.activate]
-        let actionViews: [ActionViewName] = [.none,.none,.MapView]
-        //let options = self.talkbox?.createUserOptions(opt1: "If.", opt2: "No need. Skip it.", actionViews: (.none,.none))
+        let actions: [KindActionType] = [.none,.talk]
+        let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView]
+        self.fadeOutView()
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+        
     }
 
      override func leftOptionClicked() {

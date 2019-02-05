@@ -20,7 +20,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p0c-2d-LM8" userLabel="Backdrop">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.098039215686274508" green="0.098039215686274508" blue="0.098039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1LH-Se-bVM" userLabel="ActionTriggerViewsHosts">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -29,7 +29,14 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xZ8-CM-mff" userLabel="100-BadgePhotoSetupViewHost" customClass="BadgePhotoSetupView" customModule="TheKind" customModuleProvider="target">
+                                    <view tag="105" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eo-O7-Oer" userLabel="105-MapView" customClass="MapActionTriggerView" customModule="TheKind" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view tag="102" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cym-tF-rfj" userLabel="102-UserNameViewHost" customClass="UserNameView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
@@ -37,13 +44,20 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view tag="102" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cym-tF-rfj" userLabel="102-UserNameViewHost" customClass="UserNameView" customModule="TheKind" customModuleProvider="target">
+                                    <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xZ8-CM-mff" userLabel="100-BadgePhotoSetupViewHost" customClass="BadgePhotoSetupView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view tag="105" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eo-O7-Oer" userLabel="105-MapView" customClass="MapActionTriggerView" customModule="TheKind" customModuleProvider="target">
+                                    <view tag="106" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bvV-Ka-rMx" userLabel="106-ChooseKindCardViewHost" customClass="ChooseKindCardView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                        <color key="backgroundColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view tag="107" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eTK-Ov-xyB" userLabel="107-ChooseDriverViewHost" customClass="ChooseDriverView" customModule="TheKind" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
                                         </userDefinedRuntimeAttributes>
@@ -52,47 +66,46 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="cym-tF-rfj" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="2fe-49-kCT"/>
+                                    <constraint firstItem="bvV-Ka-rMx" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="37P-yu-ZKy"/>
                                     <constraint firstAttribute="trailing" secondItem="cym-tF-rfj" secondAttribute="trailing" id="68A-jn-ejH"/>
                                     <constraint firstAttribute="trailing" secondItem="xZ8-CM-mff" secondAttribute="trailing" id="6wJ-rj-bF2"/>
                                     <constraint firstItem="7RB-H1-Tgr" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="9TW-dp-zkN"/>
                                     <constraint firstAttribute="trailing" secondItem="YKl-rU-KWD" secondAttribute="trailing" id="Agv-iB-B0W"/>
+                                    <constraint firstItem="eTK-Ov-xyB" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="B2H-ZB-Gqu"/>
+                                    <constraint firstAttribute="trailing" secondItem="bvV-Ka-rMx" secondAttribute="trailing" id="BIo-AF-Ad1"/>
+                                    <constraint firstAttribute="bottom" secondItem="eTK-Ov-xyB" secondAttribute="bottom" id="DGu-TQ-pwB"/>
                                     <constraint firstAttribute="bottom" secondItem="YKl-rU-KWD" secondAttribute="bottom" id="FNl-Ao-K4U"/>
                                     <constraint firstAttribute="bottom" secondItem="0eo-O7-Oer" secondAttribute="bottom" id="Ft2-SJ-qTA"/>
                                     <constraint firstItem="xZ8-CM-mff" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="IU9-tG-oLJ"/>
                                     <constraint firstItem="xZ8-CM-mff" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="KPD-JP-8qQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="bvV-Ka-rMx" secondAttribute="bottom" id="Kb1-7m-ICz"/>
                                     <constraint firstItem="YKl-rU-KWD" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="Pwh-gB-UKV"/>
                                     <constraint firstItem="YKl-rU-KWD" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="Q6c-xi-a6U"/>
                                     <constraint firstAttribute="bottom" secondItem="xZ8-CM-mff" secondAttribute="bottom" id="RfY-FU-f4c"/>
                                     <constraint firstItem="7RB-H1-Tgr" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="ScF-2v-YxP"/>
+                                    <constraint firstAttribute="trailing" secondItem="eTK-Ov-xyB" secondAttribute="trailing" id="Sl3-pl-dJ3"/>
                                     <constraint firstItem="0eo-O7-Oer" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="WgU-Lp-5cY"/>
                                     <constraint firstAttribute="trailing" secondItem="7RB-H1-Tgr" secondAttribute="trailing" id="bY2-bN-W14"/>
                                     <constraint firstItem="0eo-O7-Oer" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="f0J-yD-k0b"/>
                                     <constraint firstItem="cym-tF-rfj" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="faB-7g-Krw"/>
                                     <constraint firstAttribute="bottom" secondItem="cym-tF-rfj" secondAttribute="bottom" id="ifV-Ke-jZA"/>
+                                    <constraint firstItem="bvV-Ka-rMx" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="lQL-If-36A"/>
                                     <constraint firstAttribute="trailing" secondItem="0eo-O7-Oer" secondAttribute="trailing" id="rEi-cc-FZp"/>
                                     <constraint firstAttribute="bottom" secondItem="7RB-H1-Tgr" secondAttribute="bottom" id="sOq-2s-LJA"/>
-                                    <constraint firstAttribute="trailing" secondItem="0eo-O7-Oer" secondAttribute="trailing" id="wqr-3f-npU"/>
-                                    <constraint firstItem="0eo-O7-Oer" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="yz8-Xa-200"/>
+                                    <constraint firstItem="eTK-Ov-xyB" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="ym0-aI-M2o"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pt-Di-eiT" userLabel="bottom_curtain">
-                                <rect key="frame" x="0.0" y="471" width="375" height="366"/>
+                                <rect key="frame" x="0.0" y="461.5" width="375" height="385.5"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_curtain_5" translatesAutoresizingMaskIntoConstraints="NO" id="uFA-4x-IUP" userLabel="bottom_curtain">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="366"/>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain_final" translatesAutoresizingMaskIntoConstraints="NO" id="TdV-gj-duV" userLabel="bottom_curtain_slice">
+                                        <rect key="frame" x="0.0" y="-6" width="375" height="385.5"/>
                                     </imageView>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_curtain_5" translatesAutoresizingMaskIntoConstraints="NO" id="TdV-gj-duV" userLabel="bottom_curtain_slice">
-                                        <rect key="frame" x="0.0" y="-7" width="375" height="366"/>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain_final" translatesAutoresizingMaskIntoConstraints="NO" id="uFA-4x-IUP" userLabel="bottom_curtain">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="385.5"/>
                                     </imageView>
-                                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mcZ-Xj-H4Q" userLabel="CircleDetailsHost" customClass="CircleDetailView" customModule="TheKind" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="268"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="268" id="ZwN-nm-WpU"/>
-                                        </constraints>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Psy-SE-XbL" userLabel="jungChatWindow">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="196"/>
+                                        <rect key="frame" x="0.0" y="10" width="375" height="196"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4FF-H6-M6b" userLabel="Jung Chat View" customClass="JungChatLogger" customModule="TheKind" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="196"/>
@@ -108,16 +121,15 @@
                                             <constraint firstAttribute="height" constant="196" id="P3c-Vd-YYg"/>
                                         </constraints>
                                     </view>
-                                    <imageView hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_curtain_5" translatesAutoresizingMaskIntoConstraints="NO" id="Thy-bB-cDC" userLabel="chatmask">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="366"/>
+                                    <imageView hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain_final" translatesAutoresizingMaskIntoConstraints="NO" id="Thy-bB-cDC" userLabel="chatmask">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="385.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="mcZ-Xj-H4Q" firstAttribute="leading" secondItem="9pt-Di-eiT" secondAttribute="leading" id="04k-EM-bCG"/>
-                                    <constraint firstItem="Psy-SE-XbL" firstAttribute="top" secondItem="9pt-Di-eiT" secondAttribute="top" id="4z9-bI-V71"/>
-                                    <constraint firstItem="TdV-gj-duV" firstAttribute="centerY" secondItem="9pt-Di-eiT" secondAttribute="centerY" constant="-7" id="5BO-3b-OTf"/>
+                                    <constraint firstItem="Psy-SE-XbL" firstAttribute="top" secondItem="9pt-Di-eiT" secondAttribute="top" constant="10" id="4z9-bI-V71"/>
+                                    <constraint firstItem="TdV-gj-duV" firstAttribute="centerY" secondItem="9pt-Di-eiT" secondAttribute="centerY" constant="-6" id="5BO-3b-OTf"/>
                                     <constraint firstItem="uFA-4x-IUP" firstAttribute="height" secondItem="9pt-Di-eiT" secondAttribute="height" id="AdD-0b-LOW"/>
                                     <constraint firstItem="Thy-bB-cDC" firstAttribute="height" secondItem="9pt-Di-eiT" secondAttribute="height" id="CF0-Ve-j39"/>
                                     <constraint firstItem="Thy-bB-cDC" firstAttribute="centerX" secondItem="9pt-Di-eiT" secondAttribute="centerX" id="CWI-fU-ZLU"/>
@@ -130,10 +142,8 @@
                                     <constraint firstItem="Thy-bB-cDC" firstAttribute="centerY" secondItem="9pt-Di-eiT" secondAttribute="centerY" id="b0E-nd-xZp"/>
                                     <constraint firstItem="Thy-bB-cDC" firstAttribute="width" secondItem="9pt-Di-eiT" secondAttribute="width" id="djU-bH-Et6"/>
                                     <constraint firstItem="TdV-gj-duV" firstAttribute="centerX" secondItem="9pt-Di-eiT" secondAttribute="centerX" id="gfv-wL-iZo"/>
-                                    <constraint firstAttribute="height" constant="366" id="hb2-dB-WlU"/>
+                                    <constraint firstAttribute="height" constant="385.5" id="hb2-dB-WlU"/>
                                     <constraint firstItem="TdV-gj-duV" firstAttribute="width" secondItem="9pt-Di-eiT" secondAttribute="width" id="k4X-Te-Azd"/>
-                                    <constraint firstAttribute="trailing" secondItem="mcZ-Xj-H4Q" secondAttribute="trailing" id="uEO-uT-0TV"/>
-                                    <constraint firstItem="mcZ-Xj-H4Q" firstAttribute="top" secondItem="9pt-Di-eiT" secondAttribute="top" id="weR-dZ-Pgd"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGE-Wo-HLs" userLabel="top_curtain">
@@ -176,7 +186,7 @@
                             <constraint firstItem="1LH-Se-bVM" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="I7O-MS-38p"/>
                             <constraint firstItem="9pt-Di-eiT" firstAttribute="centerX" secondItem="OgW-vl-BuR" secondAttribute="centerX" id="Kh9-yk-aja"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="RlQ-Dt-6dI"/>
-                            <constraint firstAttribute="bottom" secondItem="9pt-Di-eiT" secondAttribute="bottom" constant="-170" id="Tez-TZ-ad9"/>
+                            <constraint firstAttribute="bottom" secondItem="9pt-Di-eiT" secondAttribute="bottom" constant="-180" id="Tez-TZ-ad9"/>
                             <constraint firstItem="aGE-Wo-HLs" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" constant="-30" id="Wxt-lx-of8"/>
                             <constraint firstItem="9pt-Di-eiT" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="XRW-jI-Xj6"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" id="YUW-Uf-C8e"/>
@@ -188,11 +198,15 @@
                         <viewLayoutGuide key="safeArea" id="adk-ga-bKs"/>
                     </view>
                     <connections>
+                        <outlet property="JungChatWindowY" destination="4z9-bI-V71" id="aPc-1d-Bxd"/>
                         <outlet property="badgePhotoSetupViewHost" destination="xZ8-CM-mff" id="fT2-DK-Ddp"/>
+                        <outlet property="bottomCurtainImage" destination="uFA-4x-IUP" id="6fZ-4x-Lv0"/>
+                        <outlet property="bottomCurtainImageBase" destination="TdV-gj-duV" id="T84-OR-plr"/>
                         <outlet property="bottomCurtainView" destination="9pt-Di-eiT" id="odJ-9c-K3I"/>
                         <outlet property="bottom_curtain_bottom_constraint" destination="Tez-TZ-ad9" id="rks-5O-K5d"/>
                         <outlet property="chatMask" destination="Thy-bB-cDC" id="Uj5-c3-kKp"/>
-                        <outlet property="circleDetailsHost" destination="mcZ-Xj-H4Q" id="vUu-2F-e0h"/>
+                        <outlet property="chooseDriverView" destination="eTK-Ov-xyB" id="vp6-R0-bvz"/>
+                        <outlet property="chooseKindCardViewHost" destination="bvV-Ka-rMx" id="hu6-9O-PPk"/>
                         <outlet property="dobOnboardingViewHost" destination="YKl-rU-KWD" id="VUh-Qx-9sG"/>
                         <outlet property="gameBoardViewHost" destination="7RB-H1-Tgr" id="ELY-2q-Ix2"/>
                         <outlet property="hudView" destination="A4g-0r-7jc" id="4VZ-nG-9oi"/>
@@ -211,6 +225,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bottom_curtain_5" width="375" height="358"/>
+        <image name="bottom_courtain_final" width="375" height="386"/>
     </resources>
 </document>

@@ -9,7 +9,7 @@
 import UIKit
 import Mapbox
 import MapKit
-
+//REFACTOR THE UP AND DOWN FOR DRAWER
 class MapActionTriggerView: KindActionTriggerView {
 
     @IBOutlet var insideExpandedCircleView: UIView!
@@ -77,6 +77,9 @@ class MapActionTriggerView: KindActionTriggerView {
         
     }
     
+    override func talk() {
+        activate()
+    }
     
     override func activate() {
         //load annotations.
@@ -87,8 +90,8 @@ class MapActionTriggerView: KindActionTriggerView {
             self.talkbox?.delegate = self
             UIView.animate(withDuration: 1) {
                 self.alpha = 1
-                self.mainViewController?.jungChatWindow.alpha = 0
-                self.mainViewController?.topCurtainView.alpha = 0
+                //self.mainViewController?.jungChatWindow.alpha = 0
+                //self.mainViewController?.topCurtainView.alpha = 0
             }
         }
     }
@@ -203,8 +206,11 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
                     print("done activateOnSelection")
                     //check if scale is 100% open otherwise won't show detailsview
                     if annotationView.transform.a == self.MAXSCIRCLESCALE {
+                        //push Jung chat window down a bit to accomodate the extra space.
+                        // stop incrementing and add and remove a std value
+                        self.mainViewController?.JungChatWindowY.constant = 70
                         UIView.animate(withDuration: 0.6, animations: {
-                            self.mainViewController?.circleDetailsHost.alpha = 1
+                            self.mainViewController?.view.layoutIfNeeded()
                         })
                     }
                     
@@ -234,10 +240,13 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             self.insideExpandedCircleView.isUserInteractionEnabled = false
         }) { (completed) in
             delay(bySeconds: 0.5, closure: {
-                self.mainViewController?.circleDetailsHost.alpha = 0
+                
+                //self.mainViewController?.circleDetailsHost.alpha = 0
                 self.mainViewController?.moveMapBottomPanel(distance: -self.MOVEDRAWERDISTANCE) {
-                    
-                    // completed.
+                    self.mainViewController?.JungChatWindowY.constant = 10
+                    UIView.animate(withDuration: 0.6, animations: {
+                        self.mainViewController?.view.layoutIfNeeded()
+                    })
                     if let completion = completion {
                         completion()
                     }

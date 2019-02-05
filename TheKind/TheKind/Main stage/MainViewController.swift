@@ -11,7 +11,7 @@ import NVActivityIndicatorView
 import AWSRekognition
 import FirebaseAuth
 
-//HERE: Starting here.
+//HERE: Maybe MOVE UP the chatbox during the onboarding.
 class MainViewController: UIViewController {
 
     var isOnboarding: Bool!
@@ -19,7 +19,13 @@ class MainViewController: UIViewController {
     var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
     @IBOutlet var hudWindow: UIView!
-    @IBOutlet var jungChatWindow: UIView!
+    @IBOutlet var jungChatWindow: UIView! {
+        didSet{
+            //MExer aqui quando o mapa entra pra ajustar o chatbox
+        }
+    }
+    
+    @IBOutlet var JungChatWindowY: NSLayoutConstraint!
     @IBOutlet var chatMask: UIImageView!
     
     
@@ -57,20 +63,41 @@ class MainViewController: UIViewController {
             mapViewHost.alpha = 0
         }
     }
+
     
-    @IBOutlet var circleDetailsHost: CircleDetailView! {
+    @IBOutlet var chooseKindCardViewHost: ChooseKindCardView! {
         didSet {
-            circleDetailsHost.alpha = 0
+            chooseKindCardViewHost.isHidden = true
+            chooseKindCardViewHost.alpha = 0
         }
     }
     
+    @IBOutlet var chooseDriverView: ChooseDriverView! {
+        didSet {
+            chooseDriverView.isHidden = true
+            chooseDriverView.alpha = 0
+        }
+    }
     
     
     @IBOutlet var top_curtain_top_constraint: NSLayoutConstraint!
     @IBOutlet var bottom_curtain_bottom_constraint: NSLayoutConstraint!
 
+
     @IBOutlet var bottomCurtainView: UIView!
     @IBOutlet weak var topCurtainView: UIView!
+    @IBOutlet var bottomCurtainImage: UIImageView! {
+        didSet {
+            bottomCurtainImage.image = bottomCurtainImage.image?.withRenderingMode(.alwaysTemplate)
+            bottomCurtainImage.tintColor = UIColor.black //(r: 6, g: 6, b: 6)
+        }
+    }
+    @IBOutlet var bottomCurtainImageBase: UIImageView! {
+        didSet {
+            bottomCurtainImageBase.image = bottomCurtainImage.image?.withRenderingMode(.alwaysTemplate)
+            bottomCurtainImageBase.tintColor = UIColor(r: 34, g: 34, b: 34)
+        }
+    }
     
     
     @IBOutlet var hudView: HUDview!
@@ -95,7 +122,8 @@ class MainViewController: UIViewController {
         badgePhotoSetupViewHost.talkbox = talkbox
         dobOnboardingViewHost.talkbox = talkbox
         userNameViewHost.talkbox = talkbox
-        
+        chooseDriverView.talkbox = talkbox
+        chooseKindCardViewHost.talkbox = talkbox
 
         loggedUserEmail = Auth.auth().currentUser?.email
         
@@ -147,6 +175,7 @@ class MainViewController: UIViewController {
         }
         
     }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent // .default
     }
@@ -155,23 +184,9 @@ class MainViewController: UIViewController {
 
 
 
-var introSnippets : [Snippet] = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: nil),
-                                  Snippet(message: "You say it like 'YUNG'.", action: .none,id: 2, actionView: nil),
-                                  Snippet(message: "Think of me like a friend that can introduce you to other people.", action: .none,id: 2, actionView: nil),
-                                  Snippet(message: "... or kinds like I like to call.", action: .none,id: 2, actionView: nil),
-                                  Snippet(message: "Whenever you join a circle I can introduce you to someone", action: .none, id: 4, actionView: nil),
-                                  Snippet(message: "That is... if you want of course.", action: .none, id: 6, actionView: nil),
-                                  Snippet(message: "But first let's take a selfie.", action: .fadeInView, id: 7, actionView: ActionViewName.BadgePhotoSetupView),
-                                  Snippet(message: "Nothing to worry. No one will ever swipe your photo. I promise. Nothing to worry. No one will ever swipe your photo. I promise. Nothing to worry. No one will ever swipe your photo. I promise", action: .none, id: 7, actionView: nil)]
+var introSnippets : [Snippet] = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
+                                  Snippet(message: "You say it like 'YUNG'.", action: .talk,id: 2, actionView: ActionViewName.UserNameView)]
 
-//var introSnippets : [Snippet] = [Snippet(message: "Hi Tenny my name is JUNG.", action: .activate, id: 1, actionView: ActionViewName.MapView),
-//                                 Snippet(message: "You say it like 'YUNG'.", action: .none,id: 2, actionView: nil),
-//                                 Snippet(message: "Think of me like a friend that can introduce you to other people.", action: .none,id: 2, actionView: nil),
-//                                 Snippet(message: "... or kinds like I like to call.", action: .none,id: 2, actionView: nil),
-//                                 Snippet(message: "Whenever you join a circle I can introduce you to someone", action: .none, id: 4, actionView: nil),
-//                                 Snippet(message: "That is... if you want of course.", action: .none, id: 6, actionView: nil),
-//                                 Snippet(message: "But first let's take a selfie.", action: .none, id: 7, actionView: ActionViewName.none),
-//                                 Snippet(message: "Nothing to worry. No one will ever swipe your photo. I promise", action: .none, id: 7, actionView: nil)]
 
 
 

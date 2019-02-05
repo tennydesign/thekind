@@ -17,7 +17,6 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
     @IBOutlet var mainView: UIView!
     var pickerData = Array(1900...2019)
     lazy var boudingRect = CGSize(width: pickerView.bounds.width, height: pickerView.bounds.height)
-
     @IBOutlet weak var pickerView: UIPickerView!
     
     override init(frame: CGRect) {
@@ -58,7 +57,7 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         let actions: [KindActionType] = [.none, .none,.activate]
         let actionViews: [ActionViewName] = [.none,.none, .DobOnboardingView]
         
-        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Confirm this year.", actionViews: (.none,.DobOnboardingView))
+        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Confirm this year.", actionView: self)
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
@@ -90,9 +89,9 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         let age = year-selectedYear
         // TODO: moving forward. 
        
-        let txt = "You are about \(age) years old.-That's cool.-I'm not really sure how old I am.-But I feel like I'm getting old pretty fast."
-        let actions: [KindActionType] = [.none,.none,.none,.talk]
-        let actionViews: [ActionViewName] = [.none,.none,.none,.UserNameView]
+        let txt = "I understand you are about \(age) years old.- We are almost finished with the setup."
+        let actions: [KindActionType] = [.none,.talk]
+        let actionViews: [ActionViewName] = [.none,.ChooseDriver]
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
         
         // Move next.

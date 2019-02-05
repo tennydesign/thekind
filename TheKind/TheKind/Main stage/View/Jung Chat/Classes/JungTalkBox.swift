@@ -93,6 +93,18 @@ class JungTalkBox {
         
     }
  
+    func createUserOptions(opt1: String, opt2: String, actionView: UIView, id: Int? = nil) -> (Snippet,Snippet)? {
+        
+        let actionOpt: (KindActionType, KindActionType) = (.leftOptionClicked, .rightOptionClicked)
+        
+        let actionViewName: ActionViewName = ActionViewName(rawValue: actionView.tag) ?? .none
+        
+        let userOptionA = Snippet.init(message: opt1, action: actionOpt.0, id: id ?? 0, actionView: actionViewName)
+        let userOptionB = Snippet.init(message: opt2, action: actionOpt.1, id: id ?? 0, actionView: actionViewName)
+        
+        return (userOptionA,userOptionB)
+        
+    }
     
     func executeSnippetAction(_ snippet: SnippetProtocol) {
         guard let tag = snippet.actionView?.rawValue else {return}

@@ -70,7 +70,7 @@
                     <viewLayoutGuide key="safeArea" id="Hvw-Yx-ThL"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="IGt-CQ-adm" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="CZt-p1-dgX"/>
                 <constraint firstItem="IGt-CQ-adm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QH6-Ek-PHa"/>

@@ -44,7 +44,10 @@ class BadgePhotoSetupView: KindActionTriggerView {
     }
     
     override func talk() {
-        
+        let txt = "Please take a selife.-This will help when meeting other people.-Just tap the camera above."
+        let actions: [KindActionType] = [.none,.fadeInView, .none]
+        let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView, .none]
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
     }
     
 
@@ -56,7 +59,7 @@ class BadgePhotoSetupView: KindActionTriggerView {
     
     override func rightOptionClicked() {
         self.fadeOutView()
-        let txt = "Ok.-Moving on."
+        let txt = "-Cool!-I think it looks good too 🙂."
         let actions: [KindActionType] = [.none,.talk]
         let actionViews: [ActionViewName] = [.none, .DobOnboardingView]
         

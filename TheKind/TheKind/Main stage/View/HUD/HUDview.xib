@@ -28,7 +28,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kMP-A5-S8t" userLabel="hudControls">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HIt-8J-2dn" userLabel="viewForKindCard">
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HIt-8J-2dn" userLabel="viewForKindCard">
                             <rect key="frame" x="31" y="60" width="28" height="53"/>
                             <subviews>
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="12" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="hud_kind_icon" translatesAutoresizingMaskIntoConstraints="NO" id="rOu-ac-IIP" userLabel="kindimage">
@@ -104,7 +104,7 @@
         </view>
     </objects>
     <resources>
-        <image name="hud_kind_icon" width="28" height="53"/>
+        <image name="hud_kind_icon" width="103" height="133"/>
         <image name="photoArc" width="65" height="65"/>
     </resources>
 </document>
