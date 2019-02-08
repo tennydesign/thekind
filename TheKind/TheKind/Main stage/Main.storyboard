@@ -20,7 +20,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p0c-2d-LM8" userLabel="Backdrop">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.047058823529411764" green="0.047058823529411764" blue="0.047058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1LH-Se-bVM" userLabel="ActionTriggerViewsHosts">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -98,7 +98,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pt-Di-eiT" userLabel="bottom_curtain">
                                 <rect key="frame" x="0.0" y="461.5" width="375" height="385.5"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain_final" translatesAutoresizingMaskIntoConstraints="NO" id="TdV-gj-duV" userLabel="bottom_curtain_slice">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.27000000000000002" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain_final" translatesAutoresizingMaskIntoConstraints="NO" id="TdV-gj-duV" userLabel="bottom_curtain_slice">
                                         <rect key="frame" x="0.0" y="-6" width="375" height="385.5"/>
                                     </imageView>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain_final" translatesAutoresizingMaskIntoConstraints="NO" id="uFA-4x-IUP" userLabel="bottom_curtain">

@@ -76,24 +76,20 @@ extension GameBoardScene {
     
     func updatePanLimitPoint() {
         
-        if let scene = self.scene as? GameBoardScene {
-            
-            if let tileMap = scene.childNode(withName: "GameBoardTileMap") as? SKTileMapNode {
-                
-                let mapHeight = tileMap.mapSize.height
-                let mapWidth = tileMap.mapSize.width
-                
+        //if let scene = self.scene as? GameBoardScene {
                 // zoomFactor = How many times the board is zoomed. Eg. 1 to 4x
                 let zoomFactor = (maxZoomOutLimit! / (camera?.xScale)!)
+                print(zoomFactor)
+//                let maxPanX = (mapWidth/2) - (280/zoomFactor) + 5 // 5 is a buffer.
+//                let maxPanY = (mapHeight/2) - (340/zoomFactor) + 5
+//
+                //maxPan = CGPoint(x: maxPanX, y: maxPanY)
                 
-                let maxPanX = (mapWidth/2) - (280/zoomFactor) + 5 // 5 is a buffer.
-                let maxPanY = (mapHeight/2) - (340/zoomFactor) + 5
-                maxPan = CGPoint(x: maxPanX, y: maxPanY)
                 
-            }
+                maxPan = CGPoint(x: (kindTilemap.mapSize.width/2), y: (kindTilemap.mapSize.height/2))
             
             
-        }
+        //}
     }
     
     @objc func handlePinchFrom(withSender pinch: UIPinchGestureRecognizer) {

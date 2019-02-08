@@ -308,13 +308,13 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		A02D71A621C6BDDF00EBBD12 /* Onboarding Stage */ = {
+		A02D71A621C6BDDF00EBBD12 /* old_Onboarding Stage */ = {
 			isa = PBXGroup;
 			children = (
 				A03A46A921C6C18200D90190 /* OnBoarding.storyboard */,
 				A02D71A421C6BC7200EBBD12 /* OnBoardingViewController.swift */,
 			);
-			path = "Onboarding Stage";
+			path = "old_Onboarding Stage";
 			sourceTree = "<group>";
 		};
 		A0301D652190B1CA00E023F7 /* GameBoardFlow */ = {
@@ -462,7 +462,7 @@
 				A0320B57212CDE75008A96E2 /* Login stage */,
 				A0320B58212DB6E6008A96E2 /* Main stage */,
 				A0120E6021C6DF68000454EC /* SwipeCards stage */,
-				A02D71A621C6BDDF00EBBD12 /* Onboarding Stage */,
+				A02D71A621C6BDDF00EBBD12 /* old_Onboarding Stage */,
 				A0C5D232212A4A7600BF1B0C /* LaunchScreen.storyboard */,
 				A0C5D235212A4A7600BF1B0C /* Info.plist */,
 				A0C5D22D212A4A7500BF1B0C /* TheKind.xcdatamodeld */,

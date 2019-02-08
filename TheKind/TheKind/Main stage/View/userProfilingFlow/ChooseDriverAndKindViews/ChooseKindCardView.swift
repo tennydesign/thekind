@@ -43,13 +43,13 @@ class ChooseKindCardView: KindActionTriggerView {
 
     var currentCellToTint: kindCollectioViewCell?
     
-    var onBoardingViewController: OnBoardingViewController?
-
     let flowLayout = ZoomAndSnapFlowLayout()
 
     
     @IBOutlet var chooseKindCard: UIView!
 
+    var mainViewController: MainViewController?
+    
     @IBOutlet weak var kindCollectionView: UICollectionView! {
         didSet {
             kindCollectionView.delegate = self
@@ -126,7 +126,7 @@ class ChooseKindCardView: KindActionTriggerView {
         let actions: [KindActionType] = [.none]
         let actionViews: [ActionViewName] = [.none]
         
-        let options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I identify with the \(selectedIndex) Kind", actionView: self)
+        let options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I'm like the \(kindName)", actionView: self)
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
@@ -163,9 +163,16 @@ extension ChooseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
     
+    
+    func clearJungChat() {
+        kindNameLabel.alpha = 0
+        self.mainViewController?.jungChatLogger.resetJungChat()
+        self.mainViewController?.jungChatLogger.hideOptionLabels(true, completion: nil)
+    }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        kindNameLabel.alpha = 0
+        clearJungChat()
+        
         if scrollView.panGestureRecognizer.translation(in: scrollView.superview).x > 0 {
             print("right")
             
@@ -179,16 +186,11 @@ extension ChooseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 
         guard let itemIndex = indexPathForCenterCell()?.row else {return}
-
-        if itemIndex != selectedIndex {
-            if !self.kindCollectionView.isDragging {
-                self.fillAndPresentLabelWith(itemIndex)
-                self.selectedIndex = itemIndex
-            }
-        } else {
-            fillAndPresentLabelWith(itemIndex)
+        if !self.kindCollectionView.isDragging {
+            self.fillAndPresentLabelWith(itemIndex)
+            self.selectedIndex = itemIndex
         }
-            
+        
     }
     
     

@@ -19,7 +19,7 @@ class HUDview: KindActionTriggerView {
     @IBOutlet var kindIconImageView: UIImageView! {
         didSet {
             // To take the color away.
-            //kindIconImageView.image = kindIconImageView.image?.withRenderingMode(.alwaysTemplate)
+            kindIconImageView.image = kindIconImageView.image?.withRenderingMode(.alwaysTemplate)
         }
     }
     @IBOutlet var viewForAvatar: UIView!
@@ -52,8 +52,9 @@ class HUDview: KindActionTriggerView {
         gradient = CAGradientLayer()
         gradient.frame = self.bounds
         gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
-        gradient.locations = [0.45, 1]
+        gradient.locations = [0.55, 1]
         layer.insertSublayer(gradient, at: 0)
+        
 
     }
     

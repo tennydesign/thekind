@@ -14,9 +14,11 @@ protocol KindActionTriggerViewProtocol {
     func deactivate()
     func rightOptionClicked()
     func leftOptionClicked()
+    func fadeInView()
+    func fadeOutView()
 }
 
-class KindActionTriggerView: UIView {
+class KindActionTriggerView: UIView, KindActionTriggerViewProtocol {
     
     var nextView: UIView?
     // ===> POLYMORPHIC ACTIONS <===

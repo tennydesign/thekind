@@ -12,8 +12,8 @@ import UIKit
 
 let PRIMARYFONT = "Acrylic Hand Sans"
 
-func returnActionTriggerView(by tag: Int) -> KindActionTriggerView? {
-    guard let targetView = UIApplication.shared.keyWindow?.viewWithTag(tag) as? KindActionTriggerView else {return nil}
+func returnActionTriggerView(by tag: Int) -> KindActionTriggerViewProtocol? {
+    guard let targetView = UIApplication.shared.keyWindow?.viewWithTag(tag) as? KindActionTriggerViewProtocol else {return nil}
     return targetView
 }
 

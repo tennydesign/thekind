@@ -16,7 +16,6 @@ class OnBoardingViewController: UIViewController {
     @IBOutlet var chooseKindCardView: ChooseKindCardView! {
         didSet{
             chooseKindCardView.alpha = 0
-            chooseKindCardView.onBoardingViewController = self
         }
     }
     @IBOutlet var chooseDriverView: ChooseDriverView! {

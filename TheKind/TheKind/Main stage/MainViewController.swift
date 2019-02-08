@@ -111,6 +111,7 @@ class MainViewController: UIViewController {
         badgePhotoSetupViewHost.mainViewController = self
         userNameViewHost.mainViewController = self
         mapViewHost.mainViewController = self
+        chooseKindCardViewHost.mainViewController = self
         
         jungChatLogger.talkbox = talkbox
         badgePhotoSetupViewHost.talkbox = talkbox
@@ -146,7 +147,9 @@ class MainViewController: UIViewController {
     }
     
     func presentJungIntro() {
-        let intro = JungRoutine(snippets: introSnippets, userResponseOptions: nil, sender: .Jung)
+        hitPickerControl()
+        let options = self.talkbox.createUserOptions(opt1: "Wire-in mode.", opt2: "Introduce me to someone.", actionView: self.view)
+        let intro = JungRoutine(snippets: introSnippets, userResponseOptions: options, sender: .Jung)
         talkbox.displayRoutine(routine: intro)
     }
     
@@ -178,7 +181,7 @@ class MainViewController: UIViewController {
 
 
 var introSnippets : [Snippet] = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
-                                  Snippet(message: "You say it like 'YUNG'.", action: .talk,id: 2, actionView: ActionViewName.ChooseKind)]
+                                  Snippet(message: "You say it like 'YUNG'.", action: .activate,id: 2, actionView: ActionViewName.GameBoard)]
 
 
 

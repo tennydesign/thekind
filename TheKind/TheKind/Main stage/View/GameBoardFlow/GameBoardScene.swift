@@ -12,49 +12,162 @@ import SpriteKit
 
 class GameBoardScene: SKScene {
 
-
     var lastCamScale: CGFloat?
     var maxZoomOutLimit: CGFloat?
     var maxZoomInLimit: CGFloat?
     var maxPan: CGPoint!
     var tileMapSize: CGSize?
+    var kindTilemap: SKTileMapNode!
+    var backgroundTileMap: SKTileMapNode!
+    var kindTiles:KindTile!
     
     //Initializes all zoom variables.
     var initCamScale: CGFloat? {
         didSet {
-            maxZoomOutLimit = initCamScale! * 2
-            maxZoomInLimit = initCamScale! / 2
+            maxZoomOutLimit = initCamScale! * 1.2
+            maxZoomInLimit = initCamScale! / 3
             lastCamScale = initCamScale!
         }
     }
     
     
     override func sceneDidLoad() {
-        
-        if let tileMap = self.childNode(withName: "GameBoardTileMap") as? SKTileMapNode {
-            tileMapSize = tileMap.mapSize
-            scene!.size = CGSize(width: tileMapSize!.width + 30, height: tileMapSize!.height + 30) // 30 is to add a "cushion" to give the cards breathing space.
-            if let camera = scene?.childNode(withName: "camera") as? SKCameraNode {
-                let numberOfColumns: CGFloat = CGFloat(tileMap.numberOfColumns)
-                // Zoom is relative to the size of the map. Currently showing 4 cards (fator = 6).
-                initCamScale = 6/numberOfColumns
-                camera.setScale(maxZoomOutLimit!*2)
-                self.camera = camera
-                changeCameraZoom(camera: camera, scale: initCamScale!)
-            }
-        }
+
         
     }
     
     
+    func initializeTileMaps() {
+        guard let tileMap = self.childNode(withName: "GameBoardTileMap") as? SKTileMapNode else {fatalError("TileMap Set not found")}
+        guard let backGroundMap = self.childNode(withName: "BackgroundTileMap") as? SKTileMapNode else {fatalError("TileMap Set not found")}
+        kindTilemap = tileMap
+        backgroundTileMap = backGroundMap
+    }
+    
+    func setupCamera(tileMap: SKTileMapNode) {
+        tileMapSize = tileMap.mapSize
+        scene!.size = CGSize(width: tileMapSize!.width + 30, height: tileMapSize!.height + 30) // 30 is to add a "cushion" to give the cards breathing space.
+        if let camera = scene?.childNode(withName: "camera") as? SKCameraNode {
+            let numberOfColumns: CGFloat = CGFloat(tileMap.numberOfColumns)
+            // Zoom is relative to the size of the map. Currently showing 4 cards (fator = 6).
+            initCamScale = 6/numberOfColumns
+            camera.setScale(maxZoomOutLimit!*2)
+            self.camera = camera
+            changeCameraZoom(camera: camera, scale: initCamScale!)
+        }
+    }
+        
     override func didMove(to view: SKView) {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom(withSender:)))
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchFrom(withSender:)))
         
         self.view?.addGestureRecognizer(panGestureRecognizer)
         self.view?.addGestureRecognizer(pinchGestureRecognizer)
+        
+        initializeTileMaps()
+        kindTiles = KindTile()
+        setupTileMap(tileMap: kindTilemap)
+        setupTileMap(tileMap: backgroundTileMap)
+        setupCamera(tileMap: kindTilemap)
+        spawnKinds()
+        layoutBoard()
+        placeKind(colum: 0,row: 0, kind: kindTiles.catalyst!)
     }
     
-
-
+    func setupTileMap(tileMap: SKTileMapNode) {
+        let columns = 24
+        let rows = 24
+        let size = CGSize(width: 56, height: 56)
+        
+        tileMap.tileSet = kindTiles.tileSet
+        tileMap.numberOfColumns = columns
+        tileMap.numberOfRows = rows
+        tileMap.tileSize = size
+        
+    }
+    
+    func layoutBoard() {
+        let columns = backgroundTileMap.numberOfColumns
+        let rows = backgroundTileMap.numberOfRows
+        for colum in 0..<columns {
+            for row in 0..<rows {
+                backgroundTileMap.setTileGroup(kindTiles.boardTile, forColumn: colum, row: row)
+            }
+        }
+    }
+    
+    func spawnKinds() {
+        let columns = kindTilemap.numberOfColumns
+        let rows = kindTilemap.numberOfRows
+        for colum in 0..<columns {
+            for row in 0..<rows {
+                kindTilemap.setTileGroup(kindTiles.idealist, forColumn: colum, row: row)
+            }
+        }
+    }
+    
+    func placeKind(colum: Int, row: Int, kind: SKTileGroup) {
+        kindTilemap.setTileGroup(kind, forColumn: colum, row: row)
+    }
+    
 }
+
+
+
+class KindTile {
+    var leader: SKTileGroup?
+    var idealist: SKTileGroup?
+    var catalyst: SKTileGroup?
+    var mentor: SKTileGroup?
+    var boardTile: SKTileGroup?
+    var tileSet: SKTileSet!
+    
+    init() {
+        guard let set = SKTileSet(named: "thedeckSet") else {fatalError("Object Tiles Tile Set not found")}
+        tileSet = set
+        
+        guard let leader = set.tileGroups.first(where: {$0.name == "leader"}) else {fatalError("No Duck tile definition found")}
+        self.leader = leader
+        
+        guard let idealist = set.tileGroups.first(where: {$0.name == "idealist"}) else {fatalError("No Duck tile definition found")}
+        self.idealist = idealist
+        
+        guard let catalyst = set.tileGroups.first(where: {$0.name == "catalyst"}) else {fatalError("No Duck tile definition found")}
+        
+        self.catalyst = catalyst
+        
+        guard let mentor = set.tileGroups.first(where: {$0.name == "mentor"}) else {fatalError("No Duck tile definition found")}
+        
+        self.mentor = mentor
+        
+        guard let boardTile = set.tileGroups.first(where: {$0.name == "boardtile"}) else {fatalError("No Duck tile definition found")}
+        
+        self.boardTile = boardTile
+
+    }
+}
+
+//CHecking if tile is of type.
+//var backgroundLayer: SKTileMapNode!
+//
+//override func didMove(to view: SKView) {
+//    guard let backgroundLayer = childNode(withName: "background") as? SKTileMapNode else {
+//        fatalError("Background node not loaded")
+//    }
+//
+//    self.backgroundLayer = backgroundLayer
+//
+//    for row in 0..<self.backgroundLayer.numberOfRows {
+//        for column in 0..<self.backgroundLayer.numberOfColumns {
+//            let backgroundTile = self.backgroundLayer.tileDefinition(atColumn: column, row: row)
+//            let isPoison = backgroundTile?.userData?.value(forKey: "isPoisonKey")
+//
+//            if let countNode = isPoison as? Bool {
+//                // Code here
+//                if countNode {
+//                    print(countNode)
+//                }
+//            }
+//        }
+//    }
+//}

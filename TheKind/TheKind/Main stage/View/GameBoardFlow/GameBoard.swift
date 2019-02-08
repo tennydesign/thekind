@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 import SpriteKit
 
-class GameBoard: UIView {
+class GameBoard: KindActionTriggerView {
     
 
     @IBOutlet var gameBoardView: UIView!
@@ -38,6 +38,7 @@ class GameBoard: UIView {
         
         if let scene = SKScene(fileNamed: "gameboardScene") as? GameBoardScene {
             scene.scaleMode = .aspectFill
+            
             boardSkView.presentScene(scene)
         } else {
             print("scene not found")
@@ -45,5 +46,11 @@ class GameBoard: UIView {
         
         boardSkView.ignoresSiblingOrder = true
         
+        
+    }
+    
+    override func activate() {
+        self.isHidden = false
+        self.alpha = 1
     }
 }
