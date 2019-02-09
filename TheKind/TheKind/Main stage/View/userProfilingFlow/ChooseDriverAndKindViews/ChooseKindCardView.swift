@@ -61,11 +61,18 @@ class ChooseKindCardView: KindActionTriggerView {
     
     @IBOutlet var chooseCardView: UIView!
     
-    var kinds: [Kind] = [Kind.init(image: #imageLiteral(resourceName: "kind_shape_shifter"), name: "The Shape Shifter", id: 0),
-                         Kind.init(image: #imageLiteral(resourceName: "kind_mountain"), name: "The Founder", id: 1),
-                         Kind.init(image: #imageLiteral(resourceName: "AngelIcon"), name: "The Catalyst", id: 2),
-                         Kind.init(image: #imageLiteral(resourceName: "hud_kind_icon"), name: "The Entertainter", id: 3),
-                         Kind.init(image: #imageLiteral(resourceName: "TrailBlazerIcon"), name: "The Lover", id: 4)]
+    var kinds: [Kind] = [Kind.init(image: #imageLiteral(resourceName: "angel"), name: "The Angel", id: 0),
+                         Kind.init(image: #imageLiteral(resourceName: "founder"), name: "The Founder", id: 1),
+                         Kind.init(image: #imageLiteral(resourceName: "rebel"), name: "The Rebel", id: 2),
+                         Kind.init(image: #imageLiteral(resourceName: "team_player"), name: "The Team Player", id: 3),
+                         Kind.init(image: #imageLiteral(resourceName: "grinder"), name: "The Grinder", id: 4),
+                         Kind.init(image: #imageLiteral(resourceName: "mentor"), name: "The Mentor", id: 5),
+                         Kind.init(image: #imageLiteral(resourceName: "leader"), name: "The Leader", id: 6),
+                         Kind.init(image: #imageLiteral(resourceName: "trailblazer"), name: "The Trailblazer", id: 7),
+                         Kind.init(image: #imageLiteral(resourceName: "explorer"), name: "The Explorer", id: 8),
+                         Kind.init(image: #imageLiteral(resourceName: "visionary"), name: "The Visionary", id: 9),
+                         Kind.init(image: #imageLiteral(resourceName: "Entertainer"), name: "The Entertainer", id: 10),
+                         Kind.init(image: #imageLiteral(resourceName: "idealist"), name: "The Idealist", id: 4)]
     
     override init(frame: CGRect) {
         super.init(frame: frame)

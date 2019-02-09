@@ -181,7 +181,7 @@ class MainViewController: UIViewController {
 
 
 var introSnippets : [Snippet] = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
-                                  Snippet(message: "You say it like 'YUNG'.", action: .activate,id: 2, actionView: ActionViewName.GameBoard)]
+                                 Snippet(message: "You say it like 'YUNG'.", action: .activate,id: 2, actionView: ActionViewName.GameBoard)]
 
 
 

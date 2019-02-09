@@ -24,7 +24,7 @@ class GameBoardScene: SKScene {
     //Initializes all zoom variables.
     var initCamScale: CGFloat? {
         didSet {
-            maxZoomOutLimit = initCamScale! * 1.2
+            maxZoomOutLimit = initCamScale! * 3
             maxZoomInLimit = initCamScale! / 3
             lastCamScale = initCamScale!
         }
@@ -71,7 +71,7 @@ class GameBoardScene: SKScene {
         setupCamera(tileMap: kindTilemap)
         spawnKinds()
         layoutBoard()
-        placeKind(colum: 0,row: 0, kind: kindTiles.catalyst!)
+        placeKind(colum: 0,row: 0, kind: kindTiles.visionary!)
     }
     
     func setupTileMap(tileMap: SKTileMapNode) {
@@ -99,9 +99,11 @@ class GameBoardScene: SKScene {
     func spawnKinds() {
         let columns = kindTilemap.numberOfColumns
         let rows = kindTilemap.numberOfRows
+        let kindtileArray: [SKTileGroup] = [kindTiles.visionary!,kindTiles.idealist!,kindTiles.leader!, kindTiles.mentor!, kindTiles.teamPlayer!, kindTiles.angel!, kindTiles.founder!]
+        
         for colum in 0..<columns {
             for row in 0..<rows {
-                kindTilemap.setTileGroup(kindTiles.idealist, forColumn: colum, row: row)
+                kindTilemap.setTileGroup(kindtileArray[Int(random(min: 0, max: 7))], forColumn: colum, row: row)
             }
         }
     }
@@ -117,8 +119,11 @@ class GameBoardScene: SKScene {
 class KindTile {
     var leader: SKTileGroup?
     var idealist: SKTileGroup?
-    var catalyst: SKTileGroup?
+    var visionary: SKTileGroup?
     var mentor: SKTileGroup?
+    var teamPlayer: SKTileGroup?
+    var founder: SKTileGroup?
+    var angel: SKTileGroup?
     var boardTile: SKTileGroup?
     var tileSet: SKTileSet!
     
@@ -132,13 +137,26 @@ class KindTile {
         guard let idealist = set.tileGroups.first(where: {$0.name == "idealist"}) else {fatalError("No Duck tile definition found")}
         self.idealist = idealist
         
-        guard let catalyst = set.tileGroups.first(where: {$0.name == "catalyst"}) else {fatalError("No Duck tile definition found")}
+        guard let catalyst = set.tileGroups.first(where: {$0.name == "visionary"}) else {fatalError("No Duck tile definition found")}
         
-        self.catalyst = catalyst
+        self.visionary = catalyst
         
         guard let mentor = set.tileGroups.first(where: {$0.name == "mentor"}) else {fatalError("No Duck tile definition found")}
         
         self.mentor = mentor
+        
+        guard let teamPlayer = set.tileGroups.first(where: {$0.name == "team_player"}) else {fatalError("No Duck tile definition found")}
+        
+        self.teamPlayer = teamPlayer
+        
+        guard let angel = set.tileGroups.first(where: {$0.name == "angel"}) else {fatalError("No Duck tile definition found")}
+        
+        self.angel = angel
+        
+        guard let founder = set.tileGroups.first(where: {$0.name == "founder"}) else {fatalError("No Duck tile definition found")}
+        
+        self.founder = founder
+        
         
         guard let boardTile = set.tileGroups.first(where: {$0.name == "boardtile"}) else {fatalError("No Duck tile definition found")}
         
