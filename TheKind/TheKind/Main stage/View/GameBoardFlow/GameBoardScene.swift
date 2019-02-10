@@ -99,11 +99,12 @@ class GameBoardScene: SKScene {
     func spawnKinds() {
         let columns = kindTilemap.numberOfColumns
         let rows = kindTilemap.numberOfRows
-        let kindtileArray: [SKTileGroup] = [kindTiles.visionary!,kindTiles.idealist!,kindTiles.leader!, kindTiles.mentor!, kindTiles.teamPlayer!, kindTiles.angel!, kindTiles.founder!]
+        let kindtileArray: [SKTileGroup] = [kindTiles.visionary!,kindTiles.idealist!,kindTiles.leader!, kindTiles.mentor!, kindTiles.teamPlayer!, kindTiles.angel!, kindTiles.founder!, kindTiles.entertainer!,
+                                            kindTiles.rebel!, kindTiles.trailblazer!, kindTiles.explorer!, kindTiles.grinder!]
         
         for colum in 0..<columns {
             for row in 0..<rows {
-                kindTilemap.setTileGroup(kindtileArray[Int(random(min: 0, max: 7))], forColumn: colum, row: row)
+                kindTilemap.setTileGroup(kindtileArray[Int.random(in: 0...11)], forColumn: colum, row: row)
             }
         }
     }
@@ -125,6 +126,11 @@ class KindTile {
     var founder: SKTileGroup?
     var angel: SKTileGroup?
     var boardTile: SKTileGroup?
+    var entertainer: SKTileGroup?
+    var rebel: SKTileGroup?
+    var trailblazer: SKTileGroup?
+    var explorer: SKTileGroup?
+    var grinder: SKTileGroup?
     var tileSet: SKTileSet!
     
     init() {
@@ -157,6 +163,25 @@ class KindTile {
         
         self.founder = founder
         
+        guard let entertainer = set.tileGroups.first(where: {$0.name == "entertainer"}) else {fatalError("No Duck tile definition found")}
+        
+        self.entertainer = entertainer
+        
+        guard let rebel = set.tileGroups.first(where: {$0.name == "rebel"}) else {fatalError("No Duck tile definition found")}
+        
+        self.rebel = rebel
+        
+        guard let trailblazer = set.tileGroups.first(where: {$0.name == "trailblazer"}) else {fatalError("No Duck tile definition found")}
+        
+        self.trailblazer = trailblazer
+        
+        guard let explorer = set.tileGroups.first(where: {$0.name == "explorer"}) else {fatalError("No Duck tile definition found")}
+        
+        self.explorer = explorer
+        
+        guard let grinder = set.tileGroups.first(where: {$0.name == "grinder"}) else {fatalError("No Duck tile definition found")}
+        
+        self.grinder = grinder
         
         guard let boardTile = set.tileGroups.first(where: {$0.name == "boardtile"}) else {fatalError("No Duck tile definition found")}
         
