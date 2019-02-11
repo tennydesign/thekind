@@ -13,6 +13,31 @@ import SpriteKit
 extension GameBoardScene {
     
     
+    @objc func handleTap(withSender sender: UITapGestureRecognizer) {
+        let location = self.convertPoint(fromView: sender.location(in: self.view))
+        let column = kindTilemap.tileColumnIndex(fromPosition: location)
+        let row = kindTilemap.tileRowIndex(fromPosition: location)
+        let tile = kindTilemap.tileDefinition(atColumn: column, row: row)
+        print(tile?.name)
+        
+        moveTileToCenterAndZoom(row: row, column: column)
+
+
+    }
+    
+    func moveTileToCenterAndZoom(row: Int, column: Int) {
+        let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
+        let cameraMoveAction = SKAction.move(to: centerLocation, duration: 0.4)
+        cameraMoveAction.timingFunction = CubicEaseOut
+        let cameraZoomAction = SKAction.scale(to: maxZoomInLimit ?? 0.15, duration: 0.4)
+        cameraZoomAction.timingFunction = CubicEaseOut
+        let parallelActions = SKAction.group([cameraMoveAction,cameraZoomAction])
+
+        camera?.run(parallelActions)
+        
+    }
+    
+    
     @objc func handlePanFrom(withSender sender: UIPanGestureRecognizer) {
         
         if sender.state == .began || sender.state == .changed {

@@ -25,7 +25,7 @@ class GameBoardScene: SKScene {
     var initCamScale: CGFloat? {
         didSet {
             maxZoomOutLimit = initCamScale! * 3
-            maxZoomInLimit = initCamScale! / 3
+            maxZoomInLimit = initCamScale! / 2.5
             lastCamScale = initCamScale!
         }
     }
@@ -60,9 +60,11 @@ class GameBoardScene: SKScene {
     override func didMove(to view: SKView) {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom(withSender:)))
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchFrom(withSender:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(withSender:)))
         
         self.view?.addGestureRecognizer(panGestureRecognizer)
         self.view?.addGestureRecognizer(pinchGestureRecognizer)
+        self.view?.addGestureRecognizer(tapGestureRecognizer)
         
         initializeTileMaps()
         kindTiles = KindTile()
@@ -100,7 +102,7 @@ class GameBoardScene: SKScene {
         let columns = kindTilemap.numberOfColumns
         let rows = kindTilemap.numberOfRows
         let kindtileArray: [SKTileGroup] = [kindTiles.visionary!,kindTiles.idealist!,kindTiles.leader!, kindTiles.mentor!, kindTiles.teamPlayer!, kindTiles.angel!, kindTiles.founder!, kindTiles.entertainer!,
-                                            kindTiles.rebel!, kindTiles.trailblazer!, kindTiles.explorer!, kindTiles.grinder!]
+                                                  kindTiles.rebel!, kindTiles.trailblazer!, kindTiles.explorer!, kindTiles.grinder!]
         
         for colum in 0..<columns {
             for row in 0..<rows {
