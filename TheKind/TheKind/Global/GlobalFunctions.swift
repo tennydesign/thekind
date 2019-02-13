@@ -13,6 +13,7 @@ import UIKit
 let PRIMARYFONT = "Acrylic Hand Sans"
 
 func returnActionTriggerView(by tag: Int) -> KindActionTriggerViewProtocol? {
+    //Starts in the root of the view hierarchy and search for the tagged view.
     guard let targetView = UIApplication.shared.keyWindow?.viewWithTag(tag) as? KindActionTriggerViewProtocol else {return nil}
     return targetView
 }

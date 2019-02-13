@@ -81,6 +81,8 @@
 		A0D960CE21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0D960CC21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib */; };
 		A0F223A621B88DB10096C25D /* KindButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F223A521B88DB10096C25D /* KindButton.swift */; };
 		A0F223A821B88E0F0096C25D /* KindTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F223A721B88E0F0096C25D /* KindTextField.swift */; };
+		A0FBB735221395C700405440 /* GameBoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FBB734221395C700405440 /* GameBoardModel.swift */; };
+		A0FBB7372213A97800405440 /* xt_ActionTriggerGameBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FBB7362213A97800405440 /* xt_ActionTriggerGameBoardScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +186,8 @@
 		A0D960CC21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = kindCollectioViewCell.xib; sourceTree = "<group>"; };
 		A0F223A521B88DB10096C25D /* KindButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindButton.swift; sourceTree = "<group>"; };
 		A0F223A721B88E0F0096C25D /* KindTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindTextField.swift; sourceTree = "<group>"; };
+		A0FBB734221395C700405440 /* GameBoardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardModel.swift; sourceTree = "<group>"; };
+		A0FBB7362213A97800405440 /* xt_ActionTriggerGameBoardScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xt_ActionTriggerGameBoardScene.swift; sourceTree = "<group>"; };
 		ADFA0A6551046C9AFBC81770 /* Pods-TheKindUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheKindUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheKindUITests/Pods-TheKindUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B5F581DE4D740C1B2ACE534B /* Pods-TheKind.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheKind.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheKind/Pods-TheKind.debug.xcconfig"; sourceTree = "<group>"; };
 		B8682BB931DD38851E48BFF3 /* Pods_TheKindUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheKindUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -323,7 +327,9 @@
 				A0301D6D2190C00C00E023F7 /* GameBoard.swift */,
 				A0301D6F2190C32300E023F7 /* GameBoardScene.swift */,
 				A017CDD32190E1B6002B7D9D /* xt_GameBoardScene.swift */,
+				A0FBB7362213A97800405440 /* xt_ActionTriggerGameBoardScene.swift */,
 				A0301D6A2190BEB000E023F7 /* GameBoard Views */,
+				A0FBB7382213A9DE00405440 /* Model */,
 			);
 			path = GameBoardFlow;
 			sourceTree = "<group>";
@@ -543,6 +549,14 @@
 				A07075F621EFFC940013380D /* MapView */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A0FBB7382213A9DE00405440 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A0FBB734221395C700405440 /* GameBoardModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		D4A2F69252DB72E54D247A94 /* Pods */ = {
@@ -858,6 +872,7 @@
 			files = (
 				A0C5D22F212A4A7500BF1B0C /* TheKind.xcdatamodeld in Sources */,
 				A0F223A821B88E0F0096C25D /* KindTextField.swift in Sources */,
+				A0FBB735221395C700405440 /* GameBoardModel.swift in Sources */,
 				A002F48421B9EFAE006E8660 /* JungChatBubbleCollectionViewCell.swift in Sources */,
 				A002F48321B9EFAE006E8660 /* KindJungOptionLabel.swift in Sources */,
 				A0320B56212B8AB6008A96E2 /* Extensions.swift in Sources */,
@@ -865,6 +880,7 @@
 				A0320B4D212B63C2008A96E2 /* LoginOptionsView.swift in Sources */,
 				A017CDD42190E1B6002B7D9D /* xt_GameBoardScene.swift in Sources */,
 				A05150F621E4002800795172 /* UserNameView.swift in Sources */,
+				A0FBB7372213A97800405440 /* xt_ActionTriggerGameBoardScene.swift in Sources */,
 				A0320B53212B69DD008A96E2 /* LoginExistingUser.swift in Sources */,
 				A03D77F321B7518A00DCF627 /* JungTalkBox.swift in Sources */,
 				A0D960CD21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift in Sources */,

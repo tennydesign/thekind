@@ -10,41 +10,111 @@ import Foundation
 import UIKit
 import SpriteKit
 
+
+// GESTURES AND MOVEMENTS.
 extension GameBoardScene {
-    
-    
     @objc func handleTap(withSender sender: UITapGestureRecognizer) {
         let location = self.convertPoint(fromView: sender.location(in: self.view))
         let column = kindTilemap.tileColumnIndex(fromPosition: location)
         let row = kindTilemap.tileRowIndex(fromPosition: location)
-        let tile = kindTilemap.tileDefinition(atColumn: column, row: row)
-        print(tile?.name)
+        //let tile = kindTilemap.tileDefinition(atColumn: column, row: row)
+        //print(tile?.name)
+        let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
+        //moveCamToCenterOfTileAndZoom(row: row, column: column)
         
-        moveTileToCenterAndZoom(row: row, column: column)
-
+        moveCamToCenterOfTileAndZoom(duration: 0.6, centerLocation: centerLocation)
 
     }
     
-    func moveTileToCenterAndZoom(row: Int, column: Int) {
-        let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
-        let cameraMoveAction = SKAction.move(to: centerLocation, duration: 0.4)
+    func moveCamToCenterOfTileAndZoom(duration: Double,centerLocation: CGPoint) {
+        //let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
+        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
         cameraMoveAction.timingFunction = CubicEaseOut
-        let cameraZoomAction = SKAction.scale(to: maxZoomInLimit ?? 0.15, duration: 0.4)
+        let cameraZoomAction = SKAction.scale(to: maxZoomInLimit ?? 0.15, duration: duration)
+        cameraZoomAction.timingFunction = CubicEaseOut
+        let parallelActions = SKAction.group([cameraMoveAction,cameraZoomAction])
+        
+        
+        if !isPanning {
+            camera?.run(parallelActions, completion: {
+            
+            })
+        }
+        
+    }
+    
+    func moveCamToCenterOfTile(duration: Double, centerLocation: CGPoint, completion: @escaping (()->())) {
+        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
+        cameraMoveAction.timingFunction = CubicEaseOut
+        
+        if !isPanning {
+            camera?.run(cameraMoveAction, completion: {
+                completion()
+            })
+        }
+    }
+    
+    func moveCamToCenterOfTile(duration: Double, centerLocation: CGPoint) {
+        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
+        cameraMoveAction.timingFunction = CubicEaseOut
+        
+        if !isPanning {
+            camera?.run(cameraMoveAction, completion: {
+               
+            })
+        }
+    }
+    
+    func moveCamToCenterOfTile(duration: Double, row: Int, column: Int, completion: @escaping (()->())) {
+        let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
+        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
+        cameraMoveAction.timingFunction = CubicEaseOut
+        
+        if !isPanning {
+            camera?.run(cameraMoveAction, completion: {
+                completion()
+            })
+        }
+    }
+    
+    func moveCamToCenterOfTile(duration: Double, row: Int, column: Int) {
+        let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
+        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
+        cameraMoveAction.timingFunction = CubicEaseOut
+        
+        if !isPanning {
+            camera?.run(cameraMoveAction, completion: {
+               
+            })
+        }
+    }
+    
+    func moveCamToCenterOfTileAndZoom(duration: Double, row: Int, column: Int) {
+        let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
+        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
+        cameraMoveAction.timingFunction = CubicEaseOut
+        let cameraZoomAction = SKAction.scale(to: maxZoomInLimit ?? 0.15, duration: duration)
         cameraZoomAction.timingFunction = CubicEaseOut
         let parallelActions = SKAction.group([cameraMoveAction,cameraZoomAction])
 
-        camera?.run(parallelActions)
+        if !isPanning {
+            camera?.run(parallelActions, completion: {
+                
+            })
+        }
+        
         
     }
     
-    
     @objc func handlePanFrom(withSender sender: UIPanGestureRecognizer) {
-        
+        isPanning = true
         if sender.state == .began || sender.state == .changed {
             let translation = sender.translation(in: sender.view)
-
-            slideGameBoard(translation: translation)
-
+            
+            slideGameBoard(translation: translation) {
+                self.isPanning = false
+            }
+            
             //this clears up the gesture buffer? maybe. It doesn't work well without it.
             sender.setTranslation(CGPoint.zero, in: sender.view)
             
@@ -53,7 +123,7 @@ extension GameBoardScene {
         
     }
     
-    func slideGameBoard(translation: CGPoint) {
+    func slideGameBoard(translation: CGPoint, completion: @escaping (()->())) {
         
         let slideSpeed:CGFloat = 9
         let zoomedOutSpeedFactor:CGFloat = self.size.width/100
@@ -75,8 +145,10 @@ extension GameBoardScene {
         action.timingFunction = CubicEaseOut
         
         
-        self.camera?.run(action)
-        
+        self.camera?.run(action, completion: {
+            completion()
+        })
+
     }
     
     func keepWithinPanLimitPoints(for coordinate: CGPoint) -> CGPoint
@@ -100,21 +172,11 @@ extension GameBoardScene {
     }
     
     func updatePanLimitPoint() {
-        
-        //if let scene = self.scene as? GameBoardScene {
-                // zoomFactor = How many times the board is zoomed. Eg. 1 to 4x
-                let zoomFactor = (maxZoomOutLimit! / (camera?.xScale)!)
-                print(zoomFactor)
-//                let maxPanX = (mapWidth/2) - (280/zoomFactor) + 5 // 5 is a buffer.
-//                let maxPanY = (mapHeight/2) - (340/zoomFactor) + 5
-//
-                //maxPan = CGPoint(x: maxPanX, y: maxPanY)
-                
-                
-                maxPan = CGPoint(x: (kindTilemap.mapSize.width/2), y: (kindTilemap.mapSize.height/2))
-            
-            
-        //}
+
+        let zoomFactor = (maxZoomOutLimit! / (camera?.xScale)!)
+        print(zoomFactor)
+        maxPan = CGPoint(x: (kindTilemap.mapSize.width/2), y: (kindTilemap.mapSize.height/2))
+
     }
     
     @objc func handlePinchFrom(withSender pinch: UIPinchGestureRecognizer) {
@@ -147,8 +209,6 @@ extension GameBoardScene {
         print("camera zoom: \(String(describing: camera?.xScale))")
         
     }
-
-    
     
     func CubicEaseOut(_ t:Float)->Float
     {
@@ -163,3 +223,6 @@ extension GameBoardScene {
     }
     
 }
+
+
+

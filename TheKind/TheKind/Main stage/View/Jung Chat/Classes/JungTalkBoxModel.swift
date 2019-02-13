@@ -46,6 +46,7 @@ enum KindActionType {
 enum ActionViewName: Int {
     case BadgePhotoSetupView = 100,
         GameBoard = 103,
+        GameBoardActionView = 201,
         HudView = 12,
         DobOnboardingView = 101,
         UserNameView = 102,

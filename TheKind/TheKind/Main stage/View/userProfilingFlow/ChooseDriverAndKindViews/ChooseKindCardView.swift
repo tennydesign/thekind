@@ -56,6 +56,7 @@ class ChooseKindCardView: KindActionTriggerView {
             kindCollectionView.dataSource = self
             kindCollectionView.collectionViewLayout = flowLayout
             kindCollectionView.register(UINib.init(nibName: "kindCollectioViewCell", bundle: nil), forCellWithReuseIdentifier: "kindCollectioViewCell")
+            print(kindCollectionView.center)
         }
     }
     

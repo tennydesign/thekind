@@ -32,20 +32,20 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <collectionView contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8a1-t0-nIt">
-                            <rect key="frame" x="0.0" y="118.5" width="375" height="390"/>
+                            <rect key="frame" x="0.0" y="183.5" width="375" height="300"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="390" id="hes-5r-4QN"/>
+                                <constraint firstAttribute="height" constant="300" id="hes-5r-4QN"/>
                             </constraints>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Ymf-GN-16F">
-                                <size key="itemSize" width="276" height="390"/>
+                                <size key="itemSize" width="276" height="300"/>
                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Shape-shifter" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ARb-vM-AwA" userLabel="kindNameLabel">
-                            <rect key="frame" x="116" y="396.5" width="143" height="11.5"/>
+                            <rect key="frame" x="116" y="401.5" width="143" height="11.5"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="143" id="9Ur-pB-4es"/>
                             </constraints>
@@ -58,9 +58,9 @@
                     <constraints>
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="leading" secondItem="IGt-CQ-adm" secondAttribute="leading" id="Gjv-m8-NrU"/>
                         <constraint firstItem="ARb-vM-AwA" firstAttribute="centerX" secondItem="IGt-CQ-adm" secondAttribute="centerX" id="L30-e3-GOo"/>
-                        <constraint firstItem="8a1-t0-nIt" firstAttribute="centerY" secondItem="IGt-CQ-adm" secondAttribute="centerY" constant="-20" id="PLB-G5-b0F"/>
+                        <constraint firstItem="8a1-t0-nIt" firstAttribute="centerY" secondItem="IGt-CQ-adm" secondAttribute="centerY" id="PLB-G5-b0F"/>
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="centerX" secondItem="IGt-CQ-adm" secondAttribute="centerX" id="f9o-Ha-6et"/>
-                        <constraint firstItem="ARb-vM-AwA" firstAttribute="top" secondItem="8a1-t0-nIt" secondAttribute="bottom" constant="-112" id="pWU-2G-iHR"/>
+                        <constraint firstItem="ARb-vM-AwA" firstAttribute="top" secondItem="8a1-t0-nIt" secondAttribute="bottom" constant="-82" id="pWU-2G-iHR"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="Hvw-Yx-ThL"/>
                 </view>

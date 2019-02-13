@@ -30,7 +30,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HIt-8J-2dn" userLabel="viewForKindCard">
-                            <rect key="frame" x="26" y="61" width="42" height="42"/>
+                            <rect key="frame" x="10" y="61" width="42" height="42"/>
                             <subviews>
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="12" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="hud_kind_icon" translatesAutoresizingMaskIntoConstraints="NO" id="rOu-ac-IIP" userLabel="kindimage">
                                     <rect key="frame" x="0.0" y="0.0" width="42" height="42"/>
@@ -48,7 +48,7 @@
                             </constraints>
                         </view>
                         <view clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8vQ-xq-ppk" userLabel="viewForAvatar">
-                            <rect key="frame" x="304" y="56" width="52" height="52"/>
+                            <rect key="frame" x="313" y="56" width="52" height="52"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoArc" translatesAutoresizingMaskIntoConstraints="NO" id="DMl-s2-61A" userLabel="photoArc">
                                     <rect key="frame" x="0.0" y="0.0" width="52" height="52"/>
@@ -104,10 +104,10 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="8vQ-xq-ppk" secondAttribute="trailing" constant="19" id="GWH-j8-J0J"/>
+                        <constraint firstAttribute="trailing" secondItem="8vQ-xq-ppk" secondAttribute="trailing" constant="10" id="GWH-j8-J0J"/>
                         <constraint firstItem="ko6-Mp-okn" firstAttribute="centerY" secondItem="8vQ-xq-ppk" secondAttribute="centerY" id="QFL-0D-NF8"/>
                         <constraint firstItem="8vQ-xq-ppk" firstAttribute="centerY" secondItem="HIt-8J-2dn" secondAttribute="centerY" id="c0v-q6-CZI"/>
-                        <constraint firstItem="HIt-8J-2dn" firstAttribute="leading" secondItem="kMP-A5-S8t" secondAttribute="leading" constant="26" id="gqA-dH-YKY"/>
+                        <constraint firstItem="HIt-8J-2dn" firstAttribute="leading" secondItem="kMP-A5-S8t" secondAttribute="leading" constant="10" id="gqA-dH-YKY"/>
                         <constraint firstItem="HIt-8J-2dn" firstAttribute="top" secondItem="kMP-A5-S8t" secondAttribute="top" constant="61" id="wQV-yC-CCh"/>
                     </constraints>
                 </view>

@@ -112,6 +112,7 @@ class MainViewController: UIViewController {
         userNameViewHost.mainViewController = self
         mapViewHost.mainViewController = self
         chooseKindCardViewHost.mainViewController = self
+        gameBoardViewHost.mainViewController = self
         
         jungChatLogger.talkbox = talkbox
         badgePhotoSetupViewHost.talkbox = talkbox
@@ -120,7 +121,8 @@ class MainViewController: UIViewController {
         chooseDriverView.talkbox = talkbox
         chooseKindCardViewHost.talkbox = talkbox
         mapViewHost.talkbox = talkbox
-
+        gameBoardViewHost.talkbox = talkbox
+        
         loggedUserEmail = Auth.auth().currentUser?.email
         
         chatMask.isHidden = false

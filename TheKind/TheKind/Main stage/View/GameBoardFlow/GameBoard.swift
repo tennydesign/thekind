@@ -5,7 +5,7 @@
 //  Created by Tennyson Pinheiro on 11/5/18.
 //  Copyright © 2018 tenny. All rights reserved.
 //
-// HERE: TESTED WITH MANY IPHONE FORMATS AND LOOKS OKAY, with a small diff between X models and previous model, small adjsutment probably 15-20px
+//
 
 import Foundation
 import UIKit
@@ -17,6 +17,9 @@ class GameBoard: KindActionTriggerView {
     @IBOutlet var gameBoardView: UIView!
     @IBOutlet weak var boardSkView: SKView!
     var tileMapSize: CGSize?
+    var talkbox: JungTalkBox?
+    var mainViewController: MainViewController?
+    var gameBoardScene: GameBoardScene?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,8 +41,8 @@ class GameBoard: KindActionTriggerView {
         
         if let scene = SKScene(fileNamed: "gameboardScene") as? GameBoardScene {
             scene.scaleMode = .aspectFill
-            
             boardSkView.presentScene(scene)
+            gameBoardScene = scene
         } else {
             print("scene not found")
         }
@@ -52,5 +55,22 @@ class GameBoard: KindActionTriggerView {
     override func activate() {
         self.isHidden = false
         self.alpha = 1
+        
+        gameBoardScene?.talkbox = self.talkbox
+        
+        let txt = "Let me know if you want me to introduce you to someone."
+        let actions: [KindActionType] = [.none]
+        let actionViews: [ActionViewName] = [.none]
+        
+        //HERE
+        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Yes... introduce me to someone", actionViews: (ActionViewName.GameBoardActionView,ActionViewName.GameBoardActionView))
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        
+    }
+    
+    override func deactivate() {
+        self.isHidden = true
+        self.alpha = 0
     }
 }
