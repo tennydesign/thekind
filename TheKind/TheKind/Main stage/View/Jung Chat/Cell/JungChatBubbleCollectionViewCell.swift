@@ -11,7 +11,6 @@ import UIKit
 class JungChatBubbleCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet var chatLineLabel: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,5 +19,7 @@ class JungChatBubbleCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         self.alpha = 1
+
     }
+    
 }

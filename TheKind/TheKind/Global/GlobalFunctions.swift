@@ -11,6 +11,10 @@ import UIKit
 
 
 let PRIMARYFONT = "Acrylic Hand Sans"
+// This var is true when user clicks to see the carousel of another user.
+// It is used to distinguish two functions for the same view
+// 1) ChooseKind 2) UserCarousel. 
+var isShowingUserCarousel:Bool = false
 
 func returnActionTriggerView(by tag: Int) -> KindActionTriggerViewProtocol? {
     //Starts in the root of the view hierarchy and search for the tagged view.

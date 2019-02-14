@@ -26,7 +26,7 @@
                             <fragment content="PayPal: Your security code is: 626009. Your code expires in 5 minutes Please don't re.">
                                 <attributes>
                                     <color key="NSColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <font key="NSFont" size="12" name="AcrylicHandSans-Regular"/>
+                                    <font key="NSFont" size="11" name="AcrylicHandSans-Regular"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" hyphenationFactor="1" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                 </attributes>
                             </fragment>

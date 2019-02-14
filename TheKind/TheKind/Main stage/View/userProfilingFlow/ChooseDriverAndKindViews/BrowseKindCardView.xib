@@ -15,7 +15,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChooseKindCardView" customModule="TheKind" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowseKindCardView" customModule="TheKind" customModuleProvider="target">
             <connections>
                 <outlet property="chooseCardView" destination="IGt-CQ-adm" id="EEc-FF-cVg"/>
                 <outlet property="chooseKindCard" destination="iN0-l3-epB" id="f6W-dp-czu"/>
@@ -53,9 +53,47 @@
                             <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nI2-Vc-OLm" userLabel="viewForAvatar">
+                            <rect key="frame" x="147.5" y="153.5" width="80" height="80"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoArc" translatesAutoresizingMaskIntoConstraints="NO" id="Nt4-yN-O8Y" userLabel="photoArc">
+                                    <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                </imageView>
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zLu-jS-XPw" userLabel="photoFrame">
+                                    <rect key="frame" x="-1" y="1" width="82" height="78"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="2bq-wU-3Be">
+                                            <rect key="frame" x="0.0" y="0.0" width="82" height="78"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="2bq-wU-3Be" firstAttribute="height" secondItem="zLu-jS-XPw" secondAttribute="height" id="5Yq-DS-fJg"/>
+                                        <constraint firstItem="2bq-wU-3Be" firstAttribute="centerY" secondItem="zLu-jS-XPw" secondAttribute="centerY" id="AJQ-xu-jKW"/>
+                                        <constraint firstItem="2bq-wU-3Be" firstAttribute="centerX" secondItem="zLu-jS-XPw" secondAttribute="centerX" id="AeA-u5-fTx"/>
+                                        <constraint firstItem="2bq-wU-3Be" firstAttribute="width" secondItem="zLu-jS-XPw" secondAttribute="width" id="NxX-y1-e4i"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="2WI-he-YZy"/>
+                                <constraint firstItem="Nt4-yN-O8Y" firstAttribute="centerX" secondItem="nI2-Vc-OLm" secondAttribute="centerX" id="ACM-iy-4J5"/>
+                                <constraint firstItem="Nt4-yN-O8Y" firstAttribute="height" secondItem="nI2-Vc-OLm" secondAttribute="height" id="BG1-98-3yg"/>
+                                <constraint firstItem="zLu-jS-XPw" firstAttribute="centerY" secondItem="Nt4-yN-O8Y" secondAttribute="centerY" id="BaK-9N-1t5"/>
+                                <constraint firstItem="zLu-jS-XPw" firstAttribute="width" secondItem="Nt4-yN-O8Y" secondAttribute="width" constant="2" id="DL9-x9-ZKx"/>
+                                <constraint firstItem="Nt4-yN-O8Y" firstAttribute="width" secondItem="nI2-Vc-OLm" secondAttribute="width" id="L4p-f7-Vh4"/>
+                                <constraint firstAttribute="width" constant="80" id="THe-Ak-gZh"/>
+                                <constraint firstItem="zLu-jS-XPw" firstAttribute="height" secondItem="Nt4-yN-O8Y" secondAttribute="height" constant="-2" id="Wm1-CI-cZr"/>
+                                <constraint firstItem="Nt4-yN-O8Y" firstAttribute="centerY" secondItem="nI2-Vc-OLm" secondAttribute="centerY" id="q42-Xr-H8V"/>
+                                <constraint firstItem="zLu-jS-XPw" firstAttribute="centerX" secondItem="Nt4-yN-O8Y" secondAttribute="centerX" id="xJZ-cD-Nbp"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="nI2-Vc-OLm" firstAttribute="centerX" secondItem="IGt-CQ-adm" secondAttribute="centerX" id="F0i-Ob-6nX"/>
+                        <constraint firstItem="8a1-t0-nIt" firstAttribute="top" secondItem="nI2-Vc-OLm" secondAttribute="bottom" constant="-50" id="GPP-xl-rND"/>
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="leading" secondItem="IGt-CQ-adm" secondAttribute="leading" id="Gjv-m8-NrU"/>
                         <constraint firstItem="ARb-vM-AwA" firstAttribute="centerX" secondItem="IGt-CQ-adm" secondAttribute="centerX" id="L30-e3-GOo"/>
                         <constraint firstItem="8a1-t0-nIt" firstAttribute="centerY" secondItem="IGt-CQ-adm" secondAttribute="centerY" id="PLB-G5-b0F"/>
@@ -76,4 +114,8 @@
             <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
         </view>
     </objects>
+    <resources>
+        <image name="photoArc" width="65" height="65"/>
+        <image name="userPhoto" width="52" height="51"/>
+    </resources>
 </document>

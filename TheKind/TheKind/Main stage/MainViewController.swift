@@ -26,6 +26,7 @@ class MainViewController: UIViewController {
     
     @IBOutlet var JungChatWindowY: NSLayoutConstraint!
     @IBOutlet var chatMask: UIImageView!
+    @IBOutlet var chatMaskView: UIView!
     
     
     var loggedUserEmail: String?
@@ -64,7 +65,7 @@ class MainViewController: UIViewController {
     }
 
     
-    @IBOutlet var chooseKindCardViewHost: ChooseKindCardView! {
+    @IBOutlet var chooseKindCardViewHost: BrowseKindCardView! {
         didSet {
             chooseKindCardViewHost.isHidden = true
             chooseKindCardViewHost.alpha = 0
@@ -125,8 +126,9 @@ class MainViewController: UIViewController {
         
         loggedUserEmail = Auth.auth().currentUser?.email
         
-        chatMask.isHidden = false
-        jungChatWindow.mask = chatMask
+        //chatMask.isHidden = false
+        //jungChatWindow.mask = chatMask
+        //jungChatWindow.mask = chatMaskView
 
         
         delay(bySeconds: 1) {
@@ -149,9 +151,9 @@ class MainViewController: UIViewController {
     }
     
     func presentJungIntro() {
-        hitPickerControl()
-        let options = self.talkbox.createUserOptions(opt1: "Wire-in mode.", opt2: "Introduce me to someone.", actionView: self.view)
-        let intro = JungRoutine(snippets: introSnippets, userResponseOptions: options, sender: .Jung)
+        //hitPickerControl()
+        //let options = self.talkbox.createUserOptions(opt1: "Wire-in mode.", opt2: "Introduce me to someone.", actionView: self.view)
+        let intro = JungRoutine(snippets: introSnippets, userResponseOptions: nil, sender: .Jung)
         talkbox.displayRoutine(routine: intro)
     }
     

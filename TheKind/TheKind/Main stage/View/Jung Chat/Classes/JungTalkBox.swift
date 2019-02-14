@@ -58,6 +58,7 @@ class JungTalkBox {
         
     }
 
+    //TODO: Maybe treat for empty dialog.
     func routineFromText(dialog: String, snippetId: [Int]? = nil, sender: Sender? = nil, action: [KindActionType], actionView: [ActionViewName], options: (Snippet,Snippet)? = nil) -> JungRoutine? {
         
         let messages = Array(dialog.split(separator: "-").map({ (substring) -> String in
@@ -78,6 +79,21 @@ class JungTalkBox {
         }
         
 
+        return JungRoutine.init(snippets: snippets, userResponseOptions: options, sender: .Jung)
+        
+    }
+    
+    func routineWithNoText(snippetId: [Int]? = nil, sender: Sender? = nil, action: [KindActionType], actionView: [ActionViewName], options: (Snippet,Snippet)? = nil) -> JungRoutine? {
+        
+        var snippets:[Snippet] = []
+        
+        for index in 0...action.count-1 {
+            let snippet = Snippet.init(message: "", action: action[index],
+                                       id: snippetId?[index] ?? 0, actionView: actionView[index])
+            snippets.append(snippet)
+        }
+        
+        
         return JungRoutine.init(snippets: snippets, userResponseOptions: options, sender: .Jung)
         
     }

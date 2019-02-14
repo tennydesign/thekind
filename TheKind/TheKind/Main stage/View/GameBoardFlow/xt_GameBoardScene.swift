@@ -22,11 +22,42 @@ extension GameBoardScene {
         let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
         //moveCamToCenterOfTileAndZoom(row: row, column: column)
         
-        moveCamToCenterOfTileAndZoom(duration: 0.6, centerLocation: centerLocation)
-
+        moveCamToCenterOfTileAndZoom(duration: 0.6, centerLocation: centerLocation) {
+            self.kindMatchControlView.preIntroduction()
+        }
     }
     
-    func moveCamToCenterOfTileAndZoom(duration: Double,centerLocation: CGPoint) {
+
+    
+    
+    func moveCamToCenterOfTile(duration: Double, centerLocation: CGPoint, completion: (()->())?) {
+        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
+        cameraMoveAction.timingFunction = CubicEaseOut
+        
+        if !isPanning {
+            camera?.run(cameraMoveAction, completion: {
+                if let completion = completion {
+                    completion()
+                }
+            })
+        }
+    }
+    
+    func moveCamToCenterOfTile(duration: Double, row: Int, column: Int, completion: (()->())?) {
+        let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
+        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
+        cameraMoveAction.timingFunction = CubicEaseOut
+        
+        if !isPanning {
+            camera?.run(cameraMoveAction, completion: {
+                if let completion = completion {
+                    completion()
+                }
+            })
+        }
+    }
+    
+    func moveCamToCenterOfTileAndZoom(duration: Double,centerLocation: CGPoint, completion: (()->())?) {
         //let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
         let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
         cameraMoveAction.timingFunction = CubicEaseOut
@@ -37,59 +68,15 @@ extension GameBoardScene {
         
         if !isPanning {
             camera?.run(parallelActions, completion: {
-            
+                if let completion = completion {
+                    completion()
+                }
             })
         }
         
     }
     
-    func moveCamToCenterOfTile(duration: Double, centerLocation: CGPoint, completion: @escaping (()->())) {
-        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
-        cameraMoveAction.timingFunction = CubicEaseOut
-        
-        if !isPanning {
-            camera?.run(cameraMoveAction, completion: {
-                completion()
-            })
-        }
-    }
-    
-    func moveCamToCenterOfTile(duration: Double, centerLocation: CGPoint) {
-        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
-        cameraMoveAction.timingFunction = CubicEaseOut
-        
-        if !isPanning {
-            camera?.run(cameraMoveAction, completion: {
-               
-            })
-        }
-    }
-    
-    func moveCamToCenterOfTile(duration: Double, row: Int, column: Int, completion: @escaping (()->())) {
-        let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
-        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
-        cameraMoveAction.timingFunction = CubicEaseOut
-        
-        if !isPanning {
-            camera?.run(cameraMoveAction, completion: {
-                completion()
-            })
-        }
-    }
-    
-    func moveCamToCenterOfTile(duration: Double, row: Int, column: Int) {
-        let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
-        let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
-        cameraMoveAction.timingFunction = CubicEaseOut
-        
-        if !isPanning {
-            camera?.run(cameraMoveAction, completion: {
-               
-            })
-        }
-    }
-    
-    func moveCamToCenterOfTileAndZoom(duration: Double, row: Int, column: Int) {
+    func moveCamToCenterOfTileAndZoom(duration: Double, row: Int, column: Int, completion: (()->())?) {
         let centerLocation = kindTilemap.centerOfTile(atColumn: column, row: row)
         let cameraMoveAction = SKAction.move(to: centerLocation, duration: duration)
         cameraMoveAction.timingFunction = CubicEaseOut
@@ -99,7 +86,9 @@ extension GameBoardScene {
 
         if !isPanning {
             camera?.run(parallelActions, completion: {
-                
+                if let completion = completion {
+                    completion()
+                }
             })
         }
         

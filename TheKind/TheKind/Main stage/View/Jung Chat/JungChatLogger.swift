@@ -21,13 +21,14 @@ class JungChatLogger: KindActionTriggerView {
     @IBOutlet var mainView: UIView!
     @IBOutlet var HoldToAnswerViewWidthAnchor: NSLayoutConstraint!
 
+    @IBOutlet var jungSymbolImageView: UIImageView!
     
     @IBOutlet var heightCollectionViewConsraint: NSLayoutConstraint!
     @IBOutlet var holdToAnswerBar: UIView!
     var mainViewController: MainViewController?
     
     var messagesPipe: [Int: String] = [:]
-
+    //var animator: UIViewPropertyAnimator()
     var messagesCollection: [String] = [] {
         didSet {
             refreshAndScrollCollectionView()
@@ -39,7 +40,7 @@ class JungChatLogger: KindActionTriggerView {
         return jungChatLoggerCollectionView.numberOfItems(inSection: 0)  - 1
     }
    
-    let targetStretcherValue: CGFloat = 56.0
+    let targetStretcherValue: CGFloat = 46.0
     
     // This is setup on init by the main view controller.
     var talkbox: JungTalkBox! {
@@ -59,13 +60,19 @@ class JungChatLogger: KindActionTriggerView {
         commonInit()
     }
     
-    
+    private var gradient: CAGradientLayer!
     func commonInit() {
         Bundle.main.loadNibNamed("JungChatLogger", owner: self, options: nil)
         addSubview(jungChatLogger)
-
-        jungChatLogger.frame = self.bounds
-        jungChatLogger.autoresizingMask = [.flexibleHeight,.flexibleWidth]
+        
+//        gradient = CAGradientLayer()
+//        gradient.frame = self.bounds
+//        gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
+//        gradient.locations = [1, 0.55]
+//        layer.insertSublayer(gradient, at: 0)
+        
+//        jungChatLogger.frame = self.bounds
+//        jungChatLogger.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         
         setupGestures()
         
@@ -83,17 +90,21 @@ class JungChatLogger: KindActionTriggerView {
         if self.messagesCollection.isEmpty {resetJungChat()}
   
         hideOptionLabels(true, completion: nil)
-        
 
     
     }
+    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        gradient.frame = bounds
+//    }
     
     func resetJungChat() {
         self.messagesCollection = ["","","","","",""]
     }
     
     var animationCount: Int = 0
-    var tempoInBetweenPosts: Double = 1
+    var tempoInBetweenPosts: Double = 2.2
     var delayJungPostInSecs: Double = 0
     
     
@@ -188,7 +199,12 @@ class JungChatLogger: KindActionTriggerView {
     }
     
     func stopLoadingAnimator() {
+        
         if self.animationCount == 0 {
+            if let transform = self.jungSymbolImageView.layer.presentation()?.transform {
+                self.jungSymbolImageView.layer.removeAllAnimations()
+                self.jungSymbolImageView.layer.transform = transform
+            }
             self.jungLoadingAnimator.stopAnimating()
         }
     }
@@ -196,16 +212,24 @@ class JungChatLogger: KindActionTriggerView {
     func startLoadingAnimator(for count: Int) {
         self.animationCount += count
         if !jungLoadingAnimator.isAnimating {
+            let rotate = CABasicAnimation(keyPath: "transform.rotation")
+            rotate.byValue = 2 * CGFloat.pi
+            rotate.duration = 4
+            rotate.repeatCount = .greatestFiniteMagnitude
+            self.jungSymbolImageView.layer.add(rotate, forKey: nil)
             jungLoadingAnimator.startAnimating()
         }
     }
     
+    func updateJungRotationPosition() {
+        if let presentation = self.jungSymbolImageView.layer.presentation() {
+            let transform = presentation.transform
+            self.jungSymbolImageView.layer.transform = transform
+        }
+    }
 
   
-    
-    // Time Between the user posted answer displayed and Jung's routine response.
-    var timeSpanFromUserAnswer: Double = 2
-    
+
     fileprivate func postWithFailSafeBarControl(_ userResponseOption: Snippet?) {
         
         HoldToAnswerViewWidthAnchor.constant = 0//targetStretcherValue
@@ -228,6 +252,7 @@ class JungChatLogger: KindActionTriggerView {
     
     // This updates the collectionview
     fileprivate func postMessageToJungChat(message: String) {
+        // do not post empty strings
         if !message.isEmpty {
             self.messagesCollection.append(message)
             self.refreshAndScrollCollectionView()
@@ -294,6 +319,7 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "JungChatBubbleCollectionViewCell", for: indexPath) as! JungChatBubbleCollectionViewCell
 
+
         cell.chatLineLabel.attributedText = formatJungChatBubbleText(text: messagesCollection[indexPath.row])
         cell.alpha = alphaMessageRatio(indexPath: indexPath)
         return cell
@@ -303,7 +329,7 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         var rowSize: CGSize = CGSize(width: collectionView.frame.width, height: 55)
-        let boundaries:CGRect = estimateFrameFromText(messagesCollection[indexPath.row], bounding: rowSize, fontSize: 12, fontName: PRIMARYFONT)
+        let boundaries:CGRect = estimateFrameFromText(messagesCollection[indexPath.row], bounding: rowSize, fontSize: 11, fontName: PRIMARYFONT)
         rowSize = CGSize(width: collectionView.frame.width, height: boundaries.size.height + 10)
 
         return rowSize
@@ -312,16 +338,15 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
     
     func scrollCollectionViewToRecentMessage() {
         let indexPath = IndexPath(row: mostRecentChatMessageIndex, section: 0)
-        jungChatLoggerCollectionView.scrollToItem(at: indexPath, at: .bottom, animated: false)
+        jungChatLoggerCollectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
     }
     
     func refreshAndScrollCollectionView() {
-        
         self.jungChatLoggerCollectionView.reloadData()
         self.scrollCollectionViewToRecentMessage()
         
     }
-    
+
     
 
     func formatJungChatBubbleText(text: String) -> NSAttributedString {
@@ -350,9 +375,9 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
         {
             return 1
         } else if (indexPath.row == mostRecentChatMessageIndex - 1) {
-            return 0.2
+            return 0.6
         } else if (indexPath.row == mostRecentChatMessageIndex - 2){
-            return 0.1
+            return 0.4
         } else {
             return 0
         }

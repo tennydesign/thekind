@@ -90,7 +90,7 @@ class BrowseKindCardView: KindActionTriggerView {
     }
     
     func commonInit() {
-        Bundle.main.loadNibNamed("ChooseKindCardView", owner: self, options: nil)
+        Bundle.main.loadNibNamed("BrowseKindCardView", owner: self, options: nil)
         addSubview(chooseKindCard)
         
         fillAndPresentLabelWith(0)
@@ -101,7 +101,7 @@ class BrowseKindCardView: KindActionTriggerView {
     override func talk() {
         let txt = "Lastly...-Choose your kind."
         let actions: [KindActionType] = [.none, .activate]
-        let actionViews: [ActionViewName] = [.none,.ChooseKindView]
+        let actionViews: [ActionViewName] = [.none,.BrowseKindView]
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }
@@ -121,7 +121,7 @@ class BrowseKindCardView: KindActionTriggerView {
     override func rightOptionClicked() {
         let txt = "So you are the Founder kind.-I realy like founders.-Creative disruptors."
         let actions: [KindActionType] = [.none, .deactivate,.talk]
-        let actionViews: [ActionViewName] = [.none,.ChooseKindView,.MapView]
+        let actionViews: [ActionViewName] = [.none,.BrowseKindView,.MapView]
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }
@@ -129,6 +129,10 @@ class BrowseKindCardView: KindActionTriggerView {
     override func leftOptionClicked() {
         if isShowingUserCarousel {
             self.fadeOutView()
+            let actions: [KindActionType] = [.talk]
+            let actionViews: [ActionViewName] = [ActionViewName.GameBoardSceneControlView]
+            
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
             isShowingUserCarousel = false
         } else {
             self.fadeOutView()
@@ -148,7 +152,7 @@ class BrowseKindCardView: KindActionTriggerView {
         let actionViews: [ActionViewName] = [.none,.none]
         
         
-        let options = self.talkbox?.createUserOptions(opt1: "Back to circle", opt2: "Introduce us.", actionViews: (ActionViewName.ChooseKindView,ActionViewName.KindMatchControlView))
+        let options = self.talkbox?.createUserOptions(opt1: "Back to circle", opt2: "Introduce us.", actionViews: (ActionViewName.BrowseKindView,ActionViewName.KindMatchControlView))
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }

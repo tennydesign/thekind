@@ -24,16 +24,18 @@ class GameBoardScene: SKScene {
     var pinchGestureRecognizer = UIPinchGestureRecognizer()
     var tapGestureRecognizer = UITapGestureRecognizer()
     var isPanning:Bool = false
+    var sceneCamera: SKCameraNode!
     
     var talkbox: JungTalkBox? {
         didSet {
             gameControllerView.talkbox = self.talkbox
+            kindMatchControlView.talkbox = self.talkbox
         }
     }
     
     //View to control board KindActtionTriggerProtocol
     let gameControllerView = GameBoardSceneControlView()
-    
+    let kindMatchControlView = KindMatchControl()
     //Initializes all zoom variables.
     var initCamScale: CGFloat? {
         didSet {
@@ -54,9 +56,9 @@ class GameBoardScene: SKScene {
         
         
         gameControllerView.delegate = self
- 
+        kindMatchControlView.delegate = self
         self.view?.addSubview(gameControllerView)
-        
+        self.view?.addSubview(kindMatchControlView)
         // read the scene and load maps
         initializeTileMaps()
         
@@ -67,7 +69,7 @@ class GameBoardScene: SKScene {
         setupTileMap(tileMap: kindTilemap, rows: 24, columns: 24, tileSize: CGSize(width: 56, height: 56))
         
         // config background map.
-        setupTileMap(tileMap: kindTilemap, rows: 24, columns: 24, tileSize: CGSize(width: 56, height: 56))
+        setupTileMap(tileMap: backgroundTileMap, rows: 24, columns: 24, tileSize: CGSize(width: 56, height: 56))
         
         // setup size of the scene based on size of tilemap.
         scene!.size = kindTilemap.mapSize
@@ -104,6 +106,7 @@ class GameBoardScene: SKScene {
             camera.setScale(maxZoomOutLimit!*2)
             self.camera = camera
             changeCameraZoom(camera: camera, scale: initCamScale!)
+            sceneCamera = camera
         }
     }
     

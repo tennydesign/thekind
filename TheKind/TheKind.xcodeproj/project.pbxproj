@@ -32,8 +32,8 @@
 		A02A5D0A21CB2E9400F26463 /* KindActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02A5D0921CB2E9400F26463 /* KindActionTriggerView.swift */; };
 		A02B24D321E0318500737ACC /* DobOnboardingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A02B24D221E0318500737ACC /* DobOnboardingView.xib */; };
 		A02B24D521E031AA00737ACC /* dobOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02B24D421E031AA00737ACC /* dobOnboardingView.swift */; };
-		A02D719F21C42FA300EBBD12 /* ChooseKindCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D719E21C42FA300EBBD12 /* ChooseKindCardView.swift */; };
-		A02D71A121C4300E00EBBD12 /* ChooseKindCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A02D71A021C4300E00EBBD12 /* ChooseKindCardView.xib */; };
+		A02D719F21C42FA300EBBD12 /* BrowseKindCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D719E21C42FA300EBBD12 /* BrowseKindCardView.swift */; };
+		A02D71A121C4300E00EBBD12 /* BrowseKindCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A02D71A021C4300E00EBBD12 /* BrowseKindCardView.xib */; };
 		A02D71A521C6BC7200EBBD12 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D71A421C6BC7200EBBD12 /* OnBoardingViewController.swift */; };
 		A0301D672190B21100E023F7 /* thedeck.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0301D662190B21100E023F7 /* thedeck.sks */; };
 		A0301D692190B33200E023F7 /* gameboardScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0301D682190B33200E023F7 /* gameboardScene.sks */; };
@@ -131,8 +131,8 @@
 		A02A5D0921CB2E9400F26463 /* KindActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindActionTriggerView.swift; sourceTree = "<group>"; };
 		A02B24D221E0318500737ACC /* DobOnboardingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DobOnboardingView.xib; sourceTree = "<group>"; };
 		A02B24D421E031AA00737ACC /* dobOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dobOnboardingView.swift; sourceTree = "<group>"; };
-		A02D719E21C42FA300EBBD12 /* ChooseKindCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseKindCardView.swift; sourceTree = "<group>"; };
-		A02D71A021C4300E00EBBD12 /* ChooseKindCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseKindCardView.xib; sourceTree = "<group>"; };
+		A02D719E21C42FA300EBBD12 /* BrowseKindCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseKindCardView.swift; sourceTree = "<group>"; };
+		A02D71A021C4300E00EBBD12 /* BrowseKindCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowseKindCardView.xib; sourceTree = "<group>"; };
 		A02D71A421C6BC7200EBBD12 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		A0301D662190B21100E023F7 /* thedeck.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = thedeck.sks; sourceTree = "<group>"; };
 		A0301D682190B33200E023F7 /* gameboardScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = gameboardScene.sks; sourceTree = "<group>"; };
@@ -512,8 +512,8 @@
 			children = (
 				A002F49421BF57D3006E8660 /* ChooseDriverView.swift */,
 				A002F49621BF5800006E8660 /* ChooseDriverView.xib */,
-				A02D719E21C42FA300EBBD12 /* ChooseKindCardView.swift */,
-				A02D71A021C4300E00EBBD12 /* ChooseKindCardView.xib */,
+				A02D719E21C42FA300EBBD12 /* BrowseKindCardView.swift */,
+				A02D71A021C4300E00EBBD12 /* BrowseKindCardView.xib */,
 				A0D960CF21C1A7DA00DF1CB0 /* Cell */,
 			);
 			path = ChooseDriverAndKindViews;
@@ -718,7 +718,7 @@
 				A0320B4F212B69BA008A96E2 /* LoginExistingUser.xib in Resources */,
 				A0120E6221C6DF99000454EC /* SwipeCards.storyboard in Resources */,
 				A05150F421E3FFFC00795172 /* UserNameView.xib in Resources */,
-				A02D71A121C4300E00EBBD12 /* ChooseKindCardView.xib in Resources */,
+				A02D71A121C4300E00EBBD12 /* BrowseKindCardView.xib in Resources */,
 				A031885721C33A57008D1198 /* HUDview.xib in Resources */,
 				A0B6B29A21CD5BEC00C58B3F /* AcrylicHand-Serif.ttf in Resources */,
 				A0320B5D212E1596008A96E2 /* GoogleService-Info.plist in Resources */,
@@ -894,7 +894,7 @@
 				A0C5D2C7212B511E00BF1B0C /* LandingViewController.swift in Sources */,
 				A046420B21CC3B6F00E8817C /* JungAWSRecognitionBadge.swift in Sources */,
 				A0301D702190C32300E023F7 /* GameBoardScene.swift in Sources */,
-				A02D719F21C42FA300EBBD12 /* ChooseKindCardView.swift in Sources */,
+				A02D719F21C42FA300EBBD12 /* BrowseKindCardView.swift in Sources */,
 				A0120E6421C6DFAE000454EC /* SwipeCardsViewController.swift in Sources */,
 				A05150F821E44A9400795172 /* KindUser.swift in Sources */,
 				A0034F7822039AE600E9810B /* CircleDetailView.swift in Sources */,

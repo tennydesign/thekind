@@ -59,7 +59,7 @@ class ChooseDriverView: KindActionTriggerView {
     override func talk() {
         let txt = "Now...-What drives you the most?.-We all have a stronger one."
         let actions: [KindActionType] = [.none, .activate, .none]
-        let actionViews: [ActionViewName] = [.none,.ChooseDriver, .none]
+        let actionViews: [ActionViewName] = [.none,.ChooseDriverView, .none]
         
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I identify with this one.", actionView: self)
         
@@ -77,7 +77,7 @@ class ChooseDriverView: KindActionTriggerView {
     override func rightOptionClicked() {
         let txt = "Ohhh \(selected)...-Great choice!"
         let actions: [KindActionType] = [.deactivate,.talk]
-        let actionViews: [ActionViewName] = [.ChooseDriver,.ChooseKind]
+        let actionViews: [ActionViewName] = [.ChooseDriverView,.BrowseKindView]
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }

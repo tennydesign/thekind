@@ -13,7 +13,7 @@ class OnBoardingViewController: UIViewController {
 
 
     
-    @IBOutlet var chooseKindCardView: ChooseKindCardView! {
+    @IBOutlet var chooseKindCardView: BrowseKindCardView! {
         didSet{
             chooseKindCardView.alpha = 0
         }

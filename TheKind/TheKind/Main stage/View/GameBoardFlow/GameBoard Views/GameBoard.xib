@@ -27,10 +27,10 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="ggI-hj-mdy" secondAttribute="bottom" id="1vO-Ow-kUL"/>
                 <constraint firstItem="ggI-hj-mdy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="PZb-B3-7Ta"/>
                 <constraint firstItem="ggI-hj-mdy" firstAttribute="trailing" secondItem="8PV-EL-Ven" secondAttribute="trailing" id="TbV-9d-mWu"/>
                 <constraint firstItem="ggI-hj-mdy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="XoS-HA-ytE"/>
-                <constraint firstItem="ggI-hj-mdy" firstAttribute="bottom" secondItem="8PV-EL-Ven" secondAttribute="bottom" id="jPt-PX-3Dv"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="8PV-EL-Ven"/>

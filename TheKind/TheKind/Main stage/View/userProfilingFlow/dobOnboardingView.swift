@@ -91,7 +91,7 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
        
         let txt = "I understand you are about \(age) years old.- We are almost finished with the setup."
         let actions: [KindActionType] = [.none,.talk]
-        let actionViews: [ActionViewName] = [.none,.ChooseDriver]
+        let actionViews: [ActionViewName] = [.none,.ChooseDriverView]
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
         
         // Move next.
