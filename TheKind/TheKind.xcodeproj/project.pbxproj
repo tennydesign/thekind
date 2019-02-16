@@ -24,11 +24,11 @@
 		A0034F7522039ACA00E9810B /* CircleAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0034F7422039ACA00E9810B /* CircleAnnotationModel.swift */; };
 		A0034F7822039AE600E9810B /* CircleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0034F7622039AE600E9810B /* CircleDetailView.swift */; };
 		A0034F7922039AE600E9810B /* CircleDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0034F7722039AE600E9810B /* CircleDetailView.xib */; };
-		A0120E6221C6DF99000454EC /* SwipeCards.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0120E6121C6DF99000454EC /* SwipeCards.storyboard */; };
-		A0120E6421C6DFAE000454EC /* SwipeCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0120E6321C6DFAE000454EC /* SwipeCardsViewController.swift */; };
 		A0120E6621C6E345000454EC /* BadgePhotoSetupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */; };
 		A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */; };
-		A017CDD42190E1B6002B7D9D /* xt_GameBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A017CDD32190E1B6002B7D9D /* xt_GameBoardScene.swift */; };
+		A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */; };
+		A025F6E122172D720010BDA1 /* ChosenKindCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A025F6DF22172D720010BDA1 /* ChosenKindCollectionViewCell.swift */; };
+		A025F6E222172D720010BDA1 /* ChosenKindCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A025F6E022172D720010BDA1 /* ChosenKindCollectionViewCell.xib */; };
 		A02A5D0A21CB2E9400F26463 /* KindActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02A5D0921CB2E9400F26463 /* KindActionTriggerView.swift */; };
 		A02B24D321E0318500737ACC /* DobOnboardingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A02B24D221E0318500737ACC /* DobOnboardingView.xib */; };
 		A02B24D521E031AA00737ACC /* dobOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02B24D421E031AA00737ACC /* dobOnboardingView.swift */; };
@@ -79,6 +79,12 @@
 		A0D086EB215EA61300011A54 /* AcylicalHand-Small-SVG.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0D086EA215EA61200011A54 /* AcylicalHand-Small-SVG.ttf */; };
 		A0D960CD21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D960CB21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift */; };
 		A0D960CE21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0D960CC21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib */; };
+		A0E9C0462215D05200C949D4 /* KindMatchControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E9C0452215D05200C949D4 /* KindMatchControl.swift */; };
+		A0E9C0482215D27000C949D4 /* GameBoardSceneControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E9C0472215D27000C949D4 /* GameBoardSceneControlView.swift */; };
+		A0E9C04A22162D0D00C949D4 /* CardSwipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0E9C04922162D0D00C949D4 /* CardSwipeView.xib */; };
+		A0E9C04C22162D2400C949D4 /* CardSwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E9C04B22162D2400C949D4 /* CardSwipeView.swift */; };
+		A0E9C04E2216415E00C949D4 /* KindSwipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0E9C04D2216415E00C949D4 /* KindSwipeView.xib */; };
+		A0E9C0502216416D00C949D4 /* KindSwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E9C04F2216416D00C949D4 /* KindSwipeView.swift */; };
 		A0F223A621B88DB10096C25D /* KindButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F223A521B88DB10096C25D /* KindButton.swift */; };
 		A0F223A821B88E0F0096C25D /* KindTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F223A721B88E0F0096C25D /* KindTextField.swift */; };
 		A0FBB735221395C700405440 /* GameBoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FBB734221395C700405440 /* GameBoardModel.swift */; };
@@ -123,11 +129,11 @@
 		A0034F7422039ACA00E9810B /* CircleAnnotationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleAnnotationModel.swift; sourceTree = "<group>"; };
 		A0034F7622039AE600E9810B /* CircleDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleDetailView.swift; sourceTree = "<group>"; };
 		A0034F7722039AE600E9810B /* CircleDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleDetailView.xib; sourceTree = "<group>"; };
-		A0120E6121C6DF99000454EC /* SwipeCards.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SwipeCards.storyboard; sourceTree = "<group>"; };
-		A0120E6321C6DFAE000454EC /* SwipeCardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCardsViewController.swift; sourceTree = "<group>"; };
 		A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgePhotoSetupView.xib; sourceTree = "<group>"; };
 		A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePhotoSetupView.swift; sourceTree = "<group>"; };
-		A017CDD32190E1B6002B7D9D /* xt_GameBoardScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xt_GameBoardScene.swift; sourceTree = "<group>"; };
+		A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xt_GesturesGameBoardScene.swift; sourceTree = "<group>"; };
+		A025F6DF22172D720010BDA1 /* ChosenKindCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChosenKindCollectionViewCell.swift; sourceTree = "<group>"; };
+		A025F6E022172D720010BDA1 /* ChosenKindCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChosenKindCollectionViewCell.xib; sourceTree = "<group>"; };
 		A02A5D0921CB2E9400F26463 /* KindActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindActionTriggerView.swift; sourceTree = "<group>"; };
 		A02B24D221E0318500737ACC /* DobOnboardingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DobOnboardingView.xib; sourceTree = "<group>"; };
 		A02B24D421E031AA00737ACC /* dobOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dobOnboardingView.swift; sourceTree = "<group>"; };
@@ -184,6 +190,12 @@
 		A0D086EA215EA61200011A54 /* AcylicalHand-Small-SVG.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Small-SVG.ttf"; sourceTree = "<group>"; };
 		A0D960CB21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kindCollectioViewCell.swift; sourceTree = "<group>"; };
 		A0D960CC21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = kindCollectioViewCell.xib; sourceTree = "<group>"; };
+		A0E9C0452215D05200C949D4 /* KindMatchControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindMatchControl.swift; sourceTree = "<group>"; };
+		A0E9C0472215D27000C949D4 /* GameBoardSceneControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardSceneControlView.swift; sourceTree = "<group>"; };
+		A0E9C04922162D0D00C949D4 /* CardSwipeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardSwipeView.xib; sourceTree = "<group>"; };
+		A0E9C04B22162D2400C949D4 /* CardSwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSwipeView.swift; sourceTree = "<group>"; };
+		A0E9C04D2216415E00C949D4 /* KindSwipeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KindSwipeView.xib; sourceTree = "<group>"; };
+		A0E9C04F2216416D00C949D4 /* KindSwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindSwipeView.swift; sourceTree = "<group>"; };
 		A0F223A521B88DB10096C25D /* KindButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindButton.swift; sourceTree = "<group>"; };
 		A0F223A721B88E0F0096C25D /* KindTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindTextField.swift; sourceTree = "<group>"; };
 		A0FBB734221395C700405440 /* GameBoardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardModel.swift; sourceTree = "<group>"; };
@@ -298,10 +310,22 @@
 		A0120E6021C6DF68000454EC /* SwipeCards stage */ = {
 			isa = PBXGroup;
 			children = (
-				A0120E6121C6DF99000454EC /* SwipeCards.storyboard */,
-				A0120E6321C6DFAE000454EC /* SwipeCardsViewController.swift */,
+				A0E9C04922162D0D00C949D4 /* CardSwipeView.xib */,
+				A0E9C04B22162D2400C949D4 /* CardSwipeView.swift */,
+				A0E9C04D2216415E00C949D4 /* KindSwipeView.xib */,
+				A0E9C04F2216416D00C949D4 /* KindSwipeView.swift */,
+				A025F6DE22172D450010BDA1 /* Cell */,
 			);
 			path = "SwipeCards stage";
+			sourceTree = "<group>";
+		};
+		A025F6DE22172D450010BDA1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A025F6DF22172D720010BDA1 /* ChosenKindCollectionViewCell.swift */,
+				A025F6E022172D720010BDA1 /* ChosenKindCollectionViewCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		A02A5D0B21CB348E00F26463 /* Classes */ = {
@@ -326,8 +350,10 @@
 			children = (
 				A0301D6D2190C00C00E023F7 /* GameBoard.swift */,
 				A0301D6F2190C32300E023F7 /* GameBoardScene.swift */,
-				A017CDD32190E1B6002B7D9D /* xt_GameBoardScene.swift */,
+				A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */,
 				A0FBB7362213A97800405440 /* xt_ActionTriggerGameBoardScene.swift */,
+				A0E9C0472215D27000C949D4 /* GameBoardSceneControlView.swift */,
+				A0E9C0452215D05200C949D4 /* KindMatchControl.swift */,
 				A0301D6A2190BEB000E023F7 /* GameBoard Views */,
 				A0FBB7382213A9DE00405440 /* Model */,
 			);
@@ -467,7 +493,6 @@
 				A002F47521B9EEC0006E8660 /* Global */,
 				A0320B57212CDE75008A96E2 /* Login stage */,
 				A0320B58212DB6E6008A96E2 /* Main stage */,
-				A0120E6021C6DF68000454EC /* SwipeCards stage */,
 				A02D71A621C6BDDF00EBBD12 /* old_Onboarding Stage */,
 				A0C5D232212A4A7600BF1B0C /* LaunchScreen.storyboard */,
 				A0C5D235212A4A7600BF1B0C /* Info.plist */,
@@ -542,6 +567,7 @@
 		A0F223B121B8A75E0096C25D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A0120E6021C6DF68000454EC /* SwipeCards stage */,
 				A031885521C33A1E008D1198 /* HUD */,
 				A002F47821B9EFAE006E8660 /* Jung Chat */,
 				A0301D652190B1CA00E023F7 /* GameBoardFlow */,
@@ -706,6 +732,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0E9C04A22162D0D00C949D4 /* CardSwipeView.xib in Resources */,
 				A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */,
 				A070760121F2CEAB0013380D /* MapView.xib in Resources */,
 				A0120E6621C6E345000454EC /* BadgePhotoSetupView.xib in Resources */,
@@ -716,7 +743,6 @@
 				A0320B5F212F2873008A96E2 /* Main.storyboard in Resources */,
 				A0C5D234212A4A7600BF1B0C /* LaunchScreen.storyboard in Resources */,
 				A0320B4F212B69BA008A96E2 /* LoginExistingUser.xib in Resources */,
-				A0120E6221C6DF99000454EC /* SwipeCards.storyboard in Resources */,
 				A05150F421E3FFFC00795172 /* UserNameView.xib in Resources */,
 				A02D71A121C4300E00EBBD12 /* BrowseKindCardView.xib in Resources */,
 				A031885721C33A57008D1198 /* HUDview.xib in Resources */,
@@ -729,9 +755,11 @@
 				A0B6B29821CD599B00C58B3F /* AcylicalHand-Tall.ttf in Resources */,
 				A0320B4B212B6363008A96E2 /* LoginOptionsView.xib in Resources */,
 				A0C5D231212A4A7600BF1B0C /* Assets.xcassets in Resources */,
+				A0E9C04E2216415E00C949D4 /* KindSwipeView.xib in Resources */,
 				A002F48521B9EFAE006E8660 /* JungChatBubbleCollectionViewCell.xib in Resources */,
 				A0301D672190B21100E023F7 /* thedeck.sks in Resources */,
 				A03A46AA21C6C18200D90190 /* OnBoarding.storyboard in Resources */,
+				A025F6E222172D720010BDA1 /* ChosenKindCollectionViewCell.xib in Resources */,
 				A0D960CE21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib in Resources */,
 				A0C5D22C212A4A7500BF1B0C /* Login.storyboard in Resources */,
 				A0034F7922039AE600E9810B /* CircleDetailView.xib in Resources */,
@@ -767,11 +795,13 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Koloda/Koloda.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+				"${BUILT_PRODUCTS_DIR}/pop/pop.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -780,11 +810,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Koloda.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/pop.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -878,26 +910,29 @@
 				A0320B56212B8AB6008A96E2 /* Extensions.swift in Sources */,
 				A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */,
 				A0320B4D212B63C2008A96E2 /* LoginOptionsView.swift in Sources */,
-				A017CDD42190E1B6002B7D9D /* xt_GameBoardScene.swift in Sources */,
+				A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */,
 				A05150F621E4002800795172 /* UserNameView.swift in Sources */,
 				A0FBB7372213A97800405440 /* xt_ActionTriggerGameBoardScene.swift in Sources */,
 				A0320B53212B69DD008A96E2 /* LoginExistingUser.swift in Sources */,
 				A03D77F321B7518A00DCF627 /* JungTalkBox.swift in Sources */,
 				A0D960CD21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift in Sources */,
 				A002F49121BDD01F006E8660 /* LandingViewControllerViewModel.swift in Sources */,
+				A0E9C0502216416D00C949D4 /* KindSwipeView.swift in Sources */,
 				A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */,
 				A0034F7322039ABE00E9810B /* MapViewViewModel.swift in Sources */,
 				A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */,
 				A02D71A521C6BC7200EBBD12 /* OnBoardingViewController.swift in Sources */,
 				A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */,
 				A002F48E21BDC9D6006E8660 /* Bindable.swift in Sources */,
+				A025F6E122172D720010BDA1 /* ChosenKindCollectionViewCell.swift in Sources */,
 				A0C5D2C7212B511E00BF1B0C /* LandingViewController.swift in Sources */,
 				A046420B21CC3B6F00E8817C /* JungAWSRecognitionBadge.swift in Sources */,
 				A0301D702190C32300E023F7 /* GameBoardScene.swift in Sources */,
 				A02D719F21C42FA300EBBD12 /* BrowseKindCardView.swift in Sources */,
-				A0120E6421C6DFAE000454EC /* SwipeCardsViewController.swift in Sources */,
+				A0E9C0482215D27000C949D4 /* GameBoardSceneControlView.swift in Sources */,
 				A05150F821E44A9400795172 /* KindUser.swift in Sources */,
 				A0034F7822039AE600E9810B /* CircleDetailView.swift in Sources */,
+				A0E9C04C22162D2400C949D4 /* CardSwipeView.swift in Sources */,
 				A0015A30218CE8DF001DDA20 /* MainViewController.swift in Sources */,
 				A0034F7522039ACA00E9810B /* CircleAnnotationModel.swift in Sources */,
 				A0B6B29C21D1786900C58B3F /* JungTalkBoxModel.swift in Sources */,
@@ -908,6 +943,7 @@
 				A031885921C33A76008D1198 /* HUDview.swift in Sources */,
 				A0C5D227212A4A7500BF1B0C /* AppDelegate.swift in Sources */,
 				A02A5D0A21CB2E9400F26463 /* KindActionTriggerView.swift in Sources */,
+				A0E9C0462215D05200C949D4 /* KindMatchControl.swift in Sources */,
 				A0301D6E2190C00C00E023F7 /* GameBoard.swift in Sources */,
 				A0C5C06D21FF5A1300846B82 /* CreateNewUser.swift in Sources */,
 				A002F49521BF57D3006E8660 /* ChooseDriverView.swift in Sources */,

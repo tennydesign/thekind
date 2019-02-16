@@ -54,6 +54,7 @@ enum ActionViewName: Int {
         MapView = 105,
         BrowseKindView = 106,
         ChooseDriverView = 107,
+        CardSwipeView = 108,
         none = -1
 }
 

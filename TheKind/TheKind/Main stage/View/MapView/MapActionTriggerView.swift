@@ -96,6 +96,8 @@ class MapActionTriggerView: KindActionTriggerView {
         
     }
     
+    
+    
     override func talk() {
         clearJungChatLog()
         UIView.animate(withDuration: 0.4, animations: {

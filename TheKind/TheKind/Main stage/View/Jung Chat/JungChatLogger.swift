@@ -104,7 +104,7 @@ class JungChatLogger: KindActionTriggerView {
     }
     
     var animationCount: Int = 0
-    var tempoInBetweenPosts: Double = 2.2
+    var tempoInBetweenPosts: Double = 1
     var delayJungPostInSecs: Double = 0
     
     

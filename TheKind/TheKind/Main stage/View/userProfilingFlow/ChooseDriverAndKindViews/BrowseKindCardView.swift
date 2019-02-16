@@ -99,31 +99,37 @@ class BrowseKindCardView: KindActionTriggerView {
     
 
     override func talk() {
-        let txt = "Lastly...-Choose your kind."
-        let actions: [KindActionType] = [.none, .activate]
-        let actionViews: [ActionViewName] = [.none,.BrowseKindView]
-        
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        if !isShowingUserCarousel{
+            let txt = "Lastly...-Choose your kind."
+            let actions: [KindActionType] = [.none, .activate]
+            let actionViews: [ActionViewName] = [.none,.BrowseKindView]
+            
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        }
     }
     
     override func activate() {
+        self.fadeInView()
         if isShowingUserCarousel {
             browseKind()
         } else {
             selectedKind()
         }
-        self.fadeInView()
     }
     
     override func deactivate() {
         self.fadeOutView()
     }
+    
     override func rightOptionClicked() {
-        let txt = "So you are the Founder kind.-I realy like founders.-Creative disruptors."
-        let actions: [KindActionType] = [.none, .deactivate,.talk]
-        let actionViews: [ActionViewName] = [.none,.BrowseKindView,.MapView]
-        
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        if !isShowingUserCarousel {
+            guard let kindName = kinds[selectedIndex].name else {return}
+            let txt = "You chose\(kindName). -Also know as The Mage.-Moving on..."
+            let actions: [KindActionType] = [.none, .deactivate,.talk]
+            let actionViews: [ActionViewName] = [.none,.BrowseKindView,.MapView]
+            
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        }
     }
     
     override func leftOptionClicked() {
@@ -136,11 +142,10 @@ class BrowseKindCardView: KindActionTriggerView {
             isShowingUserCarousel = false
         } else {
             self.fadeOutView()
-            let txt = "Sure!"
             let actions: [KindActionType] = [.talk]
             let actionViews: [ActionViewName] = [.ChooseDriverView]
             
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
         }
     }
     
@@ -169,6 +174,8 @@ class BrowseKindCardView: KindActionTriggerView {
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
+    
+    
     
     fileprivate func fillAndPresentLabelWith(_ itemIndex: Int) {
         guard let kindName = self.kinds[itemIndex].name else {return}

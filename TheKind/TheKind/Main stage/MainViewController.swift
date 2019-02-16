@@ -17,14 +17,18 @@ class MainViewController: UIViewController {
     @IBOutlet var bottomConstraintPanelMover: NSLayoutConstraint!
     var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
-    @IBOutlet var hudWindow: UIView!
+    
+    
+    @IBOutlet var hudView: HUDview! // content is here.
+    @IBOutlet var hudWindow: UIView! // overall top
+    
     @IBOutlet var jungChatWindow: UIView! {
         didSet{
             //If you want to adjust chatbox window independently of bottomPanel.
         }
     }
+
     
-    @IBOutlet var JungChatWindowY: NSLayoutConstraint!
     @IBOutlet var chatMask: UIImageView!
     @IBOutlet var chatMaskView: UIView!
     
@@ -38,6 +42,14 @@ class MainViewController: UIViewController {
     }
     
     // ADDTRIGGERVIEW: Must add it here.
+    //HERE
+    @IBOutlet var cardSwipeViewHost: CardSwipeView! {
+        didSet{
+            cardSwipeViewHost.isHidden = false
+            cardSwipeViewHost.alpha = 1
+        }
+    }
+    
     @IBOutlet var dobOnboardingViewHost: dobOnboardingView! {
         didSet{
             dobOnboardingViewHost.isHidden = true
@@ -95,8 +107,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    
-    @IBOutlet var hudView: HUDview!
     @IBOutlet var jungChatLogger: JungChatLogger!
     
     let talkbox = JungTalkBox()
@@ -114,6 +124,7 @@ class MainViewController: UIViewController {
         mapViewHost.mainViewController = self
         chooseKindCardViewHost.mainViewController = self
         gameBoardViewHost.mainViewController = self
+        cardSwipeViewHost.mainViewController = self
         
         jungChatLogger.talkbox = talkbox
         badgePhotoSetupViewHost.talkbox = talkbox
@@ -123,6 +134,7 @@ class MainViewController: UIViewController {
         chooseKindCardViewHost.talkbox = talkbox
         mapViewHost.talkbox = talkbox
         gameBoardViewHost.talkbox = talkbox
+        cardSwipeViewHost.talkbox = talkbox
         
         loggedUserEmail = Auth.auth().currentUser?.email
         

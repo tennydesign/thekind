@@ -82,6 +82,8 @@ PODS:
   - GoogleUtilities/UserDefaults (5.3.7):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.1)
+  - Koloda (4.6):
+    - pop (~> 1.0)
   - leveldb-library (1.20)
   - Mapbox-iOS-SDK (4.8.0-alpha.2)
   - nanopb (0.3.901):
@@ -92,6 +94,7 @@ PODS:
   - NVActivityIndicatorView (4.6.1):
     - NVActivityIndicatorView/Presenter (= 4.6.1)
   - NVActivityIndicatorView/Presenter (4.6.1)
+  - pop (1.0.12)
 
 DEPENDENCIES:
   - AWSRekognition
@@ -100,6 +103,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - GoogleSignIn
+  - Koloda
   - Mapbox-iOS-SDK (= 4.8.0-alpha.2)
   - NVActivityIndicatorView
 
@@ -120,10 +124,12 @@ SPEC REPOS:
     - GoogleToolboxForMac
     - GoogleUtilities
     - GTMSessionFetcher
+    - Koloda
     - leveldb-library
     - Mapbox-iOS-SDK
     - nanopb
     - NVActivityIndicatorView
+    - pop
 
 SPEC CHECKSUMS:
   AWSCore: 734b0d67c2c77f6edae9e5520431a37310ea4193
@@ -141,11 +147,13 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
   GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
+  Koloda: bcf5acded25fc49020d1447ed8ddd87e14d01e7e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   Mapbox-iOS-SDK: 621e599a8c0096600bc7116fb4f43a14aaaac8dc
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
+  pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
 
-PODFILE CHECKSUM: f974123b557b16aac3624c5ddce061182a8f57c6
+PODFILE CHECKSUM: a6265a0901e731973c1db8956ab393ff4606d9dc
 
 COCOAPODS: 1.5.3

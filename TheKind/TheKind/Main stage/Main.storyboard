@@ -20,7 +20,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p0c-2d-LM8" userLabel="Backdrop">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.047058823529411764" green="0.047058823529411764" blue="0.047058823529411764" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1LH-Se-bVM" userLabel="ActionTriggerViewsHosts">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -51,16 +51,14 @@
                                     <view tag="106" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bvV-Ka-rMx" userLabel="106-ChooseKindCardViewHost" customClass="BrowseKindCardView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
-                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <view tag="107" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eTK-Ov-xyB" userLabel="107-ChooseDriverViewHost" customClass="ChooseDriverView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
-                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view tag="108" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-Wn-hre" userLabel="108-CardSwipeViewHost" customClass="CardSwipeView" customModule="TheKind" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -70,6 +68,7 @@
                                     <constraint firstAttribute="trailing" secondItem="cym-tF-rfj" secondAttribute="trailing" id="68A-jn-ejH"/>
                                     <constraint firstAttribute="trailing" secondItem="xZ8-CM-mff" secondAttribute="trailing" id="6wJ-rj-bF2"/>
                                     <constraint firstItem="7RB-H1-Tgr" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="9TW-dp-zkN"/>
+                                    <constraint firstItem="mmM-Wn-hre" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="ALp-ym-CVI"/>
                                     <constraint firstAttribute="trailing" secondItem="YKl-rU-KWD" secondAttribute="trailing" id="Agv-iB-B0W"/>
                                     <constraint firstItem="eTK-Ov-xyB" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="B2H-ZB-Gqu"/>
                                     <constraint firstAttribute="trailing" secondItem="bvV-Ka-rMx" secondAttribute="trailing" id="BIo-AF-Ad1"/>
@@ -79,13 +78,16 @@
                                     <constraint firstItem="xZ8-CM-mff" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="IU9-tG-oLJ"/>
                                     <constraint firstItem="xZ8-CM-mff" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="KPD-JP-8qQ"/>
                                     <constraint firstAttribute="bottom" secondItem="bvV-Ka-rMx" secondAttribute="bottom" id="Kb1-7m-ICz"/>
+                                    <constraint firstItem="mmM-Wn-hre" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="LOy-un-TXT"/>
                                     <constraint firstItem="YKl-rU-KWD" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="Pwh-gB-UKV"/>
                                     <constraint firstItem="YKl-rU-KWD" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="Q6c-xi-a6U"/>
                                     <constraint firstAttribute="bottom" secondItem="xZ8-CM-mff" secondAttribute="bottom" id="RfY-FU-f4c"/>
                                     <constraint firstItem="7RB-H1-Tgr" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="ScF-2v-YxP"/>
                                     <constraint firstAttribute="trailing" secondItem="eTK-Ov-xyB" secondAttribute="trailing" id="Sl3-pl-dJ3"/>
                                     <constraint firstItem="0eo-O7-Oer" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="WgU-Lp-5cY"/>
+                                    <constraint firstAttribute="bottom" secondItem="mmM-Wn-hre" secondAttribute="bottom" id="YSN-b5-tKG"/>
                                     <constraint firstAttribute="trailing" secondItem="7RB-H1-Tgr" secondAttribute="trailing" id="bY2-bN-W14"/>
+                                    <constraint firstAttribute="trailing" secondItem="mmM-Wn-hre" secondAttribute="trailing" id="d1J-q8-4qs"/>
                                     <constraint firstItem="0eo-O7-Oer" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="f0J-yD-k0b"/>
                                     <constraint firstItem="cym-tF-rfj" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="faB-7g-Krw"/>
                                     <constraint firstAttribute="bottom" secondItem="cym-tF-rfj" secondAttribute="bottom" id="ifV-Ke-jZA"/>
@@ -154,7 +156,7 @@
                                     <constraint firstItem="C7V-aM-7ZV" firstAttribute="height" secondItem="9pt-Di-eiT" secondAttribute="height" id="zEY-hg-rCW"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGE-Wo-HLs" userLabel="top_curtain">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGE-Wo-HLs" userLabel="top_curtain">
                                 <rect key="frame" x="0.0" y="-28" width="375" height="241"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyb-mU-8lf" userLabel="HUD window">
@@ -211,6 +213,7 @@
                         <outlet property="bottomCurtainImage" destination="uFA-4x-IUP" id="6fZ-4x-Lv0"/>
                         <outlet property="bottomCurtainImageBase" destination="TdV-gj-duV" id="T84-OR-plr"/>
                         <outlet property="bottomCurtainView" destination="9pt-Di-eiT" id="odJ-9c-K3I"/>
+                        <outlet property="cardSwipeViewHost" destination="mmM-Wn-hre" id="C0P-fe-KrA"/>
                         <outlet property="chatMask" destination="Thy-bB-cDC" id="Uj5-c3-kKp"/>
                         <outlet property="chatMaskView" destination="C7V-aM-7ZV" id="9hS-od-1Fq"/>
                         <outlet property="chooseDriverView" destination="eTK-Ov-xyB" id="vp6-R0-bvz"/>
