@@ -29,6 +29,9 @@
 		A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */; };
 		A025F6E122172D720010BDA1 /* ChosenKindCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A025F6DF22172D720010BDA1 /* ChosenKindCollectionViewCell.swift */; };
 		A025F6E222172D720010BDA1 /* ChosenKindCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A025F6E022172D720010BDA1 /* ChosenKindCollectionViewCell.xib */; };
+		A025F6E4221B3FD70010BDA1 /* CustomSwipeOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = A025F6E3221B3FD60010BDA1 /* CustomSwipeOverlay.xib */; };
+		A025F6E6221B403C0010BDA1 /* CustomSwipeOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A025F6E5221B403C0010BDA1 /* CustomSwipeOverlay.swift */; };
+		A025F6E9221B47960010BDA1 /* KeepParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = A025F6E7221B47960010BDA1 /* KeepParticle.sks */; };
 		A02A5D0A21CB2E9400F26463 /* KindActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02A5D0921CB2E9400F26463 /* KindActionTriggerView.swift */; };
 		A02B24D321E0318500737ACC /* DobOnboardingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A02B24D221E0318500737ACC /* DobOnboardingView.xib */; };
 		A02B24D521E031AA00737ACC /* dobOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02B24D421E031AA00737ACC /* dobOnboardingView.swift */; };
@@ -134,6 +137,9 @@
 		A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xt_GesturesGameBoardScene.swift; sourceTree = "<group>"; };
 		A025F6DF22172D720010BDA1 /* ChosenKindCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChosenKindCollectionViewCell.swift; sourceTree = "<group>"; };
 		A025F6E022172D720010BDA1 /* ChosenKindCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChosenKindCollectionViewCell.xib; sourceTree = "<group>"; };
+		A025F6E3221B3FD60010BDA1 /* CustomSwipeOverlay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomSwipeOverlay.xib; sourceTree = "<group>"; };
+		A025F6E5221B403C0010BDA1 /* CustomSwipeOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwipeOverlay.swift; sourceTree = "<group>"; };
+		A025F6E7221B47960010BDA1 /* KeepParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = KeepParticle.sks; sourceTree = "<group>"; };
 		A02A5D0921CB2E9400F26463 /* KindActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindActionTriggerView.swift; sourceTree = "<group>"; };
 		A02B24D221E0318500737ACC /* DobOnboardingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DobOnboardingView.xib; sourceTree = "<group>"; };
 		A02B24D421E031AA00737ACC /* dobOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dobOnboardingView.swift; sourceTree = "<group>"; };
@@ -310,11 +316,14 @@
 		A0120E6021C6DF68000454EC /* SwipeCards stage */ = {
 			isa = PBXGroup;
 			children = (
-				A0E9C04922162D0D00C949D4 /* CardSwipeView.xib */,
 				A0E9C04B22162D2400C949D4 /* CardSwipeView.swift */,
+				A0E9C04922162D0D00C949D4 /* CardSwipeView.xib */,
+				A025F6E3221B3FD60010BDA1 /* CustomSwipeOverlay.xib */,
+				A025F6E5221B403C0010BDA1 /* CustomSwipeOverlay.swift */,
 				A0E9C04D2216415E00C949D4 /* KindSwipeView.xib */,
 				A0E9C04F2216416D00C949D4 /* KindSwipeView.swift */,
 				A025F6DE22172D450010BDA1 /* Cell */,
+				A025F6E7221B47960010BDA1 /* KeepParticle.sks */,
 			);
 			path = "SwipeCards stage";
 			sourceTree = "<group>";
@@ -744,6 +753,7 @@
 				A0C5D234212A4A7600BF1B0C /* LaunchScreen.storyboard in Resources */,
 				A0320B4F212B69BA008A96E2 /* LoginExistingUser.xib in Resources */,
 				A05150F421E3FFFC00795172 /* UserNameView.xib in Resources */,
+				A025F6E4221B3FD70010BDA1 /* CustomSwipeOverlay.xib in Resources */,
 				A02D71A121C4300E00EBBD12 /* BrowseKindCardView.xib in Resources */,
 				A031885721C33A57008D1198 /* HUDview.xib in Resources */,
 				A0B6B29A21CD5BEC00C58B3F /* AcrylicHand-Serif.ttf in Resources */,
@@ -753,6 +763,7 @@
 				A002F49721BF5800006E8660 /* ChooseDriverView.xib in Resources */,
 				A0301D6C2190BED500E023F7 /* GameBoard.xib in Resources */,
 				A0B6B29821CD599B00C58B3F /* AcylicalHand-Tall.ttf in Resources */,
+				A025F6E9221B47960010BDA1 /* KeepParticle.sks in Resources */,
 				A0320B4B212B6363008A96E2 /* LoginOptionsView.xib in Resources */,
 				A0C5D231212A4A7600BF1B0C /* Assets.xcassets in Resources */,
 				A0E9C04E2216415E00C949D4 /* KindSwipeView.xib in Resources */,
@@ -920,6 +931,7 @@
 				A0E9C0502216416D00C949D4 /* KindSwipeView.swift in Sources */,
 				A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */,
 				A0034F7322039ABE00E9810B /* MapViewViewModel.swift in Sources */,
+				A025F6E6221B403C0010BDA1 /* CustomSwipeOverlay.swift in Sources */,
 				A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */,
 				A02D71A521C6BC7200EBBD12 /* OnBoardingViewController.swift in Sources */,
 				A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */,

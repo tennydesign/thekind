@@ -57,20 +57,6 @@
                             <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Zb-m6-dcN" userLabel="Jung Loading Animator" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
-                            <rect key="frame" x="162.5" y="113.5" width="50" height="50"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="50" id="Sje-an-e2d"/>
-                                <constraint firstAttribute="height" constant="50" id="xyL-lK-yps"/>
-                            </constraints>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="ballScaleMultiple"/>
-                                <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                    <color key="value" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </view>
                         <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Jung_ai" translatesAutoresizingMaskIntoConstraints="NO" id="gFN-uh-qgM" userLabel="Jung">
                             <rect key="frame" x="167.5" y="118.5" width="40" height="40"/>
                             <constraints>
@@ -78,9 +64,23 @@
                                 <constraint firstAttribute="width" constant="40" id="dtx-cA-cPv"/>
                             </constraints>
                         </imageView>
+                        <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Zb-m6-dcN" userLabel="Jung Loading Animator" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
+                            <rect key="frame" x="162.5" y="113.5" width="50" height="50"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="Sje-an-e2d"/>
+                                <constraint firstAttribute="height" constant="50" id="xyL-lK-yps"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="circleStrokeSpin"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                    <color key="value" red="0.90196078431372551" green="0.14901960784313725" blue="0.396078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                         <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7kP-Zp-pCJ" userLabel="HoldToAnswerViewBar">
-                            <rect key="frame" x="159.5" y="167.5" width="56" height="1"/>
-                            <color key="backgroundColor" red="0.90064877271652222" green="0.14752364158630371" blue="0.39424765110015869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <rect key="frame" x="159.5" y="165.5" width="56" height="1"/>
+                            <color key="backgroundColor" red="0.90196078431372551" green="0.14901960784313725" blue="0.396078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="56" id="9C6-oT-JKf"/>
                                 <constraint firstAttribute="height" constant="1" id="wJB-qt-8NY"/>
@@ -108,7 +108,7 @@
                         <constraint firstItem="8Zb-m6-dcN" firstAttribute="centerX" secondItem="gFN-uh-qgM" secondAttribute="centerX" id="LyB-zB-gSx"/>
                         <constraint firstItem="gFN-uh-qgM" firstAttribute="centerY" secondItem="lfN-ey-Vla" secondAttribute="centerY" id="asK-GX-AWv"/>
                         <constraint firstItem="cKD-xW-40i" firstAttribute="centerY" secondItem="gFN-uh-qgM" secondAttribute="centerY" id="h4K-GW-tkk"/>
-                        <constraint firstItem="7kP-Zp-pCJ" firstAttribute="bottom" secondItem="gFN-uh-qgM" secondAttribute="bottom" constant="10" id="i7D-Ah-qrq"/>
+                        <constraint firstItem="7kP-Zp-pCJ" firstAttribute="bottom" secondItem="gFN-uh-qgM" secondAttribute="bottom" constant="8" id="i7D-Ah-qrq"/>
                         <constraint firstItem="cKD-xW-40i" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" constant="100" id="lCb-dp-F7M"/>
                         <constraint firstItem="gFN-uh-qgM" firstAttribute="centerY" secondItem="8Zb-m6-dcN" secondAttribute="centerY" id="nhf-dW-y0J"/>
                         <constraint firstItem="gFN-uh-qgM" firstAttribute="top" secondItem="7dT-VQ-BOy" secondAttribute="bottom" constant="20" id="oK9-rm-ivh"/>
