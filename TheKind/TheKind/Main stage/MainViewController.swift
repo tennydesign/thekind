@@ -17,7 +17,7 @@ class MainViewController: UIViewController {
     @IBOutlet var bottomConstraintPanelMover: NSLayoutConstraint!
     var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
-    
+    var kindUserManager: KindUserManager?
     
     @IBOutlet var hudView: HUDview! // content is here.
     @IBOutlet var hudWindow: UIView! // overall top
@@ -32,8 +32,6 @@ class MainViewController: UIViewController {
     @IBOutlet var chatMask: UIImageView!
     @IBOutlet var chatMaskView: UIView!
     
-    
-    var loggedUserEmail: String?
     // TODO: Gameboard is hidden
     @IBOutlet var gameBoardViewHost: GameBoard! {
         didSet {
@@ -46,7 +44,7 @@ class MainViewController: UIViewController {
     @IBOutlet var cardSwipeViewHost: CardSwipeView! {
         didSet{
             cardSwipeViewHost.isHidden = false
-            cardSwipeViewHost.alpha = 1
+            cardSwipeViewHost.alpha = 0
         }
     }
     
@@ -125,7 +123,10 @@ class MainViewController: UIViewController {
         chooseKindCardViewHost.mainViewController = self
         gameBoardViewHost.mainViewController = self
         cardSwipeViewHost.mainViewController = self
+        dobOnboardingViewHost.mainViewController = self
+        chooseDriverView.mainViewController = self
         
+    
         jungChatLogger.talkbox = talkbox
         badgePhotoSetupViewHost.talkbox = talkbox
         dobOnboardingViewHost.talkbox = talkbox
@@ -135,8 +136,7 @@ class MainViewController: UIViewController {
         mapViewHost.talkbox = talkbox
         gameBoardViewHost.talkbox = talkbox
         cardSwipeViewHost.talkbox = talkbox
-        
-        loggedUserEmail = Auth.auth().currentUser?.email
+        kindUserManager = KindUserManager()
         
         //chatMask.isHidden = false
         //jungChatWindow.mask = chatMask
@@ -197,7 +197,7 @@ class MainViewController: UIViewController {
 
 
 var introSnippets : [Snippet] = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
-                                 Snippet(message: "You say it like 'YUNG'.", action: .activate,id: 2, actionView: ActionViewName.GameBoard)]
+                                 Snippet(message: "You say it like 'YUNG'.", action: .talk,id: 2, actionView: ActionViewName.UserNameView)]
 
 
 

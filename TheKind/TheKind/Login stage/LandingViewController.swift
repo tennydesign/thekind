@@ -74,6 +74,7 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
         
         GIDSignIn.sharedInstance()?.delegate = self
         GIDSignIn.sharedInstance()?.uiDelegate = self
+        //GIDSignIn.sharedInstance()?.signInSilently()
         
         loginTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         self.loginWindow.addGestureRecognizer(loginTapGesture)
@@ -139,7 +140,7 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
 // MARK: === LOGIN WITH FIREBASE
 extension LandingViewController: GIDSignInDelegate,GIDSignInUIDelegate {
     
-    // === THIS USES THE MVVM
+    // === THIS USES THE MVVM - it mimics the VM just so we don't have to call VM from the Views
     func createNewUser(email:String, password: String, completion: @escaping (Error?)->()) {
         landingViewControllerViewModel.createNewUser(email, password) { (err) in
             if let err = err {
@@ -153,6 +154,7 @@ extension LandingViewController: GIDSignInDelegate,GIDSignInUIDelegate {
     }
     
     func loginWithEmailAndPassword(email: String, password: String, completion: @escaping (Error?)->()) {
+        
         landingViewControllerViewModel.loginWithEmailAndPassword(email, password) { (err) in
             if let err = err {
                 print("something wrong when login in user:", err)
@@ -161,6 +163,7 @@ extension LandingViewController: GIDSignInDelegate,GIDSignInUIDelegate {
             }
             completion(nil)
         }
+        
     }
     
      func goToOnboading() {
@@ -181,8 +184,8 @@ extension LandingViewController: GIDSignInDelegate,GIDSignInUIDelegate {
             print("Access token: \(String(describing: authentication.accessToken))")
             
             if let email = user.profile.email, let name = user.profile.name {
-                KindUser.loggedUserEmail = email
-                KindUser.loggedUserName = name
+                KindUserManager.loggedUserEmail = email
+                KindUserManager.loggedUserName = name
             }
             
             goToOnboading()

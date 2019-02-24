@@ -128,6 +128,9 @@ class BrowseKindCardView: KindActionTriggerView {
             let actions: [KindActionType] = [.none, .deactivate,.talk]
             let actionViews: [ActionViewName] = [.none,.BrowseKindView,.MapView]
             
+            mainViewController?.kindUserManager?.userFields[UserFields.kind.rawValue] = kindName
+            mainViewController?.kindUserManager?.updateUserSettings()
+            
             self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
         }
     }

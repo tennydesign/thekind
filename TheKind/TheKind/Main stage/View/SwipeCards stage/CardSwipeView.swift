@@ -9,16 +9,15 @@
 import UIKit
 import Koloda
 
-//HERE: IMPLEMENT OVERLAYS
-
 class CardSwipeView: UIView {
     var kindsToSwipe: [UIImage] = [#imageLiteral(resourceName: "team_player"),#imageLiteral(resourceName: "explorer"),#imageLiteral(resourceName: "idealist"),#imageLiteral(resourceName: "rebel")]
     var currentlyShowingCard = UIImage()
-    var kindsChosen : [UIImage] = [#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "fire"), #imageLiteral(resourceName: "map"), #imageLiteral(resourceName: "chair"),#imageLiteral(resourceName: "map"),#imageLiteral(resourceName: "chair"),#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "chair"),#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "map"),#imageLiteral(resourceName: "fire")]
+    var kindsChosen : [UIImage] = []//[#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "fire"), #imageLiteral(resourceName: "map"), #imageLiteral(resourceName: "chair"),#imageLiteral(resourceName: "map"),#imageLiteral(resourceName: "chair"),#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "chair"),#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "map"),#imageLiteral(resourceName: "fire")]
     // The selected (clocked on) kind of the chosenKindsCollectionView
     var kindsChosenSelectedIndex = -1
     var mainViewController: MainViewController?
     var talkbox: JungTalkBox?
+    var presentSwipeOptionsAsJungButtons: Bool = true
     
     @IBOutlet var kolodaView: KolodaView!
     @IBOutlet var chosenKindsCollectionView: UICollectionView!
@@ -48,9 +47,6 @@ class CardSwipeView: UIView {
         chosenKindsCollectionView.dataSource = self
         chosenKindsCollectionView.delegate = self
         kolodaView.appearanceAnimationDuration = 0.3
-        kolodaView.reverseAnimationDuration = 0.1
-        kolodaView.countOfVisibleCards = 1
-        kolodaView.alphaValueSemiTransparent = 0
         chosenKindsCollectionView?.register(UINib(nibName: "ChosenKindCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ChosenKindCollectionViewCell")
 
     
@@ -68,25 +64,27 @@ extension CardSwipeView: KolodaViewDelegate {
         if imageToShowIndex == kindsToSwipe.count {
             imageToShowIndex = 0
         }
+        
         koloda.resetCurrentCardIndex()
 
     }
     
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection) {
+        
         if direction == SwipeResultDirection.left {
+            // inserts
             kindsChosen.insert(currentlyShowingCard, at: 0)
-
             let indexPath = IndexPath(item: 0, section: 0)
-            chosenKindsCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
             chosenKindsCollectionView.insertItems(at: [indexPath])
-            //Attempts to change the image on the cell if cell is visible. It fails if user has scrolled the collectionview past (0,0) indexpath
-            if let cell = chosenKindsCollectionView.cellForItem(at: indexPath) as? ChosenKindCollectionViewCell {
-                cell.kindImageView.image = currentlyShowingCard.withRenderingMode(.alwaysTemplate)
-                cell.kindImageView.tintColor = UIColor(r: 171, g: 171, b: 171)
+            chosenKindsCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
+            
+            // I need this delay otherwise the insert above cancels the reload.
+            delay(bySeconds: 0.3) {
+                self.deselectAllItemsInChosenKindCollection()
             }
-
-            // By reloading we are making sure the collectionview is updated with the chosenKind regardless if the let above has failed.
-            chosenKindsCollectionView.reloadData()
+            
+        } else if direction == SwipeResultDirection.right {
+            deselectAllItemsInChosenKindCollection()
         }
     }
     
@@ -105,6 +103,7 @@ extension CardSwipeView: KolodaViewDelegate {
     func kolodaShouldTransparentizeNextCard(_ koloda: KolodaView) -> Bool {
         return true
     }
+ 
 }
 
 extension CardSwipeView: KolodaViewDataSource {
@@ -113,6 +112,10 @@ extension CardSwipeView: KolodaViewDataSource {
     }
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
+        kindsChosenSelectedIndex = -1
+        presentSwipeOptionsAsJungButtons = true
+        self.mainViewController?.jungChatLogger.resetJungChat()
+        chosenKindsCollectionView.reloadData()
         introduceKind()
     }
     
@@ -122,24 +125,26 @@ extension CardSwipeView: KolodaViewDataSource {
         
         
         currentlyShowingCard = kindsToSwipe[imageToShowIndex]
-//
-//        // ============== change info inside card here
+
         customView?.imageView.image = currentlyShowingCard.withRenderingMode(.alwaysTemplate)
         customView?.imageView.tintColor = UIColor(r: 210, g: 183, b: 102)
 
-        self.mainViewController?.jungChatLogger.resetJungChat()
+        //Describe incoming Kind.
         introduceKind()
+
+        // tells the system a new card is being presented for swipe (modifies the behavior of the right/left buttons)
+        presentSwipeOptionsAsJungButtons = true
         
         return customView!
     }
     
 
     func kolodaSpeedThatCardShouldDrag(_ koloda: KolodaView) -> DragSpeed {
-        return .fast
+        return .default
     }
     
     func introduceKind() {
-        let txt = "The Poet kind says:-There should be no filter between reality and emotions.-Life is a beautiful emotional rollercoaster.-Enjoy it while you can."
+        let txt = "(TOP) The Poet kind says:-There should be no filter between reality and emotions.-Life is a beautiful emotional rollercoaster.-Enjoy it while you can."
         let actions: [KindActionType] = [.none,.none,.none,.none]
         let actionViews: [ActionViewName] = [.none,.none,.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "Keep it.", opt2: "Don't keep it.", actionView: self)
@@ -148,6 +153,9 @@ extension CardSwipeView: KolodaViewDataSource {
     }
 
 }
+
+// ===== REFERS TO THE COLLECTION VIEW OF CHOSEN KINDS
+// ====================================================
 
 extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -163,32 +171,50 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
         } else {
             cell.kindImageView.tintColor = UIColor(r: 171, g: 171, b: 171)
         }
-        
+    
         return cell
         
     }
     
+ 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
+        
+        // tells the system the focus is not on the card being presented for swipe (modifies the behavior of the right/left buttons)
+        presentSwipeOptionsAsJungButtons = false
+        // cleans chat.
+        self.mainViewController?.jungChatLogger.resetJungChat()
+    
         kindsChosenSelectedIndex = indexPath.row
         collectionView.reloadData()
-
-        //HERE: JUNG OFFERS TO REMOVE KIND.
-        let txt = "The Poet kind says:-There should be no filter between reality and emotions."
+        
+        jungOffersToRemoveKindFromCollectionView()
+    }
+    
+    func koloda(_ koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
+        guard let overlayView = Bundle.main.loadNibNamed("CustomSwipeOverlay", owner: self, options: nil)![0] as? CustomSwipeOverlay else {return nil}
+        return overlayView
+    }
+    
+    func jungOffersToRemoveKindFromCollectionView() {
+        //JUNG OFFERS TO REMOVE KIND.
+        let txt = "(BOTTOM) The Poet kind says:-There should be no filter between reality and emotions."
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "Tell me more.", opt2: "Release kind.", actionView: self)
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: options))
     }
-    
-    func koloda(_ koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {
-        guard let overlayView = Bundle.main.loadNibNamed("CustomSwipeOverlay", owner: self, options: nil)![0] as? CustomSwipeOverlay else {return nil}
 
-        return overlayView
+    func deselectAllItemsInChosenKindCollection() {
+        kindsChosenSelectedIndex = -1 // deselect everyone
+        chosenKindsCollectionView.reloadData()
     }
-
     
 }
+
+
+// ===== REFERS TO THE ACTION TRIGGERS
+// ====================================================
 
 extension CardSwipeView: KindActionTriggerViewProtocol {
     
@@ -204,26 +230,47 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
         
     }
     
-    //HERE
+    
     func rightOptionClicked() {
-        let indexPath = IndexPath(item: kindsChosenSelectedIndex, section: 0)
-        kindsChosen.remove(at: indexPath.row)
-        chosenKindsCollectionView.deleteItems(at: [indexPath])
-        chosenKindsCollectionView.reloadData()
-        let txt = "Done."
-        let actions: [KindActionType] = [.none]
-        let actionViews: [ActionViewName] = [.none]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+        if !presentSwipeOptionsAsJungButtons {
+            removeKind()
+        } else {
+            kolodaView.swipe(.right)
+        }
+    }
+    
+    private func removeKind() {
+        if kindsChosenSelectedIndex > -1 {
+            let indexPath = IndexPath(item: kindsChosenSelectedIndex, section: 0)
+            kindsChosen.remove(at: indexPath.row)
+            
+            chosenKindsCollectionView.deleteItems(at: [indexPath])
+            chosenKindsCollectionView.reloadData()
+            
+            let txt = "Done."
+            let actions: [KindActionType] = [.none]
+            let actionViews: [ActionViewName] = [.none]
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+        } else {
+            fatalError("kindsChosenSelectedIndex is pointing to -1, this will break the app")
+        }
     }
     
     func leftOptionClicked() {
+        if !presentSwipeOptionsAsJungButtons {
+            moreInfoOnKind()
+        } else {
+            kolodaView.swipe(.left)
+        }
+    }
+
+    private func moreInfoOnKind() {
         let txt = "Life is like a rollercoaster.-The ups are high and the downs are low.-The rollercoaster of life is what makes it genuine, sensible, intense and worth living."
         let actions: [KindActionType] = [.none,.none,.none]
         let actionViews: [ActionViewName] = [.none,.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Release kind.", actionView: self)
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: options))
     }
-    
     func fadeInView() {
         
     }
@@ -234,4 +281,6 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
     
     
 }
+
+
 

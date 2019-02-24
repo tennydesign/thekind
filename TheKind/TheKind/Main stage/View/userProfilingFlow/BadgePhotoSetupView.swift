@@ -58,6 +58,17 @@ class BadgePhotoSetupView: KindActionTriggerView {
     
     
     override func rightOptionClicked() {
+        
+        // SAVE PHOTO TO DATABASE
+        guard let image = mainViewController?.hudView.userPictureImageVIew.image else {
+            fatalError("couldn't find an image to update")
+        }
+        guard let uploadData = image.jpegData(compressionQuality: 0.1) else {
+            fatalError("error compressing image")
+        }
+        
+        mainViewController?.kindUserManager?.uploadUserPicture(profileImageData: uploadData)
+        
         self.fadeOutView()
         let txt = "-Cool!-I think it looks good too 🙂."
         let actions: [KindActionType] = [.none,.talk]

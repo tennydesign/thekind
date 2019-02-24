@@ -74,9 +74,9 @@ class LoginExistingUser: UIView,UITextFieldDelegate,loginValidationProtocol {
             }
             // Just so this gets executed.
             print("passed")
-            KindUser.loggedUserEmail = email
-            KindUser.loggedUserName = String(email.split(separator: "@").first ?? "")
-            
+//            KindUserManager.loggedUserEmail = email
+//            KindUserManager.loggedUserName = String(email.split(separator: "@").first ?? "")
+//
             self.navigateAfterFadingOut()
 
         })

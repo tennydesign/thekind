@@ -47,7 +47,7 @@
                                 <constraint firstItem="rOu-ac-IIP" firstAttribute="top" secondItem="HIt-8J-2dn" secondAttribute="top" id="xzd-JI-xBz"/>
                             </constraints>
                         </view>
-                        <view clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8vQ-xq-ppk" userLabel="viewForAvatar">
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8vQ-xq-ppk" userLabel="viewForAvatar">
                             <rect key="frame" x="313" y="56" width="52" height="52"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoArc" translatesAutoresizingMaskIntoConstraints="NO" id="DMl-s2-61A" userLabel="photoArc">
@@ -56,7 +56,7 @@
                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="60A-On-gjo" userLabel="photoFrame">
                                     <rect key="frame" x="-1" y="1" width="54" height="50"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cH0-kM-N6P">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="cH0-kM-N6P">
                                             <rect key="frame" x="0.0" y="0.0" width="54" height="50"/>
                                         </imageView>
                                     </subviews>
@@ -129,5 +129,6 @@
         <image name="circleIcon" width="21" height="21"/>
         <image name="hud_kind_icon" width="103" height="133"/>
         <image name="photoArc" width="65" height="65"/>
+        <image name="userPhoto" width="52" height="51"/>
     </resources>
 </document>

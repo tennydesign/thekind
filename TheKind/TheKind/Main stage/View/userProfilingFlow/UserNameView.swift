@@ -90,7 +90,7 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
 
         textField.resignFirstResponder()
         
-        KindUser.loggedUserName = username
+        KindUserManager.loggedUserName = username
         let txt = "Great, I will call you \(username) from now on.-You can change it again if you prefer."
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
@@ -104,9 +104,9 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
      override func talk() {
         var txt: String = ""
 
-        if !(KindUser.loggedUserName ?? "").isEmpty {
-            userNameTextField.text = KindUser.loggedUserName
-            txt = "Can I call you \(KindUser.loggedUserName!)?-If that's not good please change above."
+        if !(KindUserManager.loggedUserName ?? "").isEmpty {
+            userNameTextField.text = KindUserManager.loggedUserName
+            txt = "Can I call you \(KindUserManager.loggedUserName!)?-If that's not good please change above."
         } else {
              userNameTextField.text = "[Type your name]"
              txt = "Hummm... I tried but didn't find your name.-Please enter your name above"
@@ -134,21 +134,24 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         var txt: String = ""
         
         if let username = userNameTextField.text, !(username.trimmingCharacters(in: .whitespaces).isEmpty) {
-            KindUser.loggedUserName = username
-            txt = "Great, \(KindUser.loggedUserName ?? username) nice to meet you.-Welcome to The Kind."
-            // SAVE USERNAME TO FIRESTORE.
-            // PROCEED ON COMPLETED
+            KindUserManager.loggedUserName = username
+            txt = "Great, \(KindUserManager.loggedUserName ?? username) nice to meet you.-Welcome to The Kind."
+            
+            let kindUserManager = KindUserManager()
+            kindUserManager.userFields[UserFields.name.rawValue] = username
+            kindUserManager.updateUserSettings()
+            
+            //Move forward
+            let actions: [KindActionType] = [.none,.talk]
+            let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView]
+            self.fadeOutView()
+            
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+          
         } else {
-            talk() // Talk to the user about the user name. (repeat the routine)
-            return
+            talk() // Talk to the user about the updated user name. (repeat the routine)
         }
-        
-        let actions: [KindActionType] = [.none,.talk]
-        let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView]
-        self.fadeOutView()
-        
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
-        
+       
     }
 
      override func leftOptionClicked() {

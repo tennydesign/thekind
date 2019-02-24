@@ -21,7 +21,6 @@ class OnBoardingViewController: UIViewController {
     @IBOutlet var chooseDriverView: ChooseDriverView! {
         didSet{
             chooseDriverView.alpha = 1
-            chooseDriverView.onBoardingViewController = self
         }
     }
     @IBOutlet var pickYourKindWindow: UIView!

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 class JungTalkBox {
+    var isProcessingSpeech = false
     let tempoBetweenPlayerResponseAndJungResponse: Double = 2
     //var mainViewController: MainViewController?
     
@@ -18,23 +19,26 @@ class JungTalkBox {
     
     
     func displayRoutine(routine: JungRoutineProtocol?, wait: Double? = nil) {
-        delay(bySeconds: wait ?? 0) {
-            self.injectRoutineMessageObserver?(routine)
-        }
+        //if !isProcessingSpeech {
+            delay(bySeconds: wait ?? 0) {
+                self.injectRoutineMessageObserver?(routine)
+                self.isProcessingSpeech = true
+            }
+        //}
     }
     
     func displayRoutine(for userResponseOption: Snippet?, wait: Double? = nil) {
         guard let userResponseOption = userResponseOption else {return}
-        
+
         let playerMessage = Snippet.init(message: userResponseOption.message, action: userResponseOption.action, id: userResponseOption.id, actionView: userResponseOption.actionView ?? .none)
         let playerPostRoutine = JungRoutine.init(snippets: [playerMessage], userResponseOptions: nil, sender: .Player)
-        
+
         // 1 - send the user message to the chat
         injectRoutineMessageObserver?(playerPostRoutine)
-        
+
         // 2 - get Jung routine response to the chat. FIRESTORE
         let jungPostRoutine = retrieveRoutineForUserOption(userOptionId: userResponseOption.id)
-        
+
         // 3 - Send response routine to chat.
         delay(bySeconds: tempoBetweenPlayerResponseAndJungResponse) {
             self.injectRoutineMessageObserver?(jungPostRoutine)

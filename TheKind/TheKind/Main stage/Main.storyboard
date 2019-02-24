@@ -56,7 +56,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view tag="108" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-Wn-hre" userLabel="108-CardSwipeViewHost" customClass="CardSwipeView" customModule="TheKind" customModuleProvider="target">
+                                    <view alpha="0.0" tag="108" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-Wn-hre" userLabel="108-CardSwipeViewHost" customClass="CardSwipeView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
@@ -156,7 +156,7 @@
                                     <constraint firstItem="C7V-aM-7ZV" firstAttribute="height" secondItem="9pt-Di-eiT" secondAttribute="height" id="zEY-hg-rCW"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGE-Wo-HLs" userLabel="top_curtain">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGE-Wo-HLs" userLabel="top_curtain">
                                 <rect key="frame" x="0.0" y="-28" width="375" height="241"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyb-mU-8lf" userLabel="HUD window">

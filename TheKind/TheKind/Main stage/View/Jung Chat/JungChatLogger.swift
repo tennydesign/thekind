@@ -27,7 +27,10 @@ class JungChatLogger: KindActionTriggerView {
     @IBOutlet var holdToAnswerBar: UIView!
     var mainViewController: MainViewController?
     
-    var messagesPipe: [Int: String] = [:]
+    
+    let serialPostsQueue = DispatchQueue(label: "com.thekind.jungPosts")
+    var messagesPipe: [String] = []
+    
     //var animator: UIViewPropertyAnimator()
     var messagesCollection: [String] = [] {
         didSet {
@@ -148,6 +151,8 @@ class JungChatLogger: KindActionTriggerView {
                     delay(bySeconds: 0.5, closure: {
                         self.performPostsWithTimeInterval(jungRoutine) { (success) in
                             self.stopLoadingAnimator()
+                            // release jung lock.
+                            self.talkbox.isProcessingSpeech = false
                             if labelsUpdated {
                                 self.hideOptionLabels(false, completion: nil)
                             }
@@ -161,6 +166,8 @@ class JungChatLogger: KindActionTriggerView {
                     
                     self.postMessageToJungChat(message: message)
                     self.talkbox.executeSnippetAction(snippet)
+                    // release jung lock.
+                    self.talkbox.isProcessingSpeech = false
                     if labelsUpdated {
                         self.hideOptionLabels(false, completion: nil)
                     }
@@ -176,24 +183,34 @@ class JungChatLogger: KindActionTriggerView {
                                                   timeInterval: Double? = nil,
                                                   delayBeginning: Double? = nil,
                                                   completion: ((Bool)->())?) {
-        var jungSnippets: [Snippet] = jungRoutine.snippets
+        
+    
+        jungRoutine.snippets.forEach { (snippet) in
+            messagesPipe.append(snippet.message)
+        }
+        
+        print(messagesPipe)
+        
+        var snippets: [Snippet] = jungRoutine.snippets
         var messageIndex = 0
         
         Timer.scheduledTimer(withTimeInterval: timeInterval ?? self.tempoInBetweenPosts, repeats: true){ t in
-            if !jungSnippets[messageIndex].message.isEmpty {
-                self.postMessageToJungChat(message: jungSnippets[messageIndex].message)
+            
+            if !snippets[messageIndex].message.isEmpty {
+                self.postMessageToJungChat(message: snippets[messageIndex].message)
             }
-            self.talkbox.executeSnippetAction(jungSnippets[messageIndex])
+            
+            self.talkbox.executeSnippetAction(snippets[messageIndex])
             self.animationCount -= 1
             // 3 - Stops timer
-            if messageIndex == jungSnippets.count-1 {
+            if messageIndex == snippets.count-1 {
                 if let completion = completion {
                     completion(true)
                 }
                 t.invalidate()
             }
             
-            messageIndex = min(messageIndex+1, jungSnippets.count-1)
+            messageIndex = min(messageIndex+1, snippets.count-1)
             
         }
     }
@@ -254,8 +271,8 @@ class JungChatLogger: KindActionTriggerView {
     fileprivate func postMessageToJungChat(message: String) {
         // do not post empty strings
         if !message.isEmpty {
+            //HERE:
             self.messagesCollection.append(message)
-            self.refreshAndScrollCollectionView()
         }
     }
     
@@ -342,9 +359,10 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
     }
     
     func refreshAndScrollCollectionView() {
-        self.jungChatLoggerCollectionView.reloadData()
-        self.scrollCollectionViewToRecentMessage()
-        
+        //DispatchQueue.main.async {
+            self.jungChatLoggerCollectionView.reloadData()
+            self.scrollCollectionViewToRecentMessage()
+        //}
     }
 
     

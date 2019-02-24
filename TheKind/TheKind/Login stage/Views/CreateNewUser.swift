@@ -66,8 +66,6 @@ class CreateNewUser: UIView,loginValidationProtocol,UITextFieldDelegate {
                 return
             }
             
-            KindUser.loggedUserEmail = email
-            KindUser.loggedUserName = String(email.split(separator: "@").first ?? "")
             self.navigateAfterFadingOut()
         })
         

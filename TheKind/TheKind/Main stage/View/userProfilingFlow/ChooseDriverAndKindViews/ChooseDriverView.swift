@@ -19,7 +19,7 @@ class ChooseDriverView: KindActionTriggerView {
 
     @IBOutlet var runOnView: UIView!
     var selected: String = "Imagination."
-    var onBoardingViewController: OnBoardingViewController?
+    var mainViewController: MainViewController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -78,6 +78,9 @@ class ChooseDriverView: KindActionTriggerView {
         let txt = "Ohhh \(selected)...-Great choice!"
         let actions: [KindActionType] = [.deactivate,.talk]
         let actionViews: [ActionViewName] = [.ChooseDriverView,.BrowseKindView]
+        
+        mainViewController?.kindUserManager?.userFields[UserFields.driver.rawValue] = selected
+        mainViewController?.kindUserManager?.updateUserSettings()
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }

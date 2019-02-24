@@ -16,4 +16,8 @@ class ChosenKindCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
+    override func prepareForReuse() {
+        kindImageView.tintColor = UIColor(r: 171, g: 171, b: 171)
+    }
+
 }

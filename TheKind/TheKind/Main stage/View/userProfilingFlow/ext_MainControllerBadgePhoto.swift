@@ -13,32 +13,32 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
     
     
     //TODO: THis is a hacked version for test. Uncomment below for the real one.
-    func hitPickerControl() {
-        self.hudView.userPictureImageVIew.image = #imageLiteral(resourceName: "userPhoto")
-
-        let txt = "Let me show how you look like.-Look up ☝️."
-        let actions: [KindActionType] = [.none, .activate]
-        let actionViews: [ActionViewName] = [.none,.HudView]
-
-        // TODO: all should look like this one.
-        let options = self.talkbox.createUserOptions(opt1: "Take another one.", opt2: "Keep this one.", actionViews: (.BadgePhotoSetupView,.BadgePhotoSetupView))
-
-
-        self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options), wait: 1)
-
-    }
-    
 //    func hitPickerControl() {
-//        let pickerController = UIImagePickerController()
-//        pickerController.allowsEditing = true
-//        //pickerController.cameraOverlayView = OVERLAY!!
-//        pickerController.sourceType = .camera
-//        pickerController.cameraCaptureMode = .photo
-//        pickerController.delegate = self
-//        pickerController.cameraDevice = .front
-//        present(pickerController, animated: true)
+//        self.hudView.userPictureImageVIew.image = #imageLiteral(resourceName: "userPhoto")
+//
+//        let txt = "Let me show how you look like.-Look up ☝️."
+//        let actions: [KindActionType] = [.none, .activate]
+//        let actionViews: [ActionViewName] = [.none,.HudView]
+//
+//        // TODO: all should look like this one.
+//        let options = self.talkbox.createUserOptions(opt1: "Take another one.", opt2: "Keep this one.", actionViews: (.BadgePhotoSetupView,.BadgePhotoSetupView))
+//
+//
+//        self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options), wait: 1)
 //
 //    }
+    
+    func hitPickerControl() {
+        let pickerController = UIImagePickerController()
+        pickerController.allowsEditing = true
+        //pickerController.cameraOverlayView = OVERLAY!!
+        pickerController.sourceType = .camera
+        pickerController.cameraCaptureMode = .photo
+        pickerController.delegate = self
+        pickerController.cameraDevice = .front
+        present(pickerController, animated: true)
+
+    }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.jungChatLogger.HoldToAnswerViewWidthAnchor.constant = 0

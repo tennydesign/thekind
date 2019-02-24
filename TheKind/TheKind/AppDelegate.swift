@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
         
+      
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast2,
                                                                 identityPoolId:"us-east-2:d1ceaf9c-9b21-413b-90d2-ffdba62011fb")
         

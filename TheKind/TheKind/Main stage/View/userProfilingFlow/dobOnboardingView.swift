@@ -87,8 +87,12 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         // Last words.
         let year = Calendar.current.component(.year, from: Date())
         let age = year-selectedYear
-        // TODO: moving forward. 
-       
+        // TODO: moving forward.
+        
+        //HERE
+        mainViewController?.kindUserManager?.userFields[UserFields.year.rawValue] = selectedYear
+        mainViewController?.kindUserManager?.updateUserSettings()
+        
         let txt = "I understand you are about \(age) years old.- We are almost finished with the setup."
         let actions: [KindActionType] = [.none,.talk]
         let actionViews: [ActionViewName] = [.none,.ChooseDriverView]
