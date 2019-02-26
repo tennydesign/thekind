@@ -33,6 +33,7 @@
 		A025F6E6221B403C0010BDA1 /* CustomSwipeOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A025F6E5221B403C0010BDA1 /* CustomSwipeOverlay.swift */; };
 		A025F6E9221B47960010BDA1 /* KeepParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = A025F6E7221B47960010BDA1 /* KeepParticle.sks */; };
 		A025F6F1222229430010BDA1 /* KindDeckManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A025F6F0222229420010BDA1 /* KindDeckManagement.swift */; };
+		A025F6F322248E790010BDA1 /* KindDeckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A025F6F222248E790010BDA1 /* KindDeckModel.swift */; };
 		A02A5D0A21CB2E9400F26463 /* KindActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02A5D0921CB2E9400F26463 /* KindActionTriggerView.swift */; };
 		A02B24D321E0318500737ACC /* DobOnboardingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A02B24D221E0318500737ACC /* DobOnboardingView.xib */; };
 		A02B24D521E031AA00737ACC /* dobOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02B24D421E031AA00737ACC /* dobOnboardingView.swift */; };
@@ -142,6 +143,7 @@
 		A025F6E5221B403C0010BDA1 /* CustomSwipeOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwipeOverlay.swift; sourceTree = "<group>"; };
 		A025F6E7221B47960010BDA1 /* KeepParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = KeepParticle.sks; sourceTree = "<group>"; };
 		A025F6F0222229420010BDA1 /* KindDeckManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindDeckManagement.swift; sourceTree = "<group>"; };
+		A025F6F222248E790010BDA1 /* KindDeckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindDeckModel.swift; sourceTree = "<group>"; };
 		A02A5D0921CB2E9400F26463 /* KindActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindActionTriggerView.swift; sourceTree = "<group>"; };
 		A02B24D221E0318500737ACC /* DobOnboardingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DobOnboardingView.xib; sourceTree = "<group>"; };
 		A02B24D421E031AA00737ACC /* dobOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dobOnboardingView.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				A025F6F0222229420010BDA1 /* KindDeckManagement.swift */,
+				A025F6F222248E790010BDA1 /* KindDeckModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -944,6 +947,7 @@
 				A05150F621E4002800795172 /* UserNameView.swift in Sources */,
 				A0FBB7372213A97800405440 /* xt_ActionTriggerGameBoardScene.swift in Sources */,
 				A0320B53212B69DD008A96E2 /* LoginExistingUser.swift in Sources */,
+				A025F6F322248E790010BDA1 /* KindDeckModel.swift in Sources */,
 				A03D77F321B7518A00DCF627 /* JungTalkBox.swift in Sources */,
 				A0D960CD21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift in Sources */,
 				A002F49121BDD01F006E8660 /* LandingViewControllerViewModel.swift in Sources */,

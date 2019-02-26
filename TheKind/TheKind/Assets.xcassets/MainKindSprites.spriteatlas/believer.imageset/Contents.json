@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Explorer Copy.png",
+      "filename" : "believer.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Explorer Copy@4x.png",
+      "filename" : "believer@4x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Explorer Copy@6x.png",
+      "filename" : "believer@6x.png",
       "scale" : "3x"
     }
   ],
