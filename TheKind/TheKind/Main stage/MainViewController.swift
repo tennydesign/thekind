@@ -12,12 +12,12 @@ import AWSRekognition
 import FirebaseAuth
 
 class MainViewController: UIViewController {
-
+    
     var isOnboarding: Bool!
     @IBOutlet var bottomConstraintPanelMover: NSLayoutConstraint!
     var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
-    var kindUserManager: KindUserManager?
+    var kindUserManager: KindUserSettingsManager!
     
     @IBOutlet var hudView: HUDview! // content is here.
     @IBOutlet var hudWindow: UIView! // overall top
@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
             //If you want to adjust chatbox window independently of bottomPanel.
         }
     }
-
+    
     
     @IBOutlet var chatMask: UIImageView!
     @IBOutlet var chatMaskView: UIView!
@@ -73,7 +73,7 @@ class MainViewController: UIViewController {
             mapViewHost.alpha = 0
         }
     }
-
+    
     
     @IBOutlet var chooseKindCardViewHost: BrowseKindCardView! {
         didSet {
@@ -89,7 +89,7 @@ class MainViewController: UIViewController {
         }
     }
     
-
+    
     @IBOutlet var bottomCurtainView: UIView!
     @IBOutlet weak var topCurtainView: UIView!
     @IBOutlet var bottomCurtainImage: UIImageView! {
@@ -109,11 +109,8 @@ class MainViewController: UIViewController {
     
     let talkbox = JungTalkBox()
     
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-
+    
+    fileprivate func initMainViewControllerForViews() {
         // ADDTRIGGERVIEW: Must add it here.
         hudView.mainViewController = self
         jungChatLogger.mainViewController = self
@@ -125,8 +122,9 @@ class MainViewController: UIViewController {
         cardSwipeViewHost.mainViewController = self
         dobOnboardingViewHost.mainViewController = self
         chooseDriverView.mainViewController = self
-        
+    }
     
+    fileprivate func initTalkboxForViews() {
         jungChatLogger.talkbox = talkbox
         badgePhotoSetupViewHost.talkbox = talkbox
         dobOnboardingViewHost.talkbox = talkbox
@@ -136,18 +134,38 @@ class MainViewController: UIViewController {
         mapViewHost.talkbox = talkbox
         gameBoardViewHost.talkbox = talkbox
         cardSwipeViewHost.talkbox = talkbox
-        kindUserManager = KindUserManager()
+    }
+    
+    //First view of the sequence
+    var firstViewToPresent = ActionViewName.UserNameView
+    var introSnippets : [Snippet] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initMainViewControllerForViews()
+        initTalkboxForViews()
+        kindUserManager = KindUserSettingsManager()
         
-        //chatMask.isHidden = false
-        //jungChatWindow.mask = chatMask
-        //jungChatWindow.mask = chatMaskView
+        // Check in which view of the game the user is.
+        kindUserManager.checkUserOnboardingView { (viewTag) in
+            if let tag = viewTag {
+                if let actionViewNameEnum = ActionViewName(rawValue: tag) {
+                        self.firstViewToPresent = actionViewNameEnum
+                }
+            }
+            
+            self.introSnippets = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
+                                  Snippet(message: "You say it like 'YUNG'.", action: .activate,id: 2, actionView: self.firstViewToPresent)]
 
-        
-        delay(bySeconds: 1) {
-            self.adaptHUDAndPanelToIphoneXFamily()
-            self.presentJungIntro() // using this routine to test scripts before deploying them.
+            delay(bySeconds: 1) {
+                self.adaptHUDAndPanelToIphoneXFamily()
+
+                let intro = JungRoutine(snippets: self.introSnippets, userResponseOptions: nil, sender: .Jung)
+                self.talkbox.displayRoutine(routine: intro)
+            }
         }
-       
+        
+        
     }
     
     
@@ -159,7 +177,7 @@ class MainViewController: UIViewController {
             }
             
         }
-
+        
     }
     
     func presentJungIntro() {
@@ -186,18 +204,19 @@ class MainViewController: UIViewController {
         }
         
     }
-
+    
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent // .default
     }
     
+    
+    
 }
 
 
 
-var introSnippets : [Snippet] = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
-                                 Snippet(message: "You say it like 'YUNG'.", action: .talk,id: 2, actionView: ActionViewName.UserNameView)]
+
 
 
 

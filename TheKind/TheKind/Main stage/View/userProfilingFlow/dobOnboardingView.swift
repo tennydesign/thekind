@@ -90,8 +90,8 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         // TODO: moving forward.
         
         //HERE
-        mainViewController?.kindUserManager?.userFields[UserFields.year.rawValue] = selectedYear
-        mainViewController?.kindUserManager?.updateUserSettings()
+        mainViewController?.kindUserManager?.userFields[UserFieldTitle.year.rawValue] = selectedYear
+
         
         let txt = "I understand you are about \(age) years old.- We are almost finished with the setup."
         let actions: [KindActionType] = [.none,.talk]

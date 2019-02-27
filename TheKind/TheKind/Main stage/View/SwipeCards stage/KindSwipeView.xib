@@ -28,7 +28,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Angel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fg-Wg-ecg">
-                            <rect key="frame" x="58.5" y="200" width="83.5" height="10"/>
+                            <rect key="frame" x="71" y="200" width="58.5" height="10"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="10" id="tPW-aj-exf"/>
                             </constraints>
@@ -59,6 +59,7 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="imageView" destination="Ir1-a4-shR" id="fuq-sg-d6W"/>
+                <outlet property="kindDescriptionLabel" destination="5fg-Wg-ecg" id="1GW-7u-C38"/>
             </connections>
             <point key="canvasLocation" x="-148" y="118.29085457271366"/>
         </view>

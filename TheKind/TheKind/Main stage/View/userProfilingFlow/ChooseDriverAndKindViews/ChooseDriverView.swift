@@ -79,8 +79,7 @@ class ChooseDriverView: KindActionTriggerView {
         let actions: [KindActionType] = [.deactivate,.talk]
         let actionViews: [ActionViewName] = [.ChooseDriverView,.BrowseKindView]
         
-        mainViewController?.kindUserManager?.userFields[UserFields.driver.rawValue] = selected
-        mainViewController?.kindUserManager?.updateUserSettings()
+        mainViewController?.kindUserManager?.userFields[UserFieldTitle.driver.rawValue] = selected
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }

@@ -90,7 +90,7 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
 
         textField.resignFirstResponder()
         
-        KindUserManager.loggedUserName = username
+        KindUserSettingsManager.loggedUserName = username
         let txt = "Great, I will call you \(username) from now on.-You can change it again if you prefer."
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
@@ -104,9 +104,9 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
      override func talk() {
         var txt: String = ""
 
-        if !(KindUserManager.loggedUserName ?? "").isEmpty {
-            userNameTextField.text = KindUserManager.loggedUserName
-            txt = "Can I call you \(KindUserManager.loggedUserName!)?-If that's not good please change above."
+        if !(KindUserSettingsManager.loggedUserName ?? "").isEmpty {
+            userNameTextField.text = KindUserSettingsManager.loggedUserName
+            txt = "Can I call you \(KindUserSettingsManager.loggedUserName!)?-If that's not good please change above."
         } else {
              userNameTextField.text = "[Type your name]"
              txt = "Hummm... I tried but didn't find your name.-Please enter your name above"
@@ -134,12 +134,11 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         var txt: String = ""
         
         if let username = userNameTextField.text, !(username.trimmingCharacters(in: .whitespaces).isEmpty) {
-            KindUserManager.loggedUserName = username
-            txt = "Great, \(KindUserManager.loggedUserName ?? username) nice to meet you.-Welcome to The Kind."
+            KindUserSettingsManager.loggedUserName = username
+            txt = "Great, \(KindUserSettingsManager.loggedUserName ?? username) nice to meet you.-Welcome to The Kind."
             
-            let kindUserManager = KindUserManager()
-            kindUserManager.userFields[UserFields.name.rawValue] = username
-            kindUserManager.updateUserSettings()
+            let kindUserManager = KindUserSettingsManager()
+            kindUserManager.userFields[UserFieldTitle.name.rawValue] = username
             
             //Move forward
             let actions: [KindActionType] = [.none,.talk]

@@ -76,7 +76,7 @@ class BrowseKindCardView: KindActionTriggerView {
                          Kind.init(image: #imageLiteral(resourceName: "trailblazer"), name: "The Trailblazer", id: 7),
                          Kind.init(image: #imageLiteral(resourceName: "explorer"), name: "The Explorer", id: 8),
                          Kind.init(image: #imageLiteral(resourceName: "visionary"), name: "The Visionary", id: 9),
-                         Kind.init(image: #imageLiteral(resourceName: "Entertainer"), name: "The Entertainer", id: 10),
+                         Kind.init(image: #imageLiteral(resourceName: "entertainer"), name: "The Entertainer", id: 10),
                          Kind.init(image: #imageLiteral(resourceName: "idealist"), name: "The Idealist", id: 4)]
     
     override init(frame: CGRect) {
@@ -128,8 +128,7 @@ class BrowseKindCardView: KindActionTriggerView {
             let actions: [KindActionType] = [.none, .deactivate,.talk]
             let actionViews: [ActionViewName] = [.none,.BrowseKindView,.MapView]
             
-            mainViewController?.kindUserManager?.userFields[UserFields.kind.rawValue] = kindName
-            mainViewController?.kindUserManager?.updateUserSettings()
+            mainViewController?.kindUserManager?.userFields[UserFieldTitle.kind.rawValue] = kindName
             
             self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
         }

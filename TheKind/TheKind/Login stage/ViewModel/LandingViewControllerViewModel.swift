@@ -13,7 +13,7 @@ class LandingViewControllerViewModel {
  //   var bindableToLoginView = Bindable<LoginView>()
     // a bind is like an estilingue. Client will fire, this will fire back to client .bind closure
     // after somework.
-    let kindUserManager = KindUserManager()
+    let kindUserManager = KindUserSettingsManager()
     var bindableIsFormValid = Bindable<Bool>()
     var password: String? {
         didSet {

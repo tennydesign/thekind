@@ -183,11 +183,17 @@ extension LandingViewController: GIDSignInDelegate,GIDSignInUIDelegate {
         if let authentication = user.authentication {
             print("Access token: \(String(describing: authentication.accessToken))")
             
-            if let email = user.profile.email, let name = user.profile.name {
-                KindUserManager.loggedUserEmail = email
-                KindUserManager.loggedUserName = name
+            let userManager = KindUserSettingsManager()
+            
+            if let email = user.profile.email {
+                userManager.userFields[UserFieldTitle.email.rawValue] = email
             }
             
+            if let name = user.profile.name {
+                KindUserSettingsManager.loggedUserName = name
+                userManager.userFields[UserFieldTitle.name.rawValue] = name
+            }
+
             goToOnboading()
             
 

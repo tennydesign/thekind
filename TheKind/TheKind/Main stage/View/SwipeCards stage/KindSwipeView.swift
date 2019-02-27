@@ -12,6 +12,7 @@ import Koloda
 
 class KindSwipeView: UIView {
 
+    @IBOutlet var kindDescriptionLabel: UILabel!
     @IBOutlet var imageView: UIImageView!
     
     override init(frame: CGRect) {

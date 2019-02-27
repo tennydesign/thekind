@@ -10,10 +10,15 @@ import UIKit
 import Koloda
 
 class CardSwipeView: UIView {
-    var kindsToSwipe: [UIImage] = [#imageLiteral(resourceName: "team_player"),#imageLiteral(resourceName: "explorer"),#imageLiteral(resourceName: "idealist"),#imageLiteral(resourceName: "rebel")]
-    var currentlyShowingCard = UIImage()
-    var kindsChosen : [UIImage] = []//[#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "fire"), #imageLiteral(resourceName: "map"), #imageLiteral(resourceName: "chair"),#imageLiteral(resourceName: "map"),#imageLiteral(resourceName: "chair"),#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "chair"),#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "fire"),#imageLiteral(resourceName: "map"),#imageLiteral(resourceName: "fire")]
-    // The selected (clocked on) kind of the chosenKindsCollectionView
+    //var kindsToSwipe: [UIImage] = [#imageLiteral(resourceName: "team_player"),#imageLiteral(resourceName: "explorer"),#imageLiteral(resourceName: "idealist"),#imageLiteral(resourceName: "rebel")]
+    var kindsToSwipe: [KindCardId:KindCard] = GameKinds.twelveKindsOriginal
+    
+    
+    var currentlyShowingCardImage = UIImage()
+    var currentlyShowingCardTitle: String = ""
+    
+    var kindsChosen : [UIImage] = []
+    
     var kindsChosenSelectedIndex = -1
     var mainViewController: MainViewController?
     var talkbox: JungTalkBox?
@@ -59,7 +64,9 @@ class CardSwipeView: UIView {
 extension CardSwipeView: KolodaViewDelegate {
 
     func kolodaDidRunOutOfCards(_ koloda: KolodaView) {
+        //HERE
         imageToShowIndex += 1
+        //imageToShowIndex = min(imageToShowIndex, kindsToSwipe.count)
         imageToShowIndex = min(imageToShowIndex, kindsToSwipe.count)
         if imageToShowIndex == kindsToSwipe.count {
             imageToShowIndex = 0
@@ -73,7 +80,7 @@ extension CardSwipeView: KolodaViewDelegate {
         
         if direction == SwipeResultDirection.left {
             // inserts
-            kindsChosen.insert(currentlyShowingCard, at: 0)
+            kindsChosen.insert(currentlyShowingCardImage, at: 0)
             let indexPath = IndexPath(item: 0, section: 0)
             chosenKindsCollectionView.insertItems(at: [indexPath])
             chosenKindsCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
@@ -81,6 +88,7 @@ extension CardSwipeView: KolodaViewDelegate {
             // I need this delay otherwise the insert above cancels the reload.
             delay(bySeconds: 0.3) {
                 self.deselectAllItemsInChosenKindCollection()
+                
             }
             
         } else if direction == SwipeResultDirection.right {
@@ -123,11 +131,14 @@ extension CardSwipeView: KolodaViewDataSource {
         // ============= load card from xib
         let customView = Bundle.main.loadNibNamed("KindSwipeView", owner: nil, options: nil)?.first as? KindSwipeView
         
+        self.mainViewController?.jungChatLogger.resetJungChat()
+        let kinds:[KindCard] = Array(kindsToSwipe.values)
+        currentlyShowingCardImage = UIImage(named: kinds[imageToShowIndex].iconImageName.rawValue )!
+        currentlyShowingCardTitle = kinds[imageToShowIndex].kindName.rawValue
         
-        currentlyShowingCard = kindsToSwipe[imageToShowIndex]
-
-        customView?.imageView.image = currentlyShowingCard.withRenderingMode(.alwaysTemplate)
+        customView?.imageView.image = currentlyShowingCardImage.withRenderingMode(.alwaysTemplate)
         customView?.imageView.tintColor = UIColor(r: 210, g: 183, b: 102)
+        customView?.kindDescriptionLabel.text = currentlyShowingCardTitle
 
         //Describe incoming Kind.
         introduceKind()
@@ -141,15 +152,6 @@ extension CardSwipeView: KolodaViewDataSource {
 
     func kolodaSpeedThatCardShouldDrag(_ koloda: KolodaView) -> DragSpeed {
         return .default
-    }
-    
-    func introduceKind() {
-        let txt = "(TOP) The Poet kind says:-There should be no filter between reality and emotions.-Life is a beautiful emotional rollercoaster.-Enjoy it while you can."
-        let actions: [KindActionType] = [.none,.none,.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none,.none,.none]
-        let options = self.talkbox?.createUserOptions(opt1: "Keep it.", opt2: "Don't keep it.", actionView: self)
-        
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: options))
     }
 
 }
@@ -218,12 +220,21 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
 
 extension CardSwipeView: KindActionTriggerViewProtocol {
     
+    func introduceKind() {
+        let txt = "(TOP) \(currentlyShowingCardTitle) kind says:-There should be no filter between reality and emotions.-Life is a beautiful emotional rollercoaster."
+        let actions: [KindActionType] = [.none,.none,.none]
+        let actionViews: [ActionViewName] = [.none,.none,.none]
+        let options = self.talkbox?.createUserOptions(opt1: "Keep it.", opt2: "Don't keep it.", actionView: self)
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: options))
+    }
+    
     func talk() {
         
     }
     
     func activate() {
-        
+        self.alpha = 1
     }
     
     func deactivate() {
