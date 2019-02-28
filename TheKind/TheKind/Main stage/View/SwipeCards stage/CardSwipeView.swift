@@ -11,7 +11,7 @@ import Koloda
 
 class CardSwipeView: UIView {
     //var kindsToSwipe: [UIImage] = [#imageLiteral(resourceName: "team_player"),#imageLiteral(resourceName: "explorer"),#imageLiteral(resourceName: "idealist"),#imageLiteral(resourceName: "rebel")]
-    var kindsToSwipe: [KindCardId:KindCard] = GameKinds.twelveKindsOriginal
+    var kindsToSwipe: [KindCardId:KindCard] = GameKinds.minorKindsOriginal
     
     
     var currentlyShowingCardImage = UIImage()
