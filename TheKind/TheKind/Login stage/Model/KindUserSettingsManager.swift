@@ -79,8 +79,9 @@ public class KindUserSettingsManager {
                 return
             }
             
-            //KindUserManager.loggedUserEmail = email
             KindUserSettingsManager.loggedUserName = String(email.split(separator: "@").first ?? "")
+             self.userFields[UserFieldTitle.name.rawValue] = KindUserSettingsManager.loggedUserName!
+            self.userFields[UserFieldTitle.email.rawValue] = email
             
             completion(nil)
             
@@ -98,7 +99,6 @@ public class KindUserSettingsManager {
             KindUserSettingsManager.loggedUserName = String(email.split(separator: "@").first ?? "")
             self.userFields[UserFieldTitle.name.rawValue] = KindUserSettingsManager.loggedUserName!
             self.userFields[UserFieldTitle.email.rawValue] = email
-            self.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView
             completion(nil)
             
         }
@@ -141,7 +141,7 @@ public class KindUserSettingsManager {
                             completion(onboardingView)
                         } else {
                             self.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
-                            completion(ActionViewName.UserNameView.rawValue)
+                            completion(nil)
                         }
                     }
                 }

@@ -5,7 +5,7 @@
 //  Created by Tenny on 1/7/19.
 //  Copyright © 2019 tenny. All rights reserved.
 //
-
+// FOR NAVIGATION ALWAYS SEARCH FOR THE RIGHTCLICKED OPTION.
 import UIKit
 
 class UserNameView: KindActionTriggerView, UITextFieldDelegate {
@@ -101,6 +101,15 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         return true
     }
     
+    override func activate() {
+        // save current view # to database (onboarding log)
+        if mainViewController?.kindUserManager != nil {
+            mainViewController?.kindUserManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
+            self.fadeInView()
+            self.talk()
+        } else {fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging") }
+    }
+    
      override func talk() {
         var txt: String = ""
 
@@ -114,17 +123,15 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
        
         adaptLineToTextSize(userNameTextField)
         
-        let actions: [KindActionType] = [.none,.activate]
-        let actionViews: [ActionViewName] = [.none,.UserNameView]
+        let actions: [KindActionType] = [.none,.none]
+        let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I'm good with that.", actionView: self)
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: options))
         
     }
     
 
-     override func activate() {
-        self.fadeInView()
-    }
+
     
     override  func deactivate() {
         self.talkbox?.delegate = nil
@@ -137,15 +144,16 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
             KindUserSettingsManager.loggedUserName = username
             txt = "Great, \(KindUserSettingsManager.loggedUserName ?? username) nice to meet you.-Welcome to The Kind."
             
-            let kindUserManager = KindUserSettingsManager()
-            kindUserManager.userFields[UserFieldTitle.name.rawValue] = username
+            if mainViewController?.kindUserManager != nil {
+                mainViewController?.kindUserManager.userFields[UserFieldTitle.name.rawValue] = username
+                //Move forward
+                let actions: [KindActionType] = [.none,.activate]
+                let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView]
+                self.fadeOutView()
+                
+                self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+            } else {fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging") }
             
-            //Move forward
-            let actions: [KindActionType] = [.none,.talk]
-            let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView]
-            self.fadeOutView()
-            
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
           
         } else {
             talk() // Talk to the user about the updated user name. (repeat the routine)

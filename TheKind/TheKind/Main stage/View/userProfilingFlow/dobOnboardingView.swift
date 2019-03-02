@@ -51,10 +51,19 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         
     }
     
+    override func activate() {
+        if mainViewController?.kindUserManager != nil {
+            mainViewController?.kindUserManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.DobOnboardingView.rawValue
+            self.talk()
+        } else {
+            fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging")
+        }
+        
+    }
     
     override func talk() {
         let txt = "Ok.-Now tell me what year you were born.-Choose from the options above."
-        let actions: [KindActionType] = [.none, .none,.activate]
+        let actions: [KindActionType] = [.none, .none,.fadeInView]
         let actionViews: [ActionViewName] = [.none,.none, .DobOnboardingView]
         
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Confirm this year.", actionView: self)
@@ -62,7 +71,9 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
     
-    override func activate() {
+
+    
+    override func fadeInView() {
         self.alpha = 0
         self.isHidden = false
         self.talkbox?.delegate = self
@@ -90,11 +101,11 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         // TODO: moving forward.
         
         //HERE
-        mainViewController?.kindUserManager?.userFields[UserFieldTitle.year.rawValue] = selectedYear
+        mainViewController?.kindUserManager.userFields[UserFieldTitle.year.rawValue] = selectedYear
 
         
         let txt = "I understand you are about \(age) years old.- We are almost finished with the setup."
-        let actions: [KindActionType] = [.none,.talk]
+        let actions: [KindActionType] = [.none,.activate]
         let actionViews: [ActionViewName] = [.none,.ChooseDriverView]
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
         

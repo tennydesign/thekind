@@ -6,7 +6,7 @@
 //  Copyright © 2018 tenny. All rights reserved.
 //
 
-
+//HERE: LOOPING
 import UIKit
 
 
@@ -37,17 +37,17 @@ class BrowseKindCardView: KindActionTriggerView {
     var selectedIndex: Int = 0 {
         didSet {
             if isShowingUserCarousel{
-                browseKind()
+                userIsBrowsingGameBoardKindsTalk()
             } else{
-                selectedKind()
+                userIsSelectingMainKindTalk()
             }
         }
     }
     
 
     var currentCellToTint: kindCollectioViewCell?
+    var availableKindsForDriver: [KindCard] = []
     
-    let flowLayout = ZoomAndSnapFlowLayout()
 
     
     @IBOutlet var chooseKindCard: UIView!
@@ -58,6 +58,7 @@ class BrowseKindCardView: KindActionTriggerView {
         didSet {
             kindCollectionView.delegate = self
             kindCollectionView.dataSource = self
+            let flowLayout = ZoomAndSnapFlowLayout()
             kindCollectionView.collectionViewLayout = flowLayout
             kindCollectionView.register(UINib.init(nibName: "kindCollectioViewCell", bundle: nil), forCellWithReuseIdentifier: "kindCollectioViewCell")
             print(kindCollectionView.center)
@@ -66,18 +67,6 @@ class BrowseKindCardView: KindActionTriggerView {
     
     @IBOutlet var chooseCardView: UIView!
     
-    var kinds: [Kind] = [Kind.init(image: #imageLiteral(resourceName: "angel"), name: "The Angel", id: 0),
-                         Kind.init(image: #imageLiteral(resourceName: "founder"), name: "The Founder", id: 1),
-                         Kind.init(image: #imageLiteral(resourceName: "rebel"), name: "The Rebel", id: 2),
-                         Kind.init(image: #imageLiteral(resourceName: "team_player"), name: "The Team Player", id: 3),
-                         Kind.init(image: #imageLiteral(resourceName: "grinder"), name: "The Grinder", id: 4),
-                         Kind.init(image: #imageLiteral(resourceName: "mentor"), name: "The Mentor", id: 5),
-                         Kind.init(image: #imageLiteral(resourceName: "leader"), name: "The Leader", id: 6),
-                         Kind.init(image: #imageLiteral(resourceName: "trailblazer"), name: "The Trailblazer", id: 7),
-                         Kind.init(image: #imageLiteral(resourceName: "explorer"), name: "The Explorer", id: 8),
-                         Kind.init(image: #imageLiteral(resourceName: "visionary"), name: "The Visionary", id: 9),
-                         Kind.init(image: #imageLiteral(resourceName: "entertainer"), name: "The Entertainer", id: 10),
-                         Kind.init(image: #imageLiteral(resourceName: "idealist"), name: "The Idealist", id: 4)]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -93,7 +82,7 @@ class BrowseKindCardView: KindActionTriggerView {
         Bundle.main.loadNibNamed("BrowseKindCardView", owner: self, options: nil)
         addSubview(chooseKindCard)
         
-        fillAndPresentLabelWith(0)
+        
         print("status bar: \(UIApplication.shared.statusBarFrame.height)")
     }
     
@@ -101,7 +90,7 @@ class BrowseKindCardView: KindActionTriggerView {
     override func talk() {
         if !isShowingUserCarousel{
             let txt = "Lastly...-Choose your kind."
-            let actions: [KindActionType] = [.none, .activate]
+            let actions: [KindActionType] = [.none, .fadeInView]
             let actionViews: [ActionViewName] = [.none,.BrowseKindView]
             
             self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
@@ -109,11 +98,26 @@ class BrowseKindCardView: KindActionTriggerView {
     }
     
     override func activate() {
-        self.fadeInView()
-        if isShowingUserCarousel {
-            browseKind()
+        if mainViewController?.kindUserManager != nil {
+            mainViewController?.kindUserManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BrowseKindView.rawValue
+            guard let driver = mainViewController?.kindUserManager.userFields[UserFieldTitle.driver.rawValue] as? String else {
+                fatalError("Cant find Driver choice")
+            }
+            guard let kindsForDriver = GameKinds.drivers[driver] else {fatalError("Cant find Kinds for driver choice")}
+            availableKindsForDriver = kindsForDriver
+            reloadAndResetCollectionView()
+            
+            fillAndPresentLabelWith(selectedIndex)
+            //Switch between user is browsing or choosing carousels.
+            clearJungChat()
+            if isShowingUserCarousel {
+                userIsBrowsingGameBoardKindsTalk()
+            } else {
+                userIsSelectingMainKindTalk()
+            }
+            talk()
         } else {
-            selectedKind()
+            fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging")
         }
     }
     
@@ -123,13 +127,15 @@ class BrowseKindCardView: KindActionTriggerView {
     
     override func rightOptionClicked() {
         if !isShowingUserCarousel {
-            guard let kindName = kinds[selectedIndex].name else {return}
+            let kind = self.availableKindsForDriver[selectedIndex]
+            let kindName = kind.kindName.rawValue
             let txt = "You chose\(kindName). -Also know as The Mage.-Moving on..."
-            let actions: [KindActionType] = [.none, .deactivate,.talk]
+            let actions: [KindActionType] = [.none, .deactivate,.activate]
             let actionViews: [ActionViewName] = [.none,.BrowseKindView,.MapView]
             
-            mainViewController?.kindUserManager?.userFields[UserFieldTitle.kind.rawValue] = kindName
-            
+            mainViewController?.kindUserManager.userFields[UserFieldTitle.kind.rawValue] = kindName
+           // KindDeckManagement.userMainKind = kinds[selectedIndex]
+            KindDeckManagement.userKindDeckArray.append(self.availableKindsForDriver[selectedIndex])
             self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
         }
     }
@@ -139,21 +145,20 @@ class BrowseKindCardView: KindActionTriggerView {
             self.fadeOutView()
             let actions: [KindActionType] = [.talk]
             let actionViews: [ActionViewName] = [ActionViewName.GameBoardSceneControlView]
-            
+
             self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
             isShowingUserCarousel = false
         } else {
             self.fadeOutView()
-            let actions: [KindActionType] = [.talk]
+            let actions: [KindActionType] = [.activate]
             let actionViews: [ActionViewName] = [.ChooseDriverView]
-            
             self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
         }
     }
     
     // EXECUTED WHEN CAROUSEL IS SHOWING USER KINDS (TELL ME MORE ABOUT THIS KIND).
-    func browseKind() {
-        guard let kindName = kinds[selectedIndex].name else {return}
+    func userIsBrowsingGameBoardKindsTalk() {
+        let kindName = self.availableKindsForDriver[selectedIndex].kindName.rawValue
         let txt = "\(kindName) says: You can transform anything...-and turn any ordinary situations into extraordinary ones."
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
@@ -164,15 +169,15 @@ class BrowseKindCardView: KindActionTriggerView {
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
     
-    // EXECUTED WHEN USER IS CHOOSING KIND FROM CAROUSEL (ONBOARDING)
-    func selectedKind() {
-        guard let kindName = kinds[selectedIndex].name else {return}
+    // EXECUTED WHEN USER IS CHOOSING MAIN USER KIND FROM CAROUSEL (ONBOARDING)
+    func userIsSelectingMainKindTalk() {
+        let kindName = self.availableKindsForDriver[selectedIndex].kindName.rawValue
         let txt = "\(kindName) says: You can transform anything...-and turn any ordinary situations into extraordinary ones."
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
         
         
-        let options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I'm like the \(kindName)", actionView: self)
+        let options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I'm like \(kindName)", actionView: self)
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
@@ -180,7 +185,7 @@ class BrowseKindCardView: KindActionTriggerView {
     
     
     fileprivate func fillAndPresentLabelWith(_ itemIndex: Int) {
-        guard let kindName = self.kinds[itemIndex].name else {return}
+        let kindName = self.availableKindsForDriver[itemIndex].kindName.rawValue
         self.kindNameLabel.attributedText = formatLabelTextWithLineSpacing(text:kindName)
         UIView.animate(withDuration: 0.5) {
             self.kindNameLabel.alpha = 1
@@ -195,15 +200,20 @@ class BrowseKindCardView: KindActionTriggerView {
 extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return kinds.count
+ 
+        return availableKindsForDriver.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "kindCollectioViewCell", for: indexPath) as! kindCollectioViewCell
         
         
-        cell.icon.image = kinds[indexPath.row].image?.withRenderingMode(.alwaysTemplate)
-        cell.icon_color.image = kinds[indexPath.row].image
+//        cell.icon.image = kinds[indexPath.row].image?.withRenderingMode(.alwaysTemplate)
+//        cell.icon_color.image = kinds[indexPath.row].image
+        
+        guard let image = UIImage(named: availableKindsForDriver[indexPath.row].iconImageName.rawValue) else {fatalError("cant find image for kind")}
+        cell.icon.image = image.withRenderingMode(.alwaysTemplate)
+        cell.icon_color.image = image
         if indexPath.row == 0 {
             cell.icon_color.alpha = 1
         }
@@ -235,8 +245,8 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
 
         guard let itemIndex = indexPathForCenterCell()?.row else {return}
         if !self.kindCollectionView.isDragging {
-            self.fillAndPresentLabelWith(itemIndex)
             self.selectedIndex = itemIndex
+            self.fillAndPresentLabelWith(selectedIndex)
         }
         
     }
@@ -248,6 +258,15 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
         print(indexPath.row)
         return indexPath
         
+    }
+    
+    private func reloadAndResetCollectionView() {
+        selectedIndex=0
+        kindCollectionView.reloadData()
+        
+        //This resets the collectionview position
+        let flowLayout = ZoomAndSnapFlowLayout()
+        kindCollectionView.collectionViewLayout = flowLayout
     }
 
 

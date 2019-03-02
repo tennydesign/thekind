@@ -108,9 +108,11 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidHide), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
+    
 
     @objc func handleKeyboardDidShow(notification: Notification) {
         print("keyboard did show")
+
         UIView.animate(withDuration: 0.3) {
             self.loginExistingUser.transform = CGAffineTransform(translationX: 0, y: self.KEYBOARDSHOWSLIDEAMOUNT)
             self.createNewUser.transform = CGAffineTransform(translationX: 0, y: self.KEYBOARDSHOWSLIDEAMOUNT)

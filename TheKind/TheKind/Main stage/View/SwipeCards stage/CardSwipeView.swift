@@ -5,31 +5,48 @@
 //  Created by Tenny on 2/14/19.
 //  Copyright © 2019 tenny. All rights reserved.
 //
+// HERE: IT IS LOADING KINDS IN THE CAROUSEL
+// NEXT: MAKE SURE MAINVIEWCONRTOLLER LOADER IS FINE
+// MAKE SURE FLOW IS SOLID
+// CLEAN UP A LITTLE.
 
 import UIKit
 import Koloda
 
 class CardSwipeView: UIView {
     //var kindsToSwipe: [UIImage] = [#imageLiteral(resourceName: "team_player"),#imageLiteral(resourceName: "explorer"),#imageLiteral(resourceName: "idealist"),#imageLiteral(resourceName: "rebel")]
-    var kindsToSwipe: [KindCardId:KindCard] = GameKinds.minorKindsOriginal
+    var kindsToSwipe: [KindCardId:KindCard] {
+        get {
+            return GameKinds.minorKindsOriginal
+        }
+    }
     
     
     var currentlyShowingCardImage = UIImage()
-    var currentlyShowingCardTitle: String = ""
+    var currentlyShowingCardId:KindCardId?
+    var currentlyShowingCardTitle: KindName?
     
-    var kindsChosen : [UIImage] = []
+    var currentlyShowingKindCard: KindCard!
     
-    var kindsChosenSelectedIndex = -1
+    var kindsChosenImages : [UIImage] = []
+    var chosenKindsArray:[KindCard] = [] {
+        didSet {
+            
+        }
+    }
+    
+    
+    var didSelectUserChosenKindIndex = -1
     var mainViewController: MainViewController?
     var talkbox: JungTalkBox?
-    var presentSwipeOptionsAsJungButtons: Bool = true
+    var isInSwipeKindsMode: Bool = true
     
     @IBOutlet var kolodaView: KolodaView!
     @IBOutlet var chosenKindsCollectionView: UICollectionView!
     
     @IBOutlet var mainView: UIView!
     
-    var imageToShowIndex: Int = 0
+    var indexOfDisplayedKind: Int = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,13 +81,14 @@ class CardSwipeView: UIView {
 extension CardSwipeView: KolodaViewDelegate {
 
     func kolodaDidRunOutOfCards(_ koloda: KolodaView) {
-        //HERE
-        imageToShowIndex += 1
+        indexOfDisplayedKind += 1
         //imageToShowIndex = min(imageToShowIndex, kindsToSwipe.count)
-        imageToShowIndex = min(imageToShowIndex, kindsToSwipe.count)
-        if imageToShowIndex == kindsToSwipe.count {
-            imageToShowIndex = 0
-        }
+        indexOfDisplayedKind = min(indexOfDisplayedKind, kindsToSwipe.count)
+        
+        //uncomment to reset.
+//        if imageToShowIndex == kindsToSwipe.count {
+//            imageToShowIndex = 0
+//        }
         
         koloda.resetCurrentCardIndex()
 
@@ -80,7 +98,11 @@ extension CardSwipeView: KolodaViewDelegate {
         
         if direction == SwipeResultDirection.left {
             // inserts
-            kindsChosen.insert(currentlyShowingCardImage, at: 0)
+            guard let kindCard = currentlyShowingKindCard else {fatalError("no currentlyShowingKindCard found")}
+           
+            //kindsChosenImages.insert(currentlyShowingCardImage, at: 0)
+            KindDeckManagement.userKindDeckArray.insert(kindCard, at: 0)
+            
             let indexPath = IndexPath(item: 0, section: 0)
             chosenKindsCollectionView.insertItems(at: [indexPath])
             chosenKindsCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
@@ -120,8 +142,10 @@ extension CardSwipeView: KolodaViewDataSource {
     }
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
-        kindsChosenSelectedIndex = -1
-        presentSwipeOptionsAsJungButtons = true
+        // resets the selection of the user chosen collectionview.
+        didSelectUserChosenKindIndex = -1
+        
+        isInSwipeKindsMode = true
         self.mainViewController?.jungChatLogger.resetJungChat()
         chosenKindsCollectionView.reloadData()
         introduceKind()
@@ -132,19 +156,21 @@ extension CardSwipeView: KolodaViewDataSource {
         let customView = Bundle.main.loadNibNamed("KindSwipeView", owner: nil, options: nil)?.first as? KindSwipeView
         
         self.mainViewController?.jungChatLogger.resetJungChat()
-        let kinds:[KindCard] = Array(kindsToSwipe.values)
-        currentlyShowingCardImage = UIImage(named: kinds[imageToShowIndex].iconImageName.rawValue )!
-        currentlyShowingCardTitle = kinds[imageToShowIndex].kindName.rawValue
+        
+        let kinds:[KindCard] = Array(GameKinds.minorKindsOriginal.values)
+      
+        currentlyShowingKindCard = kinds[indexOfDisplayedKind]
+        currentlyShowingCardImage = UIImage(named: currentlyShowingKindCard.iconImageName.rawValue)!
         
         customView?.imageView.image = currentlyShowingCardImage.withRenderingMode(.alwaysTemplate)
         customView?.imageView.tintColor = UIColor(r: 210, g: 183, b: 102)
-        customView?.kindDescriptionLabel.text = currentlyShowingCardTitle
+        customView?.kindDescriptionLabel.text = currentlyShowingKindCard.kindName.rawValue
 
         //Describe incoming Kind.
         introduceKind()
 
         // tells the system a new card is being presented for swipe (modifies the behavior of the right/left buttons)
-        presentSwipeOptionsAsJungButtons = true
+        isInSwipeKindsMode = true
         
         return customView!
     }
@@ -161,19 +187,24 @@ extension CardSwipeView: KolodaViewDataSource {
 
 extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return kindsChosen.count
+
+        return KindDeckManagement.userKindDeckArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChosenKindCollectionViewCell", for: indexPath) as! ChosenKindCollectionViewCell
-        cell.kindImageView.image = kindsChosen[indexPath.row].withRenderingMode(.alwaysTemplate)
         
-        if kindsChosenSelectedIndex == indexPath.row {
+        guard let image = UIImage(named: KindDeckManagement.userKindDeckArray[indexPath.row].iconImageName.rawValue) else {fatalError("image not found line 185")}
+        
+        cell.kindImageView.image = image.withRenderingMode(.alwaysTemplate)
+        print(didSelectUserChosenKindIndex)
+        if didSelectUserChosenKindIndex == indexPath.row {
             cell.kindImageView.tintColor = UIColor(r: 210, g: 183, b: 102)
         } else {
             cell.kindImageView.tintColor = UIColor(r: 171, g: 171, b: 171)
         }
     
+        print("DECK CARDS: \(KindDeckManagement.userKindDeckArray)")
         return cell
         
     }
@@ -183,11 +214,11 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
         print(indexPath.row)
         
         // tells the system the focus is not on the card being presented for swipe (modifies the behavior of the right/left buttons)
-        presentSwipeOptionsAsJungButtons = false
+        isInSwipeKindsMode = false
         // cleans chat.
         self.mainViewController?.jungChatLogger.resetJungChat()
     
-        kindsChosenSelectedIndex = indexPath.row
+        didSelectUserChosenKindIndex = indexPath.row
         collectionView.reloadData()
         
         jungOffersToRemoveKindFromCollectionView()
@@ -208,7 +239,7 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
     }
 
     func deselectAllItemsInChosenKindCollection() {
-        kindsChosenSelectedIndex = -1 // deselect everyone
+        didSelectUserChosenKindIndex = -1 // deselect everyone
         chosenKindsCollectionView.reloadData()
     }
     
@@ -221,7 +252,7 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
 extension CardSwipeView: KindActionTriggerViewProtocol {
     
     func introduceKind() {
-        let txt = "(TOP) \(currentlyShowingCardTitle) kind says:-There should be no filter between reality and emotions.-Life is a beautiful emotional rollercoaster."
+        let txt = "(TOP) \(String(describing: currentlyShowingKindCard?.kindName.rawValue)) kind says:-There should be no filter between reality and emotions.-Life is a beautiful emotional rollercoaster."
         let actions: [KindActionType] = [.none,.none,.none]
         let actionViews: [ActionViewName] = [.none,.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "Keep it.", opt2: "Don't keep it.", actionView: self)
@@ -235,6 +266,7 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
     
     func activate() {
         self.alpha = 1
+        chosenKindsCollectionView.reloadData()
     }
     
     func deactivate() {
@@ -243,7 +275,7 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
     
     
     func rightOptionClicked() {
-        if !presentSwipeOptionsAsJungButtons {
+        if !isInSwipeKindsMode {
             removeKind()
         } else {
             kolodaView.swipe(.right)
@@ -251,10 +283,11 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
     }
     
     private func removeKind() {
-        if kindsChosenSelectedIndex > -1 {
-            let indexPath = IndexPath(item: kindsChosenSelectedIndex, section: 0)
-            kindsChosen.remove(at: indexPath.row)
-            
+        if didSelectUserChosenKindIndex > -1 {
+            let indexPath = IndexPath(item: didSelectUserChosenKindIndex, section: 0)
+
+            KindDeckManagement.userKindDeckArray.remove(at: indexPath.row)
+
             chosenKindsCollectionView.deleteItems(at: [indexPath])
             chosenKindsCollectionView.reloadData()
             
@@ -268,7 +301,7 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
     }
     
     func leftOptionClicked() {
-        if !presentSwipeOptionsAsJungButtons {
+        if !isInSwipeKindsMode {
             moreInfoOnKind()
         } else {
             kolodaView.swipe(.left)

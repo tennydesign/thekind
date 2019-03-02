@@ -59,7 +59,7 @@ class CreateNewUser: UIView,loginValidationProtocol,UITextFieldDelegate {
     @IBAction func createUserClicked(_ sender: KindButton) {
         guard let email = emailTextField.text, email.count > 0 else {return}
         guard let password = passwordTextField.text, password.count > 0 else {return}
-        
+        print(password)
         landingViewController?.createNewUser(email: email, password: password, completion: { [unowned self](err) in
             if let err = err {
                 print("something wrong when creating user:", err)

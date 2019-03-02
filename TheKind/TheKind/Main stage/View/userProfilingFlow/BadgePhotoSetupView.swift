@@ -36,7 +36,12 @@ class BadgePhotoSetupView: KindActionTriggerView {
     }
     
     override func activate() {
- 
+        if mainViewController?.kindUserManager != nil {
+            mainViewController?.kindUserManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BadgePhotoSetupView.rawValue
+            talk()
+        } else {
+            fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging")
+        }
     }
     
     override func deactivate() {
@@ -67,11 +72,11 @@ class BadgePhotoSetupView: KindActionTriggerView {
             fatalError("error compressing image")
         }
         
-        mainViewController?.kindUserManager?.uploadUserPicture(profileImageData: uploadData)
+        mainViewController?.kindUserManager.uploadUserPicture(profileImageData: uploadData)
         
         self.fadeOutView()
         let txt = "-Cool!-I think it looks good too 🙂."
-        let actions: [KindActionType] = [.none,.talk]
+        let actions: [KindActionType] = [.none,.activate]
         let actionViews: [ActionViewName] = [.none, .DobOnboardingView]
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))

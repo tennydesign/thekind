@@ -99,29 +99,39 @@ class MapActionTriggerView: KindActionTriggerView {
     
     
     override func talk() {
-        clearJungChatLog()
-        UIView.animate(withDuration: 0.4, animations: {
-            self.mainViewController?.jungChatLogger.alpha = 0
-        }) { (completed) in
-            self.mainViewController?.moveBottomPanel(distance: self.hiddenDrawerDistance) {
-                self.activate()
-            }
-        }
+
         
 
     }
     
     override func activate() {
-        //load annotations.
-        mapViewViewModel.retrieveCirclesCloseToPlayer() {
-            //present map after annotations are there.
-            self.alpha = 0
-            self.isHidden = false
-            self.talkbox?.delegate = self
-            UIView.animate(withDuration: 1) {
-                self.alpha = 1
+        if mainViewController?.kindUserManager != nil {
+            mainViewController?.kindUserManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.MapView.rawValue
+            
+            //work on the map before showing
+            clearJungChatLog()
+            UIView.animate(withDuration: 0.4, animations: {
+                self.mainViewController?.jungChatLogger.alpha = 0
+            }) { (completed) in
+                self.mainViewController?.moveBottomPanel(distance: self.hiddenDrawerDistance) {
+                    self.mapViewViewModel.retrieveCirclesCloseToPlayer() {
+                        //present map after annotations are there.
+                        self.alpha = 0
+                        self.isHidden = false
+                        self.talkbox?.delegate = self
+                        UIView.animate(withDuration: 1) {
+                            self.alpha = 1
+                        }
+                    }
+                }
             }
+            
+            self.talk()
+        } else {
+            fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging")
         }
+        
+
     }
     
     func clearJungChatLog() {

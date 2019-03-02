@@ -58,7 +58,7 @@ class ChooseDriverView: KindActionTriggerView {
     
     override func talk() {
         let txt = "Now...-What drives you the most?.-We all have a stronger one."
-        let actions: [KindActionType] = [.none, .activate, .none]
+        let actions: [KindActionType] = [.none, .fadeInView, .none]
         let actionViews: [ActionViewName] = [.none,.ChooseDriverView, .none]
         
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I identify with this one.", actionView: self)
@@ -67,7 +67,13 @@ class ChooseDriverView: KindActionTriggerView {
     }
     
     override func activate() {
-        self.fadeInView()
+        if mainViewController?.kindUserManager != nil {
+            mainViewController?.kindUserManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.ChooseDriverView.rawValue
+            talk()
+        } else {
+            fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging")
+        }
+        
     }
     
     override func deactivate() {
@@ -76,10 +82,11 @@ class ChooseDriverView: KindActionTriggerView {
     
     override func rightOptionClicked() {
         let txt = "Ohhh \(selected)...-Great choice!"
-        let actions: [KindActionType] = [.deactivate,.talk]
+        let actions: [KindActionType] = [.deactivate,.activate]
         let actionViews: [ActionViewName] = [.ChooseDriverView,.BrowseKindView]
         
-        mainViewController?.kindUserManager?.userFields[UserFieldTitle.driver.rawValue] = selected
+        let driverName = (selected.dropLast()).lowercased()
+        mainViewController?.kindUserManager.userFields[UserFieldTitle.driver.rawValue] = driverName
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }

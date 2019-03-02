@@ -17,8 +17,8 @@ class MainViewController: UIViewController {
     @IBOutlet var bottomConstraintPanelMover: NSLayoutConstraint!
     var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
-    var kindUserManager: KindUserSettingsManager!
-    
+    var kindUserManager = KindUserSettingsManager()
+    var kindDeckManager = KindDeckManagement()
     @IBOutlet var hudView: HUDview! // content is here.
     @IBOutlet var hudWindow: UIView! // overall top
     
@@ -144,15 +144,27 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         initMainViewControllerForViews()
         initTalkboxForViews()
-        kindUserManager = KindUserSettingsManager()
-        
         // Check in which view of the game the user is.
         kindUserManager.checkUserOnboardingView { (viewTag) in
             if let tag = viewTag {
+                // recurrent user.
                 if let actionViewNameEnum = ActionViewName(rawValue: tag) {
                         self.firstViewToPresent = actionViewNameEnum
                 }
+                
+                //load user deck
+                KindDeckManagement.getCurrentUserDeck {
+                    print("loaded kind decks")
+                    print(KindDeckManagement.userKindDeckArray)
+                }
+                
+            } else {
+                 // if tag is nil present first view as UserNameView.
+                 self.firstViewToPresent = ActionViewName.UserNameView
+                
             }
+            
+
             
             self.introSnippets = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
                                   Snippet(message: "You say it like 'YUNG'.", action: .activate,id: 2, actionView: self.firstViewToPresent)]
@@ -164,6 +176,7 @@ class MainViewController: UIViewController {
                 self.talkbox.displayRoutine(routine: intro)
             }
         }
+        
         
         
     }

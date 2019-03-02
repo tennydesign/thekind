@@ -7,13 +7,40 @@
 //
 
 import Foundation
+import Firebase
+import FirebaseFirestore
 
 class GameKinds {
-    var drivers: [String: [KindCardId: KindCard]]!
-    var intellectCards: [KindCardId: KindCard]!
-    var intuitionCards: [KindCardId: KindCard]!
-    var EmpathyCards: [KindCardId: KindCard]!
-    var imaginationCards: [KindCardId: KindCard]!
+    static let drivers: [String: [KindCard]] = ["intellect": intellectCardsArray,
+                                                            "imagination": imaginationCardsArray,
+                                                            "intuition": intuitionCardsArray,
+                                                            "empathy": EmpathyCardsArray]
+    
+    static let intellectCardsArray: [KindCard] = Array(intellectCards.values)
+    static let intellectCards: [KindCardId: KindCard] = [.explorer : KindCard(kindId: .explorer, antagonists: nil, kindName: .explorer, iconImageName: .explorer),
+                                                  .mentor : KindCard(kindId: .mentor, antagonists: nil, kindName: .mentor, iconImageName: .mentor),
+                                                  .rebel : KindCard(kindId: .rebel, antagonists: nil, kindName: .rebel, iconImageName: .rebel)]
+    
+    static let intuitionCardsArray: [KindCard] = Array(intuitionCards.values)
+    static let intuitionCards: [KindCardId: KindCard] = [.leader : KindCard(kindId: .leader, antagonists: nil, kindName: .leader, iconImageName: .leader),
+                                                  .grinder : KindCard(kindId: .grinder, antagonists: nil, kindName: .grinder, iconImageName: .grinder),
+                                                  .idealist : KindCard(kindId: .idealist, antagonists: nil, kindName: .idealist, iconImageName: .idealist),
+                                                  .teamplayer : KindCard(kindId: .teamplayer, antagonists: nil, kindName: .teamplayer, iconImageName: .teamplayer)]
+    
+    static let EmpathyCardsArray: [KindCard] = Array(EmpathyCards.values)
+    static let EmpathyCards: [KindCardId: KindCard] = [.angel : KindCard(kindId: .angel, antagonists: nil, kindName: .angel, iconImageName: .angel),
+                                                .trailblazer : KindCard(kindId: .trailblazer, antagonists: nil, kindName: .trailblazer, iconImageName: .trailblazer),
+                                                .entertainer : KindCard(kindId: .entertainer, antagonists: nil, kindName: .entertainer, iconImageName: .entertainer)]
+    
+    static let imaginationCardsArray: [KindCard] = Array(imaginationCards.values)
+    static let imaginationCards: [KindCardId: KindCard] = [.visionary : KindCard(kindId: .visionary, antagonists: nil, kindName: .visionary, iconImageName: .visionary),
+                                                    .founder : KindCard(kindId: .founder, antagonists: nil, kindName: .founder, iconImageName: .founder)]
+
+    
+    static let allCardsOriginalArray = twelveKindsOriginalArray + minorKindsOriginalArray
+    static let allCardsOriginal = GameKinds.twelveKindsOriginal.merging(minorKindsOriginal) { (_, new) in new }
+    
+    static let twelveKindsOriginalArray: [KindCard] = Array(twelveKindsOriginal.values)
     static let twelveKindsOriginal: [KindCardId: KindCard] = [.explorer : KindCard(kindId: .explorer, antagonists: nil, kindName: .explorer, iconImageName: .explorer),
                                                   .mentor : KindCard(kindId: .mentor, antagonists: nil, kindName: .mentor, iconImageName: .mentor),
                                                   .rebel : KindCard(kindId: .rebel, antagonists: nil, kindName: .rebel, iconImageName: .rebel),
@@ -27,6 +54,8 @@ class GameKinds {
                                                   .trailblazer : KindCard(kindId: .trailblazer, antagonists: nil, kindName: .trailblazer, iconImageName: .trailblazer),
                                                   .entertainer : KindCard(kindId: .entertainer, antagonists: nil, kindName: .entertainer, iconImageName: .entertainer)]
     
+    
+    static let minorKindsOriginalArray: [KindCard] = Array(minorKindsOriginal.values)
     static let minorKindsOriginal: [KindCardId: KindCard] = [.achiever : KindCard(kindId: .achiever, antagonists: nil, kindName: .achiever, iconImageName: .achiever),
                                                               .adventurer : KindCard(kindId: .adventurer, antagonists: nil, kindName: .adventurer, iconImageName: .adventurer),
                                                               .aequanimus : KindCard(kindId: .aequanimus, antagonists: nil, kindName: .aequanimus, iconImageName: .aequanimus),
@@ -64,28 +93,6 @@ class GameKinds {
                                                               .still: KindCard(kindId: .still, antagonists: nil, kindName: .still, iconImageName: .still),
                                                               .traditionalist: KindCard(kindId: .traditionalist, antagonists: nil, kindName: .traditionalist, iconImageName: .traditionalist)]
     
-    init() {
-        intellectCards = [.explorer : KindCard(kindId: .explorer, antagonists: nil, kindName: .explorer, iconImageName: .explorer),
-                          .mentor : KindCard(kindId: .mentor, antagonists: nil, kindName: .mentor, iconImageName: .mentor),
-                          .rebel : KindCard(kindId: .rebel, antagonists: nil, kindName: .rebel, iconImageName: .rebel)]
-      
-        imaginationCards = [.visionary : KindCard(kindId: .visionary, antagonists: nil, kindName: .visionary, iconImageName: .visionary),
-                          .founder : KindCard(kindId: .founder, antagonists: nil, kindName: .founder, iconImageName: .founder)]
-        
-        intuitionCards = [.leader : KindCard(kindId: .leader, antagonists: nil, kindName: .leader, iconImageName: .leader),
-                          .grinder : KindCard(kindId: .grinder, antagonists: nil, kindName: .grinder, iconImageName: .grinder),
-                          .idealist : KindCard(kindId: .idealist, antagonists: nil, kindName: .idealist, iconImageName: .idealist),
-                          .teamplayer : KindCard(kindId: .teamplayer, antagonists: nil, kindName: .teamplayer, iconImageName: .teamplayer)]
-        
-        EmpathyCards = [.angel : KindCard(kindId: .angel, antagonists: nil, kindName: .angel, iconImageName: .angel),
-                        .trailblazer : KindCard(kindId: .trailblazer, antagonists: nil, kindName: .trailblazer, iconImageName: .trailblazer),
-                        .entertainer : KindCard(kindId: .entertainer, antagonists: nil, kindName: .entertainer, iconImageName: .entertainer)]
-        
-        drivers["intellect"] = intellectCards
-        drivers["intution"] = intuitionCards
-        drivers["empathy"] = EmpathyCards
-        drivers["imagination"] = imaginationCards
-    }
 }
 
 struct KindCard {
