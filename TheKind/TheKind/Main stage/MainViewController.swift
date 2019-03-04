@@ -153,6 +153,7 @@ class MainViewController: UIViewController {
                 // recurrent user.
                 if let actionViewNameEnum = ActionViewName(rawValue: tag) {
                         self.firstViewToPresent = actionViewNameEnum
+                        
                 }
                 
                 //load user deck

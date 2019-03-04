@@ -102,9 +102,9 @@ class BrowseKindCardView: KindActionTriggerView {
              KindUserSettingsManager.updateUserSettings()
             
             guard let driver =  KindUserSettingsManager.userFields[UserFieldTitle.driver.rawValue] as? String else {
-                fatalError("Cant find Driver choice")
+                fatalError("Cant find Driver choice, go back anc choose a driver")
             }
-            guard let kindsForDriver = GameKinds.drivers[driver] else {fatalError("Cant find Kinds for driver choice")}
+            guard let kindsForDriver = GameKinds.kindsForDriver[driver] else {fatalError("Cant find Kinds for driver choice")}
             availableKindsForDriver = kindsForDriver
             reloadAndResetCollectionView()
             
@@ -124,33 +124,43 @@ class BrowseKindCardView: KindActionTriggerView {
             let kind = self.availableKindsForDriver[selectedIndex]
             let kindName = kind.kindName.rawValue
             let txt = "You chose\(kindName). -Also know as The Mage.-Moving on..."
-            let actions: [KindActionType] = [.none, .deactivate,.activate]
-            let actionViews: [ActionViewName] = [.none,.BrowseKindView,.MapView]
+            let actions: [KindActionType] = [.activate, .deactivate,.activate]
+            let actionViews: [ActionViewName] = [.HudView,.BrowseKindView,.MapView]
             
-            //HERE TOMORROW. Changed from name to ID, test it .
-             KindUserSettingsManager.userFields[UserFieldTitle.kind.rawValue] = kind.kindId.rawValue
-             KindUserSettingsManager.updateUserSettings()
+            // update user settings
+            KindUserSettingsManager.userFields[UserFieldTitle.kind.rawValue] = kind.kindId.rawValue
+            KindUserSettingsManager.updateUserSettings()
             
-           // KindDeckManagement.userMainKind = kinds[selectedIndex]
-            KindDeckManagement.userKindDeckArray.append(self.availableKindsForDriver[selectedIndex])
+            // update deck.
+            KindDeckManagement.userKindDeckArray.append(kind)
+            KindDeckManagement.userMainKind = kind
+            
             self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
         }
     }
     
     override func leftOptionClicked() {
         if isShowingUserCarousel {
-            self.fadeOutView()
-            let actions: [KindActionType] = [.talk]
-            let actionViews: [ActionViewName] = [ActionViewName.GameBoardSceneControlView]
-
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
-            isShowingUserCarousel = false
+            backToGameBoard()
         } else {
-            self.fadeOutView()
-            let actions: [KindActionType] = [.activate]
-            let actionViews: [ActionViewName] = [.ChooseDriverView]
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+            backToChooseDriver()
         }
+    }
+    
+    private func backToGameBoard() {
+        self.fadeOutView()
+        let actions: [KindActionType] = [.talk]
+        let actionViews: [ActionViewName] = [ActionViewName.GameBoardSceneControlView]
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        isShowingUserCarousel = false
+    }
+    
+    private func backToChooseDriver() {
+        self.fadeOutView()
+        let actions: [KindActionType] = [.activate]
+        let actionViews: [ActionViewName] = [.ChooseDriverView]
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }
     
     // EXECUTED WHEN CAROUSEL IS SHOWING USER KINDS (TELL ME MORE ABOUT THIS KIND).

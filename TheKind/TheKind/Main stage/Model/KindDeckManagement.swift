@@ -26,8 +26,17 @@ class KindDeckManagement {
         }
     }
     
-    static var antagonisticDeck: [KindCardId: KindCard] = [:]
-    static var userMainKind: KindCard?
+    static var userMainKind: KindCard? {
+        didSet {
+            saveMainKind() { (err) in
+                if let err = err {
+                    fatalError(err.localizedDescription)
+                } else {
+                    print("main kind updated succesfully")
+                }
+            }
+        }
+    }
     
     //RETRIEVE
     static func getCurrentUserDeck(completion:@escaping ()->()) {
@@ -39,12 +48,25 @@ class KindDeckManagement {
             } else {
                 if let document = document, document.exists{
                     if let result = document.data() {
+                        
+                        // GET DECK
                         if let cardIds = result[KindDecksFields.userdeck.rawValue] as? [Int] {
                             KindDeckManagement.userKindDeckArray = self.createKindCardDeck(ids: cardIds)
-                            completion()
                         } else {
                             fatalError("couldn't load card decks")
                         }
+                        
+                        // GET MAINKIND
+                        if let maincardId = result[KindDecksFields.mainkind.rawValue] as? Int {
+                            if let mainKind = self.createKindCard(id: maincardId) {
+                                KindDeckManagement.userMainKind = mainKind
+                            }
+                        } else {
+                            fatalError("couldn't load main card from firestore")
+                        }
+                        
+                         completion()
+                        
                     }
                 }
 
@@ -52,25 +74,76 @@ class KindDeckManagement {
         }
     }
     
-    //SAVE
+  
+    private static func saveMainKind(completion: @escaping (Error?)->()) {
+        guard let mainKind = userMainKind else {fatalError("can't find mainkind to save")}
+        let db = Firestore.firestore()
+        
+        let mainKindDict:[String: Any] = [KindDecksFields.mainkind.rawValue:mainKind.kindId.rawValue]
+
+        db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).updateData(mainKindDict) { (err) in
+            if let err = err {
+                if err.localizedDescription.contains("No document to update") {
+                    //create
+                    db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).setData(mainKindDict, merge: true, completion: { (err) in
+                        if let err = err {
+                            completion(err)
+                            return
+                        }
+                        completion(nil)
+                        print("a new main kind field was created and updated")
+                    })
+                }
+                //If there is. Update.
+                print("an existent main kind field was updated")
+                
+                
+            }
+        }
+
+    }
+    
     private static func saveKindDeck(completion: @escaping (Error?)->()) {
         let db = Firestore.firestore()
         var cards:[Int] = []
         userKindDeckArray.forEach { (card) in
             cards.append(card.kindId.rawValue)
         }
-        let cardsDict:[String: [Int]] = [KindDecksFields.userdeck.rawValue:cards]
-        db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).setData(cardsDict, completion: { (err) in
+        let cardsDict:[String: Any] = [KindDecksFields.userdeck.rawValue:cards]
+        
+        db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).updateData(cardsDict) { (err) in
             if let err = err {
-                completion(err)
-                return
+                if err.localizedDescription.contains("No document to update") {
+                    //create
+                    db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).setData(cardsDict, merge: true, completion: { (err) in
+                        if let err = err {
+                            completion(err)
+                            return
+                        }
+                        completion(nil)
+                        print("a new kind deck field was created and updated")
+                    })
+                }
             }
-            completion(nil)
-        })
+                //If there is. Update.
+                print("an existent kind deck field was updated")
+                
+            }
     }
     
     
     //CREATE
+    private static func createKindCard(id: Int) -> KindCard? {
+        var kindcard: KindCard
+        if let kindIdEnum = KindCardId(rawValue: id) {
+            if let card = (GameKinds.allCardsOriginalArray.filter{$0.kindId == kindIdEnum}).first {
+                kindcard = card
+                return kindcard
+            }
+        }
+        return nil
+    }
+    
     private static func createKindCardDeck(ids: [Int]) -> [KindCard] {
         var kindcards: [KindCard] = []
         ids.forEach { (id) in

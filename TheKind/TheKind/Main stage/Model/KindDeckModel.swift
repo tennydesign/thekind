@@ -14,12 +14,12 @@ enum KindDeckDocument: String {
     case alldecks = "kinddecks"
 }
 enum KindDecksFields: String {
-    case userdeck = "userKindDeck"
+    case userdeck = "userKindDeck", mainkind = "userMainKind"
 }
 
 
 class GameKinds {
-    static let drivers: [String: [KindCard]] = [Drivers.intellect.rawValue: intellectCardsArray,
+    static let kindsForDriver: [String: [KindCard]] = [Drivers.intellect.rawValue: intellectCardsArray,
                                                             Drivers.imagination.rawValue: imaginationCardsArray,
                                                             Drivers.intuition.rawValue: intuitionCardsArray,
                                                             Drivers.empathy.rawValue: EmpathyCardsArray]

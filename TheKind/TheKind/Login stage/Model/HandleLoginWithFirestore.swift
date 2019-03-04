@@ -24,6 +24,7 @@ class HandleLoginWithFirestore {
             KindUserSettingsManager.loggedUserName = String(email.split(separator: "@").first ?? "")
             KindUserSettingsManager.userFields[UserFieldTitle.name.rawValue] = KindUserSettingsManager.loggedUserName!
             KindUserSettingsManager.userFields[UserFieldTitle.email.rawValue] = email
+            //HERE:  you don't need this update. 
             KindUserSettingsManager.updateUserSettings()
             completion(nil)
             

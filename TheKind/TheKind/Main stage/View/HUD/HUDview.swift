@@ -54,7 +54,7 @@ class HUDview: KindActionTriggerView {
         gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
         gradient.locations = [0.55, 1]
         layer.insertSublayer(gradient, at: 0)
-        
+
 
     }
     
@@ -87,12 +87,24 @@ class HUDview: KindActionTriggerView {
         
     }
     
-    
+
+    func showKindOnHUD(_ kind: KindCard) {
+        kindIconImageView.image = UIImage(named: kind.iconImageName.rawValue)
+        UIView.animate(withDuration: 1) {
+            self.viewForKindCard.alpha = 1
+        }
+    }
     
     override func activate() {
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
-            self.viewForAvatar.alpha = 1
-        }, completion: nil)
+       UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+        self.viewForAvatar.alpha = 1}, completion: nil)
+        
+        //HERE! SHOW HUD ICON !
+        if let kind = KindDeckManagement.userMainKind {
+            showKindOnHUD(kind)
+        }
+
+
     }
     
     override func deactivate() {
