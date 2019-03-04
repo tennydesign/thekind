@@ -41,7 +41,8 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.jungChatLogger.HoldToAnswerViewWidthAnchor.constant = 0
+        jungChatLogger.resetAnswerViewWidthAnchor() //0
+        jungChatLogger.resetJungChat()
         dismiss(animated: true)
     }
     
@@ -60,8 +61,9 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
 
         let jungAWSRekognition = JungAWSRekognition()
 
-        self.jungChatLogger.HoldToAnswerViewWidthAnchor.constant = 0
-        self.jungChatLogger.layoutIfNeeded()
+        //self.jungChatLogger.HoldToAnswerViewWidthAnchor.constant = 0
+        jungChatLogger.resetAnswerViewWidthAnchor() //0
+        jungChatLogger.resetJungChat()
 
 
         let actions: [KindActionType] = [.deactivate]

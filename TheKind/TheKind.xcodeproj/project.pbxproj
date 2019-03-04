@@ -60,6 +60,7 @@
 		A05150F421E3FFFC00795172 /* UserNameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A05150F321E3FFFC00795172 /* UserNameView.xib */; };
 		A05150F621E4002800795172 /* UserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F521E4002800795172 /* UserNameView.swift */; };
 		A05150F821E44A9400795172 /* KindUserSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F721E44A9400795172 /* KindUserSettingsManager.swift */; };
+		A0547F22222CBE59001EE736 /* HandleLoginWithFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0547F21222CBE59001EE736 /* HandleLoginWithFirestore.swift */; };
 		A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07075FC21F158B60013380D /* MapPhotoSnapper.swift */; };
 		A070760121F2CEAB0013380D /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A070760021F2CEAB0013380D /* MapView.xib */; };
 		A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1721F53B0F00DDEC6C /* ports.geojson */; };
@@ -170,6 +171,7 @@
 		A05150F321E3FFFC00795172 /* UserNameView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserNameView.xib; sourceTree = "<group>"; };
 		A05150F521E4002800795172 /* UserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameView.swift; sourceTree = "<group>"; };
 		A05150F721E44A9400795172 /* KindUserSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindUserSettingsManager.swift; sourceTree = "<group>"; };
+		A0547F21222CBE59001EE736 /* HandleLoginWithFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleLoginWithFirestore.swift; sourceTree = "<group>"; };
 		A07075FC21F158B60013380D /* MapPhotoSnapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPhotoSnapper.swift; sourceTree = "<group>"; };
 		A070760021F2CEAB0013380D /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
 		A0A45E1721F53B0F00DDEC6C /* ports.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ports.geojson; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 			isa = PBXGroup;
 			children = (
 				A05150F721E44A9400795172 /* KindUserSettingsManager.swift */,
+				A0547F21222CBE59001EE736 /* HandleLoginWithFirestore.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -941,6 +944,7 @@
 				A002F48421B9EFAE006E8660 /* JungChatBubbleCollectionViewCell.swift in Sources */,
 				A002F48321B9EFAE006E8660 /* KindJungOptionLabel.swift in Sources */,
 				A0320B56212B8AB6008A96E2 /* Extensions.swift in Sources */,
+				A0547F22222CBE59001EE736 /* HandleLoginWithFirestore.swift in Sources */,
 				A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */,
 				A0320B4D212B63C2008A96E2 /* LoginOptionsView.swift in Sources */,
 				A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */,

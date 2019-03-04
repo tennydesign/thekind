@@ -10,11 +10,19 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
+enum KindDeckDocument: String {
+    case alldecks = "kinddecks"
+}
+enum KindDecksFields: String {
+    case userdeck = "userKindDeck"
+}
+
+
 class GameKinds {
-    static let drivers: [String: [KindCard]] = ["intellect": intellectCardsArray,
-                                                            "imagination": imaginationCardsArray,
-                                                            "intuition": intuitionCardsArray,
-                                                            "empathy": EmpathyCardsArray]
+    static let drivers: [String: [KindCard]] = [Drivers.intellect.rawValue: intellectCardsArray,
+                                                            Drivers.imagination.rawValue: imaginationCardsArray,
+                                                            Drivers.intuition.rawValue: intuitionCardsArray,
+                                                            Drivers.empathy.rawValue: EmpathyCardsArray]
     
     static let intellectCardsArray: [KindCard] = Array(intellectCards.values)
     static let intellectCards: [KindCardId: KindCard] = [.explorer : KindCard(kindId: .explorer, antagonists: nil, kindName: .explorer, iconImageName: .explorer),
@@ -102,6 +110,12 @@ struct KindCard {
     let iconImageName: KindImageName
 }
 
+enum Drivers: String {
+    case intellect = "intellect",
+    imagination = "imagination",
+    intuition = "intuition",
+    empathy = "empathy"
+}
 
 enum KindCardId: Int {
     case angel = 1,

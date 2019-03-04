@@ -17,8 +17,7 @@ class MainViewController: UIViewController {
     @IBOutlet var bottomConstraintPanelMover: NSLayoutConstraint!
     var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
-    var kindUserManager = KindUserSettingsManager()
-    var kindDeckManager = KindDeckManagement()
+ 
     @IBOutlet var hudView: HUDview! // content is here.
     @IBOutlet var hudWindow: UIView! // overall top
     
@@ -140,12 +139,16 @@ class MainViewController: UIViewController {
     var firstViewToPresent = ActionViewName.UserNameView
     var introSnippets : [Snippet] = []
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initMainViewControllerForViews()
         initTalkboxForViews()
         // Check in which view of the game the user is.
-        kindUserManager.checkUserOnboardingView { (viewTag) in
+        
+        self.adaptHUDAndPanelToIphoneXFamily()
+       KindUserSettingsManager.checkUserOnboardingView { (viewTag) in
             if let tag = viewTag {
                 // recurrent user.
                 if let actionViewNameEnum = ActionViewName(rawValue: tag) {
@@ -166,15 +169,7 @@ class MainViewController: UIViewController {
             
 
             
-            self.introSnippets = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
-                                  Snippet(message: "You say it like 'YUNG'.", action: .activate,id: 2, actionView: self.firstViewToPresent)]
-
-            delay(bySeconds: 1) {
-                self.adaptHUDAndPanelToIphoneXFamily()
-
-                let intro = JungRoutine(snippets: self.introSnippets, userResponseOptions: nil, sender: .Jung)
-                self.talkbox.displayRoutine(routine: intro)
-            }
+            self.intro()
         }
         
         
@@ -193,12 +188,16 @@ class MainViewController: UIViewController {
         
     }
     
-    func presentJungIntro() {
-        //hitPickerControl()
-        //let options = self.talkbox.createUserOptions(opt1: "Wire-in mode.", opt2: "Introduce me to someone.", actionView: self.view)
-        let intro = JungRoutine(snippets: introSnippets, userResponseOptions: nil, sender: .Jung)
-        talkbox.displayRoutine(routine: intro)
+    fileprivate func intro() {
+        self.introSnippets = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
+                              Snippet(message: "You say it like 'YUNG'.", action: .activate,id: 2, actionView: self.firstViewToPresent)]
+        
+        delay(bySeconds: 1) {
+            let intro = JungRoutine(snippets: self.introSnippets, userResponseOptions: nil, sender: .Jung)
+            self.talkbox.displayRoutine(routine: intro)
+        }
     }
+
     
     
     override var prefersStatusBarHidden: Bool {

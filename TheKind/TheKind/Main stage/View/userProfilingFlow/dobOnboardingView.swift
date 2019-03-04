@@ -52,12 +52,11 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
     }
     
     override func activate() {
-        if mainViewController?.kindUserManager != nil {
-            mainViewController?.kindUserManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.DobOnboardingView.rawValue
+
+             KindUserSettingsManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.DobOnboardingView.rawValue
+             KindUserSettingsManager.updateUserSettings()
             self.talk()
-        } else {
-            fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging")
-        }
+  
         
     }
     
@@ -101,8 +100,8 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         // TODO: moving forward.
         
         //HERE
-        mainViewController?.kindUserManager.userFields[UserFieldTitle.year.rawValue] = selectedYear
-
+         KindUserSettingsManager.userFields[UserFieldTitle.year.rawValue] = selectedYear
+         KindUserSettingsManager.updateUserSettings()
         
         let txt = "I understand you are about \(age) years old.- We are almost finished with the setup."
         let actions: [KindActionType] = [.none,.activate]

@@ -68,15 +68,6 @@ class JungChatLogger: KindActionTriggerView {
         Bundle.main.loadNibNamed("JungChatLogger", owner: self, options: nil)
         addSubview(jungChatLogger)
         
-//        gradient = CAGradientLayer()
-//        gradient.frame = self.bounds
-//        gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
-//        gradient.locations = [1, 0.55]
-//        layer.insertSublayer(gradient, at: 0)
-        
-//        jungChatLogger.frame = self.bounds
-//        jungChatLogger.autoresizingMask = [.flexibleHeight,.flexibleWidth]
-        
         setupGestures()
         
         //COLLECTION VIEW
@@ -87,8 +78,8 @@ class JungChatLogger: KindActionTriggerView {
         refreshAndScrollCollectionView()
         
         //PROGRESS VIEW
-        HoldToAnswerViewWidthAnchor.constant = targetStretcherValue // 0
-        layoutIfNeeded()
+        resetAnswerViewWidthAnchor() // 46.0
+        
         
         if self.messagesCollection.isEmpty {resetJungChat()}
   
@@ -97,11 +88,11 @@ class JungChatLogger: KindActionTriggerView {
     
     }
     
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        gradient.frame = bounds
-//    }
-    
+    func resetAnswerViewWidthAnchor() {
+        HoldToAnswerViewWidthAnchor.constant = targetStretcherValue
+        layoutIfNeeded()
+    }
+
     func resetJungChat() {
         self.messagesCollection = ["","","","","",""]
     }

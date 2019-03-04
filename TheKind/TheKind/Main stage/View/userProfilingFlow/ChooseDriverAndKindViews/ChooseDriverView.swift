@@ -67,12 +67,11 @@ class ChooseDriverView: KindActionTriggerView {
     }
     
     override func activate() {
-        if mainViewController?.kindUserManager != nil {
-            mainViewController?.kindUserManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.ChooseDriverView.rawValue
+
+            KindUserSettingsManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.ChooseDriverView.rawValue
+            KindUserSettingsManager.updateUserSettings()
             talk()
-        } else {
-            fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging")
-        }
+
         
     }
     
@@ -86,7 +85,8 @@ class ChooseDriverView: KindActionTriggerView {
         let actionViews: [ActionViewName] = [.ChooseDriverView,.BrowseKindView]
         
         let driverName = (selected.dropLast()).lowercased()
-        mainViewController?.kindUserManager.userFields[UserFieldTitle.driver.rawValue] = driverName
+        KindUserSettingsManager.userFields[UserFieldTitle.driver.rawValue] = driverName
+         KindUserSettingsManager.updateUserSettings()
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }

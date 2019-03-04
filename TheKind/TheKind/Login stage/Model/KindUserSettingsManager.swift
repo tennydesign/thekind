@@ -30,13 +30,14 @@ public class KindUserSettingsManager {
     static var loggedUserName: String?
     
     
-    var userFields: [String: Any] = [:] {
+    static var userFields: [String: Any] = [:] {
         didSet {
-            updateUserSettings()
+            //updateUserSettings()
         }
     }
     
-    private func updateUserSettings() {
+    //SAVE
+    static func updateUserSettings() {
         let db = Firestore.firestore()
         db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).updateData(userFields) { (err) in
             if let err = err {
@@ -60,7 +61,8 @@ public class KindUserSettingsManager {
         
     }
     
-    private func createUserSettingsDocument(completion: @escaping (Error?)->()) {
+    //SAVE
+    private static func createUserSettingsDocument(completion: @escaping (Error?)->()) {
         let db = Firestore.firestore()
         db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).setData(userFields, completion: { (err) in
             if let err = err {
@@ -71,40 +73,7 @@ public class KindUserSettingsManager {
         })
     }
     
-    func loginWithEmailAndPassword(_ email: String, _ password: String, completion: @escaping (Error?)->()) {
-        // Will try to sign in  user.
-        Auth.auth().signIn(withEmail: email, password: password, completion: { (res, err) in
-            if let err = err {
-                completion(err)
-                return
-            }
-            
-            KindUserSettingsManager.loggedUserName = String(email.split(separator: "@").first ?? "")
-             self.userFields[UserFieldTitle.name.rawValue] = KindUserSettingsManager.loggedUserName!
-            self.userFields[UserFieldTitle.email.rawValue] = email
-            
-            completion(nil)
-            
-        })
-    }
-    
-    func createNewUser(_ email: String, _ password: String, completion:  @escaping (Error?)->()) {
-        Auth.auth().createUser(withEmail: email, password: password) { (res, err) in
-            if let err = err {
-                print(err)
-                completion(err)
-                return
-            }
-            
-            KindUserSettingsManager.loggedUserName = String(email.split(separator: "@").first ?? "")
-            self.userFields[UserFieldTitle.name.rawValue] = KindUserSettingsManager.loggedUserName!
-            self.userFields[UserFieldTitle.email.rawValue] = email
-            completion(nil)
-            
-        }
-    }
-    
-    func uploadUserPicture(profileImageData: Data) {
+    static func uploadUserPicture(profileImageData: Data) {
         let imageName = NSUUID().uuidString
         let storageRef = Storage.storage().reference(withPath: "profile_images").child("\(imageName).jpg")
         
@@ -120,15 +89,15 @@ public class KindUserSettingsManager {
                     return
                 }
                 self.userFields[UserFieldTitle.photoURL.rawValue] = url?.absoluteString
-
+                
             })
             
             
         })
     }
-
+    
     //HERE (finished)
-    func checkUserOnboardingView(completion:@escaping ((Int)?)->()) {
+    static func checkUserOnboardingView(completion:@escaping ((Int)?)->()) {
         let db = Firestore.firestore()
         db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).getDocument { (document, err) in
             if let err = err {
@@ -144,9 +113,15 @@ public class KindUserSettingsManager {
                             completion(nil)
                         }
                     }
+                }  else {
+                    self.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
+                    completion(nil)
                 }
-
+                
             }
         }
     }
+
 }
+
+

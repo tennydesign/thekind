@@ -82,7 +82,6 @@ class BrowseKindCardView: KindActionTriggerView {
         Bundle.main.loadNibNamed("BrowseKindCardView", owner: self, options: nil)
         addSubview(chooseKindCard)
         
-        
         print("status bar: \(UIApplication.shared.statusBarFrame.height)")
     }
     
@@ -98,9 +97,11 @@ class BrowseKindCardView: KindActionTriggerView {
     }
     
     override func activate() {
-        if mainViewController?.kindUserManager != nil {
-            mainViewController?.kindUserManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BrowseKindView.rawValue
-            guard let driver = mainViewController?.kindUserManager.userFields[UserFieldTitle.driver.rawValue] as? String else {
+
+             KindUserSettingsManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BrowseKindView.rawValue
+             KindUserSettingsManager.updateUserSettings()
+            
+            guard let driver =  KindUserSettingsManager.userFields[UserFieldTitle.driver.rawValue] as? String else {
                 fatalError("Cant find Driver choice")
             }
             guard let kindsForDriver = GameKinds.drivers[driver] else {fatalError("Cant find Kinds for driver choice")}
@@ -109,16 +110,9 @@ class BrowseKindCardView: KindActionTriggerView {
             
             fillAndPresentLabelWith(selectedIndex)
             //Switch between user is browsing or choosing carousels.
-            clearJungChat()
-            if isShowingUserCarousel {
-                userIsBrowsingGameBoardKindsTalk()
-            } else {
-                userIsSelectingMainKindTalk()
-            }
+
             talk()
-        } else {
-            fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging")
-        }
+
     }
     
     override func deactivate() {
@@ -133,7 +127,10 @@ class BrowseKindCardView: KindActionTriggerView {
             let actions: [KindActionType] = [.none, .deactivate,.activate]
             let actionViews: [ActionViewName] = [.none,.BrowseKindView,.MapView]
             
-            mainViewController?.kindUserManager.userFields[UserFieldTitle.kind.rawValue] = kindName
+            //HERE TOMORROW. Changed from name to ID, test it .
+             KindUserSettingsManager.userFields[UserFieldTitle.kind.rawValue] = kind.kindId.rawValue
+             KindUserSettingsManager.updateUserSettings()
+            
            // KindDeckManagement.userMainKind = kinds[selectedIndex]
             KindDeckManagement.userKindDeckArray.append(self.availableKindsForDriver[selectedIndex])
             self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
@@ -221,6 +218,16 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        clearJungChat()
+        guard let itemIndex = indexPathForCenterCell()?.row else {return}
+        self.selectedIndex = itemIndex
+        if isShowingUserCarousel {
+            userIsBrowsingGameBoardKindsTalk()
+        } else {
+            userIsSelectingMainKindTalk()
+        }
+    }
     
     func clearJungChat() {
         kindNameLabel.alpha = 0

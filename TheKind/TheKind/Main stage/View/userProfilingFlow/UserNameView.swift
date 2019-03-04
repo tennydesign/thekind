@@ -103,11 +103,10 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     
     override func activate() {
         // save current view # to database (onboarding log)
-        if mainViewController?.kindUserManager != nil {
-            mainViewController?.kindUserManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
-            self.fadeInView()
-            self.talk()
-        } else {fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging") }
+        KindUserSettingsManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
+        KindUserSettingsManager.updateUserSettings()
+        self.fadeInView()
+        self.talk()
     }
     
      override func talk() {
@@ -144,16 +143,14 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
             KindUserSettingsManager.loggedUserName = username
             txt = "Great, \(KindUserSettingsManager.loggedUserName ?? username) nice to meet you.-Welcome to The Kind."
             
-            if mainViewController?.kindUserManager != nil {
-                mainViewController?.kindUserManager.userFields[UserFieldTitle.name.rawValue] = username
-                //Move forward
-                let actions: [KindActionType] = [.none,.activate]
-                let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView]
-                self.fadeOutView()
-                
-                self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
-            } else {fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging") }
+            KindUserSettingsManager.userFields[UserFieldTitle.name.rawValue] = username
+            KindUserSettingsManager.updateUserSettings()
+            //Move forward
+            let actions: [KindActionType] = [.none,.activate]
+            let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView]
+            self.fadeOutView()
             
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
           
         } else {
             talk() // Talk to the user about the updated user name. (repeat the routine)

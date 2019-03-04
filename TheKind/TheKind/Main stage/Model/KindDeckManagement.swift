@@ -10,10 +10,7 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-enum KindDecksFields: String {
-    case userdeck = "userKindDeck"
-}
-
+//HERE Introduced the ENUM
 class KindDeckManagement {
     
     
@@ -21,7 +18,7 @@ class KindDeckManagement {
         didSet{
             saveKindDeck() { (err) in
                 if let err = err {
-                    print(err)
+                    fatalError(err.localizedDescription)
                 } else {
                     print("kind deck updated succesfully")
                 }
@@ -32,14 +29,10 @@ class KindDeckManagement {
     static var antagonisticDeck: [KindCardId: KindCard] = [:]
     static var userMainKind: KindCard?
     
-    init() {
-       // KindDeckManagement.userKindDeck[.founder] = KindCard(kindId: .founder, antagonists: nil, kindName: .founder, iconImageName:.founder)
-    }
-    
-    //HERE NO REAd
+    //RETRIEVE
     static func getCurrentUserDeck(completion:@escaping ()->()) {
         let db = Firestore.firestore()
-        db.collection("kinddecks").document((Auth.auth().currentUser?.uid)!).getDocument { (document, err) in
+        db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).getDocument { (document, err) in
             if let err = err {
                 print("error \(err)")
                 completion()
@@ -59,14 +52,15 @@ class KindDeckManagement {
         }
     }
     
+    //SAVE
     private static func saveKindDeck(completion: @escaping (Error?)->()) {
         let db = Firestore.firestore()
         var cards:[Int] = []
         userKindDeckArray.forEach { (card) in
             cards.append(card.kindId.rawValue)
         }
-        let cardsDict:[String: [Int]] = ["userKindDeck":cards]
-        db.collection("kinddecks").document((Auth.auth().currentUser?.uid)!).setData(cardsDict, completion: { (err) in
+        let cardsDict:[String: [Int]] = [KindDecksFields.userdeck.rawValue:cards]
+        db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).setData(cardsDict, completion: { (err) in
             if let err = err {
                 completion(err)
                 return
@@ -75,11 +69,8 @@ class KindDeckManagement {
         })
     }
     
-    func getAntagonists(_ id: KindCardId)->[KindCard]? {
-        return nil
-    }
     
-    
+    //CREATE
     private static func createKindCardDeck(ids: [Int]) -> [KindCard] {
         var kindcards: [KindCard] = []
         ids.forEach { (id) in
@@ -92,12 +83,6 @@ class KindDeckManagement {
 
         return kindcards
     }
-    
-//    func getAvailableDeck() -> [KindCard]{
-//        
-//        //
-//        
-//    }
     
 }
 

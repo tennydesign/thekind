@@ -13,7 +13,7 @@ class LandingViewControllerViewModel {
  //   var bindableToLoginView = Bindable<LoginView>()
     // a bind is like an estilingue. Client will fire, this will fire back to client .bind closure
     // after somework.
-    let kindUserManager = KindUserSettingsManager()
+    let handleLoginWithFirestore = HandleLoginWithFirestore()
     var bindableIsFormValid = Bindable<Bool>()
     var password: String? {
         didSet {
@@ -37,7 +37,7 @@ class LandingViewControllerViewModel {
     
     func loginWithEmailAndPassword(_ email: String, _ password: String, completion: @escaping (Error?)->()) {
         // Will try to sign in  user.
-        kindUserManager.loginWithEmailAndPassword(email, password) { (err) in
+        handleLoginWithFirestore.loginWithEmailAndPassword(email, password) { (err) in
             if let err = err {
                 completion(err)
                 return
@@ -47,7 +47,7 @@ class LandingViewControllerViewModel {
     }
     
     func createNewUser(_ email: String, _ password: String, completion:  @escaping (Error?)->()) {
-        kindUserManager.createNewUser(email, password) { (err) in
+        handleLoginWithFirestore.createNewUser(email, password) { (err) in
             if let err = err {
                 completion(err)
                 return

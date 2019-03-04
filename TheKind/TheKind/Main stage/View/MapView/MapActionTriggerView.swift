@@ -105,8 +105,9 @@ class MapActionTriggerView: KindActionTriggerView {
     }
     
     override func activate() {
-        if mainViewController?.kindUserManager != nil {
-            mainViewController?.kindUserManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.MapView.rawValue
+        
+            KindUserSettingsManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.MapView.rawValue
+            KindUserSettingsManager.updateUserSettings()
             
             //work on the map before showing
             clearJungChatLog()
@@ -127,11 +128,6 @@ class MapActionTriggerView: KindActionTriggerView {
             }
             
             self.talk()
-        } else {
-            fatalError("Cant find user manager in UserNameView - We need a user manager for onboarding logging")
-        }
-        
-
     }
     
     func clearJungChatLog() {
