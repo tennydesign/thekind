@@ -34,11 +34,12 @@ class MapActionTriggerView: KindActionTriggerView {
     let circleAnnotationModel = CircleAnnotationModel()
     
     // INIT VALUES
+    // HERE: Maybe add a little bit more space from top of jungchatlogger and map.
     let MAXZOOMLEVEL: Double = 18
     let FLYOVERZOOMLEVEL: Double = 14
     let MAXSCIRCLESCALE: CGFloat = 6.0
-    var openDrawerDistance: CGFloat = -180.0
-    let hiddenDrawerDistance: CGFloat = -280
+    var openDrawerDistance: CGFloat = -220.0
+    let hiddenDrawerDistance: CGFloat = -330
     let iphoneXFamilyOpenDrawerAdj:CGFloat = 48
     let iphoneXFamilyExpandedCircleInnerContentAdj: CGFloat = 10
     let annotationBounds: CGRect = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -106,8 +107,8 @@ class MapActionTriggerView: KindActionTriggerView {
     
     override func activate() {
         
-            KindUserSettingsManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.MapView.rawValue
-            KindUserSettingsManager.updateUserSettings()
+            KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.MapView.rawValue
+            KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             
             //work on the map before showing
             clearJungChatLog()

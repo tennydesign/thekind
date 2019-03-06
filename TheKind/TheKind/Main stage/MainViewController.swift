@@ -17,7 +17,7 @@ class MainViewController: UIViewController {
     @IBOutlet var bottomConstraintPanelMover: NSLayoutConstraint!
     var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
- 
+    
     @IBOutlet var hudView: HUDview! // content is here.
     @IBOutlet var hudWindow: UIView! // overall top
     
@@ -136,8 +136,11 @@ class MainViewController: UIViewController {
     }
     
     //First view of the sequence
-    var firstViewToPresent = ActionViewName.UserNameView
+    var firstViewToPresent: ActionViewName = ActionViewName.UserNameView
     var introSnippets : [Snippet] = []
+    
+
+    
     
 
     
@@ -148,35 +151,44 @@ class MainViewController: UIViewController {
         // Check in which view of the game the user is.
         
         self.adaptHUDAndPanelToIphoneXFamily()
-       KindUserSettingsManager.checkUserOnboardingView { (viewTag) in
-            if let tag = viewTag {
-                // recurrent user.
-                if let actionViewNameEnum = ActionViewName(rawValue: tag) {
-                        self.firstViewToPresent = actionViewNameEnum
-                        
-                }
-                
-                //load user deck
-                KindDeckManagement.getCurrentUserDeck {
-                    print("loaded kind decks")
-                    print(KindDeckManagement.userKindDeckArray)
-                }
-                
-            } else {
-                 // if tag is nil present first view as UserNameView.
-                 self.firstViewToPresent = ActionViewName.UserNameView
-                
-            }
-            
+        
+        retrieveUserSettingsForFirstTime()
 
-            
-            self.intro()
-        }
-        
-        
-        
     }
     
+    fileprivate func retrieveUserSettingsForFirstTime() {
+        KindUserSettingsManager.sharedInstance.retrieveUserSettings() { (fetched) in
+            //Data was fetched (user exists before)
+            if fetched == true {
+                self.updateViewTagWithCurrentState()
+                // intro = welcome back!
+            }
+            
+            self.intro()
+            
+        }
+    }
+    
+    fileprivate func updateViewTagWithCurrentState() {
+        //update tag:
+        guard let tag = KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] as? Int  else {return}
+        if let actionViewNameEnum = ActionViewName(rawValue: tag) {
+            self.firstViewToPresent = actionViewNameEnum
+        }
+    }
+    
+    
+    fileprivate func loadUserDeck() {
+        //load user deck
+        KindDeckManagement.getCurrentUserDeck {
+            print("loaded kind decks")
+            print(KindDeckManagement.userKindDeckArray)
+            //try to load hud icon
+            if let kind = KindDeckManagement.userMainKind {
+                self.hudView.showKindOnHUD(kind)
+            }
+        }
+    }
     
     func adaptHUDAndPanelToIphoneXFamily() {
         if UIScreen.isPhoneXfamily {

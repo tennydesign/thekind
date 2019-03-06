@@ -53,8 +53,8 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
     
     override func activate() {
 
-             KindUserSettingsManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.DobOnboardingView.rawValue
-             KindUserSettingsManager.updateUserSettings()
+             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.DobOnboardingView.rawValue
+             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             self.talk()
   
         
@@ -98,10 +98,9 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         let year = Calendar.current.component(.year, from: Date())
         let age = year-selectedYear
         // TODO: moving forward.
-        
-        //HERE
-         KindUserSettingsManager.userFields[UserFieldTitle.year.rawValue] = selectedYear
-         KindUserSettingsManager.updateUserSettings()
+
+         KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.year.rawValue] = selectedYear
+         KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
         
         let txt = "I understand you are about \(age) years old.- We are almost finished with the setup."
         let actions: [KindActionType] = [.none,.activate]

@@ -90,7 +90,7 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
 
         textField.resignFirstResponder()
         
-        KindUserSettingsManager.loggedUserName = username
+        KindUserSettingsManager.sharedInstance.loggedUserName = username
         let txt = "Great, I will call you \(username) from now on.-You can change it again if you prefer."
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
@@ -103,8 +103,8 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     
     override func activate() {
         // save current view # to database (onboarding log)
-        KindUserSettingsManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
-        KindUserSettingsManager.updateUserSettings()
+        KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
+        KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
         self.fadeInView()
         self.talk()
     }
@@ -112,9 +112,9 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
      override func talk() {
         var txt: String = ""
 
-        if !(KindUserSettingsManager.loggedUserName ?? "").isEmpty {
-            userNameTextField.text = KindUserSettingsManager.loggedUserName
-            txt = "Can I call you \(KindUserSettingsManager.loggedUserName!)?-If that's not good please change above."
+        if !(KindUserSettingsManager.sharedInstance.loggedUserName ?? "").isEmpty {
+            userNameTextField.text = KindUserSettingsManager.sharedInstance.loggedUserName
+            txt = "Can I call you \(KindUserSettingsManager.sharedInstance.loggedUserName!)?-If that's not good please change above."
         } else {
              userNameTextField.text = "[Type your name]"
              txt = "Hummm... I tried but didn't find your name.-Please enter your name above"
@@ -140,11 +140,11 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         var txt: String = ""
         
         if let username = userNameTextField.text, !(username.trimmingCharacters(in: .whitespaces).isEmpty) {
-            KindUserSettingsManager.loggedUserName = username
-            txt = "Great, \(KindUserSettingsManager.loggedUserName ?? username) nice to meet you.-Welcome to The Kind."
+            KindUserSettingsManager.sharedInstance.loggedUserName = username
+            txt = "Great, \(KindUserSettingsManager.sharedInstance.loggedUserName ?? username) nice to meet you.-Welcome to The Kind."
             
-            KindUserSettingsManager.userFields[UserFieldTitle.name.rawValue] = username
-            KindUserSettingsManager.updateUserSettings()
+            KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.name.rawValue] = username
+            KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             //Move forward
             let actions: [KindActionType] = [.none,.activate]
             let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView]

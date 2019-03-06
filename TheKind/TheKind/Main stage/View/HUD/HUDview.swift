@@ -55,6 +55,15 @@ class HUDview: KindActionTriggerView {
         gradient.locations = [0.55, 1]
         layer.insertSublayer(gradient, at: 0)
 
+        updateHUDWithUserSettingsObserver()
+        
+        
+        KindDeckManagement.userKindDeckChanged = { [unowned self] in
+            if let kind = KindDeckManagement.userMainKind {
+                self.showKindOnHUD(kind)
+            }
+        }
+        
 
     }
     
@@ -63,20 +72,32 @@ class HUDview: KindActionTriggerView {
         gradient.frame = bounds
     }
     
-
-//    // Received view from another screeen.
-//    // animate and remove it.
-//    // Only adjusts curtains after its gone. <----
-//    fileprivate func receiveViewInTrasitionAnimateAndRemoveIt() {
-//        delay(bySeconds: 1) {
-//            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
-//                UIApplication.shared.keyWindow!.viewWithTag(11)?.alpha = 0
-//            }, completion: { (completed) in
-//                UIApplication.shared.keyWindow!.viewWithTag(11)?.removeFromSuperview()
-//                self.mainViewController?.adjustCurtains() // <----
-//            })
-//        }
-//    }
+    fileprivate func updateHUDWithUserSettingsObserver() {
+        KindUserSettingsManager.sharedInstance.updateHUDWithUserSettings = { [unowned self] in
+            self.updateUserPhotoWithCurrentState()
+            
+            // update kind
+        }
+        
+    }
+    
+    fileprivate func updateUserPhotoWithCurrentState() {
+        // update photo:
+        if let urlString = KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.photoURL.rawValue] as? String {
+            // only load new image if it changed.
+            if KindUserSettingsManager.sharedInstance.currentUserImageURL != urlString {
+                if let url = URL(string: urlString) {
+                    let data = try? Data(contentsOf: url)
+                    self.userPictureImageVIew.image = UIImage(data: data!)
+                }
+                KindUserSettingsManager.sharedInstance.currentUserImageURL = urlString
+            }
+            self.revealUserPhoto()
+        } else {
+            self.fadeOutUserPhoto()
+        }
+    }
+    
     
     
     override func rightOptionClicked() {
@@ -96,23 +117,32 @@ class HUDview: KindActionTriggerView {
     }
     
     override func activate() {
-       UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
-        self.viewForAvatar.alpha = 1}, completion: nil)
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+                self.alpha = 1}, completion: nil)
         
-        //HERE! SHOW HUD ICON !
-        if let kind = KindDeckManagement.userMainKind {
-            showKindOnHUD(kind)
-        }
-
-
+        revealUserPhoto()
+    }
+    
+    func revealUserPhoto() {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+            self.viewForAvatar.alpha = 1}, completion: nil)
+    }
+    
+    func fadeOutUserPhoto() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.viewForAvatar.alpha = 0
+        })
     }
     
     override func deactivate() {
+        // hide it.
         UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {
-            self.viewForAvatar.alpha = 0
+            self.alpha = 0
         }, completion: nil)
     }
     
+    
+
     
 }
 

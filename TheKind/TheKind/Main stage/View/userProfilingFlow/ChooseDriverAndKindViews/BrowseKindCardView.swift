@@ -6,7 +6,7 @@
 //  Copyright © 2018 tenny. All rights reserved.
 //
 
-//HERE: LOOPING
+
 import UIKit
 
 
@@ -98,10 +98,10 @@ class BrowseKindCardView: KindActionTriggerView {
     
     override func activate() {
 
-             KindUserSettingsManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BrowseKindView.rawValue
-             KindUserSettingsManager.updateUserSettings()
+             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BrowseKindView.rawValue
+             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             
-            guard let driver =  KindUserSettingsManager.userFields[UserFieldTitle.driver.rawValue] as? String else {
+            guard let driver =  KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.driver.rawValue] as? String else {
                 fatalError("Cant find Driver choice, go back anc choose a driver")
             }
             guard let kindsForDriver = GameKinds.kindsForDriver[driver] else {fatalError("Cant find Kinds for driver choice")}
@@ -128,12 +128,13 @@ class BrowseKindCardView: KindActionTriggerView {
             let actionViews: [ActionViewName] = [.HudView,.BrowseKindView,.MapView]
             
             // update user settings
-            KindUserSettingsManager.userFields[UserFieldTitle.kind.rawValue] = kind.kindId.rawValue
-            KindUserSettingsManager.updateUserSettings()
+            KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.kind.rawValue] = kind.kindId.rawValue
+            KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             
             // update deck.
             KindDeckManagement.userKindDeckArray.append(kind)
             KindDeckManagement.userMainKind = kind
+            KindDeckManagement.saveMainKind()
             
             self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
         }

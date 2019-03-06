@@ -36,8 +36,8 @@ class BadgePhotoSetupView: KindActionTriggerView {
     }
     
     override func activate() {
-             KindUserSettingsManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BadgePhotoSetupView.rawValue
-             KindUserSettingsManager.updateUserSettings()
+             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BadgePhotoSetupView.rawValue
+             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             talk()
     }
     
@@ -69,7 +69,7 @@ class BadgePhotoSetupView: KindActionTriggerView {
             fatalError("error compressing image")
         }
         
-         KindUserSettingsManager.uploadUserPicture(profileImageData: uploadData)
+        KindUserSettingsManager.sharedInstance.uploadUserPicture(profileImageData: uploadData)
         
         self.fadeOutView()
         let txt = "-Cool!-I think it looks good too 🙂."

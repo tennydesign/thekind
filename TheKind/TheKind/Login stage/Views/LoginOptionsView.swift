@@ -11,6 +11,7 @@ import UIKit
 class LoginOptionsView: UIView {
 
     var landingViewController: LandingViewController?
+    let handleLoginWithFireStore =  HandleLoginWithFirestore()
     
     @IBOutlet var loginOptionsView: UIView!
     @IBOutlet var newUserButton: KindButton!
@@ -44,11 +45,11 @@ class LoginOptionsView: UIView {
     }
     
     @IBAction func GoogleLoginClicked(_ sender: KindButton) {
-        landingViewController?.signInWithGoogle()
+        handleLoginWithFireStore.signInWithGoogle()
     }
     
     @IBAction func googleSignOutClicked(_ sender: UIButton) {
-        landingViewController?.signOutWithGoogle()
+        handleLoginWithFireStore.signOutWithGoogle()
     }
 }
 

@@ -21,23 +21,62 @@ enum UserFieldTitle: String {
 }
 
 public class KindUserSettingsManager {
-    static var loggedUserEmail: String? {
-        get {
-            return Auth.auth().currentUser?.email
+    
+    var loggedUserName: String?
+    
+    // Implement this observer on every page where you want to show user settings.
+    var updateHUDWithUserSettings: (()->())?
+    var userSignedIn: (()->())?
+    
+    var userFields: [String: Any] = [:]
+    var currentUserImageURL: String = ""
+    static let sharedInstance = KindUserSettingsManager()
+    
+    private init() {}
+    
+    
+     // Initialize userFields
+    func initializeUserFields(email: String) {
+        let suggestedUsername = String(email.split(separator: "@").first ?? "")
+        loggedUserName = suggestedUsername
+        userFields[UserFieldTitle.name.rawValue] = suggestedUsername
+        userFields[UserFieldTitle.email.rawValue] = email
+        updateUserSettings() { (err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            // let the client know user signed in and update was successful.
+            self.userSignedIn?()
+            // turn observer ON.
+            self.observeUserSettings()
         }
+        
+
     }
     
-    static var loggedUserName: String?
     
-    
-    static var userFields: [String: Any] = [:] {
-        didSet {
-            //updateUserSettings()
-        }
+    // OBSERVE!
+    func observeUserSettings() {
+        let db = Firestore.firestore()
+        db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).addSnapshotListener { (snapshot, err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            guard let data = snapshot?.data() else {
+                print("no snapshot data on observerUserSettings")
+                return
+            }
+            self.userFields = data
+            
+            // Let the client know there were data retrieval
+            self.updateHUDWithUserSettings?()
+         }
     }
     
     //SAVE
-    static func updateUserSettings() {
+    func updateUserSettings(completion: ((Error?)->())?) {
         let db = Firestore.firestore()
         db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).updateData(userFields) { (err) in
             if let err = err {
@@ -45,24 +84,25 @@ public class KindUserSettingsManager {
                     //Create user from scratch
                     self.createUserSettingsDocument(completion: { (err) in
                         if let err = err {
-                            fatalError(err.localizedDescription)
+                            completion?(err)
                         }
                         print("New UserSettingd Document created successfully")
                         print("Fields updated successfully")
+                        completion?(nil)
+                        return
                         
                     })
                     
                 }
             }
-            
-            print("Fields updated successfully")
+            completion?(nil)
             
         }
         
     }
     
     //SAVE
-    private static func createUserSettingsDocument(completion: @escaping (Error?)->()) {
+    private func createUserSettingsDocument(completion: @escaping (Error?)->()) {
         let db = Firestore.firestore()
         db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).setData(userFields, completion: { (err) in
             if let err = err {
@@ -73,7 +113,8 @@ public class KindUserSettingsManager {
         })
     }
     
-    static func uploadUserPicture(profileImageData: Data) {
+    //SAVE
+    func uploadUserPicture(profileImageData: Data) {
         let imageName = NSUUID().uuidString
         let storageRef = Storage.storage().reference(withPath: "profile_images").child("\(imageName).jpg")
         
@@ -88,40 +129,72 @@ public class KindUserSettingsManager {
                     print(error!)
                     return
                 }
-                self.userFields[UserFieldTitle.photoURL.rawValue] = url?.absoluteString
                 
+                self.userFields[UserFieldTitle.photoURL.rawValue] = url?.absoluteString
+                self.updateUserSettings(completion: nil)
             })
             
             
         })
     }
     
-    //HERE (finished)
-    static func checkUserOnboardingView(completion:@escaping ((Int)?)->()) {
+    // RETRIEVE
+    func retrieveUserSettings(completion:@escaping (Bool?)->()) {
         let db = Firestore.firestore()
-        db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).getDocument { (document, err) in
+        db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).getDocument {  (document,err) in
             if let err = err {
-                print("error \(err)")
-                completion(nil)
-            } else {
-                if let document = document, document.exists{
-                    if let result = document.data() {
-                        if let onboardingView = result[UserFieldTitle.currentLandingView.rawValue] as? Int {
-                            completion(onboardingView)
-                        } else {
-                            self.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
-                            completion(nil)
-                        }
-                    }
-                }  else {
-                    self.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
-                    completion(nil)
-                }
-                
+                print(err)
+                completion(false)
+                return
             }
+            guard let data = document?.data() else
+            {
+                print("no data")
+                completion(false)
+                return
+            }
+            
+            self.userFields = data
+            completion(true)
+            // let the client know there was data retrieval.
+            self.updateHUDWithUserSettings?()
         }
     }
 
 }
 
+
+
+
+
+
+
+
+
+
+// RETRIEVE
+//    func checkUserOnboardingView(completion:@escaping ((Int)?)->()) {
+//        let db = Firestore.firestore()
+//        db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).getDocument { (document, err) in
+//            if let err = err {
+//                print("error \(err)")
+//                completion(nil)
+//            } else {
+//                if let document = document, document.exists{
+//                    if let result = document.data() {
+//                        if let onboardingView = result[UserFieldTitle.currentLandingView.rawValue] as? Int {
+//                            completion(onboardingView)
+//                        } else {
+//                            self.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
+//                            completion(nil)
+//                        }
+//                    }
+//                }  else {
+//                    self.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
+//                    completion(nil)
+//                }
+//
+//            }
+//        }
+//    }
 

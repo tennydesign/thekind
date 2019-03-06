@@ -44,6 +44,7 @@ class ChooseDriverView: KindActionTriggerView {
         pickerView.dataSource = self
         pickerView.selectRow(0, inComponent: 0, animated: false)
         lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)).width
+        
 
     }
 
@@ -68,8 +69,8 @@ class ChooseDriverView: KindActionTriggerView {
     
     override func activate() {
 
-            KindUserSettingsManager.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.ChooseDriverView.rawValue
-            KindUserSettingsManager.updateUserSettings()
+            KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.ChooseDriverView.rawValue
+            KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             talk()
 
         
@@ -85,8 +86,8 @@ class ChooseDriverView: KindActionTriggerView {
         let actionViews: [ActionViewName] = [.ChooseDriverView,.BrowseKindView]
         
         let driverName = (selected.dropLast()).lowercased()
-        KindUserSettingsManager.userFields[UserFieldTitle.driver.rawValue] = driverName
-         KindUserSettingsManager.updateUserSettings()
+        KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.driver.rawValue] = driverName
+         KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }

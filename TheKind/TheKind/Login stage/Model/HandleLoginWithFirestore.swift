@@ -9,6 +9,8 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import GoogleSignIn
+    //HERE: IT is loading the first TALK twice!!
 
 class HandleLoginWithFirestore {
     //LOGIN WITH FIREBASR
@@ -21,16 +23,19 @@ class HandleLoginWithFirestore {
                 return
             }
             
-            KindUserSettingsManager.loggedUserName = String(email.split(separator: "@").first ?? "")
-            KindUserSettingsManager.userFields[UserFieldTitle.name.rawValue] = KindUserSettingsManager.loggedUserName!
-            KindUserSettingsManager.userFields[UserFieldTitle.email.rawValue] = email
-            //HERE:  you don't need this update. 
-            KindUserSettingsManager.updateUserSettings()
+            KindUserSettingsManager.sharedInstance.initializeUserFields(email: email)
+//
+//            KindUserSettingsManager.sharedInstance.loggedUserName = String(email.split(separator: "@").first ?? "")
+//           KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.name.rawValue] = KindUserSettingsManager.sharedInstance.loggedUserName!
+//            KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.email.rawValue] = email
+//            //This update creates the user if its an old keychain entry without a real user in the system (like the test dummys)
+//            KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             completion(nil)
             
         })
     }
     
+
     func createNewUser(_ email: String, _ password: String, completion:  @escaping (Error?)->()) {
         Auth.auth().createUser(withEmail: email, password: password) { (res, err) in
             if let err = err {
@@ -39,12 +44,32 @@ class HandleLoginWithFirestore {
                 return
             }
             
-            KindUserSettingsManager.loggedUserName = String(email.split(separator: "@").first ?? "")
-            KindUserSettingsManager.userFields[UserFieldTitle.name.rawValue] = KindUserSettingsManager.loggedUserName!
-            KindUserSettingsManager.userFields[UserFieldTitle.email.rawValue] = email
-            KindUserSettingsManager.updateUserSettings()
+            KindUserSettingsManager.sharedInstance.initializeUserFields(email: email)
+//            KindUserSettingsManager.sharedInstance.loggedUserName = String(email.split(separator: "@").first ?? "")
+//
+//            KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.name.rawValue] = KindUserSettingsManager.sharedInstance.loggedUserName!
+//            KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.email.rawValue] = email
+//            KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             completion(nil)
             
         }
     }
+
+    func signInWithGoogle() {
+        GIDSignIn.sharedInstance().signIn()
+        
+    }
+
+    func signOutWithGoogle() {
+        
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            print("trying to sign out")
+            GIDSignIn.sharedInstance().signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+    }
+
 }

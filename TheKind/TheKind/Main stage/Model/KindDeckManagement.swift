@@ -26,17 +26,9 @@ class KindDeckManagement {
         }
     }
     
-    static var userMainKind: KindCard? {
-        didSet {
-            saveMainKind() { (err) in
-                if let err = err {
-                    fatalError(err.localizedDescription)
-                } else {
-                    print("main kind updated succesfully")
-                }
-            }
-        }
-    }
+    static var userMainKind: KindCard?
+    
+    static var userKindDeckChanged: (()->())?
     
     //RETRIEVE
     static func getCurrentUserDeck(completion:@escaping ()->()) {
@@ -74,33 +66,37 @@ class KindDeckManagement {
         }
     }
     
-  
-    private static func saveMainKind(completion: @escaping (Error?)->()) {
+
+    //HERE: OBSERVE MAINKIND!
+    
+     static func saveMainKind() {
         guard let mainKind = userMainKind else {fatalError("can't find mainkind to save")}
         let db = Firestore.firestore()
         
         let mainKindDict:[String: Any] = [KindDecksFields.mainkind.rawValue:mainKind.kindId.rawValue]
-
+        
         db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).updateData(mainKindDict) { (err) in
             if let err = err {
                 if err.localizedDescription.contains("No document to update") {
                     //create
                     db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).setData(mainKindDict, merge: true, completion: { (err) in
                         if let err = err {
-                            completion(err)
+                            print(err)
                             return
                         }
-                        completion(nil)
                         print("a new main kind field was created and updated")
+                        userKindDeckChanged?()
+                        return
+
                     })
                 }
                 //If there is. Update.
                 print("an existent main kind field was updated")
-                
+                userKindDeckChanged?()
                 
             }
         }
-
+        
     }
     
     private static func saveKindDeck(completion: @escaping (Error?)->()) {
@@ -122,12 +118,14 @@ class KindDeckManagement {
                         }
                         completion(nil)
                         print("a new kind deck field was created and updated")
+                        
+                        return
                     })
                 }
             }
                 //If there is. Update.
                 print("an existent kind deck field was updated")
-                
+                completion(nil)
             }
     }
     

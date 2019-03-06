@@ -135,6 +135,7 @@ extension AppDelegate: GIDSignInDelegate {
             // User is signed in
             // ...
             guard let email = authResult?.user.email else {return}
+            KindUserSettingsManager.sharedInstance.initializeUserFields(email: email)
             print("User signed in", email)
         }
     }

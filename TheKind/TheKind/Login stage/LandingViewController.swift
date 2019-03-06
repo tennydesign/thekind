@@ -72,7 +72,6 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
         
         setupKeyboardObservers()
         
-        GIDSignIn.sharedInstance()?.delegate = self
         GIDSignIn.sharedInstance()?.uiDelegate = self
         //GIDSignIn.sharedInstance()?.signInSilently()
         
@@ -81,6 +80,10 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
         self.view.addGestureRecognizer(loginTapGesture)
 
         setupViewModelObservers()
+        
+        KindUserSettingsManager.sharedInstance.userSignedIn = { [unowned self] in
+            self.goToOnboading()
+        }
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -140,7 +143,7 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
 }
 
 // MARK: === LOGIN WITH FIREBASE
-extension LandingViewController: GIDSignInDelegate,GIDSignInUIDelegate {
+extension LandingViewController: GIDSignInUIDelegate {
     
     // === THIS USES THE MVVM - it mimics the VM just so we don't have to call VM from the Views
     func createNewUser(email:String, password: String, completion: @escaping (Error?)->()) {
@@ -173,48 +176,6 @@ extension LandingViewController: GIDSignInDelegate,GIDSignInUIDelegate {
         let vc = storyboard.instantiateViewController(withIdentifier: "MainViewController")
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         present(vc, animated: true, completion: nil)
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-    
-        if let error = error {
-            print(error.localizedDescription)
-            return
-        }
-        
-        if let authentication = user.authentication {
-            print("Access token: \(String(describing: authentication.accessToken))")
-
-            if let email = user.profile.email {
-                KindUserSettingsManager.userFields[UserFieldTitle.email.rawValue] = email
-            }
-            
-            if let name = user.profile.name {
-                KindUserSettingsManager.loggedUserName = name
-                 KindUserSettingsManager.userFields[UserFieldTitle.name.rawValue] = name
-            }
-             KindUserSettingsManager.updateUserSettings()
-            goToOnboading()
-            
-
-        }
-    }
-    
-    func signOutWithGoogle() {
-        
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-            print("trying to sign out")
-            GIDSignIn.sharedInstance().signOut()
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
-        }
-    }
-    
-    func signInWithGoogle() {
-        GIDSignIn.sharedInstance().signIn()
-        
     }
 }
 
