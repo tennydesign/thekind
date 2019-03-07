@@ -94,8 +94,9 @@ public class KindUserSettingsManager {
                     })
                     
                 }
+            } else {
+                completion?(nil)
             }
-            completion?(nil)
             
         }
         

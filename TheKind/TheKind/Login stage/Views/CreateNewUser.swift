@@ -66,7 +66,7 @@ class CreateNewUser: UIView,loginValidationProtocol,UITextFieldDelegate {
                 return
             }
             
-            self.navigateAfterFadingOut()
+            self.fadeOutView()
         })
         
         landingViewController?.dismissKeyboard()
@@ -76,17 +76,16 @@ class CreateNewUser: UIView,loginValidationProtocol,UITextFieldDelegate {
         landingViewController?.switchViewsInsideController(toViewName: LandingVCViews.loginOptions, originView: self, removeOriginFromSuperView: false)
     }
     
-    func navigateAfterFadingOut() {
+    // WILL CALL AFTER LOGIN WAS APPROVED.
+    func fadeOutView() {
         UIView.animate(withDuration: 0.5, animations: {
             self.alpha = 0
         }, completion: { (completed) in
             
-            
-            // call function to move to OnboardingStoryboard.
-            self.landingViewController?.goToOnboading()
             self.removeFromSuperview()
             
             
         })
     }
+    
 }

@@ -151,19 +151,21 @@ class MainViewController: UIViewController {
         // Check in which view of the game the user is.
         
         self.adaptHUDAndPanelToIphoneXFamily()
-        
+        print("one time vieDidLoad")
         retrieveUserSettingsForFirstTime()
 
     }
     
     fileprivate func retrieveUserSettingsForFirstTime() {
+
         KindUserSettingsManager.sharedInstance.retrieveUserSettings() { (fetched) in
             //Data was fetched (user exists before)
+            
             if fetched == true {
                 self.updateViewTagWithCurrentState()
                 // intro = welcome back!
             }
-            
+            print("one time retrieveUserSettingsForFirstTime")
             self.intro()
             
         }
@@ -202,6 +204,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func intro() {
+        print("one time intro()")
         self.introSnippets = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
                               Snippet(message: "You say it like 'YUNG'.", action: .activate,id: 2, actionView: self.firstViewToPresent)]
         

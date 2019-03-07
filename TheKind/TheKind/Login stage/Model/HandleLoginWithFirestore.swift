@@ -24,12 +24,7 @@ class HandleLoginWithFirestore {
             }
             
             KindUserSettingsManager.sharedInstance.initializeUserFields(email: email)
-//
-//            KindUserSettingsManager.sharedInstance.loggedUserName = String(email.split(separator: "@").first ?? "")
-//           KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.name.rawValue] = KindUserSettingsManager.sharedInstance.loggedUserName!
-//            KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.email.rawValue] = email
-//            //This update creates the user if its an old keychain entry without a real user in the system (like the test dummys)
-//            KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+
             completion(nil)
             
         })
@@ -45,11 +40,7 @@ class HandleLoginWithFirestore {
             }
             
             KindUserSettingsManager.sharedInstance.initializeUserFields(email: email)
-//            KindUserSettingsManager.sharedInstance.loggedUserName = String(email.split(separator: "@").first ?? "")
-//
-//            KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.name.rawValue] = KindUserSettingsManager.sharedInstance.loggedUserName!
-//            KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.email.rawValue] = email
-//            KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+
             completion(nil)
             
         }

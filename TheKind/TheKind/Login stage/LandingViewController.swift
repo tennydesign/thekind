@@ -80,8 +80,9 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
         self.view.addGestureRecognizer(loginTapGesture)
 
         setupViewModelObservers()
-        
+        print("one time View Did Load LandingViewControllerV ")
         KindUserSettingsManager.sharedInstance.userSignedIn = { [unowned self] in
+            print("one time userSignedIn")
             self.goToOnboading()
         }
     }
@@ -172,6 +173,7 @@ extension LandingViewController: GIDSignInUIDelegate {
     }
     
      func goToOnboading() {
+        print("one time goToOnboading")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "MainViewController")
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve

@@ -73,7 +73,7 @@ class LoginExistingUser: UIView,UITextFieldDelegate,loginValidationProtocol {
                 return
             }
 
-            self.navigateAfterFadingOut()
+            self.fadeoutView()
 
         })
         
@@ -81,14 +81,11 @@ class LoginExistingUser: UIView,UITextFieldDelegate,loginValidationProtocol {
     }
     
     // WILL CALL AFTER LOGIN WAS APPROVED.
-    func navigateAfterFadingOut() {
+    func fadeoutView() {
         UIView.animate(withDuration: 0.5, animations: {
             self.alpha = 0
         }, completion: { (completed) in
 
-            
-            // call function to move to OnboardingStoryboard.
-            self.landingViewController?.goToOnboading()
             self.removeFromSuperview()
             
 
