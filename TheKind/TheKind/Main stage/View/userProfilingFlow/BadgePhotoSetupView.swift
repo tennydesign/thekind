@@ -8,6 +8,8 @@
 
 import UIKit
 
+//TODO: Screen is blinking after user chooses photo.
+
 class BadgePhotoSetupView: KindActionTriggerView {
     
     @IBOutlet var mainView: UIView!

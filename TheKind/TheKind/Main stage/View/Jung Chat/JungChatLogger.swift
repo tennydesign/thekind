@@ -262,7 +262,6 @@ class JungChatLogger: KindActionTriggerView {
     fileprivate func postMessageToJungChat(message: String) {
         // do not post empty strings
         if !message.isEmpty {
-            //HERE:
             self.messagesCollection.append(message)
         }
     }

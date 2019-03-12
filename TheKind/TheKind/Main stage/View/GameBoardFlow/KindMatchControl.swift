@@ -39,8 +39,7 @@ class KindMatchControl: UIView, KindActionTriggerViewProtocol {
         let txt = "Tenny meet Alex.-Alex is the Founder Kind and I think you have a lot in common."
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
-        
-        //HERE
+
         let options = self.talkbox?.createUserOptions(opt1: "Tell me more.", opt2: "Introduce us.", actionViews: (ActionViewName.KindMatchControlView,ActionViewName.KindMatchControlView))
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))

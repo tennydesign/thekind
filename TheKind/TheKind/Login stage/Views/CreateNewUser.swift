@@ -80,11 +80,9 @@ class CreateNewUser: UIView,loginValidationProtocol,UITextFieldDelegate {
     func fadeOutView() {
         UIView.animate(withDuration: 0.5, animations: {
             self.alpha = 0
-        }, completion: { (completed) in
-            
+        }, completion: { (completed) in            
             self.removeFromSuperview()
-            
-            
+        
         })
     }
     

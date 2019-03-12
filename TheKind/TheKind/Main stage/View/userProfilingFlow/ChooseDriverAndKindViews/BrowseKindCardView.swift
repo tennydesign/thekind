@@ -10,12 +10,6 @@
 import UIKit
 
 
-struct Kind {
-    var image: UIImage?
-    var name: String?
-    var id: Int?
-}
-
 class BrowseKindCardView: KindActionTriggerView {
     
     // INIT VALUES
@@ -132,11 +126,15 @@ class BrowseKindCardView: KindActionTriggerView {
             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             
             // update deck.
-            KindDeckManagement.userKindDeckArray.append(kind)
-            KindDeckManagement.userMainKind = kind
-            KindDeckManagement.saveMainKind()
-            
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+            KindDeckManagement.sharedInstance.userMainKind = kind.kindId.rawValue
+            KindDeckManagement.sharedInstance.saveMainKind() { (err) in
+                if let err = err {
+                    print("AQUI!!! \(err)")
+                    return
+                }
+                self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+            }
+  
         }
     }
     

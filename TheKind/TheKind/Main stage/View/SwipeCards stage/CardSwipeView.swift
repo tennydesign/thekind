@@ -5,17 +5,14 @@
 //  Created by Tenny on 2/14/19.
 //  Copyright © 2019 tenny. All rights reserved.
 //
-// HERE: IT IS LOADING KINDS IN THE CAROUSEL
-// NEXT: MAKE SURE MAINVIEWCONRTOLLER LOADER IS FINE
-// MAKE SURE FLOW IS SOLID
-// CLEAN UP A LITTLE.
+
 
 import UIKit
 import Koloda
 
 class CardSwipeView: UIView {
     //var kindsToSwipe: [UIImage] = [#imageLiteral(resourceName: "team_player"),#imageLiteral(resourceName: "explorer"),#imageLiteral(resourceName: "idealist"),#imageLiteral(resourceName: "rebel")]
-    var kindsToSwipe: [KindCardId:KindCard] {
+    var kindsToSwipe: [KindCardIdEnum:KindCard] {
         get {
             return GameKinds.minorKindsOriginal
         }
@@ -23,8 +20,8 @@ class CardSwipeView: UIView {
     
     
     var currentlyShowingCardImage = UIImage()
-    var currentlyShowingCardId:KindCardId?
-    var currentlyShowingCardTitle: KindName?
+    var currentlyShowingCardId:KindCardIdEnum?
+    var currentlyShowingCardTitle: KindNameEnum?
     
     var currentlyShowingKindCard: KindCard!
     
@@ -71,9 +68,20 @@ class CardSwipeView: UIView {
         kolodaView.appearanceAnimationDuration = 0.3
         chosenKindsCollectionView?.register(UINib(nibName: "ChosenKindCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ChosenKindCollectionViewCell")
 
-    
+        
+        // triggers every time the deck is updated.
+        KindDeckManagement.sharedInstance.getCurrentUserDeck { (success) in
+            print("retrieval of deck is \(success)")
+        }
+        KindDeckManagement.sharedInstance.updateMainKindOnClient = { [unowned self] in
+            self.chosenKindsCollectionView.reloadData()
+            
+        }
+        
     
     }
+    
+
 
 
 }
@@ -95,24 +103,32 @@ extension CardSwipeView: KolodaViewDelegate {
     }
     
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection) {
-        
+        //SWIPE LEFT
         if direction == SwipeResultDirection.left {
             // inserts
             guard let kindCard = currentlyShowingKindCard else {fatalError("no currentlyShowingKindCard found")}
            
             //kindsChosenImages.insert(currentlyShowingCardImage, at: 0)
-            KindDeckManagement.userKindDeckArray.insert(kindCard, at: 0)
+            KindDeckManagement.sharedInstance.userKindDeck.insert(kindCard.kindId.rawValue, at: 0)
             
-            let indexPath = IndexPath(item: 0, section: 0)
-            chosenKindsCollectionView.insertItems(at: [indexPath])
-            chosenKindsCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
-            
-            // I need this delay otherwise the insert above cancels the reload.
-            delay(bySeconds: 0.3) {
-                self.deselectAllItemsInChosenKindCollection()
+            KindDeckManagement.sharedInstance.updateKindDeck { (err) in
+                if let err = err {
+                    print("updatekind in swipe left error: \(err)")
+                    return
+                }
                 
+                let indexPath = IndexPath(item: 0, section: 0)
+                self.chosenKindsCollectionView.insertItems(at: [indexPath])
+                self.chosenKindsCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
+                
+                // I need this delay otherwise the insert above cancels the reload.
+                delay(bySeconds: 0.3) {
+                    self.deselectAllItemsInChosenKindCollection()
+                    
+                }
             }
-            
+        
+        // SWIPE RIGHT
         } else if direction == SwipeResultDirection.right {
             deselectAllItemsInChosenKindCollection()
         }
@@ -187,14 +203,16 @@ extension CardSwipeView: KolodaViewDataSource {
 
 extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
-        return KindDeckManagement.userKindDeckArray.count
+        return KindDeckManagement.sharedInstance.userKindDeck.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChosenKindCollectionViewCell", for: indexPath) as! ChosenKindCollectionViewCell
         
-        guard let image = UIImage(named: KindDeckManagement.userKindDeckArray[indexPath.row].iconImageName.rawValue) else {fatalError("image not found line 185")}
+        let kindID = KindDeckManagement.sharedInstance.userKindDeck[indexPath.row]
+        guard let kind = GameKinds.createKindCard(id:kindID) else {fatalError("can't find kind enum to create kind")}
+        
+        guard let image = UIImage(named: kind.iconImageName.rawValue) else {fatalError("image not found to kind \(kind)")}
         
         cell.kindImageView.image = image.withRenderingMode(.alwaysTemplate)
         print(didSelectUserChosenKindIndex)
@@ -204,7 +222,7 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
             cell.kindImageView.tintColor = UIColor(r: 171, g: 171, b: 171)
         }
     
-        print("DECK CARDS: \(KindDeckManagement.userKindDeckArray)")
+        print("DECK CARDS: \(KindDeckManagement.sharedInstance.userKindDeck)")
         return cell
         
     }
@@ -286,15 +304,23 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
         if didSelectUserChosenKindIndex > -1 {
             let indexPath = IndexPath(item: didSelectUserChosenKindIndex, section: 0)
 
-            KindDeckManagement.userKindDeckArray.remove(at: indexPath.row)
+            KindDeckManagement.sharedInstance.userKindDeck.remove(at: indexPath.row)
+            //tries to update the deck
+            KindDeckManagement.sharedInstance.updateKindDeck { (err) in
+                if let err = err {
+                    print("remove kind error: \(err)")
+                    return
+                }
+                
+                self.chosenKindsCollectionView.deleteItems(at: [indexPath])
+                self.chosenKindsCollectionView.reloadData()
+                
+                let txt = "Done."
+                let actions: [KindActionType] = [.none]
+                let actionViews: [ActionViewName] = [.none]
+                self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+            }
 
-            chosenKindsCollectionView.deleteItems(at: [indexPath])
-            chosenKindsCollectionView.reloadData()
-            
-            let txt = "Done."
-            let actions: [KindActionType] = [.none]
-            let actionViews: [ActionViewName] = [.none]
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
         } else {
             fatalError("kindsChosenSelectedIndex is pointing to -1, this will break the app")
         }

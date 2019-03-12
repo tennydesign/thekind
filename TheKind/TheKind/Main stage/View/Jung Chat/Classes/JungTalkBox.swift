@@ -62,7 +62,6 @@ class JungTalkBox {
         
     }
 
-    //TODO: Maybe treat for empty dialog.
     func routineFromText(dialog: String, snippetId: [Int]? = nil, sender: Sender? = nil, action: [KindActionType], actionView: [ActionViewName], options: (Snippet,Snippet)? = nil) -> JungRoutine? {
         
         let messages = Array(dialog.split(separator: "-").map({ (substring) -> String in

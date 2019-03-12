@@ -37,9 +37,7 @@ class MainViewController: UIViewController {
             gameBoardViewHost.isHidden = true
         }
     }
-    
-    // ADDTRIGGERVIEW: Must add it here.
-    //HERE
+
     @IBOutlet var cardSwipeViewHost: CardSwipeView! {
         didSet{
             cardSwipeViewHost.isHidden = false
@@ -110,7 +108,6 @@ class MainViewController: UIViewController {
     
     
     fileprivate func initMainViewControllerForViews() {
-        // ADDTRIGGERVIEW: Must add it here.
         hudView.mainViewController = self
         jungChatLogger.mainViewController = self
         badgePhotoSetupViewHost.mainViewController = self
@@ -153,7 +150,9 @@ class MainViewController: UIViewController {
         self.adaptHUDAndPanelToIphoneXFamily()
         print("one time vieDidLoad")
         retrieveUserSettingsForFirstTime()
-
+        
+        //initialize observer on deck changes.
+        KindDeckManagement.sharedInstance.initializeDeckObserver()
     }
     
     fileprivate func retrieveUserSettingsForFirstTime() {
@@ -182,14 +181,10 @@ class MainViewController: UIViewController {
     
     fileprivate func loadUserDeck() {
         //load user deck
-        KindDeckManagement.getCurrentUserDeck {
-            print("loaded kind decks")
-            print(KindDeckManagement.userKindDeckArray)
-            //try to load hud icon
-            if let kind = KindDeckManagement.userMainKind {
-                self.hudView.showKindOnHUD(kind)
-            }
+        KindDeckManagement.sharedInstance.getCurrentUserDeck { (success) in
+            print(KindDeckManagement.sharedInstance.userKindDeck)
         }
+
     }
     
     func adaptHUDAndPanelToIphoneXFamily() {

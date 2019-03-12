@@ -24,7 +24,6 @@ public class KindUserSettingsManager {
     
     var loggedUserName: String?
     
-    // Implement this observer on every page where you want to show user settings.
     var updateHUDWithUserSettings: (()->())?
     var userSignedIn: (()->())?
     
@@ -47,6 +46,7 @@ public class KindUserSettingsManager {
                 return
             }
             // let the client know user signed in and update was successful.
+            //TODO: check if MAINCONTROL IS LOADED!!
             self.userSignedIn?()
             // turn observer ON.
             self.observeUserSettings()

@@ -58,9 +58,9 @@ class HUDview: KindActionTriggerView {
         updateHUDWithUserSettingsObserver()
         
         
-        KindDeckManagement.userKindDeckChanged = { [unowned self] in
-            if let kind = KindDeckManagement.userMainKind {
-                self.showKindOnHUD(kind)
+        KindDeckManagement.sharedInstance.updateMainKindOnClient = { [unowned self] in
+            if let kindId = KindDeckManagement.sharedInstance.userMainKind {
+                self.showKindOnHUD(kindId)
             }
         }
         
@@ -109,7 +109,8 @@ class HUDview: KindActionTriggerView {
     }
     
 
-    func showKindOnHUD(_ kind: KindCard) {
+    func showKindOnHUD(_ id: Int) {
+        guard let kind = GameKinds.createKindCard(id: id) else {fatalError("In showKindOnHUD")}
         kindIconImageView.image = UIImage(named: kind.iconImageName.rawValue)
         UIView.animate(withDuration: 1) {
             self.viewForKindCard.alpha = 1

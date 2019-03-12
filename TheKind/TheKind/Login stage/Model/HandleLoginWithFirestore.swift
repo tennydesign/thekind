@@ -10,10 +10,9 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 import GoogleSignIn
-    //HERE: IT is loading the first TALK twice!!
+
 
 class HandleLoginWithFirestore {
-    //LOGIN WITH FIREBASR
     
     func loginWithEmailAndPassword(_ email: String, _ password: String, completion: @escaping (Error?)->()) {
         // Will try to sign in  user.
