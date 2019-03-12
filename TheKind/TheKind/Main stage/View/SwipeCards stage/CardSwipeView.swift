@@ -304,18 +304,29 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
         if didSelectUserChosenKindIndex > -1 {
             let indexPath = IndexPath(item: didSelectUserChosenKindIndex, section: 0)
 
-            KindDeckManagement.sharedInstance.userKindDeck.remove(at: indexPath.row)
-            //tries to update the deck
-            KindDeckManagement.sharedInstance.updateKindDeck { (err) in
-                if let err = err {
-                    print("remove kind error: \(err)")
-                    return
+            let kindIdToRemove = KindDeckManagement.sharedInstance.userKindDeck[indexPath.row]
+            let currentMainKind = KindDeckManagement.sharedInstance.userMainKind ?? 0
+            
+            //Protects against removing the main kind
+            if kindIdToRemove != currentMainKind {
+                KindDeckManagement.sharedInstance.userKindDeck.remove(at: indexPath.row)
+                //tries to update the deck
+                KindDeckManagement.sharedInstance.updateKindDeck { (err) in
+                    if let err = err {
+                        print("remove kind error: \(err)")
+                        return
+                    }
+                    
+                    self.chosenKindsCollectionView.deleteItems(at: [indexPath])
+                  
+                    let txt = "Done."
+                    let actions: [KindActionType] = [.none]
+                    let actionViews: [ActionViewName] = [.none]
+                    self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
                 }
-                
-                self.chosenKindsCollectionView.deleteItems(at: [indexPath])
-                self.chosenKindsCollectionView.reloadData()
-                
-                let txt = "Done."
+            } else {
+                print("YOU CANT REMOVE THE MAIN KIND FROM HERE!!!!!!!!!!!")
+                let txt = "You can only remove the main kind from the settings menu."
                 let actions: [KindActionType] = [.none]
                 let actionViews: [ActionViewName] = [.none]
                 self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
