@@ -26,7 +26,7 @@ class JungChatLogger: KindActionTriggerView {
     @IBOutlet var heightCollectionViewConsraint: NSLayoutConstraint!
     @IBOutlet var holdToAnswerBar: UIView!
     var mainViewController: MainViewController?
-    
+    var routineHasPosted: (()->())?
     
     let serialPostsQueue = DispatchQueue(label: "com.thekind.jungPosts")
     var messagesPipe: [String] = []
@@ -147,6 +147,7 @@ class JungChatLogger: KindActionTriggerView {
                             if labelsUpdated {
                                 self.hideOptionLabels(false, completion: nil)
                             }
+                            self.routineHasPosted?()
                         }
                         
                     })

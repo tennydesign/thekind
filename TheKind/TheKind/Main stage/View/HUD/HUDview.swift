@@ -88,7 +88,17 @@ class HUDview: KindActionTriggerView {
             if KindUserSettingsManager.sharedInstance.currentUserImageURL != urlString {
                 if let url = URL(string: urlString) {
                     let data = try? Data(contentsOf: url)
-                    self.userPictureImageVIew.image = UIImage(data: data!)
+                    guard let newImage = UIImage(data: data!) else {return}
+                    
+                    // Avoid flashing on onboarding where the preview is already in place when upload happens.
+                    if let viewingImage = self.userPictureImageVIew.image {
+                        if !(newImage.isEqualToImage(image: viewingImage)) {
+                            self.userPictureImageVIew.image = newImage
+                        }
+                    } else {
+                        // preview is not carrying any image.
+                        self.userPictureImageVIew.image = newImage
+                    }
                 }
                 KindUserSettingsManager.sharedInstance.currentUserImageURL = urlString
             }

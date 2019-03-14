@@ -24,6 +24,7 @@ extension GameBoardScene {
         
         moveCamToCenterOfTileAndZoom(duration: 0.6, centerLocation: centerLocation) {
             self.kindMatchControlView.preIntroduction()
+            self.tapGestureRecognizer.isEnabled = false
         }
     }
     

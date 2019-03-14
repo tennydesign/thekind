@@ -25,7 +25,7 @@ class GameBoardScene: SKScene {
     var tapGestureRecognizer = UITapGestureRecognizer()
     var isPanning:Bool = false
     var sceneCamera: SKCameraNode!
-    
+    var mainViewController: MainViewController?
     var talkbox: JungTalkBox? {
         didSet {
             gameControllerView.talkbox = self.talkbox
@@ -80,8 +80,18 @@ class GameBoardScene: SKScene {
         // install tiles
         layBackgroundBoardTiles()
         spawnKindsRandomly()
+        
 
+        
     }
+    
+    //fires when routine has finished posted
+    func routingPostingObserver() {
+        mainViewController?.jungChatLogger.routineHasPosted = { [unowned self] in
+            self.tapGestureRecognizer.isEnabled = true
+        }
+    }
+    
     
     func initializeTileMaps() {
         guard let tileMap = self.childNode(withName: "GameBoardTileMap") as? SKTileMapNode else {fatalError("TileMap Set not found")}

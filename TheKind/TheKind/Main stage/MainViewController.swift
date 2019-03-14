@@ -118,6 +118,7 @@ class MainViewController: UIViewController {
         cardSwipeViewHost.mainViewController = self
         dobOnboardingViewHost.mainViewController = self
         chooseDriverView.mainViewController = self
+        
     }
     
     fileprivate func initTalkboxForViews() {

@@ -38,9 +38,10 @@ class BadgePhotoSetupView: KindActionTriggerView {
     }
     
     override func activate() {
-             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BadgePhotoSetupView.rawValue
-             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
-            talk()
+//             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BadgePhotoSetupView.rawValue
+//             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+        self.logCurrentLandingView(tag: ActionViewName.BadgePhotoSetupView.rawValue)
+        talk()
     }
     
     override func deactivate() {

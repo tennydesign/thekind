@@ -39,6 +39,11 @@ class KindActionTriggerView: UIView, KindActionTriggerViewProtocol {
     func talk() {
         
     }
+    
+    func logCurrentLandingView(tag: Int) {
+        KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = tag
+        KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+    }
 
     // ===> NON-POLYMORPHIC ACTIONS <===
     

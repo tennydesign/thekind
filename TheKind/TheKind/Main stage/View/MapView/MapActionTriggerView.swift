@@ -153,6 +153,12 @@ class MapActionTriggerView: KindActionTriggerView {
             self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
         }
     }
+    
+    override func rightOptionClicked() {
+        let actions: [KindActionType] = [KindActionType.fadeOutView,KindActionType.activate]
+        let actionViews: [ActionViewName] = [ActionViewName.MapView, ActionViewName.GameBoard]
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(action: actions, actionView: actionViews, options: nil))
+    }
 }
 
 extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {

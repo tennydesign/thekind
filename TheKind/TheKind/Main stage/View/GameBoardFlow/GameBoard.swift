@@ -53,11 +53,10 @@ class GameBoard: KindActionTriggerView {
     }
     
     override func activate() {
-        self.isHidden = false
-        self.alpha = 1
-        
+        self.fadeInView()
+        gameBoardScene?.mainViewController = self.mainViewController
+        gameBoardScene?.routingPostingObserver()
         gameBoardScene?.talkbox = self.talkbox
-        
         let txt = "Let me know if you want me to introduce you to someone."
         let actions: [KindActionType] = [.none]
         let actionViews: [ActionViewName] = [.none]
@@ -69,7 +68,6 @@ class GameBoard: KindActionTriggerView {
     }
     
     override func deactivate() {
-        self.isHidden = true
-        self.alpha = 0
+        self.fadeOutView()
     }
 }

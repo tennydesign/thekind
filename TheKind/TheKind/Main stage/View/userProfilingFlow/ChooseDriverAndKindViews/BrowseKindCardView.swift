@@ -28,15 +28,7 @@ class BrowseKindCardView: KindActionTriggerView {
     
 
     var talkbox: JungTalkBox?
-    var selectedIndex: Int = 0 {
-        didSet {
-            if isShowingUserCarousel{
-                userIsBrowsingGameBoardKindsTalk()
-            } else{
-                userIsSelectingMainKindTalk()
-            }
-        }
-    }
+    var selectedIndex: Int = 0
     
 
     var currentCellToTint: kindCollectioViewCell?
@@ -82,11 +74,15 @@ class BrowseKindCardView: KindActionTriggerView {
 
     override func talk() {
         if !isShowingUserCarousel{
-            let txt = "Lastly...-Choose your kind."
+            let txt = "Choose your kind. -Tap the icon to know more or go back to change your main driver."
             let actions: [KindActionType] = [.none, .fadeInView]
             let actionViews: [ActionViewName] = [.none,.BrowseKindView]
+            var options: (Snippet,Snippet)?
+            if let kindName = availableKindsForDriver.first?.kindName.rawValue {
+                options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I'm like \(kindName)", actionView: self)
+            }
             
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
         }
     }
     
@@ -228,7 +224,7 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        clearJungChat()
+       // clearJungChat()
         guard let itemIndex = indexPathForCenterCell()?.row else {return}
         self.selectedIndex = itemIndex
         if isShowingUserCarousel {
@@ -245,8 +241,8 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        clearJungChat()
-        
+       // clearJungChat()
+        self.kindNameLabel.alpha = 0
         if scrollView.panGestureRecognizer.translation(in: scrollView.superview).x > 0 {
             print("right")
             
