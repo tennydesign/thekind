@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import SpriteKit
 
-class KindMatchControl: UIView, KindActionTriggerViewProtocol {
-    func deactivate() {
+class KindMatchControl: KindActionTriggerView {
+    override func deactivate() {
         
     }
     
@@ -32,7 +32,7 @@ class KindMatchControl: UIView, KindActionTriggerViewProtocol {
         tag = 202
     }
     
-    func talk() {
+    override func talk() {
     }
     
     func preIntroduction() {
@@ -40,15 +40,15 @@ class KindMatchControl: UIView, KindActionTriggerViewProtocol {
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
 
-        let options = self.talkbox?.createUserOptions(opt1: "Tell me more.", opt2: "Introduce us.", actionViews: (ActionViewName.KindMatchControlView,ActionViewName.KindMatchControlView))
+        let options = self.talkbox?.createUserOptions(opt1: "See Kind deck.", opt2: "Intro us.", actionViews: (ActionViewName.KindMatchControlView,ActionViewName.KindMatchControlView))
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
     
-    func activate() {
+    override func activate() {
     }
     
-    func rightOptionClicked() {
+    override func rightOptionClicked() {
         //HERE:
         // 1) Send Alex a message
         // 2) If Alex agrees send this screen to CHAT
@@ -57,20 +57,20 @@ class KindMatchControl: UIView, KindActionTriggerViewProtocol {
         print("GO TO CHAT SCREEN")
     }
     
-    func leftOptionClicked() {
+    override func leftOptionClicked() {
         let actions: [KindActionType] = [.activate]
         let actionViews: [ActionViewName] = [ActionViewName.BrowseKindView]
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
         
-        isShowingUserCarousel = true
+        KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck = true
     }
     
-    func fadeInView() {
+    override func fadeInView() {
         
     }
     
-    func fadeOutView() {
+    override func fadeOutView() {
         
     }
     

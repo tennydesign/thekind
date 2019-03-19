@@ -17,6 +17,7 @@ class KindDeckManagement {
     static let sharedInstance = KindDeckManagement()
     var userKindDeck: [Int] = []
     var userMainKind: Int?
+    var isBrowsingAnotherUserKindDeck = false
     
     //Computed properties.
     var kindsdict: [String: Any] {

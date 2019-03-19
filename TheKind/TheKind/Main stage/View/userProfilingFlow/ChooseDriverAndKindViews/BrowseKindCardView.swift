@@ -73,7 +73,7 @@ class BrowseKindCardView: KindActionTriggerView {
     
 
     override func talk() {
-        if !isShowingUserCarousel{
+        if !KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
             let txt = "Choose your kind. -Tap the icon to know more or go back to change your main driver."
             let actions: [KindActionType] = [.none, .fadeInView]
             let actionViews: [ActionViewName] = [.none,.BrowseKindView]
@@ -87,9 +87,9 @@ class BrowseKindCardView: KindActionTriggerView {
     }
     
     override func activate() {
-
-             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BrowseKindView.rawValue
-             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+         if !KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
+            self.logCurrentLandingView(tag: ActionViewName.BrowseKindView.rawValue)
+        }
             
             guard let driver =  KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.driver.rawValue] as? String else {
                 fatalError("Cant find Driver choice, go back anc choose a driver")
@@ -110,7 +110,7 @@ class BrowseKindCardView: KindActionTriggerView {
     }
     
     override func rightOptionClicked() {
-        if !isShowingUserCarousel {
+        if !KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
             let kind = self.availableKindsForDriver[selectedIndex]
             let kindName = kind.kindName.rawValue
             let txt = "You chose\(kindName). -Also know as The Mage.-Moving on..."
@@ -135,7 +135,7 @@ class BrowseKindCardView: KindActionTriggerView {
     }
     
     override func leftOptionClicked() {
-        if isShowingUserCarousel {
+        if KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
             backToGameBoard()
         } else {
             backToChooseDriver()
@@ -148,7 +148,7 @@ class BrowseKindCardView: KindActionTriggerView {
         let actionViews: [ActionViewName] = [ActionViewName.GameBoardSceneControlView]
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
-        isShowingUserCarousel = false
+        KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck = false
     }
     
     private func backToChooseDriver() {
@@ -166,7 +166,7 @@ class BrowseKindCardView: KindActionTriggerView {
         let actionViews: [ActionViewName] = [.none,.none]
         
         
-        let options = self.talkbox?.createUserOptions(opt1: "Back to circle", opt2: "Introduce us.", actionViews: (ActionViewName.BrowseKindView,ActionViewName.KindMatchControlView))
+        let options = self.talkbox?.createUserOptions(opt1: "Back to the board", opt2: "Introduce us.", actionViews: (ActionViewName.BrowseKindView,ActionViewName.KindMatchControlView))
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
@@ -227,7 +227,7 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
        // clearJungChat()
         guard let itemIndex = indexPathForCenterCell()?.row else {return}
         self.selectedIndex = itemIndex
-        if isShowingUserCarousel {
+        if KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
             userIsBrowsingGameBoardKindsTalk()
         } else {
             userIsSelectingMainKindTalk()
