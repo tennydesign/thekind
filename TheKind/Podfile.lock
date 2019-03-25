@@ -1,75 +1,76 @@
 PODS:
-  - AWSCore (2.8.4)
-  - AWSRekognition (2.8.4):
-    - AWSCore (= 2.8.4)
+  - AWSCore (2.9.3)
+  - AWSRekognition (2.9.3):
+    - AWSCore (= 2.9.3)
   - BoringSSL-GRPC (0.0.2):
     - BoringSSL-GRPC/Implementation (= 0.0.2)
     - BoringSSL-GRPC/Interface (= 0.0.2)
   - BoringSSL-GRPC/Implementation (0.0.2):
     - BoringSSL-GRPC/Interface (= 0.0.2)
   - BoringSSL-GRPC/Interface (0.0.2)
-  - Firebase/Auth (5.16.0):
+  - Firebase/Auth (5.19.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (= 5.3.0)
-  - Firebase/Core (5.16.0):
+    - FirebaseAuth (= 5.4.1)
+  - Firebase/Core (5.19.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 5.5.0)
-  - Firebase/CoreOnly (5.16.0):
-    - FirebaseCore (= 5.2.0)
-  - Firebase/Database (5.16.0):
+    - FirebaseAnalytics (= 5.8.0)
+  - Firebase/CoreOnly (5.19.0):
+    - FirebaseCore (= 5.4.0)
+  - Firebase/Database (5.19.0):
     - Firebase/CoreOnly
-    - FirebaseDatabase (= 5.1.0)
-  - Firebase/Firestore (5.16.0):
+    - FirebaseDatabase (= 5.1.1)
+  - Firebase/Firestore (5.19.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (= 1.0.0)
-  - Firebase/Storage (5.16.0):
+    - FirebaseFirestore (= 1.1.0)
+  - Firebase/Storage (5.19.0):
     - Firebase/CoreOnly
-    - FirebaseStorage (= 3.1.0)
-  - FirebaseAnalytics (5.5.0):
-    - FirebaseCore (~> 5.2)
-    - FirebaseInstanceID (~> 3.4)
-    - GoogleAppMeasurement (= 5.5.0)
+    - FirebaseStorage (= 3.1.1)
+  - FirebaseAnalytics (5.8.0):
+    - FirebaseCore (~> 5.4)
+    - FirebaseInstanceID (~> 3.8)
+    - GoogleAppMeasurement (= 5.8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
     - GoogleUtilities/Network (~> 5.2)
     - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
-  - FirebaseAuth (5.3.0):
+  - FirebaseAuth (5.4.1):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.2)
     - GoogleUtilities/Environment (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseAuthInterop (1.0.0)
-  - FirebaseCore (5.2.0):
+  - FirebaseCore (5.4.0):
+    - GoogleUtilities/Environment (~> 5.2)
     - GoogleUtilities/Logger (~> 5.2)
-  - FirebaseDatabase (5.1.0):
+  - FirebaseDatabase (5.1.1):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.2)
     - leveldb-library (~> 1.18)
-  - FirebaseFirestore (1.0.0):
+  - FirebaseFirestore (1.1.0):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.2)
-    - FirebaseFirestore/abseil-cpp (= 1.0.0)
+    - FirebaseFirestore/abseil-cpp (= 1.1.0)
     - "gRPC-C++ (= 0.0.6)"
     - leveldb-library (~> 1.20)
     - nanopb (~> 0.3.901)
     - Protobuf (~> 3.1)
-  - FirebaseFirestore/abseil-cpp (1.0.0):
+  - FirebaseFirestore/abseil-cpp (1.1.0):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.2)
     - "gRPC-C++ (= 0.0.6)"
     - leveldb-library (~> 1.20)
     - nanopb (~> 0.3.901)
     - Protobuf (~> 3.1)
-  - FirebaseInstanceID (3.4.0):
+  - FirebaseInstanceID (3.8.0):
     - FirebaseCore (~> 5.2)
-    - GoogleUtilities/Environment (~> 5.3)
-    - GoogleUtilities/UserDefaults (~> 5.3)
-  - FirebaseStorage (3.1.0):
+    - GoogleUtilities/Environment (~> 5.2)
+    - GoogleUtilities/UserDefaults (~> 5.2)
+  - FirebaseStorage (3.1.1):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleAppMeasurement (5.5.0):
+  - GoogleAppMeasurement (5.8.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
     - GoogleUtilities/Network (~> 5.2)
@@ -87,23 +88,23 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.2.0)
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.0)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.2.0)"
-  - GoogleUtilities/AppDelegateSwizzler (5.3.7):
+  - GoogleUtilities/AppDelegateSwizzler (5.5.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (5.3.7)
-  - GoogleUtilities/Logger (5.3.7):
+  - GoogleUtilities/Environment (5.5.0)
+  - GoogleUtilities/Logger (5.5.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (5.3.7):
+  - GoogleUtilities/MethodSwizzler (5.5.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (5.3.7):
+  - GoogleUtilities/Network (5.5.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (5.3.7)"
-  - GoogleUtilities/Reachability (5.3.7):
+  - "GoogleUtilities/NSData+zlib (5.5.0)"
+  - GoogleUtilities/Reachability (5.5.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (5.3.7):
+  - GoogleUtilities/UserDefaults (5.5.0):
     - GoogleUtilities/Logger
   - "gRPC-C++ (0.0.6)":
     - "gRPC-C++/Implementation (= 0.0.6)"
@@ -122,7 +123,7 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.17.0)
   - GTMSessionFetcher/Core (1.2.1)
-  - Koloda (4.6):
+  - Koloda (4.7):
     - pop (~> 1.0)
   - leveldb-library (1.20)
   - Mapbox-iOS-SDK (4.8.0-alpha.2)
@@ -135,7 +136,7 @@ PODS:
     - NVActivityIndicatorView/Presenter (= 4.6.1)
   - NVActivityIndicatorView/Presenter (4.6.1)
   - pop (1.0.12)
-  - Protobuf (3.6.1)
+  - Protobuf (3.7.0)
 
 DEPENDENCIES:
   - AWSRekognition
@@ -179,32 +180,32 @@ SPEC REPOS:
     - Protobuf
 
 SPEC CHECKSUMS:
-  AWSCore: 734b0d67c2c77f6edae9e5520431a37310ea4193
-  AWSRekognition: fad6467f39d64657a634da4265fb97a4d2349eda
+  AWSCore: 5cbb6c6ccfad4b55e494c2e8df87781512f7881e
+  AWSRekognition: 0b1c4c0f1e4926d41854abdab65b5195604a2313
   BoringSSL-GRPC: 2a230d9cd93e7ce39916044f645cebb31f37dde6
-  Firebase: 749a8ff4962f9d8c79dda1966de20f6f77583d67
-  FirebaseAnalytics: d35d47c03c50c73c14a7fd31463c5775843e78a9
-  FirebaseAuth: c9b3ff063c223d2841d97240af547ce511bce19a
+  Firebase: c60d49e9c2630875a96207d15e2affb8364996d1
+  FirebaseAnalytics: fd72a26bf8dac84cefba2f0864366f718555a5b0
+  FirebaseAuth: cbb892a66baed025efc179372598941252acf853
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
-  FirebaseCore: ea2d1816723ef21492b8e9113303e1350db5e08c
-  FirebaseDatabase: 23acb0c53cd4d4070a427b60100b2e4aaa97c45d
-  FirebaseFirestore: 6f2b93b4f7bb8416628142763c91ccc00fa04c86
-  FirebaseInstanceID: 97ea7a5dca9afd72c79bfcdddb7a44aa1cbb42a1
-  FirebaseStorage: 29075f874c2b3cf61e5221a62c4ceefc809e5412
-  GoogleAppMeasurement: 621f3bc6211d5ba548debe01fafad30cf5ab6859
+  FirebaseCore: 22a79a961c3951ef2f77b67bfbc99e454247b319
+  FirebaseDatabase: 2c15b0ea6f2c6eb5e57413f9d6340f1e50b81ae3
+  FirebaseFirestore: 1531eefe02da66be6860966ac4e2cdac635706e2
+  FirebaseInstanceID: cf488df2f4b79782f0e430b04a0e17c0aa7979b2
+  FirebaseStorage: 6162ef4322502b818d9de0ec552f5226d283de43
+  GoogleAppMeasurement: 1624046ab1bcc5e170061a56ef5679000b079c8e
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
   GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
-  GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
+  GoogleUtilities: 6481e6318c5fcabaaa8513ef8120f329055d7c10
   "gRPC-C++": e76441995900ac90e9bd98644ab4733f12521edf
   gRPC-Core: 4028031ed2c5267cca0d846c876d8046b1ecb9b6
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
-  Koloda: bcf5acded25fc49020d1447ed8ddd87e14d01e7e
+  Koloda: f456d003d2ce15ef9f10c2874a444f1f570b490c
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   Mapbox-iOS-SDK: 621e599a8c0096600bc7116fb4f43a14aaaac8dc
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
-  Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
+  Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
 
 PODFILE CHECKSUM: 1e94aff7a1c2f603dc15c95b44298a933073058b
 

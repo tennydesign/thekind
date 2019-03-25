@@ -19,7 +19,7 @@ class MapActionTriggerView: KindActionTriggerView {
     @IBOutlet var mapBoxView: MGLMapView! {
         didSet {
             mapBoxView.maximumZoomLevel = MAXZOOMLEVEL
-            //setup observer
+            //setup observer5
             plotAnnotations()
         }
     }
@@ -118,6 +118,7 @@ class MapActionTriggerView: KindActionTriggerView {
                 self.mainViewController?.moveBottomPanel(distance: self.hiddenDrawerDistance) {
                     self.mapViewViewModel.retrieveCirclesCloseToPlayer() {
                         //present map after annotations are there.
+                        // the observer will fire, see: plotAnnotations()
                         self.alpha = 0
                         self.isHidden = false
                         self.talkbox?.delegate = self
@@ -138,7 +139,7 @@ class MapActionTriggerView: KindActionTriggerView {
     
     func describeCircle(circleID: Int) {
         // check ID and retrieve routine
-        let txt = "An Angel's heaven.-You have high chances of making friends here.-You need the key to enter this circle."
+        let txt = "This place is dominated by the Founder kind.-You have high chances of making friends here.-You will need a key to join this circle."
         let actions: [KindActionType] = [.none, .none,.none]
         let actionViews: [ActionViewName] = [.none,.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "Back to map", opt2: "Join this circle.", actionView: self)

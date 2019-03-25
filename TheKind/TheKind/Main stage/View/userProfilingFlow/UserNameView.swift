@@ -9,7 +9,7 @@
 import UIKit
 
 class UserNameView: KindActionTriggerView, UITextFieldDelegate {
-    
+    var username: String = ""
     var mainViewController: MainViewController?
     var talkbox: JungTalkBox?
     @IBOutlet var lineWidth: NSLayoutConstraint!
@@ -80,6 +80,8 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     
     @objc func textFieldDidChange(textField: UITextField){
         adaptLineToTextSize(textField)
+        guard let username = textField.text, !(username.trimmingCharacters(in: .whitespaces).isEmpty) else {return}
+        self.username = username
         
     }
     
@@ -87,7 +89,7 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Cool guard for textfields.
         guard let username = textField.text, !(username.trimmingCharacters(in: .whitespaces).isEmpty) else {return true}
-
+        self.username = username
         textField.resignFirstResponder()
         
         KindUserSettingsManager.sharedInstance.loggedUserName = username

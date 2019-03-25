@@ -208,10 +208,6 @@ class KindDeckManagement {
 
         }
     }
-    
-    
-    
-    //CREATE
 
 }
 

@@ -710,6 +710,9 @@
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 1000;
 						SystemCapabilities = {
+							com.apple.ApplePay = {
+								enabled = 0;
+							};
 							com.apple.AutoFillCredentialProvider = {
 								enabled = 1;
 							};
