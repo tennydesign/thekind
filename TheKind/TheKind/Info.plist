@@ -47,6 +47,7 @@
 	<string>Shows your location and circles on the map.</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>HorizonRounded-Bold.otf</string>
 		<string>AcylicalHand-Small-SVG.ttf</string>
 		<string>AcylicalHand-Small.ttf</string>
 		<string>AcylicalHand-Tall.ttf</string>

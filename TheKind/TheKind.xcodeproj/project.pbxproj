@@ -61,6 +61,8 @@
 		A05150F621E4002800795172 /* UserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F521E4002800795172 /* UserNameView.swift */; };
 		A05150F821E44A9400795172 /* KindUserSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F721E44A9400795172 /* KindUserSettingsManager.swift */; };
 		A0547F22222CBE59001EE736 /* HandleLoginWithFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0547F21222CBE59001EE736 /* HandleLoginWithFirestore.swift */; };
+		A06BF621224C577E00B97A94 /* Ext_Create_MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06BF620224C577E00B97A94 /* Ext_Create_MapActionTriggerView.swift */; };
+		A06BF623224C69C800B97A94 /* HorizonRounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A06BF622224C69C800B97A94 /* HorizonRounded-Bold.otf */; };
 		A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07075FC21F158B60013380D /* MapPhotoSnapper.swift */; };
 		A070760121F2CEAB0013380D /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A070760021F2CEAB0013380D /* MapView.xib */; };
 		A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1721F53B0F00DDEC6C /* ports.geojson */; };
@@ -172,6 +174,8 @@
 		A05150F521E4002800795172 /* UserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameView.swift; sourceTree = "<group>"; };
 		A05150F721E44A9400795172 /* KindUserSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindUserSettingsManager.swift; sourceTree = "<group>"; };
 		A0547F21222CBE59001EE736 /* HandleLoginWithFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleLoginWithFirestore.swift; sourceTree = "<group>"; };
+		A06BF620224C577E00B97A94 /* Ext_Create_MapActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Create_MapActionTriggerView.swift; sourceTree = "<group>"; };
+		A06BF622224C69C800B97A94 /* HorizonRounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HorizonRounded-Bold.otf"; sourceTree = "<group>"; };
 		A07075FC21F158B60013380D /* MapPhotoSnapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPhotoSnapper.swift; sourceTree = "<group>"; };
 		A070760021F2CEAB0013380D /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
 		A0A45E1721F53B0F00DDEC6C /* ports.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ports.geojson; sourceTree = "<group>"; };
@@ -444,6 +448,7 @@
 			children = (
 				A070760021F2CEAB0013380D /* MapView.xib */,
 				A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */,
+				A06BF620224C577E00B97A94 /* Ext_Create_MapActionTriggerView.swift */,
 				A0A45E2521FBA78F00DDEC6C /* ViewModel */,
 				A0A45E2421FBA78300DDEC6C /* Model */,
 				A0A45E1D21F92B7B00DDEC6C /* old */,
@@ -549,6 +554,7 @@
 		A0C5D297212A75CD00BF1B0C /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				A06BF622224C69C800B97A94 /* HorizonRounded-Bold.otf */,
 				A0B6B29721CD599B00C58B3F /* AcylicalHand-Tall.ttf */,
 				A0B6B29921CD5BEC00C58B3F /* AcrylicHand-Serif.ttf */,
 				A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */,
@@ -708,7 +714,7 @@
 				TargetAttributes = {
 					A0C5D222212A4A7500BF1B0C = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.ApplePay = {
 								enabled = 0;
@@ -726,12 +732,12 @@
 					};
 					A0C5D239212A4A7600BF1B0C = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						TestTargetID = A0C5D222212A4A7500BF1B0C;
 					};
 					A0C5D244212A4A7600BF1B0C = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						TestTargetID = A0C5D222212A4A7500BF1B0C;
 					};
 				};
@@ -767,6 +773,7 @@
 				A0120E6621C6E345000454EC /* BadgePhotoSetupView.xib in Resources */,
 				A0301D692190B33200E023F7 /* gameboardScene.sks in Resources */,
 				A02B24D321E0318500737ACC /* DobOnboardingView.xib in Resources */,
+				A06BF623224C69C800B97A94 /* HorizonRounded-Bold.otf in Resources */,
 				A0D086EB215EA61300011A54 /* AcylicalHand-Small-SVG.ttf in Resources */,
 				A0C5C06B21FF58CE00846B82 /* CreateNewUser.xib in Resources */,
 				A0320B5F212F2873008A96E2 /* Main.storyboard in Resources */,
@@ -949,6 +956,7 @@
 				A0320B56212B8AB6008A96E2 /* Extensions.swift in Sources */,
 				A0547F22222CBE59001EE736 /* HandleLoginWithFirestore.swift in Sources */,
 				A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */,
+				A06BF621224C577E00B97A94 /* Ext_Create_MapActionTriggerView.swift in Sources */,
 				A0320B4D212B63C2008A96E2 /* LoginOptionsView.swift in Sources */,
 				A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */,
 				A05150F621E4002800795172 /* UserNameView.swift in Sources */,
@@ -1176,7 +1184,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.thekind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1197,7 +1205,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.thekind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1218,7 +1226,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = tenny.TheKindTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TheKind.app/TheKind";
 			};
@@ -1240,7 +1248,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = tenny.TheKindTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TheKind.app/TheKind";
 			};
@@ -1261,7 +1269,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = tenny.TheKindUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = TheKind;
 			};
@@ -1282,7 +1290,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = tenny.TheKindUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = TheKind;
 			};

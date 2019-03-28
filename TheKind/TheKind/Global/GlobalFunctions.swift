@@ -11,6 +11,7 @@ import UIKit
 
 
 let PRIMARYFONT = "Acrylic Hand Sans"
+let SECONDARYFONT = "Horizon Rounded"
 // This var is true when user clicks to see the carousel of another user.
 // It is used to distinguish two functions for the same view
 // 1) ChooseKind 2) UserCarousel. 
@@ -121,6 +122,7 @@ public enum DispatchLevel {
     }
 }
 
+//not in use
 func random() -> CGFloat {
     return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
 }

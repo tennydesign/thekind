@@ -12,6 +12,7 @@ import MapKit
 //REFACTOR THE UP AND DOWN FOR DRAWER
 class MapActionTriggerView: KindActionTriggerView {
 
+    @IBOutlet var circleNameTextField: KindTransparentTextField!
     @IBOutlet var insideExpandedCircleViewYConstraint: NSLayoutConstraint!
     @IBOutlet var insideExpandedCircleView: UIView!
     @IBOutlet var labelCircleName: UILabel!
@@ -25,6 +26,7 @@ class MapActionTriggerView: KindActionTriggerView {
     }
     @IBOutlet var mainView: UIView!
     
+    @IBOutlet var lineWidthConstraint: NSLayoutConstraint!
     
     var locationManager: CLLocationManager?
     var selectedAnnotation: CircleAnnotationView?
@@ -71,6 +73,8 @@ class MapActionTriggerView: KindActionTriggerView {
             self.layoutIfNeeded()
         }
         
+        circleNameTextField.delegate = self
+        circleNameTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         mapBoxView.delegate = self
         locationManager?.delegate = self
         self.talkbox?.delegate = self
@@ -93,7 +97,7 @@ class MapActionTriggerView: KindActionTriggerView {
                                       zoomLevel: 14, animated: false)
         }
 
-        
+        adaptLineToTextSize(circleNameTextField)
         
     }
     
