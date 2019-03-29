@@ -12,6 +12,9 @@ import MapKit
 //REFACTOR THE UP AND DOWN FOR DRAWER
 class MapActionTriggerView: KindActionTriggerView {
 
+    @IBOutlet var createCircleCurtain: UIImageView!
+    @IBOutlet var circleMarkMask: UIImageView!
+    @IBOutlet var createCircleView: UIView!
     @IBOutlet var circleNameTextField: KindTransparentTextField!
     @IBOutlet var insideExpandedCircleViewYConstraint: NSLayoutConstraint!
     @IBOutlet var insideExpandedCircleView: UIView!
@@ -98,9 +101,35 @@ class MapActionTriggerView: KindActionTriggerView {
         }
 
         adaptLineToTextSize(circleNameTextField)
+        createCircleView.layer.mask = createCircleCurtain.layer
         
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
+        mapBoxView.addGestureRecognizer(longPressGesture)
     }
     
+    
+    @objc func handleLongPressGesture(gestureRecognizer:UILongPressGestureRecognizer) {
+        print("hello longpress!")
+        if gestureRecognizer.state == UIGestureRecognizer.State.began {
+            let touchpoint = gestureRecognizer.location(in: mapBoxView)
+            let newCoordinates = mapBoxView.convert(touchpoint, toCoordinateFrom: mapBoxView)
+            
+            // the correct thing to do is to save in the database cause this will trigger the viewmodel to plot
+            
+            let point = KindPointAnnotation()
+            point.coordinate = newCoordinates
+            // Only plot if it has a name.
+           // if let title = item.circlePlotName {
+                point.title = "Testing longpress" //"\(coordinate.latitude), \(coordinate.longitude)"
+                point.circleDetails = CircleAnnotationSet.init(coordinate: newCoordinates, circlePlotName: "teste", isPrivate: true)
+                point.circleDetails?.circlePlotName = "Testing longpress"
+                self.mapBoxView.addAnnotation(point)
+           // }
+            
+        } else if gestureRecognizer.state == UIGestureRecognizer.State.ended {
+            print("ended gesture")
+        }
+    }
     
     
     override func talk() {
@@ -257,6 +286,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             }
         }
     }
+    
     
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
         return false

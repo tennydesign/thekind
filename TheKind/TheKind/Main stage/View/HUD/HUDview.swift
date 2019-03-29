@@ -51,8 +51,10 @@ class HUDview: KindActionTriggerView {
 
         gradient = CAGradientLayer()
         gradient.frame = self.bounds
-        gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
-        gradient.locations = [0.55, 1]
+        gradient.colors = [UIColor.black.cgColor, UIColor.black.withAlphaComponent(0.8).cgColor, UIColor.clear.cgColor]
+        gradient.locations = [0, 0.55, 1]
+        gradient.startPoint = CGPoint(x:0.0,y:0.0)
+        gradient.endPoint = CGPoint(x:0.0,y:1.0)
         layer.insertSublayer(gradient, at: 0)
 
         updateHUDWithUserSettingsObserver()

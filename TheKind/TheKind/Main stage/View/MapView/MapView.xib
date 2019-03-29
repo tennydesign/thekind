@@ -17,7 +17,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapActionTriggerView">
             <connections>
+                <outlet property="circleMarkMask" destination="Z5D-jB-gCg" id="2Vl-it-04d"/>
                 <outlet property="circleNameTextField" destination="Wky-b4-S07" id="3zg-tZ-Hbh"/>
+                <outlet property="createCircleCurtain" destination="BDt-VE-RIr" id="K20-3s-Vjg"/>
+                <outlet property="createCircleView" destination="V9E-SM-J71" id="Nnh-A1-lIl"/>
                 <outlet property="enterCircleButton" destination="rZn-YL-TVN" id="lfW-ub-b59"/>
                 <outlet property="insideExpandedCircleView" destination="aMQ-OI-6tS" id="gR6-dD-W9a"/>
                 <outlet property="insideExpandedCircleViewYConstraint" destination="dre-47-jhk" id="JHd-NL-aZT"/>
@@ -53,14 +56,21 @@
                         <constraint firstAttribute="width" constant="27" id="3Ng-AD-kX6"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V9E-SM-J71" userLabel="CreateCircleView">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <view userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V9E-SM-J71" userLabel="CreateCircleView">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="727"/>
                     <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="create_curtain-1" translatesAutoresizingMaskIntoConstraints="NO" id="BDt-VE-RIr" userLabel="create_circle_curtain">
+                            <rect key="frame" x="-94.5" y="-97.5" width="564" height="922"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="564" id="4uw-KH-Hdy"/>
+                                <constraint firstAttribute="height" constant="922" id="QjY-e1-gMW"/>
+                            </constraints>
+                        </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3K-l4-sWj" userLabel="userNameBox">
-                            <rect key="frame" x="76" y="169.5" width="223" height="128"/>
+                            <rect key="frame" x="72" y="158.5" width="231" height="70"/>
                             <subviews>
                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TENNYPINHEIRO" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wky-b4-S07" customClass="KindTransparentTextField" customModule="TheKind" customModuleProvider="target">
-                                    <rect key="frame" x="10" y="55" width="203" height="22"/>
+                                    <rect key="frame" x="10" y="26" width="211" height="22"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="22" id="S0A-2l-XQB"/>
@@ -70,7 +80,7 @@
                                     <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                                 </textField>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tcp-mT-clr" userLabel="line">
-                                    <rect key="frame" x="16.5" y="82" width="190" height="1"/>
+                                    <rect key="frame" x="20.5" y="53" width="190" height="1"/>
                                     <color key="backgroundColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="190" id="Dx0-QX-3e9"/>
@@ -82,18 +92,38 @@
                             <constraints>
                                 <constraint firstItem="Wky-b4-S07" firstAttribute="centerY" secondItem="z3K-l4-sWj" secondAttribute="centerY" constant="2" id="9jd-xJ-eRt"/>
                                 <constraint firstItem="tcp-mT-clr" firstAttribute="centerX" secondItem="Wky-b4-S07" secondAttribute="centerX" id="Ig3-V0-aF6"/>
-                                <constraint firstAttribute="height" constant="128" id="KfM-GR-UQS"/>
+                                <constraint firstAttribute="height" constant="70" id="KfM-GR-UQS"/>
                                 <constraint firstItem="Wky-b4-S07" firstAttribute="leading" secondItem="z3K-l4-sWj" secondAttribute="leading" constant="10" id="Rhp-SC-1wx"/>
                                 <constraint firstItem="tcp-mT-clr" firstAttribute="top" secondItem="Wky-b4-S07" secondAttribute="bottom" constant="5" id="WGk-wd-KyN"/>
                                 <constraint firstItem="Wky-b4-S07" firstAttribute="centerX" secondItem="z3K-l4-sWj" secondAttribute="centerX" id="bEx-Vx-q2i"/>
                                 <constraint firstAttribute="trailing" secondItem="Wky-b4-S07" secondAttribute="trailing" constant="10" id="nme-qQ-n0Q"/>
                             </constraints>
                         </view>
+                        <imageView clipsSubviews="YES" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addCircleIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Z5D-jB-gCg" userLabel="circleMarkMask">
+                            <rect key="frame" x="112.5" y="248.5" width="150" height="150"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="150" id="VZS-2B-BHa"/>
+                                <constraint firstAttribute="width" constant="150" id="yZU-pg-WQd"/>
+                            </constraints>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock closed" translatesAutoresizingMaskIntoConstraints="NO" id="u04-T0-rJh">
+                            <rect key="frame" x="172.5" y="458.5" width="30" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="hVT-fe-mEC"/>
+                                <constraint firstAttribute="width" constant="30" id="rLN-xW-Mwg"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="z3K-l4-sWj" firstAttribute="centerX" secondItem="V9E-SM-J71" secondAttribute="centerX" id="1En-YT-Kyr"/>
-                        <constraint firstItem="z3K-l4-sWj" firstAttribute="centerY" secondItem="V9E-SM-J71" secondAttribute="centerY" constant="-100" id="Li3-N1-uQ0"/>
+                        <constraint firstItem="u04-T0-rJh" firstAttribute="top" secondItem="Z5D-jB-gCg" secondAttribute="bottom" constant="60" id="5Gh-fV-WCW"/>
+                        <constraint firstItem="BDt-VE-RIr" firstAttribute="centerX" secondItem="V9E-SM-J71" secondAttribute="centerX" id="6Tl-QL-75F"/>
+                        <constraint firstItem="BDt-VE-RIr" firstAttribute="centerY" secondItem="V9E-SM-J71" secondAttribute="centerY" id="BvA-Wa-drk"/>
+                        <constraint firstItem="z3K-l4-sWj" firstAttribute="centerY" secondItem="V9E-SM-J71" secondAttribute="centerY" constant="-170" id="Li3-N1-uQ0"/>
+                        <constraint firstItem="Z5D-jB-gCg" firstAttribute="centerX" secondItem="V9E-SM-J71" secondAttribute="centerX" id="aXU-hX-Blo"/>
+                        <constraint firstItem="u04-T0-rJh" firstAttribute="centerX" secondItem="V9E-SM-J71" secondAttribute="centerX" id="cze-jw-vIL"/>
+                        <constraint firstItem="Z5D-jB-gCg" firstAttribute="top" secondItem="z3K-l4-sWj" secondAttribute="bottom" constant="20" id="t6i-uU-RK8"/>
                     </constraints>
                 </view>
                 <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMQ-OI-6tS" userLabel="EnterCircleView">
@@ -143,7 +173,7 @@
                 <constraint firstItem="aMQ-OI-6tS" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="JTc-zF-yih"/>
                 <constraint firstItem="lZ4-AR-kv6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="MHX-k6-5kJ"/>
                 <constraint firstItem="lZ4-AR-kv6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="NAF-ri-oKv"/>
-                <constraint firstItem="V9E-SM-J71" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Re1-Z7-Qee"/>
+                <constraint firstItem="V9E-SM-J71" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="60" id="Re1-Z7-Qee"/>
                 <constraint firstItem="V9E-SM-J71" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Xfm-N4-u5g"/>
                 <constraint firstItem="6C4-Ce-GiV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="bAe-uF-4c9"/>
                 <constraint firstItem="6C4-Ce-GiV" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="d5e-X8-nHg"/>
@@ -151,7 +181,7 @@
                 <constraint firstItem="lZ4-AR-kv6" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="eV2-gf-uVp"/>
                 <constraint firstItem="V9E-SM-J71" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fC2-J8-SCN"/>
                 <constraint firstItem="f05-9b-jrt" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="kRF-s1-lKc"/>
-                <constraint firstItem="V9E-SM-J71" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="oHO-E4-19G"/>
+                <constraint firstItem="V9E-SM-J71" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="30" id="oHO-E4-19G"/>
                 <constraint firstItem="6C4-Ce-GiV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qzy-wv-VcV"/>
                 <constraint firstItem="V9E-SM-J71" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="xLB-q4-6MQ"/>
                 <constraint firstItem="f05-9b-jrt" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="zwN-w2-LpS"/>
@@ -161,6 +191,9 @@
         </view>
     </objects>
     <resources>
+        <image name="addCircleIcon" width="148" height="148"/>
+        <image name="create_curtain-1" width="750" height="1334"/>
+        <image name="lock closed" width="40" height="50"/>
         <image name="privatekey" width="64" height="38"/>
     </resources>
 </document>
