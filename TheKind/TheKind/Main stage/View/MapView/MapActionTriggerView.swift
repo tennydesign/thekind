@@ -35,9 +35,7 @@ class MapActionTriggerView: KindActionTriggerView {
     var selectedAnnotation: CircleAnnotationView?
     var mainViewController: MainViewController?
     var talkbox: JungTalkBox?
-    let mapViewViewModel = MapViewViewModel()
-    let circleAnnotationModel = CircleAnnotationModel()
-    
+
     // INIT VALUES
     // HERE: Maybe add a little bit more space from top of jungchatlogger and map.
     let MAXZOOMLEVEL: Double = 18
@@ -85,15 +83,6 @@ class MapActionTriggerView: KindActionTriggerView {
         
         //TODO: COntrol for locationmanager absense
         delay(bySeconds: 1) {
-//            if let coordinate = self.locationManager?.location?.coordinate {
-//                 self.mapBoxView.setCenter(coordinate, zoomLevel: 14, animated: true)
-//            } else {
-//                // TODO: Eliminate this - Only for testing purposes.
-//                 self.mapBoxView.setCenter(CLLocationCoordinate2D(latitude: 37.778491,
-//                                                         longitude: -122.389246),
-//                                  zoomLevel: 14, animated: false)
-//            }
-            
             self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
             self.mapBoxView.setCenter(CLLocationCoordinate2D(latitude: 37.778491,
                                                              longitude: -122.389246),
@@ -113,24 +102,44 @@ class MapActionTriggerView: KindActionTriggerView {
         if gestureRecognizer.state == UIGestureRecognizer.State.began {
             let touchpoint = gestureRecognizer.location(in: mapBoxView)
             let newCoordinates = mapBoxView.convert(touchpoint, toCoordinateFrom: mapBoxView)
+
+            // SAVE - THIS WILL GO TO CONFIRM BUTTON NOT ON LONG PRESS
+            //LONGPRESS WILL TRIGGER POP UP TO CONFIG CIRCLE
+            let latitude = newCoordinates.latitude
+            let longitude = newCoordinates.longitude
             
-            // the correct thing to do is to save in the database cause this will trigger the viewmodel to plot
-            
-            let point = KindPointAnnotation()
-            point.coordinate = newCoordinates
-            // Only plot if it has a name.
-           // if let title = item.circlePlotName {
-                point.title = "Testing longpress" //"\(coordinate.latitude), \(coordinate.longitude)"
-                point.circleDetails = CircleAnnotationSet.init(coordinate: newCoordinates, circlePlotName: "teste", isPrivate: true)
-                point.circleDetails?.circlePlotName = "Testing longpress"
+            CircleAnnotationManagement.sharedInstance.saveCircle(latitude: latitude, longitude: longitude) { (circleAnnotationSet, err) in
+                if let err = err {
+                    print(err)
+                    return
+                }
+  
+                // If sucess, use the data to plot the circle.
+                let point = KindPointAnnotation(circleAnnotationSet: circleAnnotationSet)
                 self.mapBoxView.addAnnotation(point)
-           // }
+                print("saved circle success")
+            }
             
         } else if gestureRecognizer.state == UIGestureRecognizer.State.ended {
             print("ended gesture")
         }
     }
     
+    func plotAnnotations() {
+        CircleAnnotationManagement.sharedInstance.circleAnnotationObserver = { [unowned self](circleAnnotationSets) in
+            var pointAnnotations = [KindPointAnnotation]()
+            for set in circleAnnotationSets {
+                let point = KindPointAnnotation(circleAnnotationSet: set)
+                pointAnnotations.append(point)
+            }
+            
+            self.mapBoxView.addAnnotations(pointAnnotations)
+        }
+        
+    }
+    
+    
+    ///JUNG ACTIONS
     
     override func talk() {
 
@@ -149,7 +158,8 @@ class MapActionTriggerView: KindActionTriggerView {
                 self.mainViewController?.jungChatLogger.alpha = 0
             }) { (completed) in
                 self.mainViewController?.moveBottomPanel(distance: self.hiddenDrawerDistance) {
-                    self.mapViewViewModel.retrieveCirclesCloseToPlayer() {
+                    //self.mapViewViewModel.retrieveCirclesCloseToPlayer() {
+                    CircleAnnotationManagement.sharedInstance.retrieveCirclesCloseToPlayer() {
                         //present map after annotations are there.
                         // the observer will fire, see: plotAnnotations()
                         self.alpha = 0
@@ -170,7 +180,7 @@ class MapActionTriggerView: KindActionTriggerView {
         self.mainViewController?.jungChatLogger.hideOptionLabels(true, completion: nil)
     }
     
-    func describeCircle(circleID: Int) {
+    func describeCircle(circleID: String) {
         // check ID and retrieve routine
         let txt = "This place is dominated by the Founder kind.-You have high chances of making friends here.-You will need a key to join this circle."
         let actions: [KindActionType] = [.none, .none,.none]
@@ -200,27 +210,6 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
         
     }
-    
-    func plotAnnotations() {
-        // Whenever the MapViewModel receives the data this fires.
-        mapViewViewModel.annotationIndexObserver = { [unowned self](circleAnnotationSets) in
-            var pointAnnotations = [KindPointAnnotation]()
-            for item in circleAnnotationSets {
-                let point = KindPointAnnotation()
-                point.circleDetails = item
-                point.coordinate = item.coordinate
-                // Only plot if it has a name.
-                if let title = item.circlePlotName {
-                    point.title = title //"\(coordinate.latitude), \(coordinate.longitude)"
-                    pointAnnotations.append(point)
-                }
-            }
-            
-            self.mapBoxView.addAnnotations(pointAnnotations)
-        }
-        
-    }
-    
 
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
         // This example is only concerned with point annotations.
@@ -231,6 +220,8 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
 
         // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
         guard let titleName = kindAnnotation.circleDetails?.circlePlotName else {return nil}
+        
+        
         let reuseIdentifier = titleName + String(annotation.coordinate.longitude)
         
         // For better performance, always try to reuse existing annotations.
@@ -293,7 +284,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     }
     
 
-    fileprivate func activateOnSelection(_ annotationView: CircleAnnotationView, completion: ((_ circleId: Int)->())?) {
+    fileprivate func activateOnSelection(_ annotationView: CircleAnnotationView, completion: ((_ circleId: String)->())?) {
         UIView.animate(withDuration: 1, animations: {
             //scaling
             annotationView.transform = CGAffineTransform(scaleX: self.MAXSCIRCLESCALE, y: self.MAXSCIRCLESCALE)

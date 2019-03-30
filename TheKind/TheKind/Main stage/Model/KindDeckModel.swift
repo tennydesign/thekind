@@ -8,7 +8,7 @@
 
 import Foundation
 import Firebase
-import FirebaseFirestore
+//import FirebaseFirestore
 
 enum KindDeckDocument: String {
     case alldecks = "kinddecks"

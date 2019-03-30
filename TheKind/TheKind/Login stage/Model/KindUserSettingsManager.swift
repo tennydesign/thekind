@@ -17,7 +17,8 @@ enum UserFieldTitle: String {
     photoURL = "photoURL",
     driver = "driver",
     kind = "kind",
-    currentLandingView = "currentLandingView"
+    currentLandingView = "currentLandingView",
+    circles = "circles"
 }
 
 public class KindUserSettingsManager {
@@ -100,6 +101,20 @@ public class KindUserSettingsManager {
             
         }
         
+    }
+    
+    func updateUserCircleArray(newElement: String) {
+        let db = Firestore.firestore()
+        let circlesRef = db.collection("usersettings").document((Auth.auth().currentUser?.uid)!)
+        circlesRef.updateData(["circles" : FieldValue.arrayUnion([newElement])
+        ])
+    }
+    
+    func removeFromUserCircleArray(removingElement: String) {
+        let db = Firestore.firestore()
+        let circlesRef = db.collection("usersettings").document((Auth.auth().currentUser?.uid)!)
+        circlesRef.updateData(["circles" : FieldValue.arrayRemove([removingElement])
+            ])
     }
     
     //SAVE

@@ -63,6 +63,7 @@ class KindDeckManagement {
     
     func updateKindDeck(completion: ((Error?)->())?) {
         let db = Firestore.firestore()
+        
         db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).updateData(kindsdict) { (err) in
             if let err = err {
                 if err.localizedDescription.contains("No document to update") {
@@ -114,25 +115,16 @@ class KindDeckManagement {
                             completion?(err)
                         }
                         print("New main Kind Document created successfully")
-                        self.safeAddKindToDeck(kindID: mainkind, completion: { (success) in
-                            if success {
-                                completion?(nil)
-                                return
-                            }
-                        })
                     })
                 }
-                //If there is. Update.
-                print("an existent main kind field was updated")
-                self.safeAddKindToDeck(kindID: mainkind, completion: { (success) in
-                    if success {
-                        completion?(nil)
-                        self.updateMainKindOnClient?()
-                        return
-                    }
-                })
-                
             }
+            self.safeAddKindToDeck(kindID: mainkind, completion: { (success) in
+                if success {
+                    completion?(nil)
+                    self.updateMainKindOnClient?()
+                    return
+                }
+            })
         }
         
     }
