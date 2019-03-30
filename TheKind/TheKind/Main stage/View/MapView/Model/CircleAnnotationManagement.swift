@@ -48,16 +48,12 @@ class CircleAnnotationManagement {
     
     func saveCircle(latitude: Double, longitude: Double, completion: @escaping (CircleAnnotationSet, Error?)->()) {
         let db = Firestore.firestore()
-        
-
-        
+  
         let dateformat = DateFormatter()
         dateformat.dateFormat = "MM-dd hh:mm a"
         let dateNow = dateformat.string(from: Date())
-        
-        
+
         let circleDict: [String:Any] = ["admin": (Auth.auth().currentUser?.uid)!,"name" : "philz", "created": dateNow, "isprivate": true, "location": GeoPoint(latitude: latitude, longitude: longitude)]
-        
         
         var ref: DocumentReference? = nil
         

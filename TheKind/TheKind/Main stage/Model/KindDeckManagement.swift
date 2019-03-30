@@ -61,6 +61,9 @@ class KindDeckManagement {
         
     }
     
+    //TODO: Implement here the array manipulation
+    
+    
     func updateKindDeck(completion: ((Error?)->())?) {
         let db = Firestore.firestore()
         

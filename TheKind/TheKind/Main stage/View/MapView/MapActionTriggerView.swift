@@ -12,8 +12,6 @@ import MapKit
 //REFACTOR THE UP AND DOWN FOR DRAWER
 class MapActionTriggerView: KindActionTriggerView {
 
-    @IBOutlet var createCircleCurtain: UIImageView!
-    @IBOutlet var circleMarkMask: UIImageView!
     @IBOutlet var createCircleView: UIView!
     @IBOutlet var circleNameTextField: KindTransparentTextField!
     @IBOutlet var insideExpandedCircleViewYConstraint: NSLayoutConstraint!
@@ -23,7 +21,7 @@ class MapActionTriggerView: KindActionTriggerView {
     @IBOutlet var mapBoxView: MGLMapView! {
         didSet {
             mapBoxView.maximumZoomLevel = MAXZOOMLEVEL
-            //setup observer5
+            //setup observers
             plotAnnotations()
         }
     }
@@ -87,15 +85,26 @@ class MapActionTriggerView: KindActionTriggerView {
             self.mapBoxView.setCenter(CLLocationCoordinate2D(latitude: 37.778491,
                                                              longitude: -122.389246),
                                       zoomLevel: 14, animated: false)
+            
+            
+            //This creates the overlay for the CreateCircleView (the hole in the view)
+            let overlay = self.createOverlay(frame: self.frame,
+                                        xOffset: self.frame.midX,
+                                        yOffset: self.frame.midY,
+                                        radius: 90.0)
+            
+            self.createCircleView.addSubview(overlay)
+            self.createCircleView.sendSubviewToBack(overlay)
         }
 
         adaptLineToTextSize(circleNameTextField)
-        createCircleView.layer.mask = createCircleCurtain.layer
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
         mapBoxView.addGestureRecognizer(longPressGesture)
+        
+
     }
-    
+
     
     @objc func handleLongPressGesture(gestureRecognizer:UILongPressGestureRecognizer) {
         print("hello longpress!")
@@ -108,15 +117,25 @@ class MapActionTriggerView: KindActionTriggerView {
             let latitude = newCoordinates.latitude
             let longitude = newCoordinates.longitude
             
+
             CircleAnnotationManagement.sharedInstance.saveCircle(latitude: latitude, longitude: longitude) { (circleAnnotationSet, err) in
                 if let err = err {
                     print(err)
                     return
                 }
-  
+   
+                //HERE
                 // If sucess, use the data to plot the circle.
                 let point = KindPointAnnotation(circleAnnotationSet: circleAnnotationSet)
                 self.mapBoxView.addAnnotation(point)
+                
+                self.mapBoxView.setCenter(newCoordinates, zoomLevel: self.MAXZOOMLEVEL, animated: true)
+                
+                UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
+                    self.createCircleView.alpha = 1
+                }, completion: { (completed) in
+                    self.mapBoxView.selectAnnotation(point, animated: true)
+                })
                 print("saved circle success")
             }
             

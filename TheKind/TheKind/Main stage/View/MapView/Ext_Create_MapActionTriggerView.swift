@@ -35,6 +35,34 @@ extension MapActionTriggerView: UITextFieldDelegate {
         return true
     }
     
+    func createOverlay(frame: CGRect,
+                       xOffset: CGFloat,
+                       yOffset: CGFloat,
+                       radius: CGFloat) -> UIView {
+        // Step 1
+        let overlayView = UIView(frame: frame)
+        overlayView.backgroundColor = UIColor.black.withAlphaComponent(1)
+        // Step 2
+        let path = CGMutablePath()
+        path.addArc(center: CGPoint(x: xOffset, y: yOffset),
+                    radius: radius,
+                    startAngle: 0.0,
+                    endAngle: 2.0 * .pi,
+                    clockwise: false)
+        path.addRect(CGRect(origin: .zero, size: overlayView.frame.size))
+        // Step 3
+        let maskLayer = CAShapeLayer()
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.path = path
+        // For Swift 4.2
+        maskLayer.fillRule = .evenOdd
+        // Step 4
+        overlayView.layer.mask = maskLayer
+        overlayView.clipsToBounds = true
+        
+        return overlayView
+    }
+    
 }
 
 
