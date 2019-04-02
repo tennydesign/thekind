@@ -12,10 +12,11 @@ import MapKit
 import Mapbox
 
 struct CircleAnnotationSet {
-    var coordinate: CLLocationCoordinate2D
+    var location: CLLocationCoordinate2D
     var circlePlotName: String?
     var isPrivate: Bool
-    let circleId: String
+    var circleId: String
+    var admin: String
 }
 
 

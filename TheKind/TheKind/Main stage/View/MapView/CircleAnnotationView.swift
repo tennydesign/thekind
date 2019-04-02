@@ -41,7 +41,7 @@ class CircleAnnotationView: MGLAnnotationView {
     
     
     func commonInit() {
-        alpha = 0.9
+        alpha = 0.7
     }
     
     
@@ -83,7 +83,7 @@ class KindPointAnnotation: MGLPointAnnotation {
     
     init(circleAnnotationSet: CircleAnnotationSet) {
         super.init()
-        coordinate = circleAnnotationSet.coordinate
+        coordinate = circleAnnotationSet.location
         title = circleAnnotationSet.circlePlotName
         circleDetails = circleAnnotationSet
         

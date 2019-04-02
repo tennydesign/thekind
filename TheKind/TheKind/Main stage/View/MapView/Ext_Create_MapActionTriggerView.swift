@@ -35,13 +35,51 @@ extension MapActionTriggerView: UITextFieldDelegate {
         return true
     }
     
+    @objc func handleLongPressGesture(gestureRecognizer:UILongPressGestureRecognizer) {
+        print("hello longpress!")
+        if gestureRecognizer.state == UIGestureRecognizer.State.began {
+            let touchpoint = gestureRecognizer.location(in: mapBoxView)
+            let newCoordinates = mapBoxView.convert(touchpoint, toCoordinateFrom: mapBoxView)
+            
+
+            let latitude = newCoordinates.latitude
+            let longitude = newCoordinates.longitude
+            
+            
+            CircleAnnotationManagement.sharedInstance.saveCircle(latitude: latitude, longitude: longitude) { (circleAnnotationSet, err) in
+                if let err = err {
+                    print(err)
+                    return
+                }
+                
+                //HERE
+                // If sucess, use the data to plot the circle.
+                let point = KindPointAnnotation(circleAnnotationSet: circleAnnotationSet)
+                self.mapBoxView.addAnnotation(point)
+                
+                self.mapBoxView.setCenter(newCoordinates, zoomLevel: self.MAXZOOMLEVEL, animated: true)
+                
+                UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
+                    //self.expandedCircleViews.alpha = 1
+                }, completion: { (completed) in
+                    //  Shouldn't this happen first?
+                    self.mapBoxView.selectAnnotation(point, animated: true)
+                })
+                print("saved circle success")
+            }
+            
+        } else if gestureRecognizer.state == UIGestureRecognizer.State.ended {
+            print("ended gesture")
+        }
+    }
+    
     func createOverlay(frame: CGRect,
                        xOffset: CGFloat,
                        yOffset: CGFloat,
                        radius: CGFloat) -> UIView {
         // Step 1
         let overlayView = UIView(frame: frame)
-        overlayView.backgroundColor = UIColor.black.withAlphaComponent(1)
+        overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         // Step 2
         let path = CGMutablePath()
         path.addArc(center: CGPoint(x: xOffset, y: yOffset),
