@@ -15,6 +15,7 @@ class HUDview: KindActionTriggerView {
     var mainViewController: MainViewController?
     @IBOutlet var viewForKindCard: UIView!
     @IBOutlet var hudView: UIView!
+    @IBOutlet var hudCenterDisplay: UIView!
     
     @IBOutlet var circleNameStack: UIStackView!
     @IBOutlet var listViewStack: UIStackView!

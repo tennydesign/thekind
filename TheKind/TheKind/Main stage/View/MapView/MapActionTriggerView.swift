@@ -376,6 +376,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     fileprivate func activateOnSelection(_ annotationView: CircleAnnotationView, completion: ((_ circleId: String)->())?) {
         UIView.animate(withDuration: 1, animations: {
             //scaling
+            self.mainViewController?.hudView.hudCenterDisplay.alpha = 0
             annotationView.transform = CGAffineTransform(scaleX: self.MAXSCIRCLESCALE, y: self.MAXSCIRCLESCALE)
             annotationView.alpha = 0.32
             
@@ -433,19 +434,24 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     fileprivate func deActivateOnDeselection(_ annotationView: CircleAnnotationView, completion: (()->())?) {
         //self.insideExpandedCircleView.alpha = 0
         UIView.animate(withDuration: 1, animations: {
-            annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
-            annotationView.alpha = 0.9
-            annotationView.button.alpha = 0
-            self.clearJungChatLog()
             self.expandedCircleViews.alpha = 0
-            self.expandedCircleViews.isUserInteractionEnabled = false
         }) { (completed) in
+            UIView.animate(withDuration: 1, animations: {
+                self.mainViewController?.hudView.hudCenterDisplay.alpha = 1
+                annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                annotationView.alpha = 0.9
+                annotationView.button.alpha = 0
+                self.expandedCircleViews.alpha = 0
+            })
+            self.clearJungChatLog()
+            self.expandedCircleViews.isUserInteractionEnabled = false
+            
             delay(bySeconds: 0.5, closure: {
                 
-                //self.mainViewController?.circleDetailsHost.alpha = 0
-                if let completion = completion {
-                    completion()
-                }
+            //self.mainViewController?.circleDetailsHost.alpha = 0
+            if let completion = completion {
+                completion()
+            }
 
                 
             })
