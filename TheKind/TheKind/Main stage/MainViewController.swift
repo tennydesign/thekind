@@ -34,7 +34,7 @@ class MainViewController: UIViewController {
     // TODO: Gameboard is hidden
     @IBOutlet var gameBoardViewHost: GameBoard! {
         didSet {
-            gameBoardViewHost.isHidden = true
+            gameBoardViewHost.isHidden = false
         }
     }
 

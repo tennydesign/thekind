@@ -12,6 +12,8 @@ import UIKit
 
 let PRIMARYFONT = "Acrylic Hand Sans"
 let SECONDARYFONT = "Horizon Rounded"
+let PINKCOLOR:UIColor = UIColor(r: 255, g: 45, b: 85)
+let DARKPINKCOLOR:UIColor = UIColor(r: 176, g: 38, b: 65)
 // This var is true when user clicks to see the carousel of another user.
 // It is used to distinguish two functions for the same view
 // 1) ChooseKind 2) UserCarousel. 
@@ -99,6 +101,31 @@ func viewTransitionUsingAlphaAndSkatingX(_ originView: UIView, _ destinationView
             destinationView.transform = .identity
             destinationView.alpha = 1.0
         })
+    }
+}
+
+func viewSkatingX(_ viewToSlide: UIView, left: Bool,_ slideAmount: CGFloat = 0, reverse: Bool) {
+    if !reverse {
+        let slide:CGFloat = left ? (0 - slideAmount) : slideAmount
+            UIView.animate(withDuration: 0.3, animations: {
+                viewToSlide.transform = CGAffineTransform(translationX: slide, y: 0)
+            })
+    } else {
+        UIView.animate(withDuration: 0.3, animations: {
+            viewToSlide.transform = .identity
+        })
+    }
+}
+
+func fadeInView(view: UIView) {
+    UIView.animate(withDuration: 0.4) {
+        view.alpha = 1
+    }
+}
+
+func fadeOutView(view: UIView) {
+    UIView.animate(withDuration: 0.4) {
+        view.alpha = 0
     }
 }
 

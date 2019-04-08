@@ -16,6 +16,8 @@ class HUDview: KindActionTriggerView {
     @IBOutlet var viewForKindCard: UIView!
     @IBOutlet var hudView: UIView!
     
+    @IBOutlet var circleNameStack: UIStackView!
+    @IBOutlet var listViewStack: UIStackView!
     @IBOutlet var kindIconImageView: UIImageView! {
         didSet {
             // To take the color away.
@@ -45,9 +47,7 @@ class HUDview: KindActionTriggerView {
     
     fileprivate func commonInit() {
         Bundle.main.loadNibNamed("HUDview", owner: self, options: nil)
-        addSubview(hudView)
-        //receiveViewInTrasitionAnimateAndRemoveIt()
-        
+        addSubview(hudView)        
 
         gradient = CAGradientLayer()
         gradient.frame = self.bounds

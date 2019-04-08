@@ -35,11 +35,10 @@ class CircleAnnotationManagement {
                 guard let geoPoint = data["location"] as? GeoPoint else {fatalError("no geopoint")}
                 guard let isPrivate = data["isprivate"] as? Bool else {fatalError("no private or not bool")}
                 guard let admin = data["admin"] as? String else {fatalError("no admin on file")}
+                let users = data["users"] as? [String] ?? []
                 let location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: geoPoint.latitude, longitude: geoPoint.longitude)
-                let annotationSet = CircleAnnotationSet(location: location, circlePlotName: name, isPrivate: isPrivate, circleId: document.documentID, admin: admin)
+                let annotationSet = CircleAnnotationSet(location: location, circlePlotName: name, isPrivate: isPrivate, circleId: document.documentID, admin: admin, users: users)
                 self.circles.append(annotationSet)
-                //self.circlesDict?[document.documentID] = annotationSet
-
             })
             self.circleAnnotationObserver?(self.circles)
             completion()
@@ -56,7 +55,7 @@ class CircleAnnotationManagement {
         let dateNow = dateformat.string(from: Date())
 
         guard let uid = Auth.auth().currentUser?.uid else {return}
-        let circleDict: [String:Any] = ["admin": uid,"name" : "", "created": dateNow, "isprivate": false, "location": GeoPoint(latitude: latitude, longitude: longitude)]
+        let circleDict: [String:Any] = ["admin": uid,"name" : "", "created": dateNow, "isprivate": false, "location": GeoPoint(latitude: latitude, longitude: longitude), "users": [uid]]
         
         var ref: DocumentReference? = nil
         
@@ -70,7 +69,7 @@ class CircleAnnotationManagement {
             KindUserSettingsManager.sharedInstance.updateUserCircleArray(newElement: ref!.documentID)
             
             //Create the set for the new circle
-            let circleAnnotationSet = CircleAnnotationSet.init(location: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), circlePlotName: "", isPrivate: true, circleId: ref!.documentID, admin: uid)
+            let circleAnnotationSet = CircleAnnotationSet.init(location: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), circlePlotName: "", isPrivate: true, circleId: ref!.documentID, admin: uid, users: [uid])
             
             completion(circleAnnotationSet,nil)
         }
@@ -106,6 +105,18 @@ class CircleAnnotationManagement {
         
     }
     
+    func addUserToCircle(circleId: String, newElement: String) {
+            let db = Firestore.firestore()
+            let circlesRef = db.collection("kindcircles").document(circleId)
+            //updates array by keeping it unique
+            circlesRef.updateData(["users" : FieldValue.arrayUnion([newElement])])
+    }
     
     
+    func removeFromUserCircleArray(circleId: String, removingElement: String) {
+        let db = Firestore.firestore()
+        let circlesRef = db.collection("kindcircles").document(circleId)
+        circlesRef.updateData(["users" : FieldValue.arrayRemove([removingElement])
+            ])
+    }
 }

@@ -17,6 +17,7 @@ struct CircleAnnotationSet {
     var isPrivate: Bool
     var circleId: String
     var admin: String
+    var users: [String]
 }
 
 

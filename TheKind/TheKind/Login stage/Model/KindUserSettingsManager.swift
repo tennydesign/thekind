@@ -107,8 +107,7 @@ public class KindUserSettingsManager {
         let db = Firestore.firestore()
         let circlesRef = db.collection("usersettings").document((Auth.auth().currentUser?.uid)!)
         //updates array by keeping it unique
-        circlesRef.updateData(["circles" : FieldValue.arrayUnion([newElement])
-        ])
+        circlesRef.updateData(["circles" : FieldValue.arrayUnion([newElement])])
     }
     
     func removeFromUserCircleArray(removingElement: String) {
