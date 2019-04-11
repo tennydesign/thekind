@@ -87,12 +87,6 @@ class MapActionTriggerView: KindActionTriggerView {
         //setup annotation observer
         plotAnnotations()
         
-//        delay(bySeconds: 1) {
-//            self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-//            self.mapBoxView.setCenter(CLLocationCoordinate2D(latitude: 37.778491,
-//                                                             longitude: -122.389246),
-//                                      zoomLevel: 14, animated: false)
-//        }
 
         adaptLineToTextSize(circleNameTextField)
         
@@ -229,6 +223,9 @@ class MapActionTriggerView: KindActionTriggerView {
             }) { (completed) in
                 CircleAnnotationManagement.sharedInstance.retrieveCirclesCloseToPlayer() {
                     // the observer will fire, see: plotAnnotations()
+                    UIView.animate(withDuration: 0.4) {
+                        self.mapBoxView.alpha = 1
+                    }
                 }
 
             }

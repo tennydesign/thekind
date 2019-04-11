@@ -27,7 +27,6 @@ public class KindUserSettingsManager {
     
     var updateHUDWithUserSettings: (()->())?
     var userSignedIn: (()->())?
-    
     var userFields: [String: Any] = [:]
     var currentUserImageURL: String = ""
     static let sharedInstance = KindUserSettingsManager()
@@ -35,24 +34,33 @@ public class KindUserSettingsManager {
     private init() {}
     
     
-     // Initialize userFields
+    // Initialize userFields
+    //Called by AppDelegate on google login
+    //Called by HandleLoginWithFirestore on email login
     func initializeUserFields(email: String) {
-        let suggestedUsername = String(email.split(separator: "@").first ?? "")
-        loggedUserName = suggestedUsername
-        userFields[UserFieldTitle.name.rawValue] = suggestedUsername
-        userFields[UserFieldTitle.email.rawValue] = email
-        updateUserSettings() { (err) in
-            if let err = err {
-                print(err)
-                return
+        //try to retrieve settings
+        retrieveUserSettings { (success) in
+            //if fails, create first settings (name and email)
+            if !success {
+                let suggestedUsername = String(email.split(separator: "@").first ?? "")
+                self.loggedUserName = suggestedUsername
+                self.userFields[UserFieldTitle.name.rawValue] = suggestedUsername
+                self.userFields[UserFieldTitle.email.rawValue] = email
+                self.updateUserSettings() { (err) in
+                    if let err = err {
+                        print(err)
+                        return
+                    }
+                }
+            } else {
+                self.updateHUDWithUserSettings?()
+
             }
-            // let the client know user signed in and update was successful.
-            //TODO: check if MAINCONTROL IS LOADED!!
+            // let the client know user signed in
             self.userSignedIn?()
             // turn observer ON.
             self.observeUserSettings()
         }
-        
 
     }
     
@@ -155,7 +163,7 @@ public class KindUserSettingsManager {
     }
     
     // RETRIEVE
-    func retrieveUserSettings(completion:@escaping (Bool?)->()) {
+    func retrieveUserSettings(completion:@escaping (Bool)->()) {
         let db = Firestore.firestore()
         db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).getDocument {  (document,err) in
             if let err = err {
@@ -172,8 +180,6 @@ public class KindUserSettingsManager {
             
             self.userFields = data
             completion(true)
-            // let the client know there was data retrieval.
-            self.updateHUDWithUserSettings?()
         }
     }
 

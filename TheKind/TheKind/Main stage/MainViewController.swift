@@ -136,39 +136,18 @@ class MainViewController: UIViewController {
     //First view of the sequence
     var firstViewToPresent: ActionViewName = ActionViewName.UserNameView
     var introSnippets : [Snippet] = []
-    
 
-    
-    
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         initMainViewControllerForViews()
         initTalkboxForViews()
-        // Check in which view of the game the user is.
-        
-        self.adaptHUDAndPanelToIphoneXFamily()
-        //print("one time vieDidLoad")
-        retrieveUserSettingsForFirstTime()
-        
-        //initialize observer on deck changes.
-        KindDeckManagement.sharedInstance.initializeDeckObserver()
-    }
-    
-    fileprivate func retrieveUserSettingsForFirstTime() {
 
-        KindUserSettingsManager.sharedInstance.retrieveUserSettings() { (fetched) in
-            //Data was fetched (user exists before)
-            
-            if fetched == true {
-                self.updateViewTagWithCurrentState()
-                // intro = welcome back!
-            }
-            //print("one time retrieveUserSettingsForFirstTime")
-            self.intro()
-            
-        }
+        self.adaptHUDAndPanelToIphoneXFamily()
+
+        self.updateViewTagWithCurrentState()
+        self.intro()
+        
+        KindDeckManagement.sharedInstance.initializeDeckObserver()
     }
     
     fileprivate func updateViewTagWithCurrentState() {
@@ -200,14 +179,9 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func intro() {
-        //print("one time intro()")
-        self.introSnippets = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
-                              Snippet(message: "You say it like 'YUNG'.", action: .activate,id: 2, actionView: self.firstViewToPresent)]
-        
-        delay(bySeconds: 1) {
-            let intro = JungRoutine(snippets: self.introSnippets, userResponseOptions: nil, sender: .Jung)
-            self.talkbox.displayRoutine(routine: intro)
-        }
+        let actions: [KindActionType] = [.activate]
+        let actionViews: [ActionViewName] = [self.firstViewToPresent]
+        self.talkbox.displayRoutine(routine: self.talkbox.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }
 
     
