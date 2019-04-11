@@ -136,6 +136,7 @@ class MapActionTriggerView: KindActionTriggerView {
     fileprivate func adjustScreenforXFamily() {
         if UIScreen.isPhoneXfamily {
             createCircleYConstraint.constant = -5
+            insideExpandedCircleViewYConstraint.constant = -40
             self.layoutIfNeeded()
             
         }
@@ -217,7 +218,7 @@ class MapActionTriggerView: KindActionTriggerView {
         
             mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
             //work on the map before showing
-            clearJungChatLog()
+            backToTheMapReset()
             self.alpha = 0
             self.isHidden = false
             self.talkbox?.delegate = self
@@ -253,28 +254,15 @@ class MapActionTriggerView: KindActionTriggerView {
             circleNameTextField.text = "[tap to name it]"
             adaptLineToTextSize(circleNameTextField)
             
-            let txt = "You are creating a circle.-Click the locker to toggle between public and private.-If private only invited people can join.-Name the circle and hit save when you are done."
-            
-            let actions: [KindActionType] = [.none, .none,.none, .none]
-            let actionViews: [ActionViewName] = [.none,.none,.none, .none]
-            let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+            explainerCircleCreation()
         } else {
-            //This info comes from the Jung API
-            let dominantKind = "founder"
-            let chanceScore = "high"
-            let privateKey = "will"
-            let txt = "This place is dominated by the \(dominantKind) kind.-You have \(chanceScore) chances of making friends here.-You \(privateKey) need a key to join this circle."
-            
-            let actions: [KindActionType] = [.none, .none,.none]
-            let actionViews: [ActionViewName] = [.none,.none,.none]
-            let options = self.talkbox?.createUserOptions(opt1: "Back to map.", opt2: "Enter circle.", actionView: self)
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+            explainerCircleExploration()
         }
 
     }
-    
 
+    
+    
     override func leftOptionClicked() {
         mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
         // USER CANCELLED CREATION
@@ -290,6 +278,9 @@ class MapActionTriggerView: KindActionTriggerView {
                 DispatchQueue.main.async {
                     self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
                 }
+                
+                self.backToTheMapReset()
+                
                 self.creationMode = false
             }
         } else {
@@ -303,18 +294,24 @@ class MapActionTriggerView: KindActionTriggerView {
     }
     
     override func rightOptionClicked() {
-        mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
+        self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
         if creationMode {
             createNewCircle() { (circleAnnotationSet) in
-                let txt = "Done."
-                let actions: [KindActionType] = [.none]
-                let actionViews: [ActionViewName] = [.none]
-                self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, action: actions, actionView: actionViews))
+                guard let annotationSet = circleAnnotationSet else {
+                    self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
+                    self.explainerNameCircleBeforeSavingIt()
+                    return
+                }
                 
-                guard let selectedAnnotation = self.selectedAnnotationView else {return}
+                self.explainerCircleSavedSuccessfully()
                 
-                self.deActivateOnDeselection(selectedAnnotation) {
-                    self.mapBoxView.deselectAnnotation(selectedAnnotation.annotation, animated: false)
+                guard let selectedAnnotationView = self.selectedAnnotationView else {return}
+                
+                //gets the payload with the circle details
+                selectedAnnotationView.circleDetails = annotationSet
+      
+                self.deActivateOnDeselection(selectedAnnotationView) {
+                    self.mapBoxView.deselectAnnotation(selectedAnnotationView.annotation, animated: false)
                     self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
                 }
                 
@@ -393,17 +390,18 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         self.existentExpandedCircleView.isUserInteractionEnabled = false
         // If there is an active annotation and this annotation is REALLY open.
         if let annotationView = selectedAnnotationView, !annotationView.transform.isIdentity {
+            
             deActivateOnDeselection(annotationView) {
                 annotationView.setSelected(false, animated: false)
             }
             
             //Remove circle if added on long press.
-//            if creationMode {
-//                if let annotation = annotationView.annotation {
-//                    self.mapBoxView.removeAnnotation(annotation)
-//                }
-//                self.creationMode = false
-//            }
+            if creationMode {
+                if let annotation = annotationView.annotation {
+                    self.mapBoxView.removeAnnotation(annotation)
+                }
+                self.creationMode = false
+            }
             
             self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
             
@@ -437,7 +435,6 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     fileprivate func prepareViewsForDetailingCircle(annotationView: CircleAnnotationView, completion: (()->())?) {
         
         if !annotationView.transform.isIdentity {
-            self.clearJungChatLog()
             if annotationView.transform.a == self.MAXSCIRCLESCALE {
                 UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
                     self.expandedCircleViews.isUserInteractionEnabled = true
@@ -476,12 +473,16 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     }
     
     
-    fileprivate func deActivateOnDeselection(_ annotationView: CircleAnnotationView, completion: (()->())?) {
-        //self.insideExpandedCircleView.alpha = 0
-        print("here")
+    fileprivate func backToTheMapReset() {
         self.clearJungChatLog()
         self.expandedCircleViews.isUserInteractionEnabled = false
         self.resetInnerCircleViews()
+    }
+    
+    fileprivate func deActivateOnDeselection(_ annotationView: CircleAnnotationView, completion: (()->())?) {
+        //self.insideExpandedCircleView.alpha = 0
+        print("here")
+        backToTheMapReset()
         
         UIView.animate(withDuration: 1, animations: {
             self.expandedCircleViews.alpha = 0
@@ -489,22 +490,16 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     
             UIView.animate(withDuration: 1, animations: {
                 self.mainViewController?.hudView.hudCenterDisplay.alpha = 1
-//                **
                 annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
                 annotationView.alpha = 0.9
                 annotationView.button.alpha = 0
             })
-
-
+            
             self.selectedAnnotationView = nil
 
-            //delay(bySeconds: 0.5, closure: {
             if let completion = completion {
                 completion()
             }
-            //})
-
-
         }
         
         

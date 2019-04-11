@@ -125,6 +125,7 @@ class JungChatLogger: KindActionTriggerView {
         }
     }
     
+    // Here: Btns are not showing for snippets with ONE message. 
     fileprivate func messagesAndRoutinesObservers() {
         talkbox.injectRoutineMessageObserver = { [unowned self](jungRoutine) in
             
