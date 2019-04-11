@@ -244,7 +244,7 @@ class MapActionTriggerView: KindActionTriggerView {
         self.mainViewController?.jungChatLogger.hideOptionLabels(true, completion: nil)
     }
     
-    func describeCircle(circleID: String) {
+    func describeCircle(set: CircleAnnotationSet) {
         mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
         if creationMode {
             createCircleName = ""
@@ -253,7 +253,7 @@ class MapActionTriggerView: KindActionTriggerView {
             
             explainerCircleCreation()
         } else {
-            explainerCircleExploration()
+            explainerCircleExploration(set: set)
         }
 
     }
@@ -290,6 +290,7 @@ class MapActionTriggerView: KindActionTriggerView {
         }
     }
     
+    //SAVE
     override func rightOptionClicked() {
         self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
         if creationMode {
@@ -362,14 +363,16 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
       
         self.selectedAnnotationView = annotationView
         
-        if let name = annotationView.circleDetails?.circlePlotName, !name.isEmpty {
-            labelCircleName.attributedText = formatLabelTextWithLineSpacing(text: name)
-        }
+        //Extract annotation details here.
+        guard let circleDetails = annotationView.circleDetails else {fatalError("annotation carries no details to be plotted")}
+        
+        labelCircleName.attributedText = formatLabelTextWithLineSpacing(text: circleDetails.circlePlotName)
+        enterCircleButton.alpha = circleDetails.isPrivate ? 1:0
         
         self.mapBoxView.setCenter(coordinates, zoomLevel: MAXZOOMLEVEL,animated: true)
         //This takes care of all the animations.
-        activateOnSelection(annotationView) { (circleId) in
-            self.describeCircle(circleID: circleId)
+        activateOnSelection(annotationView) { (set) in
+            self.describeCircle(set: set)
         }
 
     }
@@ -411,7 +414,8 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     }
     
 
-    fileprivate func activateOnSelection(_ annotationView: CircleAnnotationView, completion: ((_ circleId: String)->())?) {
+    fileprivate func activateOnSelection(_ annotationView: CircleAnnotationView, completion: ((_ circleAnnotationSet: CircleAnnotationSet)->())?) {
+        backToTheMapReset()
         UIView.animate(withDuration: 1, animations: {
             //scaling
             self.mainViewController?.hudView.hudCenterDisplay.alpha = 0
@@ -421,9 +425,8 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             
         }) { (Completed) in
             self.prepareViewsForDetailingCircle(annotationView: annotationView) {
-                if let circleId = annotationView.circleDetails?.circleId {
-                    self.currentlyExpandedCircleId = circleId
-                    completion?(circleId)
+                if let set = annotationView.circleDetails {
+                    completion?(set)
                 }
             }
         }

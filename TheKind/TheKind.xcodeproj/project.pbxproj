@@ -21,8 +21,7 @@
 		A002F49521BF57D3006E8660 /* ChooseDriverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A002F49421BF57D3006E8660 /* ChooseDriverView.swift */; };
 		A002F49721BF5800006E8660 /* ChooseDriverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A002F49621BF5800006E8660 /* ChooseDriverView.xib */; };
 		A0034F7522039ACA00E9810B /* CircleAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0034F7422039ACA00E9810B /* CircleAnnotationModel.swift */; };
-		A0034F7822039AE600E9810B /* CircleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0034F7622039AE600E9810B /* CircleDetailView.swift */; };
-		A0034F7922039AE600E9810B /* CircleDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0034F7722039AE600E9810B /* CircleDetailView.xib */; };
+		A005041D225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */; };
 		A0120E6621C6E345000454EC /* BadgePhotoSetupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */; };
 		A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */; };
 		A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */; };
@@ -137,8 +136,7 @@
 		A002F49421BF57D3006E8660 /* ChooseDriverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseDriverView.swift; sourceTree = "<group>"; };
 		A002F49621BF5800006E8660 /* ChooseDriverView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseDriverView.xib; sourceTree = "<group>"; };
 		A0034F7422039ACA00E9810B /* CircleAnnotationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleAnnotationModel.swift; sourceTree = "<group>"; };
-		A0034F7622039AE600E9810B /* CircleDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleDetailView.swift; sourceTree = "<group>"; };
-		A0034F7722039AE600E9810B /* CircleDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleDetailView.xib; sourceTree = "<group>"; };
+		A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Explainers_MapActionTriggerView.swift; sourceTree = "<group>"; };
 		A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgePhotoSetupView.xib; sourceTree = "<group>"; };
 		A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePhotoSetupView.swift; sourceTree = "<group>"; };
 		A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xt_GesturesGameBoardScene.swift; sourceTree = "<group>"; };
@@ -329,6 +327,23 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		A005041E225FB070001B7BC5 /* PhotoCellView */ = {
+			isa = PBXGroup;
+			children = (
+				A08902DF22554A8900EE2F79 /* PhotoStripCollectionViewCell.swift */,
+				A08902E022554A8900EE2F79 /* PhotoStripCollectionViewCell.xib */,
+			);
+			path = PhotoCellView;
+			sourceTree = "<group>";
+		};
+		A005041F225FB0A9001B7BC5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A06BF626224EE68200B97A94 /* CircleAnnotationView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A0120E6021C6DF68000454EC /* SwipeCards stage */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,22 +470,12 @@
 				A070760021F2CEAB0013380D /* MapView.xib */,
 				A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */,
 				A06BF620224C577E00B97A94 /* Ext_Create_MapActionTriggerView.swift */,
-				A06BF626224EE68200B97A94 /* CircleAnnotationView.swift */,
+				A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */,
+				A005041F225FB0A9001B7BC5 /* View */,
+				A005041E225FB070001B7BC5 /* PhotoCellView */,
 				A0A45E2421FBA78300DDEC6C /* Model */,
-				A0A45E1D21F92B7B00DDEC6C /* old */,
-				A08902DF22554A8900EE2F79 /* PhotoStripCollectionViewCell.swift */,
-				A08902E022554A8900EE2F79 /* PhotoStripCollectionViewCell.xib */,
 			);
 			path = MapView;
-			sourceTree = "<group>";
-		};
-		A0A45E1D21F92B7B00DDEC6C /* old */ = {
-			isa = PBXGroup;
-			children = (
-				A0034F7622039AE600E9810B /* CircleDetailView.swift */,
-				A0034F7722039AE600E9810B /* CircleDetailView.xib */,
-			);
-			path = old;
 			sourceTree = "<group>";
 		};
 		A0A45E2421FBA78300DDEC6C /* Model */ = {
@@ -802,7 +807,6 @@
 				A025F6E222172D720010BDA1 /* ChosenKindCollectionViewCell.xib in Resources */,
 				A0D960CE21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib in Resources */,
 				A0C5D22C212A4A7500BF1B0C /* Login.storyboard in Resources */,
-				A0034F7922039AE600E9810B /* CircleDetailView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -985,7 +989,7 @@
 				A02D719F21C42FA300EBBD12 /* BrowseKindCardView.swift in Sources */,
 				A0E9C0482215D27000C949D4 /* GameBoardSceneControlView.swift in Sources */,
 				A05150F821E44A9400795172 /* KindUserSettingsManager.swift in Sources */,
-				A0034F7822039AE600E9810B /* CircleDetailView.swift in Sources */,
+				A005041D225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift in Sources */,
 				A0E9C04C22162D2400C949D4 /* CardSwipeView.swift in Sources */,
 				A06BF627224EE68200B97A94 /* CircleAnnotationView.swift in Sources */,
 				A0015A30218CE8DF001DDA20 /* MainViewController.swift in Sources */,

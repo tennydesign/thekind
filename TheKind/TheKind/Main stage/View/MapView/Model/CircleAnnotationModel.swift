@@ -13,7 +13,7 @@ import Mapbox
 
 struct CircleAnnotationSet {
     var location: CLLocationCoordinate2D
-    var circlePlotName: String?
+    var circlePlotName: String
     var isPrivate: Bool
     var circleId: String
     var admin: String

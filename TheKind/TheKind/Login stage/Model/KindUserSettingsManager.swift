@@ -53,6 +53,7 @@ public class KindUserSettingsManager {
                     }
                 }
             } else {
+                // Update all interface controls with retrieved data. 
                 self.updateHUDWithUserSettings?()
 
             }

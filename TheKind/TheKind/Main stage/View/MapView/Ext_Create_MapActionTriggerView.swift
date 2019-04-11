@@ -70,7 +70,7 @@ extension MapActionTriggerView: UITextFieldDelegate {
             latitude = newCoordinates.latitude
             longitude = newCoordinates.longitude
  
-            let point = KindPointAnnotation(circleAnnotationSet: CircleAnnotationSet(location: newCoordinates, circlePlotName: "placeholder", isPrivate: false, circleId: "", admin: "", users: [""]))
+            let point = KindPointAnnotation(circleAnnotationSet: CircleAnnotationSet(location: newCoordinates, circlePlotName: "", isPrivate: false, circleId: "", admin: "", users: [""]))
             self.mapBoxView.addAnnotation(point)
             
             self.mapBoxView.selectAnnotation(point, animated: true)
@@ -85,8 +85,10 @@ extension MapActionTriggerView: UITextFieldDelegate {
     func togglePrivateIndicator() {
         if lockTopImage.transform == .identity {
             closeLock()
+            createIsPrivateKey = true
         } else {
             openLock()
+            createIsPrivateKey = false
         }
     }
     
@@ -143,43 +145,3 @@ extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSo
     
 }
 
-//Explainers
-extension MapActionTriggerView {
-    
-    func explainerCircleCreation() {
-        let txt = "You are creating a circle.-Click the locker to toggle between public and private.-If private only invited people can join.-Name the circle and hit save when you are done."
-        
-        let actions: [KindActionType] = [.none, .none,.none, .none]
-        let actionViews: [ActionViewName] = [.none,.none,.none, .none]
-        let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
-    }
-    
-    func explainerCircleExploration() {
-        let dominantKind = "founder"
-        let chanceScore = "high"
-        let privateKey = "will"
-        let txt = "This place is dominated by the \(dominantKind) kind.-You have \(chanceScore) chances of making friends here.-You \(privateKey) need a key to join this circle."
-        
-        let actions: [KindActionType] = [.none, .none,.none]
-        let actionViews: [ActionViewName] = [.none,.none,.none]
-        let options = self.talkbox?.createUserOptions(opt1: "Back to map.", opt2: "Enter circle.", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
-    }
-    
-    func explainerNameCircleBeforeSavingIt() {
-        let txt = "Name the circle before saving it.-Tap above to do so."
-        let actions: [KindActionType] = [.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none]
-        let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
-        
-    }
-    
-    func explainerCircleSavedSuccessfully() {
-        let txt = "Done."
-        let actions: [KindActionType] = [.none]
-        let actionViews: [ActionViewName] = [.none]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, action: actions, actionView: actionViews))
-    }
-}
