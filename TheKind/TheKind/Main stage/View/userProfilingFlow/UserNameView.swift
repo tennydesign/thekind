@@ -54,14 +54,14 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
 
     
     @objc func handleKeyboardDidShow() {
-        print("keyboard did show")
+        //print("keyboard did show")
         UIView.animate(withDuration: 0.3) {
             self.userNameBox.transform = CGAffineTransform(translationX: 0, y: -35)
         }
     }
     
     @objc func handleKeyboardDidHide() {
-        print("keyboard did hide")
+        //print("keyboard did hide")
         UIView.animate(withDuration: 0.3) {
             self.userNameBox.transform = .identity
         }

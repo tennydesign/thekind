@@ -29,8 +29,8 @@ class JungAWSRekognition{
                 print(err)
                 return
             }
-            print(result?.faceDetails?.count ?? 0)
-            print(result?.faceDetails ?? "")
+            //print(result?.faceDetails?.count ?? 0)
+            //print(result?.faceDetails ?? "")
             if let faceDetails = result?.faceDetails {
                 
                 if faceDetails.count == 0 {

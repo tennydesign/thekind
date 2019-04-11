@@ -72,7 +72,7 @@ class JungTalkBox {
         if messages.count != action.count || messages.count != actionView.count {
             fatalError("Messages count is diff than action and actionView count")
         }
-        print(messages)
+        //print(messages)
         var snippets:[Snippet] = []
         
         for index in 0...messages.count-1 {

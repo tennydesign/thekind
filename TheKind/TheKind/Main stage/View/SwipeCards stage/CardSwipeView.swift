@@ -71,7 +71,7 @@ class CardSwipeView: UIView {
         
         // triggers every time the deck is updated.
         KindDeckManagement.sharedInstance.getCurrentUserDeck { (success) in
-            print("retrieval of deck is \(success)")
+            //print("retrieval of deck is \(success)")
         }
         KindDeckManagement.sharedInstance.updateMainKindOnClient = { [unowned self] in
             self.chosenKindsCollectionView.reloadData()
@@ -215,21 +215,21 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
         guard let image = UIImage(named: kind.iconImageName.rawValue) else {fatalError("image not found to kind \(kind)")}
         
         cell.kindImageView.image = image.withRenderingMode(.alwaysTemplate)
-        print(didSelectUserChosenKindIndex)
+        //print(didSelectUserChosenKindIndex)
         if didSelectUserChosenKindIndex == indexPath.row {
             cell.kindImageView.tintColor = UIColor(r: 210, g: 183, b: 102)
         } else {
             cell.kindImageView.tintColor = UIColor(r: 171, g: 171, b: 171)
         }
     
-        print("DECK CARDS: \(KindDeckManagement.sharedInstance.userKindDeck)")
+        //print("DECK CARDS: \(KindDeckManagement.sharedInstance.userKindDeck)")
         return cell
         
     }
     
  
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        //print(indexPath.row)
         
         // tells the system the focus is not on the card being presented for swipe (modifies the behavior of the right/left buttons)
         isInSwipeKindsMode = false

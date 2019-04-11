@@ -149,7 +149,7 @@ class MainViewController: UIViewController {
         // Check in which view of the game the user is.
         
         self.adaptHUDAndPanelToIphoneXFamily()
-        print("one time vieDidLoad")
+        //print("one time vieDidLoad")
         retrieveUserSettingsForFirstTime()
         
         //initialize observer on deck changes.
@@ -165,7 +165,7 @@ class MainViewController: UIViewController {
                 self.updateViewTagWithCurrentState()
                 // intro = welcome back!
             }
-            print("one time retrieveUserSettingsForFirstTime")
+            //print("one time retrieveUserSettingsForFirstTime")
             self.intro()
             
         }
@@ -183,7 +183,7 @@ class MainViewController: UIViewController {
     fileprivate func loadUserDeck() {
         //load user deck
         KindDeckManagement.sharedInstance.getCurrentUserDeck { (success) in
-            print(KindDeckManagement.sharedInstance.userKindDeck)
+            //print(KindDeckManagement.sharedInstance.userKindDeck)
         }
 
     }
@@ -200,7 +200,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func intro() {
-        print("one time intro()")
+        //print("one time intro()")
         self.introSnippets = [Snippet(message: "Hi my name is JUNG.", action: .none, id: 1, actionView: ActionViewName.none),
                               Snippet(message: "You say it like 'YUNG'.", action: .activate,id: 2, actionView: self.firstViewToPresent)]
         

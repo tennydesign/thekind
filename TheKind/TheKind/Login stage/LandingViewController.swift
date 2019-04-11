@@ -80,9 +80,9 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
         self.view.addGestureRecognizer(loginTapGesture)
 
         setupViewModelObservers()
-        print("one time View Did Load LandingViewControllerV ")
+        //print("one time View Did Load LandingViewControllerV ")
         KindUserSettingsManager.sharedInstance.userSignedIn = { [unowned self] in
-            print("one time userSignedIn")
+            //print("one time userSignedIn")
             self.goToOnboading()
         }
     }
@@ -115,7 +115,7 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
     
 
     @objc func handleKeyboardDidShow(notification: Notification) {
-        print("keyboard did show")
+        //print("keyboard did show")
 
         UIView.animate(withDuration: 0.3) {
             self.loginExistingUser.transform = CGAffineTransform(translationX: 0, y: self.KEYBOARDSHOWSLIDEAMOUNT)
@@ -125,7 +125,7 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
     }
     
     @objc func handleKeyboardDidHide() {
-        print("keyboard did hide")
+        //print("keyboard did hide")
         UIView.animate(withDuration: 0.3) {
             self.loginExistingUser.transform = .identity
             self.createNewUser.transform = .identity
@@ -173,7 +173,7 @@ extension LandingViewController: GIDSignInUIDelegate {
     }
     
      func goToOnboading() {
-        print("one time goToOnboading")
+        //print("one time goToOnboading")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "MainViewController")
         vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve

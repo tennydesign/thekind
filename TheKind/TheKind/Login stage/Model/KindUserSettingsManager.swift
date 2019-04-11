@@ -87,8 +87,8 @@ public class KindUserSettingsManager {
                         if let err = err {
                             completion?(err)
                         }
-                        print("New UserSettingd Document created successfully")
-                        print("Fields updated successfully")
+                        //print("New UserSettingd Document created successfully")
+                        //print("Fields updated successfully")
                         completion?(nil)
                         return
                         

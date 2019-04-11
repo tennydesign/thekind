@@ -11,6 +11,8 @@ import MapKit
 import Mapbox
 
 class CircleAnnotationView: MGLAnnotationView {
+
+    let MAXSCIRCLESCALE: CGFloat = 6.0
     
     var circleDetails: CircleAnnotationSet? {
         didSet {
@@ -39,11 +41,9 @@ class CircleAnnotationView: MGLAnnotationView {
     }
     
     
-    
     func commonInit() {
-        alpha = 0.7
+        alpha = 0.9
     }
-    
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -59,8 +59,7 @@ class CircleAnnotationView: MGLAnnotationView {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        
+    
         //        // Animate the border width in/out, creating an iris effect.
         //        let animation = CABasicAnimation(keyPath: "borderWidth")
         //        animation.duration = 0.4
@@ -89,9 +88,12 @@ class KindPointAnnotation: MGLPointAnnotation {
         
     }
     
+    
     override init() {
         super.init()
     }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

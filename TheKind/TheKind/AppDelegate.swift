@@ -125,7 +125,7 @@ extension AppDelegate: GIDSignInDelegate {
         let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
                                                        accessToken: authentication.accessToken)
     
-        print(credential)
+        //print(credential)
         
         Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
             if let error = error {
@@ -136,7 +136,7 @@ extension AppDelegate: GIDSignInDelegate {
             // ...
             guard let email = authResult?.user.email else {return}
             KindUserSettingsManager.sharedInstance.initializeUserFields(email: email)
-            print("User signed in", email)
+            //print("User signed in", email)
         }
     }
     

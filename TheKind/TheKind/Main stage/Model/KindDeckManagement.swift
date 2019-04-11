@@ -55,7 +55,7 @@ class KindDeckManagement {
                 return
             }
         } else {
-            print("safeAddKindToDeck: kind already exist")
+            print("safeAddKindToDeck: kind already exists")
             completion(false)
         }
         
@@ -75,7 +75,7 @@ class KindDeckManagement {
                         if let err = err {
                             completion?(err)
                         }
-                        print("New Kind Deck Document created successfully")
+                        //print("New Kind Deck Document created successfully")
                         completion?(nil)
                         return
                         
@@ -83,7 +83,7 @@ class KindDeckManagement {
                     
                 }
             } else {
-                print(" Kind Deck Document updated successfully")
+                //print(" Kind Deck Document updated successfully")
                 completion?(nil)
             }
             
@@ -117,7 +117,7 @@ class KindDeckManagement {
                         if let err = err {
                             completion?(err)
                         }
-                        print("New main Kind Document created successfully")
+                        //print("New main Kind Document created successfully")
                     })
                 }
             }

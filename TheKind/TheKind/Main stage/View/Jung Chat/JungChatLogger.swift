@@ -181,7 +181,7 @@ class JungChatLogger: KindActionTriggerView {
             messagesPipe.append(snippet.message)
         }
         
-        print(messagesPipe)
+        //print(messagesPipe)
         
         var snippets: [Snippet] = jungRoutine.snippets
         var messageIndex = 0
@@ -350,10 +350,10 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
     }
     
     func refreshAndScrollCollectionView() {
-        //DispatchQueue.main.async {
+        DispatchQueue.main.async {
             self.jungChatLoggerCollectionView.reloadData()
             self.scrollCollectionViewToRecentMessage()
-        //}
+        }
     }
 
     

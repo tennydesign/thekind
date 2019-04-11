@@ -47,7 +47,7 @@ class BrowseKindCardView: KindActionTriggerView {
             let flowLayout = ZoomAndSnapFlowLayout()
             kindCollectionView.collectionViewLayout = flowLayout
             kindCollectionView.register(UINib.init(nibName: "kindCollectioViewCell", bundle: nil), forCellWithReuseIdentifier: "kindCollectioViewCell")
-            print(kindCollectionView.center)
+            //print(kindCollectionView.center)
         }
     }
     
@@ -68,7 +68,7 @@ class BrowseKindCardView: KindActionTriggerView {
         Bundle.main.loadNibNamed("BrowseKindCardView", owner: self, options: nil)
         addSubview(chooseKindCard)
         
-        print("status bar: \(UIApplication.shared.statusBarFrame.height)")
+        //print("status bar: \(UIApplication.shared.statusBarFrame.height)")
     }
     
 
@@ -244,10 +244,10 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
        // clearJungChat()
         self.kindNameLabel.alpha = 0
         if scrollView.panGestureRecognizer.translation(in: scrollView.superview).x > 0 {
-            print("right")
+            //print("right")
             
         } else {
-            print("left")
+            //print("left")
         }
         
     }
@@ -267,7 +267,7 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
     private func indexPathForCenterCell() -> IndexPath? {
         let center = convert(self.kindCollectionView.center, to: self.kindCollectionView)
         guard let indexPath = kindCollectionView!.indexPathForItem(at: center) else {return nil}
-        print(indexPath.row)
+        //print(indexPath.row)
         return indexPath
         
     }

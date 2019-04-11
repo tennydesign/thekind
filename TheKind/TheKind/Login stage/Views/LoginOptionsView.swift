@@ -45,6 +45,9 @@ class LoginOptionsView: UIView {
     }
     
     @IBAction func GoogleLoginClicked(_ sender: KindButton) {
+        UIView.animate(withDuration: 0.4) {
+            self.alpha = 0
+        }
         handleLoginWithFireStore.signInWithGoogle()
     }
     

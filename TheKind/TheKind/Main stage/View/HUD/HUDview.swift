@@ -155,6 +155,8 @@ class HUDview: KindActionTriggerView {
         }, completion: nil)
     }
     
+    @IBAction func mapListViewBtnClicked(_ sender: Any) {
+    }
     
 
     

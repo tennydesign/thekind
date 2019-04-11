@@ -122,7 +122,7 @@ extension GameBoardScene {
         let changeY = (camera?.position.y)! + (translation.y * abs((slideSpeed + zoomedOutSpeedFactor * ((camera?.xScale)! - initCamScale!))))
         
         
-        print("x:\(changeX) :: y:\(changeY)")
+        //print("x:\(changeX) :: y:\(changeY)")
         
         
         let targetPosition = keepWithinPanLimitPoints(for: CGPoint(x: changeX, y: changeY))
@@ -163,8 +163,8 @@ extension GameBoardScene {
     
     func updatePanLimitPoint() {
 
-        let zoomFactor = (maxZoomOutLimit! / (camera?.xScale)!)
-        print(zoomFactor)
+        //let zoomFactor = (maxZoomOutLimit! / (camera?.xScale)!)
+        //print(zoomFactor)
         maxPan = CGPoint(x: (kindTilemap.mapSize.width/2), y: (kindTilemap.mapSize.height/2))
 
     }
@@ -196,7 +196,7 @@ extension GameBoardScene {
         
 
         
-        print("camera zoom: \(String(describing: camera?.xScale))")
+        //print("camera zoom: \(String(describing: camera?.xScale))")
         
     }
     

@@ -15,7 +15,7 @@ import SpriteKit
 // Functions triggered by GameBoardSceneControlView.
 extension GameBoardScene: ControlGameBoardProtocol {
     func searchBoardAndFindKindToIntroduce() {
-        print("BOARD SHOULD MOVE!!!!!")
+        //print("BOARD SHOULD MOVE!!!!!")
         moveCamToCenterOfTile(duration: 1, row: 1, column: 8) {
             self.moveCamToCenterOfTile(duration: 1, row: 4, column: 0) {
                 self.moveCamToCenterOfTileAndZoom(duration: 2, row: 13, column: 11, completion: {

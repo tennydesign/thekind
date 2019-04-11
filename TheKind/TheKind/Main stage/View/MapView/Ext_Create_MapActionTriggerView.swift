@@ -16,7 +16,7 @@ extension MapActionTriggerView: UITextFieldDelegate {
     func adaptLineToTextSize(_ textField: UITextField) {
         let textBoundingSize = textField.frame.size
         guard let text = textField.text else {return}
-        let frameForText = estimateFrameFromText(text, bounding: textBoundingSize, fontSize: 24, fontName: SECONDARYFONT)
+        let frameForText = estimateFrameFromText(text, bounding: textBoundingSize, fontSize: 18, fontName: textField.font!.fontName)// UIFont.systemFont(ofSize: 16).fontName)//SECONDARYFONT)
         
         lineWidthConstraint.constant = frameForText.width
         UIView.animate(withDuration: 1) {
@@ -26,9 +26,14 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     @objc func textFieldDidChange(textField: UITextField){
         adaptLineToTextSize(textField)
-        //guard let username = textField.text, !(username.trimmingCharacters(in: .whitespaces).isEmpty) else {return}
-        //self.username = username
-        
+        guard let circleName = textField.text, !(circleName.trimmingCharacters(in: .whitespaces).isEmpty) else {return}
+        createCircleName = circleName
+    }
+    
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.text = ""
+        adaptLineToTextSize(textField)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -36,43 +41,34 @@ extension MapActionTriggerView: UITextFieldDelegate {
         return true
     }
     
-    func createNewCircle(_ latitude: CLLocationDegrees, _ longitude: CLLocationDegrees, completion: (()->())?) {
-        CircleAnnotationManagement.sharedInstance.saveCircle(latitude: latitude, longitude: longitude) { (circleAnnotationSet, err) in
+    func createNewCircle(completion: ((CircleAnnotationSet)->())?) {
+        CircleAnnotationManagement.sharedInstance.saveCircle(name: createCircleName, isPrivate: createIsPrivateKey, users: [""], latitude: latitude, longitude: longitude) { (circleAnnotationSet, err) in
             if let err = err {
                 print(err)
                 return
             }
             
-            completion?()
-            print("saved circle success")
+            completion?(circleAnnotationSet)
+            //print("saved circle success")
         }
     }
     
     @objc func handleLongPressGesture(gestureRecognizer:UILongPressGestureRecognizer) {
-        print("hello longpress!")
+
         creationMode = true
         if gestureRecognizer.state == UIGestureRecognizer.State.began {
             let touchpoint = gestureRecognizer.location(in: mapBoxView)
             let newCoordinates = mapBoxView.convert(touchpoint, toCoordinateFrom: mapBoxView)
             
-
+            //SETUP COORDINATES
             latitude = newCoordinates.latitude
             longitude = newCoordinates.longitude
-            
-            let point = KindPointAnnotation(circleAnnotationSet: CircleAnnotationSet(location: newCoordinates, circlePlotName: "", isPrivate: false, circleId: "", admin: "", users: [""]))
+ 
+            let point = KindPointAnnotation(circleAnnotationSet: CircleAnnotationSet(location: newCoordinates, circlePlotName: "placeholder", isPrivate: false, circleId: "", admin: "", users: [""]))
             self.mapBoxView.addAnnotation(point)
             
-            self.mapBoxView.setCenter(newCoordinates, zoomLevel: self.MAXZOOMLEVEL, animated: true)
+            self.mapBoxView.selectAnnotation(point, animated: true)
             
-            UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
-                //self.expandedCircleViews.alpha = 1
-            }, completion: { (completed) in
-                //  Shouldn't this happen first?
-                self.mapBoxView.selectAnnotation(point, animated: true)
-            })
-            
-        } else if gestureRecognizer.state == UIGestureRecognizer.State.ended {
-            print("ended gesture")
         }
     }
     
