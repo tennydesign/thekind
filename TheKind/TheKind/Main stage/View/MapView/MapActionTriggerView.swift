@@ -10,7 +10,7 @@ import UIKit
 import Mapbox
 import MapKit
 //REFACTOR THE UP AND DOWN FOR DRAWER
-class MapActionTriggerView: KindActionTriggerView {
+class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
     @IBOutlet var photoStripView: UIView!
     @IBOutlet var photoStripCollectionView: UICollectionView!
@@ -49,6 +49,7 @@ class MapActionTriggerView: KindActionTriggerView {
     var longitude: CLLocationDegrees!
     var isNewCircle: Bool = false
     var usersInCircleImageViews: [UIImageView] = []
+    var longPressGesture: UIGestureRecognizer!
     
     // INIT VALUES
     // HERE: Maybe add a little bit more space from top of jungchatlogger and map.
@@ -95,7 +96,7 @@ class MapActionTriggerView: KindActionTriggerView {
         
         let tapLockerGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOnLocker))
         lockerView.addGestureRecognizer(tapLockerGesture)
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
         mapBoxView.addGestureRecognizer(longPressGesture)
         photoStripCollectionView?.register(UINib(nibName: "PhotoStripCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PhotoStripCollectionViewCell")
         photoStripCollectionView.dataSource = self
@@ -115,8 +116,22 @@ class MapActionTriggerView: KindActionTriggerView {
         self.expandedCircleViews.sendSubviewToBack(overlay)
         //HERE
 
+        // add pan gesture to detect when the map moves
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.didDragMap(_:)))
+        
+        // make your class the delegate of the pan gesture
+        panGesture.delegate = self
+        
+        // add the gesture to the mapView
+        mapBoxView.addGestureRecognizer(panGesture)
+        
         configMapbox()
 
+    }
+    
+    // This is to setup didDragMap delegate.
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
     fileprivate func configMapbox() {
@@ -255,6 +270,14 @@ class MapActionTriggerView: KindActionTriggerView {
 
     
     
+    func removeCancelledAnnotation(_ annotationView: CircleAnnotationView) {
+        //Remove instead of deselect.
+        if let annotation = annotationView.annotation {
+            self.mapBoxView.removeAnnotation(annotation)
+            self.selectedAnnotationView = nil
+        }
+    }
+    
     override func leftOptionClicked() {
         mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
         // USER CANCELLED CREATION
@@ -264,23 +287,19 @@ class MapActionTriggerView: KindActionTriggerView {
                  self.expandedCircleViews.alpha = 0
             }) { (completed) in
                 
-                //Remove instead of deselect.
-                if let annotation = annotationView.annotation {
-                    self.mapBoxView.removeAnnotation(annotation)
-                    self.selectedAnnotationView = nil
-                }
-                DispatchQueue.main.async {
-                    self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-                }
-                
-                self.toogleTopBottomInnerViewsAndUserInteraction(isOnMap: true)
-                self.clearJungChatLog()
+                self.removeCancelledAnnotation(annotationView)
                 self.isNewCircle = false
+                self.longPressGesture.isEnabled = true
+                self.mapBoxView.isUserInteractionEnabled = true
+                self.clearJungChatLog()
+                self.toogleTopBottomInnerViewsAndUserInteraction(isOnMap: true)
+                self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
             }
         } else {
             // USER HITS BACK TO THE MAP
             guard let selectedAnnotationView = selectedAnnotationView else {fatalError("LIXO!!!!")}
             self.deActivateOnDeselection(selectedAnnotationView) {
+                self.mapBoxView.isUserInteractionEnabled = true
                 self.mapBoxView.deselectAnnotation(selectedAnnotationView.annotation, animated: false)
                 self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
             }
@@ -312,6 +331,7 @@ class MapActionTriggerView: KindActionTriggerView {
                 self.deActivateOnDeselection(selectedAnnotationView) {
                     self.mapBoxView.deselectAnnotation(selectedAnnotationView.annotation, animated: false)
                     self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
+                    self.mapBoxView.isUserInteractionEnabled = true
                 }
 
                 self.isNewCircle = false

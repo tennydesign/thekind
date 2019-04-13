@@ -139,11 +139,11 @@ extension UIView {
         }
         
 //        yourButton.blink() // infinite blink effect with the default duration of 1 second
-//        
+//
 //        yourButton.blink(enabled:false) // stop the animation
-//        
+//
 //        yourButton.blink(duration: 2.0) // slowly the animation to 2 seconds
-//        
+//
 //        yourButton.blink(stopAfter:5.0)
     }
     
@@ -228,5 +228,14 @@ extension UIView {
         if size.height != 0 {
             heightAnchor.constraint(equalToConstant: size.height).isActive = true
         }
+    }
+}
+
+
+
+class PassthroughView: UIView {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
+        return view == self ? nil : view
     }
 }

@@ -97,7 +97,7 @@
                                     <constraint firstItem="eTK-Ov-xyB" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="ym0-aI-M2o"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pt-Di-eiT" userLabel="bottom_curtain">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pt-Di-eiT" userLabel="bottom_curtain" customClass="PassthroughView" customModule="TheKind" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="491.5" width="375" height="385.5"/>
                                 <subviews>
                                     <imageView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain_final" translatesAutoresizingMaskIntoConstraints="NO" id="TdV-gj-duV" userLabel="bottom_curtain_slice">
@@ -106,11 +106,11 @@
                                     <imageView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain_final" translatesAutoresizingMaskIntoConstraints="NO" id="uFA-4x-IUP" userLabel="bottom_curtain">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="385.5"/>
                                     </imageView>
-                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C7V-aM-7ZV" userLabel="chatMaskView">
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C7V-aM-7ZV" userLabel="chatMaskView" customClass="PassthroughView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="10" width="375" height="385.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Psy-SE-XbL" userLabel="jungChatWindow">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Psy-SE-XbL" userLabel="jungChatWindow" customClass="PassthroughView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="385.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4FF-H6-M6b" userLabel="Jung Chat View" customClass="JungChatLogger" customModule="TheKind" customModuleProvider="target">
@@ -156,10 +156,10 @@
                                     <constraint firstItem="C7V-aM-7ZV" firstAttribute="height" secondItem="9pt-Di-eiT" secondAttribute="height" id="zEY-hg-rCW"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGE-Wo-HLs" userLabel="top_curtain">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGE-Wo-HLs" userLabel="top_curtain" customClass="PassthroughView" customModule="TheKind" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="-28" width="375" height="241"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyb-mU-8lf" userLabel="HUD window">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyb-mU-8lf" userLabel="HUD window" customClass="PassthroughView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
                                         <subviews>
                                             <view tag="12" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A4g-0r-7jc" userLabel="HUD view" customClass="HUDview" customModule="TheKind" customModuleProvider="target">

@@ -34,7 +34,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9xs-vB-b1j" userLabel="mainView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9xs-vB-b1j" userLabel="mainView" customClass="PassthroughView" customModule="TheKind" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                     <subviews>
                         <label opaque="NO" alpha="0.0" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAKE ANOTHER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfN-ey-Vla" customClass="KindJungOptionLabel" customModule="TheKind" customModuleProvider="target">

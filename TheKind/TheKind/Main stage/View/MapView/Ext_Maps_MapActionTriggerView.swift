@@ -45,7 +45,6 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
 
     
     func mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView) {
-        
         guard let annotationView = annotationView as? CircleAnnotationView else {fatalError()}
         guard let coordinates = annotationView.circleDetails?.location else {fatalError()}
         
@@ -86,33 +85,45 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     
     func mapView(_ mapView: MGLMapView, didDeselect annotationView: MGLAnnotationView) {
         print("deselected")
+        
     }
     
     
-    //MAP IS DRAGGED.
+
     func mapView(_ mapView: MGLMapView, regionWillChangeAnimated animated: Bool) {
+        // using didDragMap instead.
+        // this method fires too often and for everything.
         
-        // If there is an active annotation and this annotation is REALLY open.
-        if let annotationView = selectedAnnotationView, !annotationView.transform.isIdentity {
+
+    }
+    
+    //MAP IS DRAGGED.
+    // This is not being used cause map is losing interactive on Select
+    // And regaining on Deselect.
+    @objc func didDragMap(_ sender: UIGestureRecognizer) {
+        if sender.state == .ended {
             
-            deActivateOnDeselection(annotationView) {
-                annotationView.setSelected(false, animated: false)
-            }
-            
-            //Remove circle if added on long press.
-            if isNewCircle {
-                if let annotation = annotationView.annotation {
-                    self.mapBoxView.removeAnnotation(annotation)
+            if let annotationView = selectedAnnotationView, !annotationView.transform.isIdentity {
+                
+                deActivateOnDeselection(annotationView) {
+                    annotationView.setSelected(false, animated: false)
                 }
-                self.isNewCircle = false
+                
+                //Remove circle if added on long press.
+                if isNewCircle {
+                    removeCancelledAnnotation(annotationView)
+                    self.isNewCircle = false
+                    longPressGesture.isEnabled = true
+                    mapBoxView.isUserInteractionEnabled = true
+                }
+                self.clearJungChatLog()
+                self.toogleTopBottomInnerViewsAndUserInteraction(isOnMap: true)
+                self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
+                
             }
-            
-            self.toogleTopBottomInnerViewsAndUserInteraction(isOnMap: true)
-            self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
             
         }
     }
-    
     
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
         return false
@@ -121,8 +132,8 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     
     func activateOnSelection(_ annotationView: CircleAnnotationView, completion: ((_ circleAnnotationSet: CircleAnnotationSet)->())?) {
         self.clearJungChatLog()
-        
-        
+        longPressGesture.isEnabled = false
+        mapBoxView.isUserInteractionEnabled = false
         UIView.animate(withDuration: 1, animations: {
             //scaling
             self.mainViewController?.hudView.hudCenterDisplay.alpha = 0
@@ -180,9 +191,6 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             self.mainViewController?.hudView.hudGradient.alpha = 1
             self.mainViewController?.hudView.hudCenterDisplay.alpha = 1
             self.mainViewController?.hudView.isUserInteractionEnabled = true
-            self.mainViewController?.hudView.hudControls.isUserInteractionEnabled = true
-            self.mainViewController?.hudWindow.isUserInteractionEnabled = true
-            self.mainViewController?.topCurtainView.isUserInteractionEnabled = true
             self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
             self.expandedCircleViews.isUserInteractionEnabled = false
         } else {
@@ -191,9 +199,6 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             self.mainViewController?.hudView.hudGradient.alpha = 0
             self.mainViewController?.hudView.hudCenterDisplay.alpha = 0
             self.mainViewController?.hudView.isUserInteractionEnabled = false
-            self.mainViewController?.hudWindow.isUserInteractionEnabled = false
-            self.mainViewController?.topCurtainView.isUserInteractionEnabled = false
-            self.mainViewController?.hudView.hudControls.isUserInteractionEnabled = false
             self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
             self.expandedCircleViews.isUserInteractionEnabled = true
         }
@@ -213,6 +218,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     
     func deActivateOnDeselection(_ annotationView: CircleAnnotationView, completion: (()->())?) {
         hidePhotoStrip()
+        longPressGesture.isEnabled = true
         self.clearJungChatLog()
         UIView.animate(withDuration: 1, animations: {
             self.toogleTopBottomInnerViewsAndUserInteraction(isOnMap: true)
