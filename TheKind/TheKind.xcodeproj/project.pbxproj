@@ -22,6 +22,7 @@
 		A002F49721BF5800006E8660 /* ChooseDriverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A002F49621BF5800006E8660 /* ChooseDriverView.xib */; };
 		A0034F7522039ACA00E9810B /* CircleAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0034F7422039ACA00E9810B /* CircleAnnotationModel.swift */; };
 		A005041D225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */; };
+		A005042122616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005042022616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift */; };
 		A0120E6621C6E345000454EC /* BadgePhotoSetupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */; };
 		A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */; };
 		A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */; };
@@ -59,7 +60,7 @@
 		A05150F621E4002800795172 /* UserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F521E4002800795172 /* UserNameView.swift */; };
 		A05150F821E44A9400795172 /* KindUserSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F721E44A9400795172 /* KindUserSettingsManager.swift */; };
 		A0547F22222CBE59001EE736 /* HandleLoginWithFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0547F21222CBE59001EE736 /* HandleLoginWithFirestore.swift */; };
-		A06BF621224C577E00B97A94 /* Ext_Create_MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06BF620224C577E00B97A94 /* Ext_Create_MapActionTriggerView.swift */; };
+		A06BF621224C577E00B97A94 /* Ext_Handlers_MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06BF620224C577E00B97A94 /* Ext_Handlers_MapActionTriggerView.swift */; };
 		A06BF623224C69C800B97A94 /* HorizonRounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A06BF622224C69C800B97A94 /* HorizonRounded-Bold.otf */; };
 		A06BF625224EDE3B00B97A94 /* CircleAnnotationManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06BF624224EDE3B00B97A94 /* CircleAnnotationManagement.swift */; };
 		A06BF627224EE68200B97A94 /* CircleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06BF626224EE68200B97A94 /* CircleAnnotationView.swift */; };
@@ -137,6 +138,7 @@
 		A002F49621BF5800006E8660 /* ChooseDriverView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseDriverView.xib; sourceTree = "<group>"; };
 		A0034F7422039ACA00E9810B /* CircleAnnotationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleAnnotationModel.swift; sourceTree = "<group>"; };
 		A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Explainers_MapActionTriggerView.swift; sourceTree = "<group>"; };
+		A005042022616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Maps_MapActionTriggerView.swift; sourceTree = "<group>"; };
 		A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgePhotoSetupView.xib; sourceTree = "<group>"; };
 		A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePhotoSetupView.swift; sourceTree = "<group>"; };
 		A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xt_GesturesGameBoardScene.swift; sourceTree = "<group>"; };
@@ -174,7 +176,7 @@
 		A05150F521E4002800795172 /* UserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameView.swift; sourceTree = "<group>"; };
 		A05150F721E44A9400795172 /* KindUserSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindUserSettingsManager.swift; sourceTree = "<group>"; };
 		A0547F21222CBE59001EE736 /* HandleLoginWithFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleLoginWithFirestore.swift; sourceTree = "<group>"; };
-		A06BF620224C577E00B97A94 /* Ext_Create_MapActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Create_MapActionTriggerView.swift; sourceTree = "<group>"; };
+		A06BF620224C577E00B97A94 /* Ext_Handlers_MapActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Handlers_MapActionTriggerView.swift; sourceTree = "<group>"; };
 		A06BF622224C69C800B97A94 /* HorizonRounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HorizonRounded-Bold.otf"; sourceTree = "<group>"; };
 		A06BF624224EDE3B00B97A94 /* CircleAnnotationManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnnotationManagement.swift; sourceTree = "<group>"; };
 		A06BF626224EE68200B97A94 /* CircleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnnotationView.swift; sourceTree = "<group>"; };
@@ -469,7 +471,8 @@
 			children = (
 				A070760021F2CEAB0013380D /* MapView.xib */,
 				A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */,
-				A06BF620224C577E00B97A94 /* Ext_Create_MapActionTriggerView.swift */,
+				A005042022616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift */,
+				A06BF620224C577E00B97A94 /* Ext_Handlers_MapActionTriggerView.swift */,
 				A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */,
 				A005041F225FB0A9001B7BC5 /* View */,
 				A005041E225FB070001B7BC5 /* PhotoCellView */,
@@ -959,10 +962,11 @@
 				A0FBB735221395C700405440 /* GameBoardModel.swift in Sources */,
 				A002F48421B9EFAE006E8660 /* JungChatBubbleCollectionViewCell.swift in Sources */,
 				A002F48321B9EFAE006E8660 /* KindJungOptionLabel.swift in Sources */,
+				A005042122616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift in Sources */,
 				A0320B56212B8AB6008A96E2 /* Extensions.swift in Sources */,
 				A0547F22222CBE59001EE736 /* HandleLoginWithFirestore.swift in Sources */,
 				A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */,
-				A06BF621224C577E00B97A94 /* Ext_Create_MapActionTriggerView.swift in Sources */,
+				A06BF621224C577E00B97A94 /* Ext_Handlers_MapActionTriggerView.swift in Sources */,
 				A0320B4D212B63C2008A96E2 /* LoginOptionsView.swift in Sources */,
 				A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */,
 				A05150F621E4002800795172 /* UserNameView.swift in Sources */,

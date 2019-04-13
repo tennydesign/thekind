@@ -11,6 +11,7 @@ import UIKit
 
 class HUDview: KindActionTriggerView {
 
+    @IBOutlet var hudGradient: UIImageView!
     @IBOutlet weak var hudControls: UIView!
     var mainViewController: MainViewController?
     @IBOutlet var viewForKindCard: UIView!
@@ -50,13 +51,13 @@ class HUDview: KindActionTriggerView {
         Bundle.main.loadNibNamed("HUDview", owner: self, options: nil)
         addSubview(hudView)        
 
-        gradient = CAGradientLayer()
-        gradient.frame = self.bounds
-        gradient.colors = [UIColor.black.cgColor, UIColor.black.withAlphaComponent(0.8).cgColor, UIColor.clear.cgColor]
-        gradient.locations = [0, 0.55, 1]
-        gradient.startPoint = CGPoint(x:0.0,y:0.0)
-        gradient.endPoint = CGPoint(x:0.0,y:1.0)
-        layer.insertSublayer(gradient, at: 0)
+//        gradient = CAGradientLayer()
+//        gradient.frame = self.bounds
+//        gradient.colors = [UIColor.black.cgColor, UIColor.black.withAlphaComponent(0.8).cgColor, UIColor.clear.cgColor]
+//        gradient.locations = [0, 0.55, 1]
+//        gradient.startPoint = CGPoint(x:0.0,y:0.0)
+//        gradient.endPoint = CGPoint(x:0.0,y:1.0)
+//        layer.insertSublayer(gradient, at: 0)
 
         updateHUDWithUserSettingsObserver()
         
@@ -72,7 +73,7 @@ class HUDview: KindActionTriggerView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        gradient.frame = bounds
+        //gradient.frame = bounds
     }
     
     fileprivate func updateHUDWithUserSettingsObserver() {

@@ -78,47 +78,94 @@ class CircleAnnotationManagement {
         
         
     }
+//
+//    //HERE: IT WORKS
+//    func updateCircleSettings(circleId: String,isprivate:Bool?, name:String?, completion: ((Error?)->())?) {
+//        let db = Firestore.firestore()
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
+//        //guard let annotation = (circles.filter{$0.circleId == circleId && $0.admin == uid}).first else {return}
+//
+//        var circleDict:[String:Any] = [:]
+//        circleDict["admin"] = uid
+//
+//        if let isprivate = isprivate {
+//            circleDict["isprivate"] = isprivate
+//        }
+//        if let name = name {
+//            circleDict["name"] = name
+//        }
+//
+//        db.collection("kindcircles").document(circleId).updateData(circleDict) { (err) in
+//            if let err = err {
+//                completion?(err)
+//                return
+//            } else {
+//                completion?(nil)
+//            }
+//
+//        }
+//
+//    }
     
-    //HERE: IT WORKS
-    func updateCircleSettings(circleId: String,isprivate:Bool?, name:String?, completion: ((Error?)->())?) {
-        let db = Firestore.firestore()
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        //guard let annotation = (circles.filter{$0.circleId == circleId && $0.admin == uid}).first else {return}
-        
-        var circleDict:[String:Any] = [:]
-        circleDict["admin"] = uid
-        
-        if let isprivate = isprivate {
-            circleDict["isprivate"] = isprivate
-        }
-        if let name = name {
-            circleDict["name"] = name
-        }
-            
-        db.collection("kindcircles").document(circleId).updateData(circleDict) { (err) in
-            if let err = err {
-                completion?(err)
-                return
-            } else {
-                completion?(nil)
-            }
-            
-        }
-        
-    }
-    
-    func addUserToCircle(circleId: String, newElement: String) {
+    func addUserToCircle(set: CircleAnnotationSet, newElement: String) {
             let db = Firestore.firestore()
+            let circleId = set.circleId
             let circlesRef = db.collection("kindcircles").document(circleId)
             //updates array by keeping it unique
             circlesRef.updateData(["users" : FieldValue.arrayUnion([newElement])])
     }
     
     
-    func removeFromUserCircleArray(circleId: String, removingElement: String) {
+    func removeFromUserCircleArray(set: CircleAnnotationSet, removingElement: String) {
         let db = Firestore.firestore()
+        let circleId = set.circleId
         let circlesRef = db.collection("kindcircles").document(circleId)
         circlesRef.updateData(["users" : FieldValue.arrayRemove([removingElement])
             ])
+    }
+    
+    func loadUsersInCircle(set: CircleAnnotationSet, completion: (([String]?)->())?) {
+        let db = Firestore.firestore()
+        let circleId = set.circleId
+        db.collection("usersettings").document(circleId).getDocument {  (document,err) in
+            if let err = err {
+                print(err)
+//                completion?(false)
+                return
+            }
+            guard let data = document?.data() else
+            {
+                print("no data")
+//                completion?(false)
+                return
+            }
+            let circleData:[String:Any] = data
+            
+            guard let users = circleData["users"] as? [String], !users.isEmpty else {
+                completion?(nil)
+                return
+            }
+            
+            completion?(users)
+        }
+    }
+    
+    func loadCircleUsersPhotoUrls(set: CircleAnnotationSet, completion: @escaping (([URL]?)->())) {
+        self.loadUsersInCircle(set: set) { (userIds) in
+            guard let userIds = userIds else {return}
+            var photoURLs: [URL]?
+            userIds.forEach({ (id) in
+                KindUserSettingsManager.sharedInstance.retrieveUserPhoto(userId: id, completion: { (photoUrl) in
+                    guard let photoUrl = photoUrl else {
+                        completion(nil)
+                        return
+                    }
+                    
+                    photoURLs!.append(photoUrl)
+                    
+                })
+            })
+            completion(photoURLs)
+        }
     }
 }

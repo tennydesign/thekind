@@ -15,6 +15,7 @@
                 <outlet property="circleNameStack" destination="ko6-Mp-okn" id="7g6-M0-zH4"/>
                 <outlet property="hudCenterDisplay" destination="w7s-xp-QZX" id="pf2-Zr-SxQ"/>
                 <outlet property="hudControls" destination="kMP-A5-S8t" id="4c6-bf-0AT"/>
+                <outlet property="hudGradient" destination="L0H-Rh-d5e" id="yKJ-HB-5zb"/>
                 <outlet property="hudView" destination="iN0-l3-epB" id="jPe-iw-p3F"/>
                 <outlet property="kindIconImageView" destination="rOu-ac-IIP" id="Dky-zX-R0v"/>
                 <outlet property="listViewStack" destination="Keu-g5-6U1" id="i9c-qF-piO"/>
@@ -32,6 +33,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kMP-A5-S8t" userLabel="hudControls">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
                     <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hudGradient" translatesAutoresizingMaskIntoConstraints="NO" id="L0H-Rh-d5e">
+                            <rect key="frame" x="0.0" y="-29" width="375" height="270"/>
+                        </imageView>
                         <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HIt-8J-2dn" userLabel="hudLeftDisplay">
                             <rect key="frame" x="15" y="55" width="55" height="55"/>
                             <subviews>
@@ -150,11 +154,15 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="L0H-Rh-d5e" secondAttribute="bottom" id="4bN-EF-G2D"/>
                         <constraint firstItem="w7s-xp-QZX" firstAttribute="centerX" secondItem="kMP-A5-S8t" secondAttribute="centerX" id="6Ol-nI-7nb"/>
                         <constraint firstAttribute="trailing" secondItem="8vQ-xq-ppk" secondAttribute="trailing" constant="15" id="GWH-j8-J0J"/>
+                        <constraint firstItem="L0H-Rh-d5e" firstAttribute="top" secondItem="kMP-A5-S8t" secondAttribute="top" constant="-29" id="Nlb-1x-ZET"/>
                         <constraint firstItem="w7s-xp-QZX" firstAttribute="centerY" secondItem="8vQ-xq-ppk" secondAttribute="centerY" id="VNV-7N-LS7"/>
+                        <constraint firstItem="L0H-Rh-d5e" firstAttribute="leading" secondItem="kMP-A5-S8t" secondAttribute="leading" id="Xu2-8u-Ws2"/>
                         <constraint firstItem="8vQ-xq-ppk" firstAttribute="centerY" secondItem="HIt-8J-2dn" secondAttribute="centerY" id="c0v-q6-CZI"/>
                         <constraint firstItem="HIt-8J-2dn" firstAttribute="leading" secondItem="kMP-A5-S8t" secondAttribute="leading" constant="15" id="gqA-dH-YKY"/>
+                        <constraint firstAttribute="trailing" secondItem="L0H-Rh-d5e" secondAttribute="trailing" id="hxj-Yc-IBD"/>
                         <constraint firstItem="HIt-8J-2dn" firstAttribute="top" secondItem="kMP-A5-S8t" secondAttribute="top" constant="55" id="wQV-yC-CCh"/>
                     </constraints>
                 </view>
@@ -173,6 +181,7 @@
     </objects>
     <resources>
         <image name="circleIcon" width="21" height="21"/>
+        <image name="hudGradient" width="748" height="432"/>
         <image name="hud_kind_icon" width="103" height="133"/>
         <image name="maplistviewicon" width="52" height="46"/>
         <image name="photoArc" width="65" height="65"/>

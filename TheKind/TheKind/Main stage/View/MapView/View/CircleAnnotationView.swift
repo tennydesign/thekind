@@ -45,6 +45,9 @@ class CircleAnnotationView: MGLAnnotationView {
         alpha = 0.9
     }
     
+    override func prepareForReuse() {
+        circleDetails = nil
+    }
     override func layoutSubviews() {
         super.layoutSubviews()
         // Use CALayer’s corner radius to turn this view into a circle.

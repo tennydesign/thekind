@@ -18,7 +18,8 @@ enum UserFieldTitle: String {
     driver = "driver",
     kind = "kind",
     currentLandingView = "currentLandingView",
-    circles = "circles"
+    circles = "circles",
+    uid = "uid"
 }
 
 public class KindUserSettingsManager {
@@ -37,9 +38,10 @@ public class KindUserSettingsManager {
     // Initialize userFields
     //Called by AppDelegate on google login
     //Called by HandleLoginWithFirestore on email login
+    //TODO: Should also be called on silent login
     func initializeUserFields(email: String) {
         //try to retrieve settings
-        retrieveUserSettings { (success) in
+        retrieveLoggedUserSettings { (success) in
             //if fails, create first settings (name and email)
             if !success {
                 let suggestedUsername = String(email.split(separator: "@").first ?? "")
@@ -53,10 +55,13 @@ public class KindUserSettingsManager {
                     }
                 }
             } else {
-                // Update all interface controls with retrieved data. 
+                // Update all interface controls with retrieved data.
                 self.updateHUDWithUserSettings?()
 
             }
+            
+ //           self.userFields[UserFieldTitle.uid.rawValue] = (Auth.auth().currentUser?.uid)!
+            
             // let the client know user signed in
             self.userSignedIn?()
             // turn observer ON.
@@ -164,7 +169,7 @@ public class KindUserSettingsManager {
     }
     
     // RETRIEVE
-    func retrieveUserSettings(completion:@escaping (Bool)->()) {
+    func retrieveLoggedUserSettings(completion:@escaping (Bool)->()) {
         let db = Firestore.firestore()
         db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).getDocument {  (document,err) in
             if let err = err {
@@ -183,6 +188,50 @@ public class KindUserSettingsManager {
             completion(true)
         }
     }
+    
+    func retrieveUserPhoto(userId: String, completion: @escaping ((URL?)->())) {
+        let db = Firestore.firestore()
+        db.collection("usersettings").document(userId).getDocument {  (document,err) in
+            if let err = err {
+                print(err)
+                completion(nil)
+                return
+            }
+            guard let data = document?.data() else
+            {
+                print("no data")
+                completion(nil)
+                return
+            }
+            guard let photoURL = data[UserFieldTitle.photoURL.rawValue] as? String else {
+                completion(nil)
+                return
+            }
+            
+            let url = URL(string: photoURL)
+            
+            completion(url)
+        }
+    }
+    
+    func retrieveUserSettings(userId: String, completion: @escaping (([String:Any]?)->())) {
+        let db = Firestore.firestore()
+        db.collection("usersettings").document(userId).getDocument {  (document,err) in
+            if let err = err {
+                print(err)
+                completion(nil)
+                return
+            }
+            guard let data = document?.data() else
+            {
+                print("no data")
+                completion(nil)
+                return
+            }
+            completion(data)
+        }
+    }
+    
 
 }
 

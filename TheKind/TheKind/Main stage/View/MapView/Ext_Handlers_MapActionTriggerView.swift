@@ -43,7 +43,7 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     func createNewCircle(completion: ((CircleAnnotationSet?)->())?) {
         if (!createCircleName.isEmpty) && !(createCircleName == "[tap to name it]") {
-            CircleAnnotationManagement.sharedInstance.saveCircle(name: createCircleName, isPrivate: createIsPrivateKey, users: [""], latitude: latitude, longitude: longitude) { (circleAnnotationSet, err) in
+            CircleAnnotationManagement.sharedInstance.saveCircle(name: createCircleName, isPrivate: createIsPrivateKey, users: [], latitude: latitude, longitude: longitude) { (circleAnnotationSet, err) in
                 if let err = err {
                     print(err)
                     return
@@ -61,7 +61,7 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     @objc func handleLongPressGesture(gestureRecognizer:UILongPressGestureRecognizer) {
 
-        creationMode = true
+        isNewCircle = true
         if gestureRecognizer.state == UIGestureRecognizer.State.began {
             let touchpoint = gestureRecognizer.location(in: mapBoxView)
             let newCoordinates = mapBoxView.convert(touchpoint, toCoordinateFrom: mapBoxView)
@@ -93,14 +93,41 @@ extension MapActionTriggerView: UITextFieldDelegate {
     }
     
     func openLock() {
-        TheKind.fadeOutView(view: photoStripView)
+        hidePhotoStrip()
         viewSkatingX(lockTopImage, left: true, reverse: true)
     }
     
     func closeLock() {
-        TheKind.fadeInView(view: photoStripView)
+        showPhotoStrip(isAdmin: true)
+        //TheKind.fadeInView(view: photoStripView)
         viewSkatingX(lockTopImage, left: false, -20, reverse: false)
     }
+    
+    func showPhotoStrip(isAdmin: Bool) {
+        if isAdmin{
+            photoStripLeadingConstraint.constant = 50
+            UIView.animate(withDuration: 0.4) {
+                self.photoStripView.alpha = 1
+                self.addUserBtn.alpha = 1
+                self.photoStripView.layoutIfNeeded()
+            }
+        } else {
+            photoStripLeadingConstraint.constant = 0
+            self.photoStripView.layoutIfNeeded()
+            UIView.animate(withDuration: 0.4) {
+                self.addUserBtn.alpha = 0
+                self.photoStripView.alpha = 1
+            }
+        }
+    }
+    
+    func hidePhotoStrip() {
+        UIView.animate(withDuration: 0.4) {
+            self.photoStripView.alpha = 0
+            self.addUserBtn.alpha = 0
+        }
+    }
+    
     
     func createOverlay(frame: CGRect,
                        xOffset: CGFloat,
@@ -134,6 +161,7 @@ extension MapActionTriggerView: UITextFieldDelegate {
 
 extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //return usersInCircleImageViews.count
         return 10
     }
     
@@ -142,6 +170,17 @@ extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSo
         return cell
     }
     
+    func updateUsersInCircle(set: CircleAnnotationSet) {
+        CircleAnnotationManagement.sharedInstance.loadCircleUsersPhotoUrls(set: set) { (urls) in
+            urls?.forEach({ (url) in
+                let imageView: UIImageView = UIImageView()
+                imageView.loadImageUsingCacheWithUrlString(urlString: url.absoluteString)
+                self.usersInCircleImageViews.append(imageView)
+            })
+            
+            self.photoStripCollectionView.reloadData()
+        }
+    }
     
 }
 
