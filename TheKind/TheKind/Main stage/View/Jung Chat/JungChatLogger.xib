@@ -18,6 +18,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JungChatLogger" customModule="TheKind" customModuleProvider="target">
             <connections>
                 <outlet property="HoldToAnswerViewWidthAnchor" destination="9C6-oT-JKf" id="bts-3Y-IDh"/>
+                <outlet property="bottomGradient" destination="sK1-zN-Q8U" id="wjN-Dn-tOC"/>
                 <outlet property="heightCollectionViewConsraint" destination="Vdc-nn-PPB" id="JGd-Pj-oYl"/>
                 <outlet property="holdToAnswerBar" destination="7kP-Zp-pCJ" id="LCt-gc-L1v"/>
                 <outlet property="jungChatLogger" destination="iN0-l3-epB" id="aPf-eR-JWb"/>
@@ -37,6 +38,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9xs-vB-b1j" userLabel="mainView" customClass="PassthroughView" customModule="TheKind" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                     <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottom_gradient" translatesAutoresizingMaskIntoConstraints="NO" id="sK1-zN-Q8U" userLabel="bottomGradient">
+                            <rect key="frame" x="0.0" y="-45" width="375" height="270"/>
+                        </imageView>
                         <label opaque="NO" alpha="0.0" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAKE ANOTHER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfN-ey-Vla" customClass="KindJungOptionLabel" customModule="TheKind" customModuleProvider="target">
                             <rect key="frame" x="32.5" y="107" width="110" height="63"/>
                             <constraints>
@@ -104,17 +108,21 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="gFN-uh-qgM" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" id="Dds-zJ-ZaS"/>
+                        <constraint firstAttribute="bottom" secondItem="sK1-zN-Q8U" secondAttribute="bottom" constant="-45" id="Ggj-QZ-2lU"/>
                         <constraint firstItem="7kP-Zp-pCJ" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" id="IfC-1u-FeF"/>
                         <constraint firstItem="8Zb-m6-dcN" firstAttribute="centerX" secondItem="gFN-uh-qgM" secondAttribute="centerX" id="LyB-zB-gSx"/>
                         <constraint firstItem="gFN-uh-qgM" firstAttribute="centerY" secondItem="lfN-ey-Vla" secondAttribute="centerY" id="asK-GX-AWv"/>
+                        <constraint firstAttribute="trailing" secondItem="sK1-zN-Q8U" secondAttribute="trailing" id="eQw-aj-gmr"/>
                         <constraint firstItem="cKD-xW-40i" firstAttribute="centerY" secondItem="gFN-uh-qgM" secondAttribute="centerY" id="h4K-GW-tkk"/>
                         <constraint firstItem="7kP-Zp-pCJ" firstAttribute="bottom" secondItem="gFN-uh-qgM" secondAttribute="bottom" constant="8" id="i7D-Ah-qrq"/>
+                        <constraint firstItem="sK1-zN-Q8U" firstAttribute="top" secondItem="9xs-vB-b1j" secondAttribute="top" constant="-45" id="kr8-aB-SqK"/>
                         <constraint firstItem="cKD-xW-40i" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" constant="100" id="lCb-dp-F7M"/>
                         <constraint firstItem="gFN-uh-qgM" firstAttribute="centerY" secondItem="8Zb-m6-dcN" secondAttribute="centerY" id="nhf-dW-y0J"/>
                         <constraint firstItem="gFN-uh-qgM" firstAttribute="top" secondItem="7dT-VQ-BOy" secondAttribute="bottom" constant="20" id="oK9-rm-ivh"/>
                         <constraint firstItem="lfN-ey-Vla" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" constant="-100" id="pEf-VR-6ka"/>
                         <constraint firstItem="7dT-VQ-BOy" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" id="rer-hQ-KQt"/>
                         <constraint firstAttribute="bottom" secondItem="lfN-ey-Vla" secondAttribute="bottom" constant="10" id="u9z-jw-pHh"/>
+                        <constraint firstItem="sK1-zN-Q8U" firstAttribute="leading" secondItem="9xs-vB-b1j" secondAttribute="leading" id="z4T-Pa-2wG"/>
                     </constraints>
                 </view>
             </subviews>
@@ -132,5 +140,6 @@
     </objects>
     <resources>
         <image name="Jung_ai" width="90" height="90"/>
+        <image name="bottom_gradient" width="750" height="482"/>
     </resources>
 </document>

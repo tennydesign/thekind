@@ -245,9 +245,12 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     override func deactivate() {
+        self.deselectAnnotationAndBackToMap()
         self.mainViewController?.jungChatLogger.resetJungChat()
         mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
+
         self.fadeOutView()
+
     }
     
     func clearJungChatLog() {
@@ -326,7 +329,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             //Happens behind the scenes.
             //Will delay 2 second to allow alpha into board, and then it will deselect the annotation and turn Map to normal state.
             delay(bySeconds: 2) {
-                self.deselectAnnotationAndBackToMap()
+                self.deactivate()
             }
         }
 

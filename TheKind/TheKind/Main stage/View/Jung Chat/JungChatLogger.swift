@@ -12,6 +12,7 @@ import NVActivityIndicatorView
 class JungChatLogger: KindActionTriggerView {
 
     
+    @IBOutlet var bottomGradient: UIImageView!
     @IBOutlet var jungChatLoggerCollectionView: UICollectionView!
     @IBOutlet var jungChatLogger: UIView!
     @IBOutlet var leftAnswerLabel: KindJungOptionLabel!
@@ -90,11 +91,14 @@ class JungChatLogger: KindActionTriggerView {
     
     func resetAnswerViewWidthAnchor() {
         HoldToAnswerViewWidthAnchor.constant = targetStretcherValue
-        layoutIfNeeded()
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        }
     }
 
     func resetJungChat() {
         self.messagesCollection = ["","","","","",""]
+        //resetAnswerViewWidthAnchor()
     }
     
     var animationCount: Int = 0
@@ -105,6 +109,7 @@ class JungChatLogger: KindActionTriggerView {
     func hideOptionLabels(_ isHidden: Bool, completion: (()->())?) {
         if isHidden == false {
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+                self.resetAnswerViewWidthAnchor()
                 self.leftAnswerLabel.alpha = 1
                 self.rightAnswerLabel.alpha = 1
                 self.holdToAnswerBar.alpha = 1
@@ -278,10 +283,7 @@ class JungChatLogger: KindActionTriggerView {
             }
         case .ended:
             // animate holder back to zero on lift.
-            self.HoldToAnswerViewWidthAnchor.constant = targetStretcherValue//0
-            UIView.animate(withDuration: 0.3) {
-                self.layoutIfNeeded()
-            }
+            self.resetAnswerViewWidthAnchor()
         default:
             ()
         }

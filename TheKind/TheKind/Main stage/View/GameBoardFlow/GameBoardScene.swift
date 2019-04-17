@@ -86,7 +86,7 @@ class GameBoardScene: SKScene {
     }
     
     //fires when routine has finished posted
-    func routingPostingObserver() {
+    func routineFinishedPostObserver() {
         mainViewController?.jungChatLogger.routineHasPosted = { [unowned self] in
             self.tapGestureRecognizer.isEnabled = true
         }
