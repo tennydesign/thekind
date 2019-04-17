@@ -65,12 +65,12 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     fileprivate func setupInnerPrivateOrPublicViews(_ set: CircleAnnotationSet) {
         if set.isPrivate {
             let keyImage = UIImage(named: "privatekey")?.withRenderingMode(.alwaysOriginal)
-            self.enterCircleButton.setImage(keyImage, for: .normal)
+            self.enterCircleButton.setBackgroundImage(keyImage, for: .normal)
             //This will show the photStrip with or without the + btn depending if user is admin.
             self.showPhotoStrip(isAdmin: self.checkIfIsAdmin(set.admin))
         } else {
-            let enterImage = UIImage(named: "Jung")?.withRenderingMode(.alwaysOriginal)
-            self.enterCircleButton.setImage(enterImage, for: .normal)
+            let enterImage = UIImage(named: "newEye")
+            self.enterCircleButton.setBackgroundImage(enterImage, for: .normal)
         }
     }
     
@@ -98,7 +98,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     }
     
     //MAP IS DRAGGED.
-    // This is not being used cause map is losing interactive on Select
+    // This is not being called (hopefully) cause map is losing touch on Select
     // And regaining on Deselect.
     @objc func didDragMap(_ sender: UIGestureRecognizer) {
         if sender.state == .ended {
@@ -117,7 +117,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
                     mapBoxView.isUserInteractionEnabled = true
                 }
                 self.clearJungChatLog()
-                self.toogleTopBottomInnerViewsAndUserInteraction(isOnMap: true)
+                self.toogleCircleAndMapViews(isOnMap: true)
                 self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
                 
             }
@@ -151,6 +151,30 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
+    func deActivateOnDeselection(_ annotationView: CircleAnnotationView, completion: (()->())?) {
+        hidePhotoStrip()
+        longPressGesture.isEnabled = true
+        self.clearJungChatLog()
+        UIView.animate(withDuration: 1, animations: {
+            self.toogleCircleAndMapViews(isOnMap: true)
+        }) { (completed) in
+            UIView.animate(withDuration: 1, animations: {
+                self.mainViewController?.hudView.alpha = 1
+                
+                annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                annotationView.alpha = 0.9
+                annotationView.button.alpha = 0
+            })
+            
+            self.selectedAnnotationView = nil
+            
+            if let completion = completion {
+                completion()
+            }
+        }
+        
+        
+    }
     
     func prepareViewsForDetailingCircle(annotationView: CircleAnnotationView, completion: (()->())?) {
         self.newExpandedCircleView.alpha = 0
@@ -159,7 +183,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         if !annotationView.transform.isIdentity {
             if annotationView.transform.a == self.MAXSCIRCLESCALE {
                 UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
-                    self.toogleTopBottomInnerViewsAndUserInteraction(isOnMap: false)
+                    self.toogleCircleAndMapViews(isOnMap: false)
                 }, completion: { (completed) in
                     
                     self.toggleInnerCircleViewInteraction(isNewCircle: self.isNewCircle)
@@ -185,7 +209,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    func toogleTopBottomInnerViewsAndUserInteraction(isOnMap: Bool) {
+    func toogleCircleAndMapViews(isOnMap: Bool) {
         if isOnMap {
             self.expandedCircleViews.alpha = 0
             self.mainViewController?.hudView.hudGradient.alpha = 1
@@ -216,29 +240,28 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
-    func deActivateOnDeselection(_ annotationView: CircleAnnotationView, completion: (()->())?) {
-        hidePhotoStrip()
-        longPressGesture.isEnabled = true
-        self.clearJungChatLog()
-        UIView.animate(withDuration: 1, animations: {
-            self.toogleTopBottomInnerViewsAndUserInteraction(isOnMap: true)
+    func removeAnnotationAndBackToMap() {
+        guard let annotationView = selectedAnnotationView else {fatalError("// USER CANCELLED CREATION")}
+        UIView.animate(withDuration: 0.4, animations: {
+            self.expandedCircleViews.alpha = 0
         }) { (completed) in
-            UIView.animate(withDuration: 1, animations: {
-                self.mainViewController?.hudView.alpha = 1
-
-                annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                annotationView.alpha = 0.9
-                annotationView.button.alpha = 0
-            })
-            
-            self.selectedAnnotationView = nil
-            
-            if let completion = completion {
-                completion()
-            }
+            self.removeCancelledAnnotation(annotationView)
+            self.isNewCircle = false
+            self.longPressGesture.isEnabled = true
+            self.mapBoxView.isUserInteractionEnabled = true
+            self.clearJungChatLog()
+            self.toogleCircleAndMapViews(isOnMap: true)
+            self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
         }
-        
-        
+    }
+    
+    func deselectAnnotationAndBackToMap() {
+        guard let selectedAnnotationView = selectedAnnotationView else {fatalError("// USER HITS BACK TO THE MAP")}
+        self.deActivateOnDeselection(selectedAnnotationView) {
+            self.mapBoxView.isUserInteractionEnabled = true
+            self.mapBoxView.deselectAnnotation(selectedAnnotationView.annotation, animated: false)
+            self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
+        }
     }
     
 }

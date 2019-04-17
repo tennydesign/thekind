@@ -39,7 +39,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     @IBOutlet var createCircleYConstraint: NSLayoutConstraint!
     
     var createCircleName: String = ""
-    var createIsPrivateKey: Bool = false
+    var circleIsInviteOnly: Bool = false
     var locationManager: CLLocationManager?
     var selectedAnnotationView: CircleAnnotationView?
     var mainViewController: MainViewController?
@@ -223,7 +223,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         
             mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
             //work on the map before showing
-            toogleTopBottomInnerViewsAndUserInteraction(isOnMap: true)
+            toogleCircleAndMapViews(isOnMap: true)
             self.alpha = 0
             self.isHidden = false
             self.talkbox?.delegate = self
@@ -258,7 +258,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     func describeCircle(set: CircleAnnotationSet) {
         if isNewCircle {
             createCircleName = ""
-            circleNameTextField.text = "[tap to name it]"
+            circleNameTextField.text = "tap to name it..."
             adaptLineToTextSize(circleNameTextField)
             
             explainerCircleCreation()
@@ -282,35 +282,20 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
         // USER CANCELLED CREATION
         if self.isNewCircle {
-            guard let annotationView = selectedAnnotationView else {fatalError("LIXO!!!!")}
-            UIView.animate(withDuration: 0.4, animations: {
-                 self.expandedCircleViews.alpha = 0
-            }) { (completed) in
-                
-                self.removeCancelledAnnotation(annotationView)
-                self.isNewCircle = false
-                self.longPressGesture.isEnabled = true
-                self.mapBoxView.isUserInteractionEnabled = true
-                self.clearJungChatLog()
-                self.toogleTopBottomInnerViewsAndUserInteraction(isOnMap: true)
-                self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-            }
+            removeAnnotationAndBackToMap()
         } else {
             // USER HITS BACK TO THE MAP
-            guard let selectedAnnotationView = selectedAnnotationView else {fatalError("LIXO!!!!")}
-            self.deActivateOnDeselection(selectedAnnotationView) {
-                self.mapBoxView.isUserInteractionEnabled = true
-                self.mapBoxView.deselectAnnotation(selectedAnnotationView.annotation, animated: false)
-                self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-            }
+            deselectAnnotationAndBackToMap()
         }
     }
+
     
     //SAVE
+    
     override func rightOptionClicked() {
         self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
         
-        //Grab the selectedAnnotation (even on create longpress will generate a selectedAnnotation, see handle)
+        //Grab the selectedAnnotation (even on create longpress will generate a template selectedAnnotation, see longpress handle)
         guard let selectedAnnotationView = self.selectedAnnotationView else {return}
         
         if isNewCircle {
@@ -322,17 +307,12 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
                     return
                 }
                 
-                //Explainer is leaking to map a "Done"
-                //self.explainerCircleSavedSuccessfully()
-                
                 //gets the payload with the circle details
                 selectedAnnotationView.circleDetails = annotationSet
                 
-                self.deActivateOnDeselection(selectedAnnotationView) {
-                    self.mapBoxView.deselectAnnotation(selectedAnnotationView.annotation, animated: false)
-                    self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-                    self.mapBoxView.isUserInteractionEnabled = true
-                }
+                self.resetInnerCreateCircleViewComponents()
+                
+                self.deselectAnnotationAndBackToMap()
 
                 self.isNewCircle = false
             }
@@ -344,12 +324,9 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(action: actions, actionView: actionViews, options: nil))
            
             //Happens behind the scenes.
-            //Will delay 1 second to allow alpha into board, and then it will deselect the annotation and turn Map to normal.
-            delay(bySeconds: 1) {
-                self.deActivateOnDeselection(selectedAnnotationView) {
-                    self.mapBoxView.deselectAnnotation(selectedAnnotationView.annotation, animated: false)
-                    self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-                }
+            //Will delay 2 second to allow alpha into board, and then it will deselect the annotation and turn Map to normal state.
+            delay(bySeconds: 2) {
+                self.deselectAnnotationAndBackToMap()
             }
         }
 

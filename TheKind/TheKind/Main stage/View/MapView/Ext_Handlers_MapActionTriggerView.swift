@@ -16,7 +16,7 @@ extension MapActionTriggerView: UITextFieldDelegate {
     func adaptLineToTextSize(_ textField: UITextField) {
         let textBoundingSize = textField.frame.size
         guard let text = textField.text else {return}
-        let frameForText = estimateFrameFromText(text, bounding: textBoundingSize, fontSize: 18, fontName: textField.font!.fontName)// UIFont.systemFont(ofSize: 16).fontName)//SECONDARYFONT)
+        let frameForText = estimateFrameFromText(text, bounding: textBoundingSize, fontSize: textField.font!.pointSize, fontName: textField.font!.fontName)// UIFont.systemFont(ofSize: 16).fontName)//SECONDARYFONT)
         
         lineWidthConstraint.constant = frameForText.width
         UIView.animate(withDuration: 1) {
@@ -41,9 +41,15 @@ extension MapActionTriggerView: UITextFieldDelegate {
         return true
     }
     
+    func resetInnerCreateCircleViewComponents() {
+        self.circleNameTextField.text = ""
+        self.adaptLineToTextSize(self.circleNameTextField)
+        self.openLock()
+    }
+    
     func createNewCircle(completion: ((CircleAnnotationSet?)->())?) {
         if (!createCircleName.isEmpty) && !(createCircleName == "[tap to name it]") {
-            CircleAnnotationManagement.sharedInstance.saveCircle(name: createCircleName, isPrivate: createIsPrivateKey, users: [], latitude: latitude, longitude: longitude) { (circleAnnotationSet, err) in
+            CircleAnnotationManagement.sharedInstance.saveCircle(name: createCircleName, isPrivate: circleIsInviteOnly, users: [], latitude: latitude, longitude: longitude) { (circleAnnotationSet, err) in
                 if let err = err {
                     print(err)
                     return
@@ -85,21 +91,20 @@ extension MapActionTriggerView: UITextFieldDelegate {
     func togglePrivateIndicator() {
         if lockTopImage.transform == .identity {
             closeLock()
-            createIsPrivateKey = true
         } else {
             openLock()
-            createIsPrivateKey = false
         }
     }
     
     func openLock() {
+        circleIsInviteOnly = false
         hidePhotoStrip()
         viewSkatingX(lockTopImage, left: true, reverse: true)
     }
     
     func closeLock() {
+        circleIsInviteOnly = true
         showPhotoStrip(isAdmin: true)
-        //TheKind.fadeInView(view: photoStripView)
         viewSkatingX(lockTopImage, left: false, -20, reverse: false)
     }
     

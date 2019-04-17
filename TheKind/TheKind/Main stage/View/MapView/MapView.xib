@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AcylicalHand-Small.ttf">
+            <string>AcrylicHandSans-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapActionTriggerView">
             <connections>
@@ -59,7 +64,7 @@
                         <constraint firstAttribute="width" constant="27" id="3Ng-AD-kX6"/>
                     </constraints>
                 </view>
-                <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V9E-SM-J71" userLabel="ExpandedCircleViews">
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V9E-SM-J71" userLabel="ExpandedCircleViews">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="727"/>
                     <subviews>
                         <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jX0-Ym-h0s" userLabel="photoStrip">
@@ -104,7 +109,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3K-l4-sWj" userLabel="userNameBox">
                                     <rect key="frame" x="97.5" y="171.5" width="180" height="70"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="[tap to name it]" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wky-b4-S07" customClass="KindTransparentTextField" customModule="TheKind" customModuleProvider="target">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="tap to name it ..." textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wky-b4-S07" customClass="KindTransparentTextField" customModule="TheKind" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="24" width="180" height="22"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -112,7 +117,7 @@
                                                 <constraint firstAttribute="width" constant="180" id="f2q-6B-rU9"/>
                                             </constraints>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                                         </textField>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tcp-mT-clr" userLabel="line">
@@ -170,32 +175,26 @@
                                 <constraint firstAttribute="height" constant="393" id="h5m-Aj-sr5"/>
                             </constraints>
                         </view>
-                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMQ-OI-6tS" userLabel="ExistentExpandedCircleView">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMQ-OI-6tS" userLabel="ExistentExpandedCircleView">
                             <rect key="frame" x="104" y="243" width="167" height="121"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfK-0s-khr" userLabel="labelCircleName">
-                                    <rect key="frame" x="20" y="112.5" width="127" height="30"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Philz Coffee Berry Street" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfK-0s-khr" userLabel="labelCircleName">
+                                    <rect key="frame" x="20" y="115" width="127" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="J1G-LT-KsY"/>
                                         <constraint firstAttribute="width" constant="127" id="skQ-GF-3S9"/>
                                     </constraints>
-                                    <attributedString key="attributedText">
-                                        <fragment content="Philz Coffee Berry Street">
-                                            <attributes>
-                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="13" name="AcrylicHandSans-Regular"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="2" hyphenationFactor="1" tighteningFactorForTruncation="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
+                                    <fontDescription key="fontDescription" name="AcrylicHandSans-Regular" family="Acrylic Hand Sans" pointSize="14"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZn-YL-TVN" userLabel="enterCircleButton">
-                                    <rect key="frame" x="51.5" y="61.5" width="64" height="38"/>
+                                    <rect key="frame" x="57" y="54" width="53" height="53"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="64" id="uah-Fx-bax"/>
-                                        <constraint firstAttribute="height" constant="38" id="zsO-zY-5TD"/>
+                                        <constraint firstAttribute="width" constant="53" id="uah-Fx-bax"/>
+                                        <constraint firstAttribute="height" constant="53" id="zsO-zY-5TD"/>
                                     </constraints>
+                                    <state key="normal" backgroundImage="newEye"/>
                                     <connections>
                                         <action selector="enterCircleTouched:" destination="-1" eventType="touchUpInside" id="UDG-rK-L7A"/>
                                     </connections>
@@ -207,7 +206,7 @@
                                 <constraint firstAttribute="width" constant="167" id="Kzu-QC-sU6"/>
                                 <constraint firstAttribute="height" constant="121" id="Q80-NO-cTQ"/>
                                 <constraint firstItem="rZn-YL-TVN" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="20" id="QzN-Va-E0h"/>
-                                <constraint firstItem="YfK-0s-khr" firstAttribute="top" secondItem="rZn-YL-TVN" secondAttribute="bottom" constant="13" id="fto-7R-Mqd"/>
+                                <constraint firstItem="YfK-0s-khr" firstAttribute="top" secondItem="rZn-YL-TVN" secondAttribute="bottom" constant="8" id="fto-7R-Mqd"/>
                                 <constraint firstItem="rZn-YL-TVN" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" id="t4X-Mk-Rwf"/>
                             </constraints>
                         </view>
@@ -255,5 +254,6 @@
         <image name="addCircleIcon" width="148" height="148"/>
         <image name="lock_bottom" width="40" height="30"/>
         <image name="lock_top" width="30" height="14"/>
+        <image name="newEye" width="106" height="106"/>
     </resources>
 </document>

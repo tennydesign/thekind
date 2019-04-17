@@ -8,9 +8,11 @@
 
 import Foundation
 import UIKit
+//PassthroughView
+//class HUDview: KindActionTriggerView {
+class HUDview: PassthroughView,KindActionTriggerViewProtocol {
 
-class HUDview: KindActionTriggerView {
-
+    
     @IBOutlet var hudGradient: UIImageView!
     @IBOutlet weak var hudControls: UIView!
     var mainViewController: MainViewController?
@@ -49,16 +51,7 @@ class HUDview: KindActionTriggerView {
     
     fileprivate func commonInit() {
         Bundle.main.loadNibNamed("HUDview", owner: self, options: nil)
-        addSubview(hudView)        
-
-//        gradient = CAGradientLayer()
-//        gradient.frame = self.bounds
-//        gradient.colors = [UIColor.black.cgColor, UIColor.black.withAlphaComponent(0.8).cgColor, UIColor.clear.cgColor]
-//        gradient.locations = [0, 0.55, 1]
-//        gradient.startPoint = CGPoint(x:0.0,y:0.0)
-//        gradient.endPoint = CGPoint(x:0.0,y:1.0)
-//        layer.insertSublayer(gradient, at: 0)
-
+        addSubview(hudView)
         updateHUDWithUserSettingsObserver()
         
         
@@ -114,11 +107,11 @@ class HUDview: KindActionTriggerView {
     
     
     
-    override func rightOptionClicked() {
+    func rightOptionClicked() {
         
     }
     
-    override func leftOptionClicked() {
+    func leftOptionClicked() {
         
     }
     
@@ -131,7 +124,7 @@ class HUDview: KindActionTriggerView {
         }
     }
     
-    override func activate() {
+    func activate() {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
                 self.alpha = 1}, completion: nil)
         
@@ -149,7 +142,7 @@ class HUDview: KindActionTriggerView {
         })
     }
     
-    override func deactivate() {
+    func deactivate() {
         // hide it.
         UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {
             self.alpha = 0
@@ -159,7 +152,30 @@ class HUDview: KindActionTriggerView {
     @IBAction func mapListViewBtnClicked(_ sender: Any) {
     }
     
-
+    
+    func talk() {
+        
+    }
+    
+    func fadeInView() {
+        
+    }
+    
+    func fadeOutView() {
+        
+    }
+    
     
 }
 
+
+
+
+
+//        gradient = CAGradientLayer()
+//        gradient.frame = self.bounds
+//        gradient.colors = [UIColor.black.cgColor, UIColor.black.withAlphaComponent(0.8).cgColor, UIColor.clear.cgColor]
+//        gradient.locations = [0, 0.55, 1]
+//        gradient.startPoint = CGPoint(x:0.0,y:0.0)
+//        gradient.endPoint = CGPoint(x:0.0,y:1.0)
+//        layer.insertSublayer(gradient, at: 0)
