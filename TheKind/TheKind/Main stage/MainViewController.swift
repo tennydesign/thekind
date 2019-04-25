@@ -28,6 +28,7 @@ class MainViewController: UIViewController {
     }
     
     
+    @IBOutlet var searchView: SearchView!
     @IBOutlet var chatMask: UIImageView!
     @IBOutlet var chatMaskView: UIView!
     
@@ -207,7 +208,6 @@ class MainViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent // .default
     }
-    
     
     
 }

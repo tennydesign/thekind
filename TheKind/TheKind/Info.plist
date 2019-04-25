@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -32,11 +32,13 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>100</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MGLMapboxAccessToken</key>
 	<string>pk.eyJ1IjoidGVubnlkZXNpZ24iLCJhIjoiY2pyMnYzZjZpMDNmejQ5cG53cGU2bTdhaCJ9.kny4qAtWLWbVBV1pVKy0JA</string>
+	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
+	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>I need the camera</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -61,6 +63,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -74,11 +78,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIStatusBarHidden</key>
-	<true/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
-	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
 	<true/>
 </dict>
 </plist>

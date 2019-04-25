@@ -18,7 +18,8 @@ protocol loginValidationProtocol {
 class LandingViewController: UIViewController,UITextFieldDelegate {
     
     
-    let KEYBOARDSHOWSLIDEAMOUNT: CGFloat = -66
+    //TODO: get the actual amount of the keyboard here.
+    var KEYBOARDSHOWSLIDEAMOUNT: CGFloat = -66
     //== HOSTS
     @IBOutlet var loginWindow: UIView!
 
@@ -116,7 +117,14 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
 
     @objc func handleKeyboardDidShow(notification: Notification) {
         //print("keyboard did show")
-
+        // TODO: this returns the size of the keyboard. Use it to define a better range of motion
+//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+//            let keyboardRectangle = keyboardFrame.cgRectValue
+//            let keyboardHeight = keyboardRectangle.height
+//            KEYBOARDSHOWSLIDEAMOUNT = keyboardHeight
+//            print(keyboardHeight)
+//        }
+        
         UIView.animate(withDuration: 0.3) {
             self.loginExistingUser.transform = CGAffineTransform(translationX: 0, y: self.KEYBOARDSHOWSLIDEAMOUNT)
             self.createNewUser.transform = CGAffineTransform(translationX: 0, y: self.KEYBOARDSHOWSLIDEAMOUNT)

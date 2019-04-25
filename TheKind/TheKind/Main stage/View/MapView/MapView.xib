@@ -249,6 +249,7 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
         </view>
+        <searchDisplayController id="S25-15-xog"/>
     </objects>
     <resources>
         <image name="addCircleIcon" width="148" height="148"/>

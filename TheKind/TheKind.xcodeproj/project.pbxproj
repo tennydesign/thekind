@@ -55,7 +55,12 @@
 		A0320B5F212F2873008A96E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0320B5E212F2873008A96E2 /* Main.storyboard */; };
 		A03A46AA21C6C18200D90190 /* OnBoarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A03A46A921C6C18200D90190 /* OnBoarding.storyboard */; };
 		A03D77F321B7518A00DCF627 /* JungTalkBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03D77F221B7518A00DCF627 /* JungTalkBox.swift */; };
+		A03ECF9022717EBE0034C7F1 /* AddNewUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03ECF8E22717EBE0034C7F1 /* AddNewUserTableViewCell.swift */; };
+		A03ECF9122717EBE0034C7F1 /* AddNewUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A03ECF8F22717EBE0034C7F1 /* AddNewUserTableViewCell.xib */; };
 		A046420B21CC3B6F00E8817C /* JungAWSRecognitionBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A046420A21CC3B6E00E8817C /* JungAWSRecognitionBadge.swift */; };
+		A04DE173227033500028A1E8 /* UserSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04DE171227033500028A1E8 /* UserSearchTableViewCell.swift */; };
+		A04DE174227033500028A1E8 /* UserSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A04DE172227033500028A1E8 /* UserSearchTableViewCell.xib */; };
+		A04DE176227049B10028A1E8 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04DE175227049B10028A1E8 /* SearchViewModel.swift */; };
 		A05150F421E3FFFC00795172 /* UserNameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A05150F321E3FFFC00795172 /* UserNameView.xib */; };
 		A05150F621E4002800795172 /* UserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F521E4002800795172 /* UserNameView.swift */; };
 		A05150F821E44A9400795172 /* KindUserSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05150F721E44A9400795172 /* KindUserSettingsManager.swift */; };
@@ -71,6 +76,8 @@
 		A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1721F53B0F00DDEC6C /* ports.geojson */; };
 		A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */; };
 		A0A69F1C2186687C00AA5C61 /* AcylicalHand-Small.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */; };
+		A0B5A2D6226FE6E9006985A4 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0B5A2D5226FE6E9006985A4 /* SearchView.xib */; };
+		A0B5A2D8226FED7C006985A4 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B5A2D7226FED7C006985A4 /* SearchView.swift */; };
 		A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */; };
 		A0B6B29821CD599B00C58B3F /* AcylicalHand-Tall.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0B6B29721CD599B00C58B3F /* AcylicalHand-Tall.ttf */; };
 		A0B6B29A21CD5BEC00C58B3F /* AcrylicHand-Serif.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0B6B29921CD5BEC00C58B3F /* AcrylicHand-Serif.ttf */; };
@@ -171,7 +178,12 @@
 		A0320B5E212F2873008A96E2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		A03A46A921C6C18200D90190 /* OnBoarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OnBoarding.storyboard; sourceTree = "<group>"; };
 		A03D77F221B7518A00DCF627 /* JungTalkBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungTalkBox.swift; sourceTree = "<group>"; };
+		A03ECF8E22717EBE0034C7F1 /* AddNewUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewUserTableViewCell.swift; sourceTree = "<group>"; };
+		A03ECF8F22717EBE0034C7F1 /* AddNewUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddNewUserTableViewCell.xib; sourceTree = "<group>"; };
 		A046420A21CC3B6E00E8817C /* JungAWSRecognitionBadge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JungAWSRecognitionBadge.swift; sourceTree = "<group>"; };
+		A04DE171227033500028A1E8 /* UserSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchTableViewCell.swift; sourceTree = "<group>"; };
+		A04DE172227033500028A1E8 /* UserSearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserSearchTableViewCell.xib; sourceTree = "<group>"; };
+		A04DE175227049B10028A1E8 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		A05150F321E3FFFC00795172 /* UserNameView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserNameView.xib; sourceTree = "<group>"; };
 		A05150F521E4002800795172 /* UserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameView.swift; sourceTree = "<group>"; };
 		A05150F721E44A9400795172 /* KindUserSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindUserSettingsManager.swift; sourceTree = "<group>"; };
@@ -187,6 +199,8 @@
 		A0A45E1721F53B0F00DDEC6C /* ports.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ports.geojson; sourceTree = "<group>"; };
 		A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapActionTriggerView.swift; sourceTree = "<group>"; };
 		A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Small.ttf"; sourceTree = "<group>"; };
+		A0B5A2D5226FE6E9006985A4 /* SearchView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchView.xib; sourceTree = "<group>"; };
+		A0B5A2D7226FED7C006985A4 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		A0B6B29721CD599B00C58B3F /* AcylicalHand-Tall.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Tall.ttf"; sourceTree = "<group>"; };
 		A0B6B29921CD5BEC00C58B3F /* AcrylicHand-Serif.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcrylicHand-Serif.ttf"; sourceTree = "<group>"; };
@@ -490,6 +504,20 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		A0B5A2D4226FE6BE006985A4 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				A0B5A2D5226FE6E9006985A4 /* SearchView.xib */,
+				A0B5A2D7226FED7C006985A4 /* SearchView.swift */,
+				A04DE175227049B10028A1E8 /* SearchViewModel.swift */,
+				A04DE171227033500028A1E8 /* UserSearchTableViewCell.swift */,
+				A04DE172227033500028A1E8 /* UserSearchTableViewCell.xib */,
+				A03ECF8E22717EBE0034C7F1 /* AddNewUserTableViewCell.swift */,
+				A03ECF8F22717EBE0034C7F1 /* AddNewUserTableViewCell.xib */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		A0C5C06721FE808500846B82 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -608,6 +636,7 @@
 		A0F223B121B8A75E0096C25D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A0B5A2D4226FE6BE006985A4 /* Search */,
 				A0120E6021C6DF68000454EC /* SwipeCards stage */,
 				A031885521C33A1E008D1198 /* HUD */,
 				A002F47821B9EFAE006E8660 /* Jung Chat */,
@@ -783,6 +812,7 @@
 				A0301D692190B33200E023F7 /* gameboardScene.sks in Resources */,
 				A02B24D321E0318500737ACC /* DobOnboardingView.xib in Resources */,
 				A06BF623224C69C800B97A94 /* HorizonRounded-Bold.otf in Resources */,
+				A03ECF9122717EBE0034C7F1 /* AddNewUserTableViewCell.xib in Resources */,
 				A08902E222554A8900EE2F79 /* PhotoStripCollectionViewCell.xib in Resources */,
 				A0D086EB215EA61300011A54 /* AcylicalHand-Small-SVG.ttf in Resources */,
 				A0C5C06B21FF58CE00846B82 /* CreateNewUser.xib in Resources */,
@@ -793,6 +823,7 @@
 				A025F6E4221B3FD70010BDA1 /* CustomSwipeOverlay.xib in Resources */,
 				A02D71A121C4300E00EBBD12 /* BrowseKindCardView.xib in Resources */,
 				A031885721C33A57008D1198 /* HUDview.xib in Resources */,
+				A04DE174227033500028A1E8 /* UserSearchTableViewCell.xib in Resources */,
 				A0B6B29A21CD5BEC00C58B3F /* AcrylicHand-Serif.ttf in Resources */,
 				A0320B5D212E1596008A96E2 /* GoogleService-Info.plist in Resources */,
 				A002F48621B9EFAE006E8660 /* JungChatLogger.xib in Resources */,
@@ -806,6 +837,7 @@
 				A0E9C04E2216415E00C949D4 /* KindSwipeView.xib in Resources */,
 				A002F48521B9EFAE006E8660 /* JungChatBubbleCollectionViewCell.xib in Resources */,
 				A0301D672190B21100E023F7 /* thedeck.sks in Resources */,
+				A0B5A2D6226FE6E9006985A4 /* SearchView.xib in Resources */,
 				A03A46AA21C6C18200D90190 /* OnBoarding.storyboard in Resources */,
 				A025F6E222172D720010BDA1 /* ChosenKindCollectionViewCell.xib in Resources */,
 				A0D960CE21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib in Resources */,
@@ -966,8 +998,10 @@
 				A0320B56212B8AB6008A96E2 /* Extensions.swift in Sources */,
 				A0547F22222CBE59001EE736 /* HandleLoginWithFirestore.swift in Sources */,
 				A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */,
+				A0B5A2D8226FED7C006985A4 /* SearchView.swift in Sources */,
 				A06BF621224C577E00B97A94 /* Ext_Handlers_MapActionTriggerView.swift in Sources */,
 				A0320B4D212B63C2008A96E2 /* LoginOptionsView.swift in Sources */,
+				A03ECF9022717EBE0034C7F1 /* AddNewUserTableViewCell.swift in Sources */,
 				A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */,
 				A05150F621E4002800795172 /* UserNameView.swift in Sources */,
 				A0FBB7372213A97800405440 /* xt_ActionTriggerGameBoardScene.swift in Sources */,
@@ -982,6 +1016,7 @@
 				A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */,
 				A02D71A521C6BC7200EBBD12 /* OnBoardingViewController.swift in Sources */,
 				A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */,
+				A04DE173227033500028A1E8 /* UserSearchTableViewCell.swift in Sources */,
 				A08902E122554A8900EE2F79 /* PhotoStripCollectionViewCell.swift in Sources */,
 				A002F48E21BDC9D6006E8660 /* Bindable.swift in Sources */,
 				A025F6E122172D720010BDA1 /* ChosenKindCollectionViewCell.swift in Sources */,
@@ -1005,6 +1040,7 @@
 				A002F48121B9EFAE006E8660 /* JungChatLogger.swift in Sources */,
 				A031885921C33A76008D1198 /* HUDview.swift in Sources */,
 				A0C5D227212A4A7500BF1B0C /* AppDelegate.swift in Sources */,
+				A04DE176227049B10028A1E8 /* SearchViewModel.swift in Sources */,
 				A02A5D0A21CB2E9400F26463 /* KindActionTriggerView.swift in Sources */,
 				A0E9C0462215D05200C949D4 /* KindMatchControl.swift in Sources */,
 				A0301D6E2190C00C00E023F7 /* GameBoard.swift in Sources */,

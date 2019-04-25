@@ -54,7 +54,7 @@
                                 <constraint firstItem="rOu-ac-IIP" firstAttribute="top" secondItem="HIt-8J-2dn" secondAttribute="top" id="xzd-JI-xBz"/>
                             </constraints>
                         </view>
-                        <view clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8vQ-xq-ppk" userLabel="hudRightDisplay">
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8vQ-xq-ppk" userLabel="hudRightDisplay">
                             <rect key="frame" x="300" y="52.5" width="60" height="60"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoArc" translatesAutoresizingMaskIntoConstraints="NO" id="DMl-s2-61A" userLabel="photoArc">
@@ -107,8 +107,16 @@
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="UM4-5d-yja" firstAttribute="leading" secondItem="YuW-Yr-hWy" secondAttribute="trailing" constant="6" id="976-gr-79i"/>
                                         <constraint firstAttribute="height" constant="21" id="FUB-V3-yeX"/>
+                                        <constraint firstAttribute="bottom" secondItem="YuW-Yr-hWy" secondAttribute="bottom" id="HyB-wz-YBm"/>
+                                        <constraint firstItem="YuW-Yr-hWy" firstAttribute="leading" secondItem="ko6-Mp-okn" secondAttribute="leading" id="JNk-wJ-2i0"/>
+                                        <constraint firstAttribute="bottom" secondItem="UM4-5d-yja" secondAttribute="bottom" id="PRr-kO-vh2"/>
+                                        <constraint firstItem="YuW-Yr-hWy" firstAttribute="top" secondItem="ko6-Mp-okn" secondAttribute="top" id="S40-mZ-TK9"/>
+                                        <constraint firstAttribute="trailing" secondItem="UM4-5d-yja" secondAttribute="trailing" id="WsZ-Kf-Tcr"/>
+                                        <constraint firstItem="UM4-5d-yja" firstAttribute="leading" secondItem="YuW-Yr-hWy" secondAttribute="trailing" constant="6" id="apX-F4-ceu"/>
                                         <constraint firstAttribute="width" constant="155" id="em5-3K-QRs"/>
+                                        <constraint firstItem="UM4-5d-yja" firstAttribute="top" secondItem="ko6-Mp-okn" secondAttribute="top" id="zsU-i3-CnO"/>
                                     </constraints>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="equalSpacing" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Keu-g5-6U1" userLabel="listViewButton">

@@ -185,6 +185,10 @@
                                     <constraint firstAttribute="height" constant="241" id="ynu-sT-zFd"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pf0-Qz-dZ3" userLabel="109-SearchViewHost" customClass="SearchView" customModule="TheKind" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -193,14 +197,18 @@
                             <constraint firstItem="9pt-Di-eiT" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="Art-dF-laV"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="CcH-iA-kZz"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="bottom" secondItem="OgW-vl-BuR" secondAttribute="bottom" id="HDh-Ev-nZo"/>
+                            <constraint firstItem="pf0-Qz-dZ3" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="Hbx-Hl-B4q"/>
                             <constraint firstItem="1LH-Se-bVM" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="I7O-MS-38p"/>
                             <constraint firstItem="9pt-Di-eiT" firstAttribute="centerX" secondItem="OgW-vl-BuR" secondAttribute="centerX" id="Kh9-yk-aja"/>
+                            <constraint firstItem="pf0-Qz-dZ3" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="LME-H4-DtM"/>
+                            <constraint firstItem="pf0-Qz-dZ3" firstAttribute="bottom" secondItem="adk-ga-bKs" secondAttribute="bottom" id="OMK-eG-29Q"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="RlQ-Dt-6dI"/>
                             <constraint firstAttribute="bottom" secondItem="9pt-Di-eiT" secondAttribute="bottom" constant="-210" id="Tez-TZ-ad9"/>
                             <constraint firstItem="aGE-Wo-HLs" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" constant="-28" id="Wxt-lx-of8"/>
                             <constraint firstItem="9pt-Di-eiT" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="XRW-jI-Xj6"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" id="YUW-Uf-C8e"/>
                             <constraint firstAttribute="bottom" secondItem="1LH-Se-bVM" secondAttribute="bottom" id="Yxu-aU-uNo"/>
+                            <constraint firstItem="pf0-Qz-dZ3" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" id="gxo-vA-jxl"/>
                             <constraint firstItem="aGE-Wo-HLs" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="pKt-Ve-6Zf"/>
                             <constraint firstItem="1LH-Se-bVM" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" id="w3n-jI-Q9L"/>
                             <constraint firstItem="aGE-Wo-HLs" firstAttribute="centerX" secondItem="OgW-vl-BuR" secondAttribute="centerX" id="yaF-6b-NAP"/>
@@ -225,6 +233,7 @@
                         <outlet property="jungChatLogger" destination="4FF-H6-M6b" id="XFY-Ae-FN5"/>
                         <outlet property="jungChatWindow" destination="Psy-SE-XbL" id="94Q-OO-Vc1"/>
                         <outlet property="mapViewHost" destination="0eo-O7-Oer" id="9Vj-Nh-jT4"/>
+                        <outlet property="searchView" destination="pf0-Qz-dZ3" id="Ftq-kA-WCG"/>
                         <outlet property="topCurtainView" destination="aGE-Wo-HLs" id="Ap2-30-Rio"/>
                         <outlet property="userNameViewHost" destination="cym-tF-rfj" id="B9a-r3-Hig"/>
                     </connections>

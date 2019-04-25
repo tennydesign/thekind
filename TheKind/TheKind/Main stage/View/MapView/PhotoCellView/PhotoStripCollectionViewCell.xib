@@ -74,6 +74,9 @@
                 <constraint firstItem="CEW-64-mKb" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="tmm-TD-8hM"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <connections>
+                <outlet property="photoFrame" destination="MHf-uK-LZx" id="hgE-Ti-xiz"/>
+            </connections>
             <point key="canvasLocation" x="48.550724637681164" y="34.821428571428569"/>
         </collectionViewCell>
     </objects>

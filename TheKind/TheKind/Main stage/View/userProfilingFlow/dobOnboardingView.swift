@@ -43,8 +43,8 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         
         pickerView.frame = CGRect(x: -100, y: 0, width: self.frame.width - 200, height: 100)
         pickerView.translatesAutoresizingMaskIntoConstraints = false
-        pickerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        pickerView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        //pickerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        //pickerView.centerYAnchor.constraint(equalTo: s elf.centerYAnchor).isActive = true
         
         pickerView.selectRow(90, inComponent:0, animated:true)
  

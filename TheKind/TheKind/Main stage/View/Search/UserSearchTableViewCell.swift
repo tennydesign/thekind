@@ -1,0 +1,46 @@
+//
+//  testeTableViewCell.swift
+//  TheKind
+//
+//  Created by Tenny on 4/23/19.
+//  Copyright © 2019 tenny. All rights reserved.
+//
+
+import UIKit
+
+protocol UserSearchViewCellDelegate:AnyObject {
+    func addRemoveClicked(_ sender: UserSearchTableViewCell)
+}
+
+class UserSearchTableViewCell: UITableViewCell {
+    @IBOutlet var photoFrame: UIView! {
+        didSet {
+            photoFrame.layer.cornerRadius = photoFrame.bounds.width / 2
+            photoFrame.layer.masksToBounds = true
+        }
+    }
+    @IBOutlet var kindTypeLabel: UILabel!
+    @IBOutlet var userPhotoImageView: UIImageView!
+    @IBOutlet var addRemoveButton: UIButton!
+    @IBOutlet var kindImageView: UIImageView!
+    @IBOutlet var nameLabel: UILabel!
+    weak var delegate: UserSearchViewCellDelegate?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+    
+    @IBAction func addRemoveButtonClicked(sender: AnyObject) {
+        delegate?.addRemoveClicked(self)
+    }
+    
+    
+    
+}

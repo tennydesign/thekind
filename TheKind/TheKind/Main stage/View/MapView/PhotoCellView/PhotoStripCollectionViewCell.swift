@@ -10,6 +10,12 @@ import UIKit
 
 class PhotoStripCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet var photoFrame: UIView! {
+        didSet {
+            photoFrame.layer.cornerRadius = photoFrame.bounds.width / 2
+            photoFrame.layer.masksToBounds = true
+        }
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
