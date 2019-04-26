@@ -25,6 +25,20 @@ class UserSearchTableViewCell: UITableViewCell {
     @IBOutlet var kindImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     weak var delegate: UserSearchViewCellDelegate?
+    var user: UserSearched? {
+        didSet {
+            nameLabel.text = user?.name
+            if let photoUrl = user?.photoURL {
+                userPhotoImageView.loadImageUsingCacheWithUrlString(urlString: photoUrl)
+            }
+            if let kind = user?.kind {
+                if let kind = GameKinds.createKindCard(id: kind) {
+                    kindImageView.image = UIImage(named: kind.iconImageName.rawValue)
+                    kindTypeLabel.text = kind.kindName.rawValue
+                }
+            }
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -336,7 +336,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     @IBAction func addUserBtnClicked(_ sender: UIButton) {
-        //TODO
+        mainViewController?.searchView.activate()
     }
     
 }

@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 class SearchViewModel {
     var userFields: [String: Any] = [:]
-    var users: [UserUnitSearch] = []
+    var users: [UserSearched] = []
     func retrieveAllUserForSearch(completion:@escaping (Bool)->()) {
         let db = Firestore.firestore()
         db.collection("usersettings").getDocuments {  (document,err) in
@@ -22,7 +22,7 @@ class SearchViewModel {
                 return
             }
             document?.documents.forEach({ (document) in
-                let user: UserUnitSearch = UserUnitSearch(document: document)
+                let user: UserSearched = UserSearched(document: document)
                 self.users.append(user)
             })
             completion(true)
@@ -31,7 +31,7 @@ class SearchViewModel {
     }
 }
 //
-struct UserUnitSearch {
+struct UserSearched {
     var name: String?
     var photoURL: String?
     var kind: Int?

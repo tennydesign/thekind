@@ -27,35 +27,63 @@
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="black" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="89" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PMG-gx-95y">
-                    <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                    <rect key="frame" x="0.0" y="166" width="375" height="501"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="separatorColor" white="1" alpha="0.6307523544520548" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="sectionIndexColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
-                <searchBar contentMode="redraw" barStyle="black" searchBarStyle="minimal" placeholder="Type your friend's email" translatesAutoresizingMaskIntoConstraints="NO" id="DX4-PS-Z4h">
-                    <rect key="frame" x="0.0" y="52" width="375" height="56"/>
-                    <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <searchBar contentMode="redraw" placeholder="Type email to search or add a friend" translatesAutoresizingMaskIntoConstraints="NO" id="DX4-PS-Z4h">
+                    <rect key="frame" x="0.0" y="100" width="375" height="56"/>
+                    <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                     <scopeButtonTitles>
                         <string>Title</string>
                         <string>Title</string>
                     </scopeButtonTitles>
                 </searchBar>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Oav-SM-Fje">
+                    <rect key="frame" x="18" y="48" width="30" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LMd-0e-OEw">
+                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="CzH-b6-81c"/>
+                                <constraint firstAttribute="height" constant="30" id="ygr-T7-8Bx"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="closeIcon"/>
+                            <connections>
+                                <action selector="closeBtnClicked:" destination="-1" eventType="touchUpInside" id="VIo-Es-Q39"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="close" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbo-Ai-34y">
+                            <rect key="frame" x="0.0" y="32" width="30" height="12"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="cvC-LN-IkH"/>
+                        <constraint firstAttribute="height" constant="44" id="fBU-Li-do5"/>
+                    </constraints>
+                </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bRV-Oe-kR8" secondAttribute="trailing" id="048-o2-tjR"/>
-                <constraint firstItem="PMG-gx-95y" firstAttribute="top" secondItem="DX4-PS-Z4h" secondAttribute="bottom" id="6A3-pl-bLb"/>
+                <constraint firstItem="PMG-gx-95y" firstAttribute="top" secondItem="DX4-PS-Z4h" secondAttribute="bottom" constant="10" id="6A3-pl-bLb"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="PMG-gx-95y" secondAttribute="trailing" id="6b4-AX-nPk"/>
                 <constraint firstItem="bRV-Oe-kR8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="7xe-Z5-vED"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="PMG-gx-95y" secondAttribute="bottom" id="8xD-LW-JAu"/>
                 <constraint firstItem="DX4-PS-Z4h" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="b20-qv-BYF"/>
-                <constraint firstItem="DX4-PS-Z4h" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="32" id="bJo-Lb-IQi"/>
+                <constraint firstItem="DX4-PS-Z4h" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="80" id="bJo-Lb-IQi"/>
+                <constraint firstItem="Oav-SM-Fje" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="18" id="j9B-Ce-dWm"/>
                 <constraint firstItem="bRV-Oe-kR8" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="kk5-PZ-xvG"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="bRV-Oe-kR8" secondAttribute="bottom" constant="-73" id="m1J-Ym-0LQ"/>
                 <constraint firstItem="PMG-gx-95y" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="nMp-Wu-4WP"/>
+                <constraint firstItem="DX4-PS-Z4h" firstAttribute="top" secondItem="Oav-SM-Fje" secondAttribute="bottom" constant="8" id="qVw-YL-7Up"/>
                 <constraint firstItem="DX4-PS-Z4h" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="t7k-dh-5nh"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
@@ -64,4 +92,7 @@
         <searchDisplayController id="yN4-6z-mLy"/>
         <searchDisplayController id="8hM-Cb-jgV"/>
     </objects>
+    <resources>
+        <image name="closeIcon" width="60" height="60"/>
+    </resources>
 </document>

@@ -12,21 +12,20 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddNewUserTableViewCell" rowHeight="85" id="KGk-i7-Jjw" customClass="AddNewUserTableViewCell" customModule="TheKind" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="385" height="85"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddNewUserTableViewCell" rowHeight="113" id="KGk-i7-Jjw" customClass="AddNewUserTableViewCell" customModule="TheKind" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="385" height="113"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="385" height="84.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="385" height="112.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="54p-aa-OQ8" customClass="KindButton" customModule="TheKind" customModuleProvider="target">
-                        <rect key="frame" x="223" y="22" width="151" height="41"/>
+                        <rect key="frame" x="30" y="29" width="325" height="55"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="151" id="KPs-aI-B9U"/>
-                            <constraint firstAttribute="height" constant="41" id="SUt-Hw-YO1"/>
+                            <constraint firstAttribute="height" constant="55" id="SUt-Hw-YO1"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <state key="normal" title="Invite friend" backgroundImage="pink_textfield">
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <state key="normal" title="Invite friend to join " backgroundImage="pink_textfield">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
                         <userDefinedRuntimeAttributes>
@@ -35,49 +34,33 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </button>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="nan-TI-Xpw">
-                        <rect key="frame" x="20" y="25" width="180" height="34.5"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter email to invite friend: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rs3-2W-aZw">
-                                <rect key="frame" x="0.0" y="0.0" width="180" height="14.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="AMA-Jw-dOs"/>
-                                    <constraint firstAttribute="height" constant="14.5" id="uNB-Mo-JzM"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="amanda@gmail.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WbD-Sz-cfA">
-                                <rect key="frame" x="0.0" y="16.5" width="180" height="18"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="CBW-Jp-ByS"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type the email and click button to invite friend." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEO-Ms-tk1">
+                        <rect key="frame" x="23.5" y="86" width="338" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="34.5" id="5NJ-Te-kXC"/>
-                            <constraint firstAttribute="width" constant="180" id="GCe-CD-oIv"/>
+                            <constraint firstAttribute="height" constant="21" id="6n0-qb-U9d"/>
+                            <constraint firstAttribute="width" constant="338" id="zyW-xQ-mXg"/>
                         </constraints>
-                    </stackView>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="nan-TI-Xpw" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="3h9-lJ-ZN5"/>
-                    <constraint firstAttribute="trailing" secondItem="54p-aa-OQ8" secondAttribute="trailing" constant="11" id="5GV-Ee-jjR"/>
+                    <constraint firstItem="cEO-Ms-tk1" firstAttribute="top" secondItem="54p-aa-OQ8" secondAttribute="bottom" constant="2" id="0Bv-gn-Mvn"/>
+                    <constraint firstItem="54p-aa-OQ8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="Dpx-39-KbC"/>
+                    <constraint firstItem="cEO-Ms-tk1" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="JgU-a0-5cO"/>
+                    <constraint firstAttribute="trailing" secondItem="54p-aa-OQ8" secondAttribute="trailing" constant="30" id="glu-Ib-Fpa"/>
+                    <constraint firstItem="54p-aa-OQ8" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="m2f-JY-kc0"/>
                     <constraint firstItem="54p-aa-OQ8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="poS-da-6O4"/>
-                    <constraint firstItem="nan-TI-Xpw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="tL3-ej-hc5"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="addUserEmailLabel" destination="WbD-Sz-cfA" id="Rsm-nK-uL1"/>
+                <outlet property="inviteUserButton" destination="54p-aa-OQ8" id="4Yf-t7-NAe"/>
             </connections>
-            <point key="canvasLocation" x="105.07246376811595" y="84.709821428571431"/>
+            <point key="canvasLocation" x="105.07246376811595" y="118.86160714285714"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -57,7 +57,7 @@
                         <viewLayoutGuide key="safeArea" id="xTL-P6-OA9"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TKd-Bh-CVS" userLabel="userInfo">
-                        <rect key="frame" x="69" y="15" width="185" height="59"/>
+                        <rect key="frame" x="74" y="15" width="185" height="59"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mariana Fernandes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQW-4W-MUP">
                                 <rect key="frame" x="8" y="0.0" width="177" height="21"/>
@@ -70,7 +70,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Trailblazer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7TT-8J-VYn">
-                                <rect key="frame" x="40" y="33" width="107" height="21"/>
+                                <rect key="frame" x="42" y="33" width="107" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="3tU-mv-sI7"/>
                                     <constraint firstAttribute="width" constant="107" id="aMs-1T-JsA"/>
@@ -80,7 +80,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trailblazer_board" translatesAutoresizingMaskIntoConstraints="NO" id="au4-Zr-VhO">
-                                <rect key="frame" x="0.0" y="19" width="40" height="40"/>
+                                <rect key="frame" x="2" y="19" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="5xa-zP-DMJ"/>
                                     <constraint firstAttribute="width" constant="40" id="NEm-ke-P6v"/>
@@ -90,7 +90,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="dQW-4W-MUP" firstAttribute="leading" secondItem="TKd-Bh-CVS" secondAttribute="leadingMargin" id="3wG-QQ-4Vh"/>
-                            <constraint firstItem="au4-Zr-VhO" firstAttribute="leading" secondItem="TKd-Bh-CVS" secondAttribute="leading" id="DEk-tU-q72"/>
+                            <constraint firstItem="au4-Zr-VhO" firstAttribute="leading" secondItem="TKd-Bh-CVS" secondAttribute="leading" constant="2" id="DEk-tU-q72"/>
                             <constraint firstAttribute="width" constant="185" id="KIS-O2-Wq5"/>
                             <constraint firstAttribute="height" constant="59" id="LCn-hQ-y4w"/>
                             <constraint firstItem="7TT-8J-VYn" firstAttribute="top" secondItem="dQW-4W-MUP" secondAttribute="bottom" constant="12" id="PEE-fs-B4m"/>
@@ -111,7 +111,7 @@
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q03-oD-81W" userLabel="line">
-                        <rect key="frame" x="12" y="84" width="296" height="0.5"/>
+                        <rect key="frame" x="12" y="84" width="296" height="1"/>
                         <color key="backgroundColor" white="1" alpha="0.2674711044520548" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="ukN-XQ-fiH"/>
@@ -122,7 +122,7 @@
                 <constraints>
                     <constraint firstItem="e89-aB-kRy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EZi-uB-7ec"/>
                     <constraint firstItem="Jad-h9-UQ8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="IJk-xB-d8J"/>
-                    <constraint firstItem="TKd-Bh-CVS" firstAttribute="leading" secondItem="Jad-h9-UQ8" secondAttribute="trailing" id="OMg-5q-Vmw"/>
+                    <constraint firstItem="TKd-Bh-CVS" firstAttribute="leading" secondItem="Jad-h9-UQ8" secondAttribute="trailing" constant="5" id="OMg-5q-Vmw"/>
                     <constraint firstAttribute="trailing" secondItem="e89-aB-kRy" secondAttribute="trailing" constant="13" id="d6W-zz-GPh"/>
                     <constraint firstAttribute="bottom" secondItem="Q03-oD-81W" secondAttribute="bottom" constant="3.5" id="dda-Ko-VDK"/>
                     <constraint firstItem="Q03-oD-81W" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="eCV-pG-Ls3"/>

@@ -13,15 +13,19 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
 
     var keyboardHeight:CGFloat!
     @IBOutlet var searchView: UIView!
-    var addUserFlag = false
+    var addUserMode = false
     @IBOutlet var searchTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     
     let searchViewModel = SearchViewModel()
     
-    var data:[UserUnitSearch]!
+    var data:[UserSearched]!
     
-    var filteredData: [UserUnitSearch]!
+    var filteredData: [UserSearched]! {
+        didSet {
+            searchTableView.reloadData()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,8 +44,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         searchTableView.dataSource = self
         searchTableView.delegate = self
         searchBar.delegate = self
-        filteredData = data
-        
+   
         setupKeyboardObservers()
         searchTableView.rowHeight = 89
         searchTableView.register(UINib(nibName: "UserSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "UserSearchTableViewCell")
@@ -58,7 +61,6 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
                 self.data = self.searchViewModel.users + self.searchViewModel.users + self.searchViewModel.users + self.searchViewModel.users
 
                 self.filteredData = self.data
-                self.searchTableView.reloadData()
             }
         }
 
@@ -87,7 +89,8 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
             for subview in view.subviews {
                 if subview.isKind(of: UITextField.self) {
                     let textField: UITextField = subview as! UITextField
-                    textField.backgroundColor = UIColor.white.withAlphaComponent(0.4)
+                    textField.backgroundColor = UIColor.white
+                    //textField.borderStyle = .line
                     
                 }
             }
@@ -104,21 +107,20 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         searchBar.endEditing(true)
 
     }
-    
+//
 //    override var inputAccessoryView: UIView? {
 //        get {
-//            
-//            return inviteNewUserView
+//            return newlyProgramaticallyCreatedView
 //        }
 //    }
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if filteredData.count == 0 {
-            addUserFlag = true
+            addUserMode = true
             return 1
         } else {
-            addUserFlag = false
+            addUserMode = false
         }
         return filteredData.count
     }
@@ -129,30 +131,18 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         var cell:UITableViewCell?
         //cell.textLabel?.text = "teste"
         
-        if !addUserFlag {
+        if !addUserMode {
             let userFoundCell = tableView.dequeueReusableCell(withIdentifier: "UserSearchTableViewCell", for: indexPath) as! UserSearchTableViewCell
-            userFoundCell.nameLabel.text = filteredData[indexPath.row].name
-            if let photoUrl = filteredData[indexPath.row].photoURL {
-                userFoundCell.userPhotoImageView.loadImageUsingCacheWithUrlString(urlString: photoUrl)
-            }
-            if let kind = filteredData[indexPath.row].kind {
-                if let kind = GameKinds.createKindCard(id: kind) {
-                    userFoundCell.kindImageView.image = UIImage(named: kind.iconImageName.rawValue)
-                    userFoundCell.kindTypeLabel.text = kind.kindName.rawValue
-                }
-            }
+            userFoundCell.user = filteredData[indexPath.row]
             userFoundCell.delegate = self
             cell = userFoundCell
         } else {
             let addUsercell = tableView.dequeueReusableCell(withIdentifier: "AddNewUserTableViewCell", for: indexPath) as! AddNewUserTableViewCell
+            addUsercell.inviteUserButton.disableButton()
             cell = addUsercell
         }
-        print("Contador: \(filteredData.count)")
         return cell!
     }
-
-    
-
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // When there is no text, filteredData is the same as the original data
@@ -161,19 +151,21 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         // For each item, return true if the item should be included and false if the
         // item should NOT be included
 
-        if !addUserFlag {
         filteredData = searchText.isEmpty ? data : data.filter({(user) -> Bool in
             // If dataItem matches the searchText, return true to include it
             return user.name?.range(of: searchText, options: .caseInsensitive) != nil
         })
-        } else {
-            let indexPath = IndexPath(item: 0, section: 0)
-            let cell = searchTableView.cellForRow(at: indexPath) as! AddNewUserTableViewCell
-            cell.addUserEmailLabel.text = searchText
+        
+        // THIS CHECKS IF ITS AN EMAIL TO ENABLE ADD BUTTON.
+        let indexPath = IndexPath(item: 0, section: 0)
+        if let cell = searchTableView.cellForRow(at: indexPath) as? AddNewUserTableViewCell {
+            if searchText.isEmail() {
+                cell.inviteUserButton.enableButton()
+            } else {
+                cell.inviteUserButton.disableButton()
+            }
         }
-        
-        
-        searchTableView.reloadData()
+
     }
 
     func retrieveuAllUsersFromFirestore() {
@@ -184,5 +176,17 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     func addRemoveClicked(_ sender: UserSearchTableViewCell) {
         guard let tappedIndexPath = searchTableView.indexPath(for: sender) else {return}
         print("clicked at \(tappedIndexPath)")
+    }
+    
+    override func activate() {
+      self.fadeInView()
+    }
+    
+    override func deactivate() {
+        self.fadeOutView()
+    }
+    
+    @IBAction func closeBtnClicked(_ sender: UIButton) {
+        self.deactivate()
     }
 }

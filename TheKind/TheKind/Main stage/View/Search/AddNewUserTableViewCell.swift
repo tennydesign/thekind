@@ -10,9 +10,10 @@ import UIKit
 
 class AddNewUserTableViewCell: UITableViewCell {
 
-    @IBOutlet var addUserEmailLabel: UILabel!
+    @IBOutlet var inviteUserButton: KindButton!
     override func awakeFromNib() {
         super.awakeFromNib()
+        inviteUserButton.disableButton()
         // Initialization code
     }
 
@@ -21,5 +22,6 @@ class AddNewUserTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+
     
 }

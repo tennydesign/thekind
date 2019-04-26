@@ -53,8 +53,9 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
     
     override func activate() {
 
-             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.DobOnboardingView.rawValue
-             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+//             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.DobOnboardingView.rawValue
+//             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+            self.logCurrentLandingView(tag: ActionViewName.DobOnboardingView.rawValue)
             self.talk()
   
         

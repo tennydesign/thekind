@@ -105,8 +105,10 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     
     override func activate() {
         // save current view # to database (onboarding log)
-        KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
-        KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+//        KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
+//        KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+        
+        self.logCurrentLandingView(tag: ActionViewName.UserNameView.rawValue)
         self.fadeInView()
         self.talk()
     }
