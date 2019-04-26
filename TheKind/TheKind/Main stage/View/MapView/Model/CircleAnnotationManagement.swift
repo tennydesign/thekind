@@ -40,6 +40,7 @@ class CircleAnnotationManagement {
                 let annotationSet = CircleAnnotationSet(location: location, circlePlotName: name, isPrivate: isPrivate, circleId: document.documentID, admin: admin, users: users)
                 self.circles.append(annotationSet)
             })
+            
             self.circleAnnotationObserver?(self.circles)
             completion()
         }
@@ -124,19 +125,17 @@ class CircleAnnotationManagement {
             ])
     }
     
-    func loadUsersInCircle(set: CircleAnnotationSet, completion: (([String]?)->())?) {
+    func loadUserIDsInCircle(set: CircleAnnotationSet, completion: (([String]?)->())?) {
         let db = Firestore.firestore()
         let circleId = set.circleId
-        db.collection("usersettings").document(circleId).getDocument {  (document,err) in
+        db.collection("kindcircles").document(circleId).getDocument {  (document,err) in
             if let err = err {
                 print(err)
-//                completion?(false)
                 return
             }
             guard let data = document?.data() else
             {
                 print("no data")
-//                completion?(false)
                 return
             }
             let circleData:[String:Any] = data
@@ -149,23 +148,26 @@ class CircleAnnotationManagement {
             completion?(users)
         }
     }
-    
-    func loadCircleUsersPhotoUrls(set: CircleAnnotationSet, completion: @escaping (([URL]?)->())) {
-        self.loadUsersInCircle(set: set) { (userIds) in
+
+
+    // DispatchGroup is forcing completion to wait till the loop is completed. 
+    func loadCircleUsersProfile(set: CircleAnnotationSet, completion: (([KindUser]?)->())?) {
+        var userProfiles:[KindUser] = []
+        let group = DispatchGroup()
+        self.loadUserIDsInCircle(set: set) { (userIds) in
             guard let userIds = userIds else {return}
-            var photoURLs: [URL]?
             userIds.forEach({ (id) in
-                KindUserSettingsManager.sharedInstance.retrieveUserPhoto(userId: id, completion: { (photoUrl) in
-                    guard let photoUrl = photoUrl else {
-                        completion(nil)
-                        return
+                group.enter()
+                KindUserSettingsManager.sharedInstance.retrieveAnyUserSettings(userId: id, completion: { (kindUser) in
+                    if let kindUser = kindUser {
+                        userProfiles.append(kindUser)
                     }
-                    
-                    photoURLs!.append(photoUrl)
-                    
+                    group.leave()
                 })
             })
-            completion(photoURLs)
+            group.notify(queue: .main) {
+                completion?(userProfiles)
+            }
         }
     }
 }

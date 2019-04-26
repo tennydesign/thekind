@@ -104,11 +104,30 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     func closeLock() {
         circleIsInviteOnly = true
-        showPhotoStrip(isAdmin: true)
+        loadPhotoStrip(isAdmin: true)
         viewSkatingX(lockTopImage, left: false, -20, reverse: false)
     }
     
-    func showPhotoStrip(isAdmin: Bool) {
+    func loadPhotoStrip(isAdmin: Bool) {
+        guard let set = selectedAnnotationView?.circleDetails else {fatalError("no set")}
+        CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile(set: set) { (kindUsers) in
+            if let users = kindUsers {
+                self.usersInCircle = users
+                self.photoStripCollectionView.reloadData()
+            }
+            self.presentPhotoStripControl(isAdmin)
+        }
+
+    }
+    
+    func hidePhotoStrip() {
+        UIView.animate(withDuration: 0.4) {
+            self.photoStripView.alpha = 0
+            self.addUserBtn.alpha = 0
+        }
+    }
+    
+    fileprivate func presentPhotoStripControl(_ isAdmin: Bool) {
         if isAdmin{
             photoStripLeadingConstraint.constant = 50
             UIView.animate(withDuration: 0.4) {
@@ -123,13 +142,6 @@ extension MapActionTriggerView: UITextFieldDelegate {
                 self.addUserBtn.alpha = 0
                 self.photoStripView.alpha = 1
             }
-        }
-    }
-    
-    func hidePhotoStrip() {
-        UIView.animate(withDuration: 0.4) {
-            self.photoStripView.alpha = 0
-            self.addUserBtn.alpha = 0
         }
     }
     
@@ -166,26 +178,29 @@ extension MapActionTriggerView: UITextFieldDelegate {
 
 extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //return usersInCircleImageViews.count
-        return 10
+
+        return usersInCircle.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoStripCollectionViewCell", for: indexPath) as! PhotoStripCollectionViewCell
+        if let imageUrl = usersInCircle[indexPath.row].photoURL {
+            cell.userPhotoImageView.loadImageUsingCacheWithUrlString(urlString:imageUrl)
+        }
         return cell
     }
     
-    func updateUsersInCircle(set: CircleAnnotationSet) {
-        CircleAnnotationManagement.sharedInstance.loadCircleUsersPhotoUrls(set: set) { (urls) in
-            urls?.forEach({ (url) in
-                let imageView: UIImageView = UIImageView()
-                imageView.loadImageUsingCacheWithUrlString(urlString: url.absoluteString)
-                self.usersInCircleImageViews.append(imageView)
-            })
-            
-            self.photoStripCollectionView.reloadData()
-        }
-    }
+//    func updateUsersInCircle(set: CircleAnnotationSet) {
+//        CircleAnnotationManagement.sharedInstance.loadCircleUsersPhotoUrls(set: set) { (urls) in
+//            urls?.forEach({ (url) in
+//                let imageView: UIImageView = UIImageView()
+//                imageView.loadImageUsingCacheWithUrlString(urlString: url.absoluteString)
+//                self.usersInCircleImageViews.append(imageView)
+//            })
+//
+//            self.photoStripCollectionView.reloadData()
+//        }
+//    }
     
 }
 

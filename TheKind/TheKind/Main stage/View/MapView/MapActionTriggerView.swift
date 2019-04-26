@@ -27,6 +27,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     @IBOutlet var lockTopImage: UIImageView!
     @IBOutlet var lockBottomImage: UIImageView!
     @IBOutlet var addUserBtn: UIButton!
+
     
     @IBOutlet var mapBoxView: MGLMapView! {
         didSet {
@@ -48,7 +49,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     var latitude: CLLocationDegrees!
     var longitude: CLLocationDegrees!
     var isNewCircle: Bool = false
-    var usersInCircleImageViews: [UIImageView] = []
+    var usersInCircle: [KindUser] = []
     var longPressGesture: UIGestureRecognizer!
     
     // INIT VALUES

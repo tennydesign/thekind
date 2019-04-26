@@ -19,9 +19,9 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     
     let searchViewModel = SearchViewModel()
     
-    var data:[UserSearched]!
+    var data:[KindUser]!
     
-    var filteredData: [UserSearched]! {
+    var filteredData: [KindUser] = [] {
         didSet {
             searchTableView.reloadData()
         }
@@ -55,7 +55,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         let tapOutsideHandler = UITapGestureRecognizer(target: self, action: #selector(tapOutsideSearch))
         
         searchTableView.addGestureRecognizer(tapOutsideHandler)
-        searchViewModel.retrieveAllUserForSearch { (completed) in
+        searchViewModel.retrieveAllUsers { (completed) in
             if completed {
                 print("great")
                 self.data = self.searchViewModel.users + self.searchViewModel.users + self.searchViewModel.users + self.searchViewModel.users
@@ -175,6 +175,9 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     
     func addRemoveClicked(_ sender: UserSearchTableViewCell) {
         guard let tappedIndexPath = searchTableView.indexPath(for: sender) else {return}
+        if let cell = searchTableView.cellForRow(at: tappedIndexPath) as? UserSearchTableViewCell {
+            //ADD HERE THE ITEM IN THE ARRAY THAT WILL RELAD THE COLLECTIONVIEW.
+        }
         print("clicked at \(tappedIndexPath)")
     }
     

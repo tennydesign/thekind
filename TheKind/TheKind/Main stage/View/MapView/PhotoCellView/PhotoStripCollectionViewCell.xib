@@ -76,6 +76,7 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <connections>
                 <outlet property="photoFrame" destination="MHf-uK-LZx" id="hgE-Ti-xiz"/>
+                <outlet property="userPhotoImageView" destination="FBq-JF-TDC" id="pYH-kM-YA4"/>
             </connections>
             <point key="canvasLocation" x="48.550724637681164" y="34.821428571428569"/>
         </collectionViewCell>

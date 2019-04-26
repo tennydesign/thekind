@@ -67,7 +67,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             let keyImage = UIImage(named: "privatekey")?.withRenderingMode(.alwaysOriginal)
             self.enterCircleButton.setBackgroundImage(keyImage, for: .normal)
             //This will show the photStrip with or without the + btn depending if user is admin.
-            self.showPhotoStrip(isAdmin: self.checkIfIsAdmin(set.admin))
+            self.loadPhotoStrip(isAdmin: self.checkIfIsAdmin(set.admin))
         } else {
             let enterImage = UIImage(named: "newEye")
             self.enterCircleButton.setBackgroundImage(enterImage, for: .normal)

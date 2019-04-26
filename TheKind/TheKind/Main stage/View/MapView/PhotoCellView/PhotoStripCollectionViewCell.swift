@@ -10,6 +10,7 @@ import UIKit
 
 class PhotoStripCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet var userPhotoImageView: UIImageView!
     @IBOutlet var photoFrame: UIView! {
         didSet {
             photoFrame.layer.cornerRadius = photoFrame.bounds.width / 2
