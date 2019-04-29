@@ -172,10 +172,12 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     
     func toogleCircleAndMapViews(isOnMap: Bool) {
         if isOnMap {
+            mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
             //if there is an annotation this will deactivate it.
             UIView.animate(withDuration: 0.5, animations: {
                 //this will animate the transitions to the map
-                    self.setupMapScreen()
+                    self.hidePhotoStrip()
+                self.toggleMapOrAnnotationView(isMap: true)
                 }) { (completed) in
                     // after internal views got to zero alpha...
                     if let annotation = self.selectedAnnotationView {
@@ -185,25 +187,23 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
                     }
                 }
         } else {
-            setupAnnotationDetailingView()
+            self.toggleMapOrAnnotationView(isMap: false)
         }
         
     }
     
-    fileprivate func setupMapScreen() {
+    fileprivate func toggleMapOrAnnotationView(isMap: Bool) {
         mainViewController?.jungChatLogger.resetJungChat()
-        expandedCircleViews.alpha = 0
-        mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-        mapBoxView.isUserInteractionEnabled = true
-        mainViewController?.hudView.hudGradient.alpha = 1
-        mainViewController?.hudView.hudCenterDisplay.alpha = 1
-        mainViewController?.hudView.isUserInteractionEnabled = true
-        mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
-        borderProtectionLeft.isUserInteractionEnabled = true
-        borderProtectionRight.isUserInteractionEnabled = true
-        expandedCircleViews.isUserInteractionEnabled = false
-        longPressGesture.isEnabled = true
-        hidePhotoStrip()
+        expandedCircleViews.alpha = isMap ? 0 : 1
+        mapBoxView.isUserInteractionEnabled = isMap ? true : false
+        mainViewController?.hudView.hudGradient.alpha = isMap ? 1 : 0
+        mainViewController?.hudView.hudCenterDisplay.alpha = isMap ? 1 : 0
+        mainViewController?.hudView.isUserInteractionEnabled = isMap ? true : false
+        mainViewController?.bottomCurtainView.isUserInteractionEnabled = isMap ? false : true
+        borderProtectionLeft.isUserInteractionEnabled = isMap ? true : false
+        borderProtectionRight.isUserInteractionEnabled = isMap ? true : false
+        expandedCircleViews.isUserInteractionEnabled = isMap ? false : false
+        longPressGesture.isEnabled = isMap ? true : false
     }
     
     func prepareViewsForDetailingCircle(annotationView: CircleAnnotationView, completion: (()->())?) {
@@ -213,6 +213,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         if !annotationView.transform.isIdentity {
             if annotationView.transform.a == self.MAXSCIRCLESCALE {
                 UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
+                    // is this repeating?
                     self.toogleCircleAndMapViews(isOnMap: false)
                 }, completion: { (completed) in
                     
@@ -238,23 +239,6 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             //annotationView.setSelected(false, animated: false)
         }
     }
-
-    
-    fileprivate func setupAnnotationDetailingView() {
-        self.mainViewController?.jungChatLogger.resetJungChat()
-        mapBoxView.isUserInteractionEnabled = false
-        //This alpha will be handled at prepareViewsForDetailingCircle for animation purposes.
-        self.expandedCircleViews.alpha = 1
-        self.mainViewController?.hudView.hudGradient.alpha = 0
-        self.mainViewController?.hudView.hudCenterDisplay.alpha = 0
-        self.mainViewController?.hudView.isUserInteractionEnabled = false
-        self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
-        self.borderProtectionLeft.isUserInteractionEnabled = false
-        self.borderProtectionRight.isUserInteractionEnabled = false
-        self.expandedCircleViews.isUserInteractionEnabled = true
-        self.longPressGesture.isEnabled = false
-    }
-    
     
     private func toggleInnerCircleViewInteraction(isNewCircle: Bool) {
         if !isNewCircle {
@@ -274,29 +258,10 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         }) { (completed) in
             self.removeCancelledAnnotation(annotationView)
             self.isNewCircle = false
-            self.longPressGesture.isEnabled = true
-            //self.mapBoxView.isUserInteractionEnabled = true
-            self.clearJungChatLog()
             self.toogleCircleAndMapViews(isOnMap: true)
             self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
         }
     }
-    
-    func deselectAnnotationIfAnyAndBackToMap() {
-        if let selectedAnnotationView = selectedAnnotationView {
- //           self.deActivateOnDeselection(selectedAnnotationView) {
-                //self.mapBoxView.isUserInteractionEnabled = true
-                self.toogleCircleAndMapViews(isOnMap: true)
-//                self.mapBoxView.deselectAnnotation(selectedAnnotationView.annotation, animated: false)
-//                self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-//            }
-        } else {
-            //self.mainViewController?.jungChatLogger.resetJungChat()
-            self.toogleCircleAndMapViews(isOnMap: true)
-            self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-        }
-    }
-    
     
     
 }

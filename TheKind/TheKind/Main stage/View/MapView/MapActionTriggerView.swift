@@ -285,24 +285,26 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     override func leftOptionClicked() {
-        mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
         // USER CANCELLED CREATION
         if self.isNewCircle {
-            removeAnnotationAndBackToMap()
+            guard let annotationView = selectedAnnotationView else {return}
+            UIView.animate(withDuration: 0.4, animations: {
+                self.expandedCircleViews.alpha = 0
+            }) { (completed) in
+                self.removeCancelledAnnotation(annotationView)
+                self.isNewCircle = false
+                self.toogleCircleAndMapViews(isOnMap: true)
+                self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
+            }
+            
         } else {
-            // USER HITS BACK TO THE MAP
-            //UIView.animate(withDuration: 1, animations: {
             self.toogleCircleAndMapViews(isOnMap: true)
-            //}) { (completed) in
-                
-            //}
-            //deselectAnnotationIfAnyAndBackToMap()
         }
     }
 
     
     //SAVE
-    
+    //HERE: MAKE THIS BETTER
     override func rightOptionClicked() {
         self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
         
@@ -323,7 +325,8 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
                 
                 self.resetInnerCreateCircleViewComponents()
                 
-                self.deselectAnnotationIfAnyAndBackToMap()
+                //self.deselectAnnotationIfAnyAndBackToMap()
+                 self.toogleCircleAndMapViews(isOnMap: true)
 
                 self.isNewCircle = false
             }
