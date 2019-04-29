@@ -22,6 +22,7 @@ class GameBoardSceneControlView: UIView, KindActionTriggerViewProtocol {
     
     var talkbox: JungTalkBox?
     var delegate: ControlGameBoardProtocol?
+    var mainViewController: MainViewController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,6 +45,7 @@ class GameBoardSceneControlView: UIView, KindActionTriggerViewProtocol {
     func activate() {
         self.isHidden = false
         self.alpha = 1
+        self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
     }
     
     func rightOptionClicked() {

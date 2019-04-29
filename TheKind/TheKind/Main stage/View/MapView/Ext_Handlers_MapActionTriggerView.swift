@@ -104,30 +104,41 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     func closeLock() {
         circleIsInviteOnly = true
-        loadPhotoStrip(isAdmin: true)
+        showPhotoStrip()
         viewSkatingX(lockTopImage, left: false, -20, reverse: false)
     }
     
-    func loadPhotoStrip(isAdmin: Bool) {
-        guard let set = selectedAnnotationView?.circleDetails else {fatalError("no set")}
-        CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile(set: set) { (kindUsers) in
-            if let users = kindUsers {
-                self.usersInCircle = users
-                self.photoStripCollectionView.reloadData()
+    func showPhotoStrip() {
+        guard let set = selectedAnnotationView?.circleDetails else {return}
+        let isAdmin = self.checkIfIsAdmin(set.admin)
+        if !isNewCircle {
+            CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile(set: set) { (kindUsers) in
+                if let users = kindUsers {
+                    self.usersInCircle = users
+                    self.photoStripCollectionView.reloadData()
+                }
+                self.toggleAddButtonOfPhotoStrip(isAdmin) // always true
             }
-            self.presentPhotoStripControl(isAdmin)
+        } else {
+            self.usersInCircle = []
+            self.photoStripCollectionView.reloadData()
+            self.toggleAddButtonOfPhotoStrip(isAdmin)
         }
 
     }
     
     func hidePhotoStrip() {
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.4, animations: {
             self.photoStripView.alpha = 0
             self.addUserBtn.alpha = 0
+        }) { (completed) in
+            self.usersInCircle = []
+            self.photoStripCollectionView.reloadData()
         }
     }
-    
-    fileprivate func presentPhotoStripControl(_ isAdmin: Bool) {
+
+    //opens space for the + button
+    fileprivate func toggleAddButtonOfPhotoStrip(_ isAdmin: Bool) {
         if isAdmin{
             photoStripLeadingConstraint.constant = 50
             UIView.animate(withDuration: 0.4) {

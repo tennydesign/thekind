@@ -12,6 +12,8 @@ import MapKit
 //REFACTOR THE UP AND DOWN FOR DRAWER
 class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
+    @IBOutlet var borderProtectionLeft: UIView!
+    @IBOutlet var borderProtectionRight: UIView!
     @IBOutlet var photoStripView: UIView!
     @IBOutlet var photoStripCollectionView: UICollectionView!
     @IBOutlet var photoStripLeadingConstraint: NSLayoutConstraint!
@@ -78,45 +80,26 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         Bundle.main.loadNibNamed("MapView", owner: self, options: nil)
         addSubview(mainView)
         
+        //screen adjustments.
         adjustScreenforXFamily()
         
         circleNameTextField.delegate = self
         mapBoxView.delegate = self
         locationManager?.delegate = self
         self.talkbox?.delegate = self
+        photoStripCollectionView.dataSource = self
+        photoStripCollectionView.delegate = self
+        
         
         circleNameTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
-        locationManager = CLLocationManager()
-
-        locationServicesSetup()
-        //setup annotation observer
-        plotAnnotations()
-        
-        
-        adaptLineToTextSize(circleNameTextField)
-        
         let tapLockerGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOnLocker))
         lockerView.addGestureRecognizer(tapLockerGesture)
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
         mapBoxView.addGestureRecognizer(longPressGesture)
         photoStripCollectionView?.register(UINib(nibName: "PhotoStripCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PhotoStripCollectionViewCell")
-        photoStripCollectionView.dataSource = self
-        photoStripCollectionView.delegate = self
-        
-        
 
-    }
-
-    override func layoutSubviews() {
-        let overlay = self.createOverlay(frame: self.frame,
-                                         xOffset: self.frame.midX,
-                                         yOffset: self.frame.midY,
-                                         radius: 90.0)
         
-        self.expandedCircleViews.addSubview(overlay)
-        self.expandedCircleViews.sendSubviewToBack(overlay)
-        //HERE
-
+        // This was at LayoutSubviews
         // add pan gesture to detect when the map moves
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.didDragMap(_:)))
         
@@ -125,6 +108,26 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         
         // add the gesture to the mapView
         mapBoxView.addGestureRecognizer(panGesture)
+
+        locationManager = CLLocationManager()
+        locationServicesSetup()
+        //setup annotation observer
+        plotAnnotations()
+        adaptLineToTextSize(circleNameTextField)
+        
+
+    }
+
+    
+    // prepares the overlay at expandedCircleViews (black alpha with a hole in the center)
+    override func layoutSubviews() {
+        let overlay = self.createOverlay(frame: self.frame,
+                                         xOffset: self.frame.midX,
+                                         yOffset: self.frame.midY,
+                                         radius: 90.0)
+        
+        self.expandedCircleViews.addSubview(overlay)
+        self.expandedCircleViews.sendSubviewToBack(overlay)
         
         configMapbox()
 
@@ -159,7 +162,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     fileprivate func locationServicesSetup() {
-        //TODO: COntrol for locationmanager absense
+        //TODO: COntrol for locationmanager absense here
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager?.startUpdatingLocation()
@@ -208,9 +211,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     ///JUNG ACTIONS
     
     override func talk() {
-
-        
-
+        //Jung should talk here
     }
     
     @IBAction func enterCircleTouched(_ sender: UIButton) {
@@ -222,21 +223,24 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.MapView.rawValue
             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
         
-            mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
             //work on the map before showing
             toogleCircleAndMapViews(isOnMap: true)
+        
             self.alpha = 0
             self.isHidden = false
             self.talkbox?.delegate = self
+        
             UIView.animate(withDuration: 0.4, animations: {
                 self.mainViewController?.jungChatLogger.backgroundColor = UIColor.clear
                 self.alpha = 1
+                //start loader here.
 
             }) { (completed) in
                 CircleAnnotationManagement.sharedInstance.retrieveCirclesCloseToPlayer() {
                     // the observer will fire, see: plotAnnotations()
                     UIView.animate(withDuration: 0.4) {
                         self.mapBoxView.alpha = 1
+                        //finish loader here.
                     }
                 }
 
@@ -246,10 +250,8 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     override func deactivate() {
-        self.deselectAnnotationAndBackToMap()
-        self.mainViewController?.jungChatLogger.resetJungChat()
-        mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
-
+        //self.deselectAnnotationIfAnyAndBackToMap()
+        self.toogleCircleAndMapViews(isOnMap: true)
         self.fadeOutView()
 
     }
@@ -289,7 +291,12 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             removeAnnotationAndBackToMap()
         } else {
             // USER HITS BACK TO THE MAP
-            deselectAnnotationAndBackToMap()
+            //UIView.animate(withDuration: 1, animations: {
+            self.toogleCircleAndMapViews(isOnMap: true)
+            //}) { (completed) in
+                
+            //}
+            //deselectAnnotationIfAnyAndBackToMap()
         }
     }
 
@@ -316,7 +323,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
                 
                 self.resetInnerCreateCircleViewComponents()
                 
-                self.deselectAnnotationAndBackToMap()
+                self.deselectAnnotationIfAnyAndBackToMap()
 
                 self.isNewCircle = false
             }
@@ -337,6 +344,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     @IBAction func addUserBtnClicked(_ sender: UIButton) {
+        print("add user clicked")
         mainViewController?.searchView.activate()
     }
     

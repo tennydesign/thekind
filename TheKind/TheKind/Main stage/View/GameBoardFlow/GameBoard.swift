@@ -54,10 +54,10 @@ class GameBoard: KindActionTriggerView {
     
     override func activate() {
         self.fadeInView()
-        
+        self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
         gameBoardScene?.mainViewController = self.mainViewController
         gameBoardScene?.routineFinishedPostObserver()
-
+        
         UIView.animate(withDuration: 0.3) {
             self.gameBoardScene?.mainViewController?.jungChatLogger.bottomGradient.alpha = 1
         }

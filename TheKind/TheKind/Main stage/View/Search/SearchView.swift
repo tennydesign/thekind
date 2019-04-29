@@ -19,7 +19,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     
     let searchViewModel = SearchViewModel()
     
-    var data:[KindUser]!
+    var data:[KindUser] = []
     
     var filteredData: [KindUser] = [] {
         didSet {

@@ -18,6 +18,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapActionTriggerView">
             <connections>
                 <outlet property="addUserBtn" destination="wKH-v1-joR" id="TFY-TP-m4Q"/>
+                <outlet property="borderProtectionLeft" destination="f05-9b-jrt" id="U9t-dx-h1G"/>
+                <outlet property="borderProtectionRight" destination="f05-9b-jrt" id="Es4-Yc-ju7"/>
                 <outlet property="circleNameTextField" destination="Wky-b4-S07" id="3zg-tZ-Hbh"/>
                 <outlet property="createCircleYConstraint" destination="MUP-G9-EKY" id="v39-P8-QEr"/>
                 <outlet property="enterCircleButton" destination="rZn-YL-TVN" id="lfW-ub-b59"/>
