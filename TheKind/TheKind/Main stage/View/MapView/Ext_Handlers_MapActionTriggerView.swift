@@ -118,11 +118,11 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     func closeLock() {
         circleIsInviteOnly = true
-        showPhotoStrip()
+        loadUserPhotoStrip()
         viewSkatingX(lockTopImage, left: false, -20, reverse: false)
     }
     
-    func showPhotoStrip() {
+    func loadUserPhotoStrip() {
         guard let set = selectedAnnotationView?.circleDetails else {return}
         //
         guard let admin = set.admin else {return}
@@ -133,12 +133,12 @@ extension MapActionTriggerView: UITextFieldDelegate {
                     self.usersInCircle = users
                     self.photoStripCollectionView.reloadData()
                 }
-                self.toggleAddButtonOfPhotoStrip(isAdmin) // always true
+                self.showPhotoStrip(isAdmin) // always true
             }
         } else {
             self.usersInCircle = []
             self.photoStripCollectionView.reloadData()
-            self.toggleAddButtonOfPhotoStrip(isAdmin)
+            self.showPhotoStrip(isAdmin)
         }
 
     }
@@ -153,8 +153,8 @@ extension MapActionTriggerView: UITextFieldDelegate {
         }
     }
 
-    //opens space for the + button
-    fileprivate func toggleAddButtonOfPhotoStrip(_ isAdmin: Bool) {
+    //also opens space for the + button when admin
+    fileprivate func showPhotoStrip(_ isAdmin: Bool) {
         if isAdmin{
             photoStripLeadingConstraint.constant = 50
             UIView.animate(withDuration: 0.4) {
@@ -216,18 +216,6 @@ extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSo
         }
         return cell
     }
-    
-//    func updateUsersInCircle(set: CircleAnnotationSet) {
-//        CircleAnnotationManagement.sharedInstance.loadCircleUsersPhotoUrls(set: set) { (urls) in
-//            urls?.forEach({ (url) in
-//                let imageView: UIImageView = UIImageView()
-//                imageView.loadImageUsingCacheWithUrlString(urlString: url.absoluteString)
-//                self.usersInCircleImageViews.append(imageView)
-//            })
-//
-//            self.photoStripCollectionView.reloadData()
-//        }
-//    }
     
 }
 

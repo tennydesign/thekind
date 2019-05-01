@@ -15,6 +15,7 @@ class LandingViewControllerViewModel {
     // after somework.
     let handleLoginWithFirestore = HandleLoginWithFirestore()
     var bindableIsFormValid = Bindable<Bool>()
+    
     var password: String? {
         didSet {
             checkFormValidity()

@@ -9,9 +9,10 @@
 import UIKit
 import Mapbox
 import MapKit
-//REFACTOR THE UP AND DOWN FOR DRAWER
-class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
+
+class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
+    
     @IBOutlet var borderProtectionLeft: UIView!
     @IBOutlet var borderProtectionRight: UIView!
     @IBOutlet var photoStripView: UIView!
@@ -45,15 +46,15 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     var circleIsInviteOnly: Bool = false
     var locationManager: CLLocationManager?
     var selectedAnnotationView: CircleAnnotationView?
+    
     var mainViewController: MainViewController?
     var talkbox: JungTalkBox?
-    var currentlyExpandedCircleId: String = ""
     var latitude: CLLocationDegrees!
     var longitude: CLLocationDegrees!
     var isNewCircle: Bool = false
     var usersInCircle: [KindUser] = []
     var longPressGesture: UIGestureRecognizer!
-    
+
     // INIT VALUES
     // HERE: Maybe add a little bit more space from top of jungchatlogger and map.
     let MAXZOOMLEVEL: Double = 18
@@ -89,8 +90,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.talkbox?.delegate = self
         photoStripCollectionView.dataSource = self
         photoStripCollectionView.delegate = self
-        
-        
+      
         circleNameTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         let tapLockerGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOnLocker))
         lockerView.addGestureRecognizer(tapLockerGesture)
@@ -116,7 +116,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         adaptLineToTextSize(circleNameTextField)
         //init state for locker is open
         openLock()
-
+        updateCircleInformationOnObserver()
     }
 
     
@@ -223,7 +223,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     override func activate() {
             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.MapView.rawValue
             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
-        
+    
             //work on the map before showing
             toogleCircleAndMapViews(isOnMap: true)
         
@@ -283,6 +283,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         if let annotation = annotationView.annotation {
             self.mapBoxView.removeAnnotation(annotation)
             self.selectedAnnotationView = nil
+            CircleAnnotationManagement.sharedInstance.currentlySelectedCircleSet = nil
         }
     }
     
@@ -339,9 +340,17 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     @IBAction func addUserBtnClicked(_ sender: UIButton) {
         print("add user clicked")
-        mainViewController?.searchView.selectedAnnotationView = selectedAnnotationView
         mainViewController?.searchView.activate()
+        //HERE .. trying to think about the workflow back and forth the photostrip wiith add user.
     }
+    
+    func updateCircleInformationOnObserver() {
+        CircleAnnotationManagement.sharedInstance.userListChangedOnCircleObserver = { [unowned self] in
+            self.photoStripCollectionView.reloadData()
+            print("observed fired!!!!")
+        }
+    }
+
     
 }
 

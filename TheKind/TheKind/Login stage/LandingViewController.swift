@@ -100,6 +100,7 @@ class LandingViewController: UIViewController,UITextFieldDelegate {
     
     func setupViewModelObservers() {
         //return from viewmodel.
+        // this is a listener/observer. Whenever  bindableIsFormValid.value is called in LandingViewControllerViewModel this will fire. Weird sintax.
         landingViewControllerViewModel.bindableIsFormValid.bind { [unowned self](isFormValid) in
             guard let isFormValid = isFormValid else {return}
             guard let loginView = self.choosenLoginView else {return}

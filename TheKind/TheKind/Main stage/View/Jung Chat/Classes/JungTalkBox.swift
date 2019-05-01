@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 class JungTalkBox {
+    
     var isProcessingSpeech = false
     let tempoBetweenPlayerResponseAndJungResponse: Double = 2
     //var mainViewController: MainViewController?
@@ -139,8 +140,8 @@ class JungTalkBox {
  
         if snippet.action == .activate {
             returnActionTriggerView(by: tag)?.activate()
-        }                                                                                                                                                                                           
-
+        }
+        
         if snippet.action == .deactivate {
             returnActionTriggerView(by: tag)?.deactivate()
         }

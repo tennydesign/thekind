@@ -9,9 +9,11 @@
 import Foundation
 import UIKit
 
+
+
 class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UserSearchViewCellDelegate, UITextFieldDelegate {
 
-    var selectedAnnotationView: CircleAnnotationView?
+    //var mapActionTriggerView: MapActionTriggerView?
     var keyboardHeight:CGFloat!
     @IBOutlet var searchView: UIView!
     var addUserMode = false
@@ -19,9 +21,9 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     @IBOutlet var searchBar: UISearchBar!
     
     let searchViewModel = SearchViewModel()
-    
+
     var data:[KindUser] = []
-    
+
     var filteredData: [KindUser] = [] {
         didSet {
             searchTableView.reloadData()
@@ -45,7 +47,6 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         searchTableView.dataSource = self
         searchTableView.delegate = self
         searchBar.delegate = self
-   
         setupKeyboardObservers()
         searchTableView.rowHeight = 89
         searchTableView.register(UINib(nibName: "UserSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "UserSearchTableViewCell")
@@ -177,9 +178,9 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     func addUserClicked(_ sender: UserSearchTableViewCell) {
         guard let tappedIndexPath = searchTableView.indexPath(for: sender) else {return}
         if let cell = searchTableView.cellForRow(at: tappedIndexPath) as? UserSearchTableViewCell {
-            guard let selectedAnnotationView = selectedAnnotationView else {return}
             guard let userId = cell.user?.uid else {return}
-            /// here
+            guard let set = CircleAnnotationManagement.sharedInstance.currentlySelectedCircleSet else {return}
+            CircleAnnotationManagement.sharedInstance.addUserToCircle(set: set, userId: userId, completion: nil)
         }
         print("clicked at \(tappedIndexPath)")
     }

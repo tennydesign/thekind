@@ -25,6 +25,7 @@ class UserSearchTableViewCell: UITableViewCell {
     @IBOutlet var kindImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     weak var delegate: UserSearchViewCellDelegate?
+    
     var user: KindUser? {
         didSet {
             nameLabel.text = user?.name

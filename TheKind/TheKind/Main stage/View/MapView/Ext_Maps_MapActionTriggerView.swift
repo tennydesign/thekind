@@ -49,7 +49,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         guard let coordinates = annotationView.circleDetails?.location else {fatalError()}
         
         self.selectedAnnotationView = annotationView
-        
+        CircleAnnotationManagement.sharedInstance.currentlySelectedCircleSet = annotationView.circleDetails
         //Extract annotation details here.
         guard let circleDetails = annotationView.circleDetails else {
             print("annotation carries no details to be plotted: mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView)")
@@ -72,6 +72,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     func activateOnSelection(_ annotationView: CircleAnnotationView, completion: ((_ circleAnnotationSet: CircleAnnotationSet)->())?) {
         self.clearJungChatLog()
         longPressGesture.isEnabled = false //to avoid circle creation.
+        
         
         UIView.animate(withDuration: 1, animations: {
             //scaling circle
@@ -121,7 +122,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         if let isPrivate = set.isPrivate, isPrivate {
             let keyImage = UIImage(named: "privatekey")?.withRenderingMode(.alwaysOriginal)
             self.enterCircleButton.setBackgroundImage(keyImage, for: .normal)
-            self.showPhotoStrip()
+            self.loadUserPhotoStrip()
         } else {
             let enterImage = UIImage(named: "newEye")
             self.enterCircleButton.setBackgroundImage(enterImage, for: .normal)
@@ -226,7 +227,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             })
         
             self.selectedAnnotationView = nil
-            
+            CircleAnnotationManagement.sharedInstance.currentlySelectedCircleSet = nil
             if let completion = completion {
                 completion()
             }
