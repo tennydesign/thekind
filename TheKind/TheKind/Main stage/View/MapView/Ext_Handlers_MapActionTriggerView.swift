@@ -27,7 +27,11 @@ extension MapActionTriggerView: UITextFieldDelegate {
     @objc func textFieldDidChange(textField: UITextField){
         adaptLineToTextSize(textField)
         guard let circleName = textField.text, !(circleName.trimmingCharacters(in: .whitespaces).isEmpty) else {return}
+        
         createCircleName = circleName
+        if selectedAnnotationView != nil {
+            selectedAnnotationView?.circleDetails?.circlePlotName = createCircleName
+        }
     }
     
     
@@ -48,8 +52,10 @@ extension MapActionTriggerView: UITextFieldDelegate {
     }
     
     func createNewCircle(completion: ((CircleAnnotationSet?)->())?) {
+        
+        guard let recentlyCreatedSet = selectedAnnotationView?.circleDetails else {return}
         if (!createCircleName.isEmpty) && !(createCircleName == "[tap to name it]") {
-            CircleAnnotationManagement.sharedInstance.saveCircle(name: createCircleName, isPrivate: circleIsInviteOnly, users: [], latitude: latitude, longitude: longitude) { (circleAnnotationSet, err) in
+            CircleAnnotationManagement.sharedInstance.saveCircle(set: recentlyCreatedSet) { (circleAnnotationSet, err) in
                 if let err = err {
                     print(err)
                     return
@@ -72,11 +78,21 @@ extension MapActionTriggerView: UITextFieldDelegate {
             let touchpoint = gestureRecognizer.location(in: mapBoxView)
             let newCoordinates = mapBoxView.convert(touchpoint, toCoordinateFrom: mapBoxView)
             
+            let dateformat = DateFormatter()
+            dateformat.dateFormat = "MM-dd hh:mm a"
+            let dateNow = dateformat.string(from: Date())
+
+            
             //SETUP COORDINATES
             latitude = newCoordinates.latitude
             longitude = newCoordinates.longitude
- 
-            let point = KindPointAnnotation(circleAnnotationSet: CircleAnnotationSet(location: newCoordinates, circlePlotName: "", isPrivate: false, circleId: "", admin: "", users: [""]))
+            let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            
+            guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
+            let users:[String] = [uid] // initiates with the creator
+            
+            let set = CircleAnnotationSet(location: location, circlePlotName: createCircleName, isPrivate: circleIsInviteOnly, circleId: nil, admin: uid, users: users, dateCreated: dateNow)
+            let point = KindPointAnnotation(circleAnnotationSet: set)
             self.mapBoxView.addAnnotation(point)
             
             self.mapBoxView.selectAnnotation(point, animated: true)
@@ -84,17 +100,15 @@ extension MapActionTriggerView: UITextFieldDelegate {
         }
     }
     
+    // + users not working on NEW circles.
     @objc func handleTapOnLocker(gestureRecognizer: UITapGestureRecognizer) {
-        togglePrivateIndicator()
-    }
-    
-    func togglePrivateIndicator() {
         if lockTopImage.transform == .identity {
             closeLock()
         } else {
             openLock()
         }
     }
+    
     
     func openLock() {
         circleIsInviteOnly = false
@@ -110,7 +124,9 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     func showPhotoStrip() {
         guard let set = selectedAnnotationView?.circleDetails else {return}
-        let isAdmin = self.checkIfIsAdmin(set.admin)
+        //
+        guard let admin = set.admin else {return}
+        let isAdmin = self.checkIfIsAdmin(admin)
         if !isNewCircle {
             CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile(set: set) { (kindUsers) in
                 if let users = kindUsers {

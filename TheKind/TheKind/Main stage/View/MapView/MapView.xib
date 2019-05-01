@@ -69,42 +69,6 @@
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V9E-SM-J71" userLabel="ExpandedCircleViews">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="727"/>
                     <subviews>
-                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jX0-Ym-h0s" userLabel="photoStrip">
-                            <rect key="frame" x="0.0" y="150" width="375" height="72"/>
-                            <subviews>
-                                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wKH-v1-joR">
-                                    <rect key="frame" x="15" y="21.5" width="29" height="29"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="29" id="0YJ-TK-pyB"/>
-                                        <constraint firstAttribute="width" constant="29" id="4Wn-8X-Nc5"/>
-                                    </constraints>
-                                    <state key="normal" title="Button" image="addCircleIcon"/>
-                                    <connections>
-                                        <action selector="addUserBtnClicked:" destination="-1" eventType="touchUpInside" id="j2R-xW-ECg"/>
-                                    </connections>
-                                </button>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="qIh-BA-Iel">
-                                    <rect key="frame" x="50" y="0.0" width="325" height="72"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gFR-6P-nun">
-                                        <size key="itemSize" width="59" height="70"/>
-                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                        <inset key="sectionInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    </collectionViewFlowLayout>
-                                </collectionView>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="qIh-BA-Iel" secondAttribute="trailing" id="75t-Nj-dt1"/>
-                                <constraint firstItem="wKH-v1-joR" firstAttribute="leading" secondItem="jX0-Ym-h0s" secondAttribute="leading" constant="15" id="B1T-xB-pYe"/>
-                                <constraint firstItem="qIh-BA-Iel" firstAttribute="leading" secondItem="jX0-Ym-h0s" secondAttribute="leading" constant="50" id="LoJ-pr-Rb8"/>
-                                <constraint firstAttribute="bottom" secondItem="qIh-BA-Iel" secondAttribute="bottom" id="cc8-Yh-nkz"/>
-                                <constraint firstItem="wKH-v1-joR" firstAttribute="centerY" secondItem="jX0-Ym-h0s" secondAttribute="centerY" id="mqf-yV-6KC"/>
-                                <constraint firstAttribute="height" constant="72" id="sn5-Gx-TgE"/>
-                                <constraint firstItem="qIh-BA-Iel" firstAttribute="top" secondItem="jX0-Ym-h0s" secondAttribute="top" id="wKQ-g1-2iU"/>
-                            </constraints>
-                        </view>
                         <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VjG-6D-ALI" userLabel="CreateCircle">
                             <rect key="frame" x="0.0" y="139" width="375" height="393"/>
                             <subviews>
@@ -177,7 +141,7 @@
                                 <constraint firstAttribute="height" constant="393" id="h5m-Aj-sr5"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMQ-OI-6tS" userLabel="ExistentExpandedCircleView">
+                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMQ-OI-6tS" userLabel="ExistentExpandedCircleView">
                             <rect key="frame" x="104" y="243" width="167" height="121"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Philz Coffee Berry Street" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfK-0s-khr" userLabel="labelCircleName">
@@ -210,6 +174,42 @@
                                 <constraint firstItem="rZn-YL-TVN" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="20" id="QzN-Va-E0h"/>
                                 <constraint firstItem="YfK-0s-khr" firstAttribute="top" secondItem="rZn-YL-TVN" secondAttribute="bottom" constant="8" id="fto-7R-Mqd"/>
                                 <constraint firstItem="rZn-YL-TVN" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" id="t4X-Mk-Rwf"/>
+                            </constraints>
+                        </view>
+                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jX0-Ym-h0s" userLabel="photoStrip">
+                            <rect key="frame" x="0.0" y="150" width="375" height="72"/>
+                            <subviews>
+                                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wKH-v1-joR">
+                                    <rect key="frame" x="15" y="21.5" width="29" height="29"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="29" id="0YJ-TK-pyB"/>
+                                        <constraint firstAttribute="width" constant="29" id="4Wn-8X-Nc5"/>
+                                    </constraints>
+                                    <state key="normal" title="Button" image="addCircleIcon"/>
+                                    <connections>
+                                        <action selector="addUserBtnClicked:" destination="-1" eventType="touchUpInside" id="j2R-xW-ECg"/>
+                                    </connections>
+                                </button>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="qIh-BA-Iel">
+                                    <rect key="frame" x="50" y="0.0" width="325" height="72"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gFR-6P-nun">
+                                        <size key="itemSize" width="59" height="70"/>
+                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                        <inset key="sectionInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </collectionViewFlowLayout>
+                                </collectionView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="qIh-BA-Iel" secondAttribute="trailing" id="75t-Nj-dt1"/>
+                                <constraint firstItem="wKH-v1-joR" firstAttribute="leading" secondItem="jX0-Ym-h0s" secondAttribute="leading" constant="15" id="B1T-xB-pYe"/>
+                                <constraint firstItem="qIh-BA-Iel" firstAttribute="leading" secondItem="jX0-Ym-h0s" secondAttribute="leading" constant="50" id="LoJ-pr-Rb8"/>
+                                <constraint firstAttribute="bottom" secondItem="qIh-BA-Iel" secondAttribute="bottom" id="cc8-Yh-nkz"/>
+                                <constraint firstItem="wKH-v1-joR" firstAttribute="centerY" secondItem="jX0-Ym-h0s" secondAttribute="centerY" id="mqf-yV-6KC"/>
+                                <constraint firstAttribute="height" constant="72" id="sn5-Gx-TgE"/>
+                                <constraint firstItem="qIh-BA-Iel" firstAttribute="top" secondItem="jX0-Ym-h0s" secondAttribute="top" id="wKQ-g1-2iU"/>
                             </constraints>
                         </view>
                     </subviews>

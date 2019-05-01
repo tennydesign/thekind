@@ -28,7 +28,7 @@ extension MapActionTriggerView {
         var actions: [KindActionType] = [.none, .none]
         var actionViews: [ActionViewName] = [.none,.none]
         
-        if set.isPrivate {
+        if let isPrivate = set.isPrivate, isPrivate {
             txt.append("-You need to be invited to get in.")
             actions.append(.none)
             actionViews.append(.none)
@@ -45,6 +45,19 @@ extension MapActionTriggerView {
         let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
         
+    }
+    
+    func explainerGoToGameBoard() {
+        //enter circle
+        let actions: [KindActionType] = [KindActionType.deactivate,KindActionType.activate]
+        let actionViews: [ActionViewName] = [ActionViewName.MapView, ActionViewName.GameBoard]
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(action: actions, actionView: actionViews, options: nil))
+        
+        //Happens behind the scenes.
+        //Will delay 2 second to allow alpha into board, and then it will deselect the annotation and turn Map to normal state.
+        delay(bySeconds: 2) {
+            self.deactivate()
+        }
     }
     
     func explainerCircleSavedSuccessfully() {

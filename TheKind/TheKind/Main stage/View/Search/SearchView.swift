@@ -11,6 +11,7 @@ import UIKit
 
 class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UserSearchViewCellDelegate, UITextFieldDelegate {
 
+    var selectedAnnotationView: CircleAnnotationView?
     var keyboardHeight:CGFloat!
     @IBOutlet var searchView: UIView!
     var addUserMode = false
@@ -173,10 +174,12 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         
     }
     
-    func addRemoveClicked(_ sender: UserSearchTableViewCell) {
+    func addUserClicked(_ sender: UserSearchTableViewCell) {
         guard let tappedIndexPath = searchTableView.indexPath(for: sender) else {return}
         if let cell = searchTableView.cellForRow(at: tappedIndexPath) as? UserSearchTableViewCell {
-            //ADD HERE THE ITEM IN THE ARRAY THAT WILL RELAD THE COLLECTIONVIEW.
+            guard let selectedAnnotationView = selectedAnnotationView else {return}
+            guard let userId = cell.user?.uid else {return}
+            /// here
         }
         print("clicked at \(tappedIndexPath)")
     }

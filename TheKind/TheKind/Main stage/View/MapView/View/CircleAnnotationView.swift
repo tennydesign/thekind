@@ -19,6 +19,7 @@ class CircleAnnotationView: MGLAnnotationView {
             
         }
     }
+    
     let button = UIButton(type: .system)
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,6 +49,7 @@ class CircleAnnotationView: MGLAnnotationView {
     override func prepareForReuse() {
         circleDetails = nil
     }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         // Use CALayer’s corner radius to turn this view into a circle.
@@ -70,36 +72,6 @@ class CircleAnnotationView: MGLAnnotationView {
         //        layer.add(animation, forKey: "borderWidth")
         //
         
-    }
-    
-}
-
-
-
-class KindPointAnnotation: MGLPointAnnotation {
-    var circleDetails: CircleAnnotationSet? {
-        didSet {
-            
-        }
-    }
-    
-    init(circleAnnotationSet: CircleAnnotationSet) {
-        super.init()
-        coordinate = circleAnnotationSet.location
-        title = circleAnnotationSet.circlePlotName
-        circleDetails = circleAnnotationSet
-        
-    }
-    
-    
-    override init() {
-        super.init()
-    }
-    
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
 }

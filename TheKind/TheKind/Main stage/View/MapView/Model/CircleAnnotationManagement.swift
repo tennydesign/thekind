@@ -28,89 +28,77 @@ class CircleAnnotationManagement {
             }
             
             snapshot?.documents.forEach({ (document) in
-                let data = document.data()
-                //print(data)
-                //print(document.documentID)
-                guard let name = data["name"] as? String else {fatalError("no name")}
-                guard let geoPoint = data["location"] as? GeoPoint else {fatalError("no geopoint")}
-                guard let isPrivate = data["isprivate"] as? Bool else {fatalError("no private or not bool")}
-                guard let admin = data["admin"] as? String else {fatalError("no admin on file")}
-                let users = data["users"] as? [String] ?? []
-                let location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: geoPoint.latitude, longitude: geoPoint.longitude)
-                let annotationSet = CircleAnnotationSet(location: location, circlePlotName: name, isPrivate: isPrivate, circleId: document.documentID, admin: admin, users: users)
-                self.circles.append(annotationSet)
+                let circleAnnotationSet = CircleAnnotationSet(document: document)
+                self.circles.append(circleAnnotationSet)
             })
-            
+
             self.circleAnnotationObserver?(self.circles)
+            
             completion()
         }
         
     }
     
     
-    func saveCircle(name: String, isPrivate: Bool, users: [String],latitude: Double, longitude: Double, completion: @escaping (CircleAnnotationSet, Error?)->()) {
+    func saveCircle(set: CircleAnnotationSet, completion: @escaping (CircleAnnotationSet?, Error?)->()) {
         let db = Firestore.firestore()
-  
-        let dateformat = DateFormatter()
-        dateformat.dateFormat = "MM-dd hh:mm a"
-        let dateNow = dateformat.string(from: Date())
-        
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        var allUsers = users
-        allUsers.append(uid)
-        let circleDict: [String:Any] = ["admin": uid, "name" : name , "created": dateNow, "isprivate": isPrivate, "location": GeoPoint(latitude: latitude, longitude: longitude), "users": allUsers]
-        
-        var ref: DocumentReference? = nil
-        
-        ref = db.collection("kindcircles").addDocument(data: circleDict) { err in
+    
+        var documentRef: DocumentReference? = nil
+        //this is returning nil HERE!!!
+        guard let circleDict = set.asDictionary() else {return}
+        documentRef = db.collection("kindcircles").addDocument(data: circleDict) { err in
             if let err = err {
                 print(err)
                 return
             }
+            if let circleid = documentRef?.documentID {
+                documentRef?.setData(["circleid":circleid], merge: true)
+            }
             
-            //print(ref!.documentID)
-            KindUserSettingsManager.sharedInstance.updateUserCircleArray(newElement: ref!.documentID)
+            documentRef?.getDocument(completion: { (document,error) in
+                if let error = error {
+                    completion(nil, error)
+                    return
+                }
+                
+                if let document = document, document.exists {
+                    let circleAnnotationSet = CircleAnnotationSet(document: document)
+                    completion(circleAnnotationSet,nil)
+                } else {
+                    print("document doesn't exist: func saveCircle" )
+                }
+            })
             
-            //Create the set for the new circle
-            let circleAnnotationSet = CircleAnnotationSet.init(location: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), circlePlotName: name, isPrivate: isPrivate, circleId: ref!.documentID, admin: uid, users: allUsers)
-            
-            completion(circleAnnotationSet,nil)
+
         }
         
         
     }
-//
-//    //HERE: IT WORKS
-//    func updateCircleSettings(circleId: String,isprivate:Bool?, name:String?, completion: ((Error?)->())?) {
-//        let db = Firestore.firestore()
-//        guard let uid = Auth.auth().currentUser?.uid else {return}
-//        //guard let annotation = (circles.filter{$0.circleId == circleId && $0.admin == uid}).first else {return}
-//
-//        var circleDict:[String:Any] = [:]
-//        circleDict["admin"] = uid
-//
-//        if let isprivate = isprivate {
-//            circleDict["isprivate"] = isprivate
-//        }
-//        if let name = name {
-//            circleDict["name"] = name
-//        }
-//
-//        db.collection("kindcircles").document(circleId).updateData(circleDict) { (err) in
-//            if let err = err {
-//                completion?(err)
-//                return
-//            } else {
-//                completion?(nil)
-//            }
-//
-//        }
-//
-//    }
+    
+    
+    func retrieveCircleById(circleId: String, completion: ((CircleAnnotationSet?)->())?) {
+        let db = Firestore.firestore()
+        db.collection("kindcircles").document(circleId).getDocument {  (document,err) in
+            if let err = err {
+                print(err)
+                completion?(nil)
+                return
+            }
+            if document?.data() == nil
+            {
+                print("no data")
+                completion?(nil)
+                return
+            }
+            
+            let set:CircleAnnotationSet = CircleAnnotationSet(document: document!)
+            completion?(set)
+        }
+    }
     
     func addUserToCircle(set: CircleAnnotationSet, newElement: String) {
             let db = Firestore.firestore()
-            let circleId = set.circleId
+            guard let circleId = set.circleId else {return}
             let circlesRef = db.collection("kindcircles").document(circleId)
             //updates array by keeping it unique
             circlesRef.updateData(["users" : FieldValue.arrayUnion([newElement])])
@@ -119,7 +107,7 @@ class CircleAnnotationManagement {
     
     func removeFromUserCircleArray(set: CircleAnnotationSet, removingElement: String) {
         let db = Firestore.firestore()
-        let circleId = set.circleId
+        guard let circleId = set.circleId else {return}
         let circlesRef = db.collection("kindcircles").document(circleId)
         circlesRef.updateData(["users" : FieldValue.arrayRemove([removingElement])
             ])
@@ -127,7 +115,7 @@ class CircleAnnotationManagement {
     
     func loadUserIDsInCircle(set: CircleAnnotationSet, completion: (([String]?)->())?) {
         let db = Firestore.firestore()
-        let circleId = set.circleId
+        guard let circleId = set.circleId else {fatalError("no circleID: func loadUserIDsInCircle")}
         db.collection("kindcircles").document(circleId).getDocument {  (document,err) in
             if let err = err {
                 print(err)
@@ -171,3 +159,35 @@ class CircleAnnotationManagement {
         }
     }
 }
+
+
+
+
+//
+//    //HERE: IT WORKS
+//    func updateCircleSettings(circleId: String,isprivate:Bool?, name:String?, completion: ((Error?)->())?) {
+//        let db = Firestore.firestore()
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
+//        //guard let annotation = (circles.filter{$0.circleId == circleId && $0.admin == uid}).first else {return}
+//
+//        var circleDict:[String:Any] = [:]
+//        circleDict["admin"] = uid
+//
+//        if let isprivate = isprivate {
+//            circleDict["isprivate"] = isprivate
+//        }
+//        if let name = name {
+//            circleDict["name"] = name
+//        }
+//
+//        db.collection("kindcircles").document(circleId).updateData(circleDict) { (err) in
+//            if let err = err {
+//                completion?(err)
+//                return
+//            } else {
+//                completion?(nil)
+//            }
+//
+//        }
+//
+//    }

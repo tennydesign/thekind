@@ -114,7 +114,8 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         //setup annotation observer
         plotAnnotations()
         adaptLineToTextSize(circleNameTextField)
-        
+        //init state for locker is open
+        openLock()
 
     }
 
@@ -252,6 +253,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     override func deactivate() {
         //self.deselectAnnotationIfAnyAndBackToMap()
         self.toogleCircleAndMapViews(isOnMap: true)
+        self.mainViewController?.hudView.hudCenterDisplay.alpha = 0
         self.fadeOutView()
 
     }
@@ -261,7 +263,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.mainViewController?.jungChatLogger.hideOptionLabels(true, completion: nil)
     }
     
-    func describeCircle(set: CircleAnnotationSet) {
+    func initializeNewCircleDescription(set: CircleAnnotationSet) {
         if isNewCircle {
             createCircleName = ""
             circleNameTextField.text = "tap to name it..."
@@ -295,6 +297,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
                 self.isNewCircle = false
                 self.toogleCircleAndMapViews(isOnMap: true)
                 self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
+                self.openLock()
             }
             
         } else {
@@ -305,49 +308,38 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     //SAVE
     //HERE: MAKE THIS BETTER
+
+    
     override func rightOptionClicked() {
         self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
-        
-        //Grab the selectedAnnotation (even on create longpress will generate a template selectedAnnotation, see longpress handle)
-        guard let selectedAnnotationView = self.selectedAnnotationView else {return}
-        
-        if isNewCircle {
-            //CREATE CIRCLE
+        self.selectedAnnotationView?.circleDetails?.isPrivate = circleIsInviteOnly
+        if isNewCircle { //save circle
             createNewCircle() { (circleAnnotationSet) in
                 guard let annotationSet = circleAnnotationSet else {
                     self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
                     self.explainerNameCircleBeforeSavingIt()
                     return
                 }
-                
                 //gets the payload with the circle details
-                selectedAnnotationView.circleDetails = annotationSet
+                self.selectedAnnotationView?.circleDetails = annotationSet
                 
                 self.resetInnerCreateCircleViewComponents()
                 
-                //self.deselectAnnotationIfAnyAndBackToMap()
+                //Return to mapview.
                  self.toogleCircleAndMapViews(isOnMap: true)
 
                 self.isNewCircle = false
             }
-
-        } else {
-            //JOIN CIRCLE
-            let actions: [KindActionType] = [KindActionType.deactivate,KindActionType.activate]
-            let actionViews: [ActionViewName] = [ActionViewName.MapView, ActionViewName.GameBoard]
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(action: actions, actionView: actionViews, options: nil))
-           
-            //Happens behind the scenes.
-            //Will delay 2 second to allow alpha into board, and then it will deselect the annotation and turn Map to normal state.
-            delay(bySeconds: 2) {
-                self.deactivate()
-            }
+        } else { // enter circle
+            explainerGoToGameBoard()
         }
 
     }
+
     
     @IBAction func addUserBtnClicked(_ sender: UIButton) {
         print("add user clicked")
+        mainViewController?.searchView.selectedAnnotationView = selectedAnnotationView
         mainViewController?.searchView.activate()
     }
     

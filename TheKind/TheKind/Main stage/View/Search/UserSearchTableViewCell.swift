@@ -9,7 +9,7 @@
 import UIKit
 
 protocol UserSearchViewCellDelegate:AnyObject {
-    func addRemoveClicked(_ sender: UserSearchTableViewCell)
+    func addUserClicked(_ sender: UserSearchTableViewCell)
 }
 
 class UserSearchTableViewCell: UITableViewCell {
@@ -52,7 +52,7 @@ class UserSearchTableViewCell: UITableViewCell {
     }
     
     @IBAction func addRemoveButtonClicked(sender: AnyObject) {
-        delegate?.addRemoveClicked(self)
+        delegate?.addUserClicked(self)
     }
     
     
