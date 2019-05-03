@@ -179,8 +179,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         guard let tappedIndexPath = searchTableView.indexPath(for: sender) else {return}
         if let cell = searchTableView.cellForRow(at: tappedIndexPath) as? UserSearchTableViewCell {
             guard let userId = cell.user?.uid else {return}
-            guard let set = CircleAnnotationManagement.sharedInstance.currentlySelectedCircleSet else {return}
-            CircleAnnotationManagement.sharedInstance.addUserToCircle(set: set, userId: userId, completion: nil)
+            CircleAnnotationManagement.sharedInstance.addUserToCircle(userId: userId, completion: nil)
         }
         print("clicked at \(tappedIndexPath)")
     }

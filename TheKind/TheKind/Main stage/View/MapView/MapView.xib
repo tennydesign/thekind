@@ -22,22 +22,22 @@
                 <outlet property="borderProtectionRight" destination="f05-9b-jrt" id="Es4-Yc-ju7"/>
                 <outlet property="circleNameTextField" destination="Wky-b4-S07" id="3zg-tZ-Hbh"/>
                 <outlet property="createCircleYConstraint" destination="MUP-G9-EKY" id="v39-P8-QEr"/>
+                <outlet property="editExpandedCircleView" destination="VjG-6D-ALI" id="gqV-p9-ZWo"/>
                 <outlet property="enterCircleButton" destination="rZn-YL-TVN" id="lfW-ub-b59"/>
-                <outlet property="existentExpandedCircleView" destination="aMQ-OI-6tS" id="gR6-dD-W9a"/>
-                <outlet property="expandedCircleViews" destination="V9E-SM-J71" id="Nnh-A1-lIl"/>
                 <outlet property="insideExpandedCircleViewYConstraint" destination="rHc-ui-cpp" id="u2n-Oh-uqY"/>
                 <outlet property="labelCircleName" destination="YfK-0s-khr" id="yhB-zI-IBK"/>
-                <outlet property="lineWidthConstraint" destination="Dx0-QX-3e9" id="AYT-TQ-25i"/>
                 <outlet property="lockBottomImage" destination="dh3-Lg-KXE" id="KPP-pi-zQp"/>
                 <outlet property="lockTopImage" destination="PZK-EP-lVV" id="ZEN-JT-7FJ"/>
                 <outlet property="lockerView" destination="TyX-do-Mcq" id="oMj-Kp-7hT"/>
                 <outlet property="mainView" destination="iN0-l3-epB" id="2vz-8v-61c"/>
                 <outlet property="mapBoxView" destination="6C4-Ce-GiV" id="W3Q-BH-nKA"/>
-                <outlet property="newExpandedCircleView" destination="VjG-6D-ALI" id="gqV-p9-ZWo"/>
+                <outlet property="newCirclelineWidthConstraint" destination="Dx0-QX-3e9" id="AYT-TQ-25i"/>
+                <outlet property="overlayExpandedCircleViews" destination="V9E-SM-J71" id="Nnh-A1-lIl"/>
                 <outlet property="photoStripCollectionView" destination="qIh-BA-Iel" id="f5H-04-Lgq"/>
                 <outlet property="photoStripLeadingConstraint" destination="LoJ-pr-Rb8" id="vWP-gb-bNJ"/>
                 <outlet property="photoStripView" destination="jX0-Ym-h0s" id="ndW-SJ-0O6"/>
                 <outlet property="photoStripViewTopConstraint" destination="qVl-QL-tbF" id="5bs-1K-dsS"/>
+                <outlet property="presentExpandedCircleView" destination="aMQ-OI-6tS" id="gR6-dD-W9a"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -66,13 +66,13 @@
                         <constraint firstAttribute="width" constant="27" id="3Ng-AD-kX6"/>
                     </constraints>
                 </view>
-                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V9E-SM-J71" userLabel="ExpandedCircleViews">
+                <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V9E-SM-J71" userLabel="ExpandedCircleViews">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="727"/>
                     <subviews>
-                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VjG-6D-ALI" userLabel="CreateCircle">
+                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VjG-6D-ALI" userLabel="EditExpandedCircleView">
                             <rect key="frame" x="0.0" y="139" width="375" height="393"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3K-l4-sWj" userLabel="userNameBox">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3K-l4-sWj" userLabel="circleNameTextField">
                                     <rect key="frame" x="97.5" y="171.5" width="180" height="70"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="tap to name it ..." textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wky-b4-S07" customClass="KindTransparentTextField" customModule="TheKind" customModuleProvider="target">
@@ -141,11 +141,11 @@
                                 <constraint firstAttribute="height" constant="393" id="h5m-Aj-sr5"/>
                             </constraints>
                         </view>
-                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMQ-OI-6tS" userLabel="ExistentExpandedCircleView">
-                            <rect key="frame" x="104" y="243" width="167" height="121"/>
+                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMQ-OI-6tS" userLabel="presentExpandedCircleView">
+                            <rect key="frame" x="0.0" y="107" width="375" height="393"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Philz Coffee Berry Street" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfK-0s-khr" userLabel="labelCircleName">
-                                    <rect key="frame" x="20" y="115" width="127" height="30"/>
+                                    <rect key="frame" x="124" y="251" width="127" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="J1G-LT-KsY"/>
                                         <constraint firstAttribute="width" constant="127" id="skQ-GF-3S9"/>
@@ -155,7 +155,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZn-YL-TVN" userLabel="enterCircleButton">
-                                    <rect key="frame" x="57" y="54" width="53" height="53"/>
+                                    <rect key="frame" x="161" y="190" width="53" height="53"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="53" id="uah-Fx-bax"/>
                                         <constraint firstAttribute="height" constant="53" id="zsO-zY-5TD"/>
@@ -169,8 +169,7 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="YfK-0s-khr" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" id="GCx-uL-2LY"/>
-                                <constraint firstAttribute="width" constant="167" id="Kzu-QC-sU6"/>
-                                <constraint firstAttribute="height" constant="121" id="Q80-NO-cTQ"/>
+                                <constraint firstAttribute="height" constant="393" id="Q80-NO-cTQ"/>
                                 <constraint firstItem="rZn-YL-TVN" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="20" id="QzN-Va-E0h"/>
                                 <constraint firstItem="YfK-0s-khr" firstAttribute="top" secondItem="rZn-YL-TVN" secondAttribute="bottom" constant="8" id="fto-7R-Mqd"/>
                                 <constraint firstItem="rZn-YL-TVN" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" id="t4X-Mk-Rwf"/>
@@ -219,7 +218,9 @@
                         <constraint firstItem="jX0-Ym-h0s" firstAttribute="centerX" secondItem="V9E-SM-J71" secondAttribute="centerX" id="Df8-kF-1CO"/>
                         <constraint firstItem="VjG-6D-ALI" firstAttribute="centerY" secondItem="V9E-SM-J71" secondAttribute="centerY" constant="-28" id="MUP-G9-EKY"/>
                         <constraint firstAttribute="trailing" secondItem="VjG-6D-ALI" secondAttribute="trailing" id="SMJ-fu-2N3"/>
+                        <constraint firstItem="aMQ-OI-6tS" firstAttribute="leading" secondItem="V9E-SM-J71" secondAttribute="leading" id="WhA-mo-jvf"/>
                         <constraint firstAttribute="trailing" secondItem="jX0-Ym-h0s" secondAttribute="trailing" id="dkw-7f-zHv"/>
+                        <constraint firstAttribute="trailing" secondItem="aMQ-OI-6tS" secondAttribute="trailing" id="eB0-fT-5t7"/>
                         <constraint firstItem="VjG-6D-ALI" firstAttribute="centerX" secondItem="V9E-SM-J71" secondAttribute="centerX" id="ebJ-SN-JUa"/>
                         <constraint firstItem="VjG-6D-ALI" firstAttribute="leading" secondItem="V9E-SM-J71" secondAttribute="leading" id="mld-jE-Mhd"/>
                         <constraint firstItem="jX0-Ym-h0s" firstAttribute="top" secondItem="V9E-SM-J71" secondAttribute="top" constant="150" id="qVl-QL-tbF"/>

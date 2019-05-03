@@ -21,20 +21,20 @@ extension MapActionTriggerView {
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
     
-    func explainerCircleExploration(set: CircleAnnotationSet) {
+    func explainerCircleExploration() {
         let dominantKind = "founder"
         let chanceScore = "high"
         var txt = "This place is dominated by the \(dominantKind) kind.-You have \(chanceScore) chances of making friends here."
         var actions: [KindActionType] = [.none, .none]
         var actionViews: [ActionViewName] = [.none,.none]
-        
-        if let isPrivate = set.isPrivate, isPrivate {
-            txt.append("-You need to be invited to get in.")
-            actions.append(.none)
-            actionViews.append(.none)
+        let options = self.talkbox?.createUserOptions(opt1: "Back to map.", opt2: "Enter circle.", actionView: self)
+
+        if circleIsPrivate {
+                txt.append("-You need to be invited to get in.")
+                actions.append(.none)
+                actionViews.append(.none)
         }
         
-        let options = self.talkbox?.createUserOptions(opt1: "Back to map.", opt2: "Enter circle.", actionView: self)
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
     

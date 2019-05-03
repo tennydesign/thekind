@@ -13,16 +13,19 @@ import MapKit
 
 class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
+
     @IBOutlet var borderProtectionLeft: UIView!
     @IBOutlet var borderProtectionRight: UIView!
     @IBOutlet var photoStripView: UIView!
     @IBOutlet var photoStripCollectionView: UICollectionView!
     @IBOutlet var photoStripLeadingConstraint: NSLayoutConstraint!
     @IBOutlet var photoStripViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet var expandedCircleViews: UIView!
-    @IBOutlet var newExpandedCircleView: UIView!
-    @IBOutlet var existentExpandedCircleView: UIView!
+    @IBOutlet var overlayExpandedCircleViews: UIView!
+    @IBOutlet var editExpandedCircleView: UIView!
+    @IBOutlet var presentExpandedCircleView: UIView!
     @IBOutlet var circleNameTextField: KindTransparentTextField!
+
+    
     @IBOutlet var insideExpandedCircleViewYConstraint: NSLayoutConstraint!
     @IBOutlet var labelCircleName: UILabel!
     @IBOutlet var enterCircleButton: UIButton!
@@ -39,20 +42,29 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     @IBOutlet var mainView: UIView!
     
-    @IBOutlet var lineWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var newCirclelineWidthConstraint: NSLayoutConstraint!
     @IBOutlet var createCircleYConstraint: NSLayoutConstraint!
     
-    var createCircleName: String = ""
-    var circleIsInviteOnly: Bool = false
+    var circlePlotName: String = ""
+    var circleIsPrivate: Bool = false
+    var userIsAdmin: Bool = false
     var locationManager: CLLocationManager?
-    var selectedAnnotationView: CircleAnnotationView?
+    var isCircleEditMode: Bool = false
+    var usersInCircle: [KindUser] = []
+    var selectedAnnotationView: CircleAnnotationView? {
+        set {
+            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView = selectedAnnotationView
+        }
+        get {
+            return CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView
+        }
+    }
+    
     
     var mainViewController: MainViewController?
     var talkbox: JungTalkBox?
     var latitude: CLLocationDegrees!
     var longitude: CLLocationDegrees!
-    var isNewCircle: Bool = false
-    var usersInCircle: [KindUser] = []
     var longPressGesture: UIGestureRecognizer!
 
     // INIT VALUES
@@ -113,7 +125,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         locationServicesSetup()
         //setup annotation observer
         plotAnnotations()
-        adaptLineToTextSize(circleNameTextField)
+        adaptLineToTextSize(circleNameTextField, lineWidth: newCirclelineWidthConstraint)
         //init state for locker is open
         openLock()
         updateCircleInformationOnObserver()
@@ -127,8 +139,8 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
                                          yOffset: self.frame.midY,
                                          radius: 90.0)
         
-        self.expandedCircleViews.addSubview(overlay)
-        self.expandedCircleViews.sendSubviewToBack(overlay)
+        self.overlayExpandedCircleViews.addSubview(overlay)
+        self.overlayExpandedCircleViews.sendSubviewToBack(overlay)
         
         configMapbox()
 
@@ -225,7 +237,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
     
             //work on the map before showing
-            toogleCircleAndMapViews(isOnMap: true)
+            presentMap()
         
             self.alpha = 0
             self.isHidden = false
@@ -252,7 +264,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     override func deactivate() {
         //self.deselectAnnotationIfAnyAndBackToMap()
-        self.toogleCircleAndMapViews(isOnMap: true)
+        self.presentMap()
         self.mainViewController?.hudView.hudCenterDisplay.alpha = 0
         self.fadeOutView()
 
@@ -263,15 +275,16 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.mainViewController?.jungChatLogger.hideOptionLabels(true, completion: nil)
     }
     
-    func initializeNewCircleDescription(set: CircleAnnotationSet) {
-        if isNewCircle {
-            createCircleName = ""
+    func initializeNewCircleDescription() {
+        
+        if isCircleEditMode {
+            circlePlotName = ""
             circleNameTextField.text = "tap to name it..."
-            adaptLineToTextSize(circleNameTextField)
+            adaptLineToTextSize(circleNameTextField, lineWidth: newCirclelineWidthConstraint)
             
             explainerCircleCreation()
         } else {
-            explainerCircleExploration(set: set)
+            explainerCircleExploration()
         }
 
     }
@@ -282,27 +295,28 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         //Remove instead of deselect.
         if let annotation = annotationView.annotation {
             self.mapBoxView.removeAnnotation(annotation)
-            self.selectedAnnotationView = nil
-            CircleAnnotationManagement.sharedInstance.currentlySelectedCircleSet = nil
+            //self.selectedAnnotationView = nil
+            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView = nil
         }
     }
     
     override func leftOptionClicked() {
         // USER CANCELLED CREATION
-        if self.isNewCircle {
-            guard let annotationView = selectedAnnotationView else {return}
+        if self.isCircleEditMode {
             UIView.animate(withDuration: 0.4, animations: {
-                self.expandedCircleViews.alpha = 0
+                self.overlayExpandedCircleViews.alpha = 0
             }) { (completed) in
-                self.removeCancelledAnnotation(annotationView)
-                self.isNewCircle = false
-                self.toogleCircleAndMapViews(isOnMap: true)
+                if let annotation = self.selectedAnnotationView {
+                    self.removeCancelledAnnotation(annotation)
+                }
+                self.isCircleEditMode = false
+                self.presentMap()
                 self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
                 self.openLock()
             }
             
         } else {
-            self.toogleCircleAndMapViews(isOnMap: true)
+            self.presentMap()
         }
     }
 
@@ -312,31 +326,34 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
     
     override func rightOptionClicked() {
-        self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
-        self.selectedAnnotationView?.circleDetails?.isPrivate = circleIsInviteOnly
-        if isNewCircle { //save circle
-            createNewCircle() { (circleAnnotationSet) in
-                guard let annotationSet = circleAnnotationSet else {
-                    self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
+      //  self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
+        //get variables in.
+
+        
+        if isCircleEditMode { //save circle
+            if !(circlePlotName.trimmingCharacters(in: .whitespaces).isEmpty) {
+                CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.circlePlotName = self.circlePlotName
+            }
+            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.isPrivate = circleIsPrivate
+            
+            CircleAnnotationManagement.sharedInstance.saveCircleSet() { (circleAnnotationSet,err)  in
+                if let err = err {
+                    print(err)
+                    return
+                }
+                
+                guard circleAnnotationSet != nil else {
                     self.explainerNameCircleBeforeSavingIt()
                     return
                 }
-                //gets the payload with the circle details
-                self.selectedAnnotationView?.circleDetails = annotationSet
                 
-                self.resetInnerCreateCircleViewComponents()
-                
-                //Return to mapview.
-                 self.toogleCircleAndMapViews(isOnMap: true)
-
-                self.isNewCircle = false
+                self.presentMap()
             }
         } else { // enter circle
             explainerGoToGameBoard()
         }
 
     }
-
     
     @IBAction func addUserBtnClicked(_ sender: UIButton) {
         print("add user clicked")
@@ -346,11 +363,46 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     func updateCircleInformationOnObserver() {
         CircleAnnotationManagement.sharedInstance.userListChangedOnCircleObserver = { [unowned self] in
-            self.photoStripCollectionView.reloadData()
-            print("observed fired!!!!")
+            self.getUsersInCircle(completion: { (completed) in
+                if completed {
+                    //modify all controls with the new SET 
+                    self.photoStripCollectionView.reloadData()
+                    print("reloaded")
+                }
+            })
+
+        }
+    }
+    
+    
+    
+    func getUsersInCircle(completion: @escaping (Bool)->()) {
+        CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile() { (kindUsers) in
+            if let users = kindUsers {
+                self.usersInCircle = users
+                completion(true)
+            } else {
+                completion(false)
+            }
         }
     }
 
-    
+
+//    @IBAction func editCircleSetButtonClicked(_ sender: UIButton) {
+//        toggleEditSaveCircleButtons(editClicked: true)
+//    }
+//
+//
+//    @IBAction func saveCircleSetButtonClicked(_ sender: Any) {
+////        CircleAnnotationManagement.sharedInstance.saveCircleSet { (set, err) in
+////            if let err = err {
+////                print(err)
+////                return
+////            }
+////            self.toggleEditSaveCircleButtons(editClicked: false)
+////            print(set)
+////        }
+//
+//    }
 }
 

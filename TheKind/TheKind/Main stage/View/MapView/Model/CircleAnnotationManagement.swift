@@ -19,25 +19,18 @@ class CircleAnnotationManagement {
     var circles: [CircleAnnotationSet] = []
     
     //Receive Currently Selected circle or nil. If nil, will kill the observer.
-    private var currentlySelectedCircleSet: CircleAnnotationSet? {
-        didSet {
-            if let set = currentlySelectedCircleSet {
-                //only creates a new observer if its for a new circle.
-                //This allows update of this variable without starting a new observer if maintaining same circle id. (only one observer per circle id)
-                if set.circleId != oldValue?.circleId {
-                    observeCircleSetFirebase(circleId: set.circleId)
-                }
-            }
-        }
-    }
     
     var currentlySelectedAnnotationView: CircleAnnotationView? {
         didSet {
-            if let set = currentlySelectedAnnotationView?.circleDetails {
-                if set.circleId != nil { //not a provisory (new-longpressed) circle.
-                    currentlySelectedCircleSet = set
+            if let annotationView = currentlySelectedAnnotationView {
+                if let circleId = annotationView.circleDetails?.circleId {
+                    //fire up observer only once per circleID
+                    if circleId != oldValue?.circleDetails?.circleId {
+                        observeCircleSetFirebase(circleId: circleId)
+                    }
                 }
             } else {
+                // kill obbserver
                 circleSnapShotListener?.remove()
             }
         }
@@ -68,14 +61,15 @@ class CircleAnnotationManagement {
     }
     
     
-    func saveCircle(set: CircleAnnotationSet, completion: @escaping (CircleAnnotationSet?, Error?)->()) {
+    func saveCircleSet(completion: @escaping (CircleAnnotationSet?, Error?)->()) {
         let db = Firestore.firestore()
-    
+        guard let set = currentlySelectedAnnotationView?.circleDetails else { return}
         var documentRef: DocumentReference? = nil
         guard let circleDict = set.asDictionary() else {return}
         documentRef = db.collection("kindcircles").addDocument(data: circleDict) { err in
             if let err = err {
                 print(err)
+                completion(nil, err)
                 return
             }
             if let circleid = documentRef?.documentID {
@@ -88,18 +82,12 @@ class CircleAnnotationManagement {
                     return
                 }
                 
-                if let document = document, document.exists {
-                    let circleAnnotationSet = CircleAnnotationSet(document: document)
-                    completion(circleAnnotationSet,nil)
-                } else {
-                    print("document doesn't exist: func saveCircle" )
-                }
+                guard let document = document, document.exists else {return}
+                let circleAnnotationSet = CircleAnnotationSet(document: document)
+                completion(circleAnnotationSet,nil)
+                
             })
-            
-
         }
-        
-        
     }
     
     
@@ -123,9 +111,9 @@ class CircleAnnotationManagement {
         }
     }
     
-    func addUserToCircle(set: CircleAnnotationSet, userId: String, completion: (()->())?) {
+    func addUserToCircle(userId: String, completion: (()->())?) {
         let db = Firestore.firestore()
-        guard let circleId = set.circleId else {return}
+        guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
         let circlesRef = db.collection("kindcircles").document(circleId)
         //updates array by keeping it unique
         circlesRef.updateData(["users" : FieldValue.arrayUnion([userId])]) { (err) in
@@ -171,9 +159,9 @@ class CircleAnnotationManagement {
         }
     }
 
-
-    // DispatchGroup is forcing completion to wait till the loop is completed. 
-    func loadCircleUsersProfile(set: CircleAnnotationSet, completion: (([KindUser]?)->())?) {
+ 
+    func loadCircleUsersProfile(completion: (([KindUser]?)->())?) {
+        guard let set = currentlySelectedAnnotationView?.circleDetails else {return}
         var userProfiles:[KindUser] = []
         let group = DispatchGroup()
         self.loadUserIDsInCircle(set: set) { (userIds) in
@@ -193,8 +181,6 @@ class CircleAnnotationManagement {
         }
     }
     
-    // WHERE TO PUT THE CALL TO THIS?
-    //HERE: OBSERVE USERS IN CIRCLE!
     func observeCircleSetFirebase(circleId: String) {
         let db = Firestore.firestore()
         circleSnapShotListener = db.collection("kindcircles").document(circleId).addSnapshotListener { (document, err) in
@@ -209,7 +195,7 @@ class CircleAnnotationManagement {
             print("userchanged")
             let set:CircleAnnotationSet = CircleAnnotationSet(document: document!)
             // reload SET with new info.
-            self.currentlySelectedCircleSet = set
+            self.currentlySelectedAnnotationView?.circleDetails = set
             // let client now there is a new loaded set.
             self.userListChangedOnCircleObserver?()
             
@@ -218,35 +204,3 @@ class CircleAnnotationManagement {
     
     
 }
-
-
-
-
-//
-//    //HERE: IT WORKS
-//    func updateCircleSettings(circleId: String,isprivate:Bool?, name:String?, completion: ((Error?)->())?) {
-//        let db = Firestore.firestore()
-//        guard let uid = Auth.auth().currentUser?.uid else {return}
-//        //guard let annotation = (circles.filter{$0.circleId == circleId && $0.admin == uid}).first else {return}
-//
-//        var circleDict:[String:Any] = [:]
-//        circleDict["admin"] = uid
-//
-//        if let isprivate = isprivate {
-//            circleDict["isprivate"] = isprivate
-//        }
-//        if let name = name {
-//            circleDict["name"] = name
-//        }
-//
-//        db.collection("kindcircles").document(circleId).updateData(circleDict) { (err) in
-//            if let err = err {
-//                completion?(err)
-//                return
-//            } else {
-//                completion?(nil)
-//            }
-//
-//        }
-//
-//    }

@@ -48,31 +48,36 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         guard let annotationView = annotationView as? CircleAnnotationView else {fatalError()}
         guard let coordinates = annotationView.circleDetails?.location else {fatalError()}
         
-        self.selectedAnnotationView = annotationView
-        CircleAnnotationManagement.sharedInstance.currentlySelectedCircleSet = annotationView.circleDetails
+        //self.selectedAnnotationView = annotationView
+        CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView = annotationView
+
         //Extract annotation details here.
-        guard let circleDetails = annotationView.circleDetails else {
-            print("annotation carries no details to be plotted: mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView)")
+        guard let set = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails else {
+            print("annotation carries no details to be plotted: mapView(_ apView: MGLMapView, didSelect annotationView: MGLAnnotationView)")
             return
         }
-        guard let name = circleDetails.circlePlotName else {
-            print("annotation carries no name to be plotted: mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView)")
-            return
-        }
-        labelCircleName.attributedText = formatLabelTextWithLineSpacing(text: name)
+        
+        //load UI variables from set.
+        self.circlePlotName = set.circlePlotName
+        self.labelCircleName.attributedText = formatLabelTextWithLineSpacing(text: self.circlePlotName)
+        self.circleNameTextField.attributedText = formatLabelTextWithLineSpacing(text: self.circlePlotName)
+        self.circleIsPrivate = set.isPrivate
+        self.userIsAdmin = checkIfIsAdmin(set.admin)
+        
         self.mapBoxView.setCenter(coordinates, zoomLevel: MAXZOOMLEVEL,animated: true)
-        //This takes care of all the animations.
-        activateOnSelection(annotationView) { (set) in
-            self.initializeNewCircleDescription(set: set)
+
+        // #0 - activation with animations.
+        activateOnSelection(annotationView) {
+            //after all functions below, #1 and #2 are completed
+            self.initializeNewCircleDescription()
         }
         
     }
     
-    
-    func activateOnSelection(_ annotationView: CircleAnnotationView, completion: ((_ circleAnnotationSet: CircleAnnotationSet)->())?) {
+    // #1 - Expand circle animation.
+    func activateOnSelection(_ annotationView: CircleAnnotationView, completion: (()->())?) {
         self.clearJungChatLog()
         longPressGesture.isEnabled = false //to avoid circle creation.
-        
         
         UIView.animate(withDuration: 1, animations: {
             //scaling circle
@@ -81,22 +86,23 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             annotationView.alpha = 0.32
         }) { (Completed) in
             self.prepareViewsForDetailingCircle(annotationView: annotationView) {
-                if let set = annotationView.circleDetails {
-                    completion?(set)
-                }
+                completion?()
             }
         }
     }
     
+    // #2 - Animate inner circle views (after expansion)
     func prepareViewsForDetailingCircle(annotationView: CircleAnnotationView, completion: (()->())?) {
         if !annotationView.transform.isIdentity { // if circle is not in its natural "dot" state
             if annotationView.transform.a == self.MAXSCIRCLESCALE { // and only if its maximized.
                 UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
-                    self.toogleCircleAndMapViews(isOnMap: false) // exit map
+                    
+                     self.toggleMapOrAnnotationView(isMap: false)
+                    
                 }, completion: { (completed) in
                      UIView.animate(withDuration: 0.4, animations: {
-                        self.toggleInnerCircleView(isNewCircle: self.isNewCircle)
-                        self.setupInnerPrivateOrPublicViews(annotationView.circleDetails!)
+                        self.toggleEditOrPresentationMode()
+                        self.togglePrivateOrPublic()
                     }, completion: { (completed) in
                         completion?()
                     })
@@ -106,59 +112,11 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    private func toggleInnerCircleView(isNewCircle: Bool) {
-        if self.isNewCircle {
-            self.existentExpandedCircleView.isUserInteractionEnabled = false
-            self.newExpandedCircleView.isUserInteractionEnabled = true
-            self.newExpandedCircleView.alpha = 1
-        } else {
-            self.existentExpandedCircleView.isUserInteractionEnabled = true
-            self.newExpandedCircleView.isUserInteractionEnabled = false
-            self.existentExpandedCircleView.alpha = 1
-        }
-    }
-    
-    fileprivate func setupInnerPrivateOrPublicViews(_ set: CircleAnnotationSet) {
-        if let isPrivate = set.isPrivate, isPrivate {
-            let keyImage = UIImage(named: "privatekey")?.withRenderingMode(.alwaysOriginal)
-            self.enterCircleButton.setBackgroundImage(keyImage, for: .normal)
-            self.loadUserPhotoStrip()
-        } else {
-            let enterImage = UIImage(named: "newEye")
-            self.enterCircleButton.setBackgroundImage(enterImage, for: .normal)
-        }
-    }
-    
-    private func deactivateInnerCircleViews(){
-        self.existentExpandedCircleView.isUserInteractionEnabled = false
-        self.newExpandedCircleView.isUserInteractionEnabled = false
-        self.existentExpandedCircleView.alpha = 0
-        self.newExpandedCircleView.alpha = 0
-    }
-    
-    func toogleCircleAndMapViews(isOnMap: Bool) {
-        if isOnMap {
-            mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-            UIView.animate(withDuration: 0.5, animations: {
-                self.hidePhotoStrip()
-                self.deactivateInnerCircleViews()
-                self.toggleMapOrAnnotationView(isMap: true) // switches to map view (taking all circle views to zero alpha etc.)
-            }) { (completed) in
-                if let annotation = self.selectedAnnotationView {
-                    self.deActivateOnDeselection(annotation) {
-                        self.mapBoxView.deselectAnnotation(annotation.annotation, animated: false)
-                    }
-                }
-            }
-        } else {
-            self.toggleMapOrAnnotationView(isMap: false)
-        }
-        
-    }
-    
+    //animated via the caller closures.
     fileprivate func toggleMapOrAnnotationView(isMap: Bool) {
         mainViewController?.jungChatLogger.resetJungChat()
-        expandedCircleViews.alpha = isMap ? 0 : 1
+        //this is the black background fade.
+        overlayExpandedCircleViews.alpha = isMap ? 0 : 1
         mapBoxView.isUserInteractionEnabled = isMap ? true : false
         mainViewController?.hudView.hudGradient.alpha = isMap ? 1 : 0
         mainViewController?.hudView.hudCenterDisplay.alpha = isMap ? 1 : 0
@@ -166,9 +124,66 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         mainViewController?.bottomCurtainView.isUserInteractionEnabled = isMap ? false : true
         borderProtectionLeft.isUserInteractionEnabled = isMap ? true : false
         borderProtectionRight.isUserInteractionEnabled = isMap ? true : false
-        expandedCircleViews.isUserInteractionEnabled = isMap ? false : true
+        overlayExpandedCircleViews.isUserInteractionEnabled = isMap ? false : true
         longPressGesture.isEnabled = isMap ? true : false
+        presentExpandedCircleView.isUserInteractionEnabled = isMap ? false : true
+        editExpandedCircleView.isUserInteractionEnabled = isMap ? false : true
+        presentExpandedCircleView.isHidden = isMap ? true : false
+        editExpandedCircleView.isHidden = isMap ? true : false
     }
+    
+    
+
+    private func toggleEditOrPresentationMode() {
+        if self.isCircleEditMode {
+            self.presentExpandedCircleView.isUserInteractionEnabled = false
+            self.editExpandedCircleView.isUserInteractionEnabled = true
+            self.editExpandedCircleView.alpha = 1
+            self.presentExpandedCircleView.alpha = 0
+        } else {
+            self.presentExpandedCircleView.isUserInteractionEnabled = true
+            self.editExpandedCircleView.isUserInteractionEnabled = false
+            self.presentExpandedCircleView.alpha = 1
+            self.editExpandedCircleView.alpha = 0
+        }
+    }
+    
+    func presentMap() {
+        mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.toggleMapOrAnnotationView(isMap: true)
+            self.hidePhotoStrip()
+        }) { (completed) in
+            //reset interface
+            self.isCircleEditMode = false
+            self.circleNameTextField.text = ""
+            self.labelCircleName.text = ""
+            self.adaptLineToTextSize(self.circleNameTextField, lineWidth: self.newCirclelineWidthConstraint)
+            self.openLock()
+            if let annotation = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView {
+                self.deActivateOnDeselection(annotation) {
+                    self.mapBoxView.deselectAnnotation(annotation.annotation, animated: false)
+                }
+            }
+        }
+    }
+
+
+
+    fileprivate func togglePrivateOrPublic() {
+        if circleIsPrivate {
+            let keyImage = UIImage(named: "privatekey")?.withRenderingMode(.alwaysOriginal)
+            self.enterCircleButton.setBackgroundImage(keyImage, for: .normal)
+            self.loadUserPhotoStrip()
+
+        } else {
+            let enterImage = UIImage(named: "newEye")
+            self.enterCircleButton.setBackgroundImage(enterImage, for: .normal)
+        }
+    }
+    
+
+
     
     func checkIfIsAdmin(_ circleAdminId: String) -> Bool {
         if circleAdminId ==  (Auth.auth().currentUser?.uid)! {
@@ -189,24 +204,23 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     func mapView(_ mapView: MGLMapView, regionWillChangeAnimated animated: Bool) {
         // using didDragMap instead.
         // this method fires too often and for everything.
-        
 
     }
     
     //MAP IS DRAGGED.
     @objc func didDragMap(_ sender: UIGestureRecognizer) {
         if sender.state == .ended {
-            if let annotationView = selectedAnnotationView, !annotationView.transform.isIdentity {
+            if let annotationView = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView, !annotationView.transform.isIdentity {
                 deActivateOnDeselection(annotationView) {
                     annotationView.setSelected(false, animated: false)
                 }
                 //Remove circle if added on long press.
-                if isNewCircle {
+                if isCircleEditMode {
                     removeCancelledAnnotation(annotationView)
-                    self.isNewCircle = false
+                    self.isCircleEditMode = false
                 }
                 self.clearJungChatLog()
-                self.toogleCircleAndMapViews(isOnMap: true)
+                self.presentMap()
                 self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
 
             }
@@ -226,21 +240,20 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
                 annotationView.button.alpha = 0
             })
         
-            self.selectedAnnotationView = nil
-            CircleAnnotationManagement.sharedInstance.currentlySelectedCircleSet = nil
+            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView = nil
             if let completion = completion {
                 completion()
             }
     }
     
     func removeAnnotationAndBackToMap() {
-        guard let annotationView = selectedAnnotationView else {fatalError("// USER CANCELLED CREATION")}
+        guard let annotationView = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView else {fatalError("// USER CANCELLED CREATION")}
         UIView.animate(withDuration: 0.4, animations: {
-            self.expandedCircleViews.alpha = 0
+            self.overlayExpandedCircleViews.alpha = 0
         }) { (completed) in
             self.removeCancelledAnnotation(annotationView)
-            self.isNewCircle = false
-            self.toogleCircleAndMapViews(isOnMap: true)
+            self.isCircleEditMode = false
+            self.presentMap()
             self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
         }
     }

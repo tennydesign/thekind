@@ -12,32 +12,30 @@ import Mapbox
 
 extension MapActionTriggerView: UITextFieldDelegate {
     
+    func isTemporaryCircleAnnotation(annotation: CircleAnnotationView?) -> Bool {
+        return CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView != nil &&  CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.circleId == nil
+    }
     
-    func adaptLineToTextSize(_ textField: UITextField) {
+    func adaptLineToTextSize(_ textField: UITextField, lineWidth: NSLayoutConstraint) {
         let textBoundingSize = textField.frame.size
         guard let text = textField.text else {return}
         let frameForText = estimateFrameFromText(text, bounding: textBoundingSize, fontSize: textField.font!.pointSize, fontName: textField.font!.fontName)// UIFont.systemFont(ofSize: 16).fontName)//SECONDARYFONT)
         
-        lineWidthConstraint.constant = frameForText.width
+        lineWidth.constant = frameForText.width
         UIView.animate(withDuration: 1) {
             self.layoutIfNeeded()
         }
     }
     
     @objc func textFieldDidChange(textField: UITextField){
-        adaptLineToTextSize(textField)
         guard let circleName = textField.text, !(circleName.trimmingCharacters(in: .whitespaces).isEmpty) else {return}
-        
-        createCircleName = circleName
-        if selectedAnnotationView != nil {
-            selectedAnnotationView?.circleDetails?.circlePlotName = createCircleName
-        }
+        circlePlotName = circleName
+        adaptLineToTextSize(textField, lineWidth: newCirclelineWidthConstraint)
     }
     
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
-        adaptLineToTextSize(textField)
+         textField.text = ""
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -45,35 +43,10 @@ extension MapActionTriggerView: UITextFieldDelegate {
         return true
     }
     
-    func resetInnerCreateCircleViewComponents() {
-        self.circleNameTextField.text = ""
-        self.adaptLineToTextSize(self.circleNameTextField)
-        self.openLock()
-    }
-    
-    func createNewCircle(completion: ((CircleAnnotationSet?)->())?) {
-        
-        guard let recentlyCreatedSet = selectedAnnotationView?.circleDetails else {return}
-        if (!createCircleName.isEmpty) && !(createCircleName == "[tap to name it]") {
-            CircleAnnotationManagement.sharedInstance.saveCircle(set: recentlyCreatedSet) { (circleAnnotationSet, err) in
-                if let err = err {
-                    print(err)
-                    return
-                }
-                
-                completion?(circleAnnotationSet)
-                //print("saved circle success")
-            }
-        } else {
-            circleNameTextField.blink(stopAfter:5.0)
-
-            completion?(nil)
-        }
-    }
     
     @objc func handleLongPressGesture(gestureRecognizer:UILongPressGestureRecognizer) {
 
-        isNewCircle = true
+        isCircleEditMode = true
         if gestureRecognizer.state == UIGestureRecognizer.State.began {
             let touchpoint = gestureRecognizer.location(in: mapBoxView)
             let newCoordinates = mapBoxView.convert(touchpoint, toCoordinateFrom: mapBoxView)
@@ -91,7 +64,7 @@ extension MapActionTriggerView: UITextFieldDelegate {
             guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
             let users:[String] = [uid] // initiates with the creator
             
-            let set = CircleAnnotationSet(location: location, circlePlotName: createCircleName, isPrivate: circleIsInviteOnly, circleId: nil, admin: uid, users: users, dateCreated: dateNow)
+            let set = CircleAnnotationSet(location: location, circlePlotName: circlePlotName, isPrivate: circleIsPrivate, circleId: nil, admin: uid, users: users, dateCreated: dateNow)
             let point = KindPointAnnotation(circleAnnotationSet: set)
             self.mapBoxView.addAnnotation(point)
             
@@ -111,34 +84,30 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     
     func openLock() {
-        circleIsInviteOnly = false
+        circleIsPrivate = false
         hidePhotoStrip()
         viewSkatingX(lockTopImage, left: true, reverse: true)
     }
     
     func closeLock() {
-        circleIsInviteOnly = true
+        circleIsPrivate = true
         loadUserPhotoStrip()
         viewSkatingX(lockTopImage, left: false, -20, reverse: false)
     }
     
     func loadUserPhotoStrip() {
-        guard let set = selectedAnnotationView?.circleDetails else {return}
-        //
-        guard let admin = set.admin else {return}
-        let isAdmin = self.checkIfIsAdmin(admin)
-        if !isNewCircle {
-            CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile(set: set) { (kindUsers) in
+        if !isCircleEditMode {
+            CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile() { (kindUsers) in
                 if let users = kindUsers {
                     self.usersInCircle = users
                     self.photoStripCollectionView.reloadData()
                 }
-                self.showPhotoStrip(isAdmin) // always true
+                self.showPhotoStrip(self.userIsAdmin) // always true
             }
         } else {
             self.usersInCircle = []
             self.photoStripCollectionView.reloadData()
-            self.showPhotoStrip(isAdmin)
+            self.showPhotoStrip(userIsAdmin)
         }
 
     }
@@ -173,6 +142,8 @@ extension MapActionTriggerView: UITextFieldDelegate {
     }
     
     
+    
+    
     func createOverlay(frame: CGRect,
                        xOffset: CGFloat,
                        yOffset: CGFloat,
@@ -205,7 +176,6 @@ extension MapActionTriggerView: UITextFieldDelegate {
 
 extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
         return usersInCircle.count
     }
     
