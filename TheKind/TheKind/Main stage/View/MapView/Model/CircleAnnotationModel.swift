@@ -97,31 +97,4 @@ struct CircleAnnotationSet {
 
 
 
-class KindPointAnnotation: MGLPointAnnotation {
-    var circleDetails: CircleAnnotationSet? {
-        didSet {
-            
-        }
-    }
-    
-    init(circleAnnotationSet: CircleAnnotationSet) {
-        super.init()
-        guard let location = circleAnnotationSet.location else {fatalError("circle can't have nil coordinates:  init(circleAnnotationSet: CircleAnnotationSet")}
-        coordinate = location
-        title = circleAnnotationSet.circlePlotName
-        circleDetails = circleAnnotationSet
-        
-    }
-    
-    
-    override init() {
-        super.init()
-    }
-    
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
+

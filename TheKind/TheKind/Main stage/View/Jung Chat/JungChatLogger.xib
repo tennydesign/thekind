@@ -83,7 +83,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7kP-Zp-pCJ" userLabel="HoldToAnswerViewBar">
-                            <rect key="frame" x="159.5" y="165.5" width="56" height="1"/>
+                            <rect key="frame" x="160" y="165.5" width="56" height="1"/>
                             <color key="backgroundColor" red="0.90196078431372551" green="0.14901960784313725" blue="0.396078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="56" id="9C6-oT-JKf"/>
@@ -109,7 +109,7 @@
                     <constraints>
                         <constraint firstItem="gFN-uh-qgM" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" id="Dds-zJ-ZaS"/>
                         <constraint firstAttribute="bottom" secondItem="sK1-zN-Q8U" secondAttribute="bottom" constant="-45" id="Ggj-QZ-2lU"/>
-                        <constraint firstItem="7kP-Zp-pCJ" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" id="IfC-1u-FeF"/>
+                        <constraint firstItem="7kP-Zp-pCJ" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" constant="0.29999999999999999" id="IfC-1u-FeF"/>
                         <constraint firstItem="8Zb-m6-dcN" firstAttribute="centerX" secondItem="gFN-uh-qgM" secondAttribute="centerX" id="LyB-zB-gSx"/>
                         <constraint firstItem="gFN-uh-qgM" firstAttribute="centerY" secondItem="lfN-ey-Vla" secondAttribute="centerY" id="asK-GX-AWv"/>
                         <constraint firstAttribute="trailing" secondItem="sK1-zN-Q8U" secondAttribute="trailing" id="eQw-aj-gmr"/>

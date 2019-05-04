@@ -12,8 +12,9 @@ import Mapbox
 
 extension MapActionTriggerView: UITextFieldDelegate {
     
-    func isTemporaryCircleAnnotation(annotation: CircleAnnotationView?) -> Bool {
-        return CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView != nil &&  CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.circleId == nil
+    func isSelectedTemporaryCircleAnnotation() -> Bool {
+        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return false}
+        return CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView != nil &&  CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.annotation?.title == uid
     }
     
     func adaptLineToTextSize(_ textField: UITextField, lineWidth: NSLayoutConstraint) {
@@ -31,11 +32,13 @@ extension MapActionTriggerView: UITextFieldDelegate {
         guard let circleName = textField.text, !(circleName.trimmingCharacters(in: .whitespaces).isEmpty) else {return}
         circlePlotName = circleName
         adaptLineToTextSize(textField, lineWidth: newCirclelineWidthConstraint)
+        CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.circlePlotName = self.circlePlotName
     }
     
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-         textField.text = ""
+        textField.text = ""
+        adaptLineToTextSize(textField, lineWidth: newCirclelineWidthConstraint)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -46,7 +49,6 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     @objc func handleLongPressGesture(gestureRecognizer:UILongPressGestureRecognizer) {
 
-        isCircleEditMode = true
         if gestureRecognizer.state == UIGestureRecognizer.State.began {
             let touchpoint = gestureRecognizer.location(in: mapBoxView)
             let newCoordinates = mapBoxView.convert(touchpoint, toCoordinateFrom: mapBoxView)
@@ -55,17 +57,15 @@ extension MapActionTriggerView: UITextFieldDelegate {
             dateformat.dateFormat = "MM-dd hh:mm a"
             let dateNow = dateformat.string(from: Date())
 
-            
-            //SETUP COORDINATES
-            latitude = newCoordinates.latitude
-            longitude = newCoordinates.longitude
-            let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let location = CLLocationCoordinate2D(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
             
             guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
             let users:[String] = [uid] // initiates with the creator
             
-            let set = CircleAnnotationSet(location: location, circlePlotName: circlePlotName, isPrivate: circleIsPrivate, circleId: nil, admin: uid, users: users, dateCreated: dateNow)
+            let set = CircleAnnotationSet(location: location, circlePlotName: "", isPrivate: false, circleId: nil, admin: uid, users: users, dateCreated: dateNow)
             let point = KindPointAnnotation(circleAnnotationSet: set)
+            point.title = uid
+            openLock()
             self.mapBoxView.addAnnotation(point)
             
             self.mapBoxView.selectAnnotation(point, animated: true)
@@ -84,47 +84,41 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     
     func openLock() {
-        circleIsPrivate = false
-        hidePhotoStrip()
+        circleIsPrivate = false // didset triggers self.togglePrivateOrPublic()
         viewSkatingX(lockTopImage, left: true, reverse: true)
     }
     
     func closeLock() {
-        circleIsPrivate = true
-        loadUserPhotoStrip()
+        circleIsPrivate = true // didset triggers self.togglePrivateOrPublic()
         viewSkatingX(lockTopImage, left: false, -20, reverse: false)
     }
     
-    func loadUserPhotoStrip() {
-        if !isCircleEditMode {
-            CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile() { (kindUsers) in
-                if let users = kindUsers {
-                    self.usersInCircle = users
-                    self.photoStripCollectionView.reloadData()
-                }
-                self.showPhotoStrip(self.userIsAdmin) // always true
-            }
+    func togglePrivateOrPublic() {
+        CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.isPrivate = circleIsPrivate
+        if circleIsPrivate {
+            let keyImage = UIImage(named: "privatekey")?.withRenderingMode(.alwaysOriginal)
+            self.enterCircleButton.setBackgroundImage(keyImage, for: .normal)
+            fadeInPhotoStrip()
         } else {
-            self.usersInCircle = []
-            self.photoStripCollectionView.reloadData()
-            self.showPhotoStrip(userIsAdmin)
+            fadeOutPhotoStrip()
+            let enterImage = UIImage(named: "newEye")
+            self.enterCircleButton.setBackgroundImage(enterImage, for: .normal)
         }
-
     }
     
-    func hidePhotoStrip() {
+    func fadeOutPhotoStrip() {
         UIView.animate(withDuration: 0.4, animations: {
             self.photoStripView.alpha = 0
             self.addUserBtn.alpha = 0
         }) { (completed) in
-            self.usersInCircle = []
-            self.photoStripCollectionView.reloadData()
+            self.photoStripView.isHidden = true
         }
     }
 
     //also opens space for the + button when admin
-    fileprivate func showPhotoStrip(_ isAdmin: Bool) {
-        if isAdmin{
+    fileprivate func fadeInPhotoStrip() {
+        photoStripView.isHidden = false
+        if self.userIsAdmin{
             photoStripLeadingConstraint.constant = 50
             UIView.animate(withDuration: 0.4) {
                 self.photoStripView.alpha = 1
@@ -133,10 +127,10 @@ extension MapActionTriggerView: UITextFieldDelegate {
             }
         } else {
             photoStripLeadingConstraint.constant = 0
-            self.photoStripView.layoutIfNeeded()
             UIView.animate(withDuration: 0.4) {
                 self.addUserBtn.alpha = 0
                 self.photoStripView.alpha = 1
+                self.photoStripView.layoutIfNeeded()
             }
         }
     }

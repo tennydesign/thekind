@@ -66,7 +66,7 @@ class GameBoard: KindActionTriggerView {
         let actions: [KindActionType] = [.none]
         let actionViews: [ActionViewName] = [.none]
         
-        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Yes... introduce me to someone", actionViews: (ActionViewName.GameBoardSceneControlView,ActionViewName.GameBoardSceneControlView))
+        let options = self.talkbox?.createUserOptions(opt1: "No... keep in wired-in mode.", opt2: "Yes... introduce me to someone.", actionViews: (ActionViewName.GameBoardSceneControlView,ActionViewName.GameBoardSceneControlView))
         
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
         

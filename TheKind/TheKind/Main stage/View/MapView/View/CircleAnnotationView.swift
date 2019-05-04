@@ -64,7 +64,10 @@ class CircleAnnotationView: MGLAnnotationView {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-    
+        
+        // Didn't use this because we can't get a completion out of it to time the other animations.
+        
+        // draft
         //        // Animate the border width in/out, creating an iris effect.
         //        let animation = CABasicAnimation(keyPath: "borderWidth")
         //        animation.duration = 0.4
@@ -72,6 +75,37 @@ class CircleAnnotationView: MGLAnnotationView {
         //        layer.add(animation, forKey: "borderWidth")
         //
         
+    }
+    
+    
+    
+}
+
+class KindPointAnnotation: MGLPointAnnotation {
+    var circleDetails: CircleAnnotationSet? {
+        didSet {
+            
+        }
+    }
+    
+    init(circleAnnotationSet: CircleAnnotationSet) {
+        super.init()
+        guard let location = circleAnnotationSet.location else {fatalError("circle can't have nil coordinates:  init(circleAnnotationSet: CircleAnnotationSet")}
+        coordinate = location
+        //title = circleAnnotationSet.circlePlotName
+        circleDetails = circleAnnotationSet
+        
+    }
+    
+    
+    override init() {
+        super.init()
+    }
+    
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
 }

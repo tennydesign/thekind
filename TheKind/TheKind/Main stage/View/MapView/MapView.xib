@@ -83,7 +83,7 @@
                                                 <constraint firstAttribute="width" constant="180" id="f2q-6B-rU9"/>
                                             </constraints>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="AcrylicHandSans-Regular" family="Acrylic Hand Sans" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                                         </textField>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tcp-mT-clr" userLabel="line">
