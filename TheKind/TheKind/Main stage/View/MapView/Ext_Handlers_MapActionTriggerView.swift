@@ -56,7 +56,15 @@ extension MapActionTriggerView: UITextFieldDelegate {
             let dateformat = DateFormatter()
             dateformat.dateFormat = "MM-dd hh:mm a"
             let dateNow = dateformat.string(from: Date())
-
+            adaptLineToTextSize(circleNameTextField, lineWidth: newCirclelineWidthConstraint)
+            
+            // UI prepare. 
+            showEditInnerCircleViews()
+            circleNameTextField.text = "Type a name."
+            self.userIsAdmin = true
+            self.usersInCircle = []
+            //HERE- SOMETIMES CIRCLE SHOWS NO INFO RIGHT AFTER CREATION - INTERMITENT.
+            
             let location = CLLocationCoordinate2D(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
             
             guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}

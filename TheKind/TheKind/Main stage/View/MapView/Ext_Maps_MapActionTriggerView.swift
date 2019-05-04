@@ -56,15 +56,8 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         
         self.mapBoxView.setCenter(coordinates, zoomLevel: MAXZOOMLEVEL,animated: true)
 
-        if isSelectedTemporaryCircleAnnotation() {
-            //create new circle
-            showEditInnerCircleViews()
-            circleNameTextField.text = "Type a name."
-            adaptLineToTextSize(circleNameTextField, lineWidth: newCirclelineWidthConstraint)
-            self.userIsAdmin = true
-            self.usersInCircle = []
-        } else {
-            // load variables.
+        if !isSelectedTemporaryCircleAnnotation() {
+            // load data into controls.
             guard let set = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails else {return}
             self.circlePlotName = set.circlePlotName
             self.labelCircleName.attributedText = formatLabelTextWithLineSpacing(text: set.circlePlotName)
