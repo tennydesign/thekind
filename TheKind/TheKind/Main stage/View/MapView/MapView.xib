@@ -75,7 +75,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3K-l4-sWj" userLabel="circleNameTextField">
                                     <rect key="frame" x="97.5" y="171.5" width="180" height="70"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="tap to name it ..." textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wky-b4-S07" customClass="KindTransparentTextField" customModule="TheKind" customModuleProvider="target">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" clearsOnBeginEditing="YES" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wky-b4-S07" customClass="KindTransparentTextField" customModule="TheKind" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="24" width="180" height="22"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>

@@ -140,6 +140,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         openLock()
         // setupCircleInformationObserver
         updateCircleInformationOnObserver()
+        userAddedToCircleListObserver()
     }
 
     
@@ -277,7 +278,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     func initializeNewCircleDescription() {
         
-        if isSelectedTemporaryCircleAnnotation() {
+        if CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
             explainerCircleCreation()
         } else {
             explainerCircleExploration()
@@ -293,13 +294,13 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.deActivateOnDeselection(completion: nil)
     }
 
-    
+    //HERE: MAKE SAVE CIRCLE SAVE LIST OF USERS TOO
     override func rightOptionClicked() {
       //  self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
         //get variables in.
 
         
-        if isSelectedTemporaryCircleAnnotation() { //save circle
+        if CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation { //save circle
             CircleAnnotationManagement.sharedInstance.saveCircleSet() { (circleAnnotationSet,err)  in
                 if let err = err {
                     print(err)
@@ -346,6 +347,18 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
                 print("reloaded")
             }
 
+        }
+    }
+    
+    //triggered when user is added at the SearchView.
+    func userAddedToCircleListObserver() {
+        CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListObserver  = { [unowned self] id in
+            print("FIRED: userAddedToCircleListObserver")
+            KindUserSettingsManager.sharedInstance.retrieveAnyUserSettings(userId: id, completion: { (kindUser) in
+                if let kindUser = kindUser {
+                    self.usersInCircle.append(kindUser)
+                }
+            })
         }
     }
 

@@ -12,10 +12,6 @@ import Mapbox
 
 extension MapActionTriggerView: UITextFieldDelegate {
     
-    func isSelectedTemporaryCircleAnnotation() -> Bool {
-        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return false}
-        return CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView != nil &&  CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.annotation?.title == uid
-    }
     
     func adaptLineToTextSize(_ textField: UITextField, lineWidth: NSLayoutConstraint) {
         let textBoundingSize = textField.frame.size
@@ -37,7 +33,6 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
         adaptLineToTextSize(textField, lineWidth: newCirclelineWidthConstraint)
     }
     
@@ -56,15 +51,14 @@ extension MapActionTriggerView: UITextFieldDelegate {
             let dateformat = DateFormatter()
             dateformat.dateFormat = "MM-dd hh:mm a"
             let dateNow = dateformat.string(from: Date())
-            adaptLineToTextSize(circleNameTextField, lineWidth: newCirclelineWidthConstraint)
             
-            // UI prepare. 
+            // UI prepare.
             showEditInnerCircleViews()
             circleNameTextField.text = "Type a name."
+            adaptLineToTextSize(circleNameTextField, lineWidth: newCirclelineWidthConstraint)
             self.userIsAdmin = true
-            self.usersInCircle = []
-            //HERE- SOMETIMES CIRCLE SHOWS NO INFO RIGHT AFTER CREATION - INTERMITENT.
             
+
             let location = CLLocationCoordinate2D(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
             
             guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}

@@ -65,7 +65,7 @@ struct CircleAnnotationSet {
         self.location = location
         self.circlePlotName = circlePlotName
         self.isPrivate = isPrivate
-        self.circleId = circleId ?? "0"
+        self.circleId = circleId ?? "temporary"
         self.admin = admin
         self.users = users
         self.dateCreated = dateCreated

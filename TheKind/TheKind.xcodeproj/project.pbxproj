@@ -483,6 +483,7 @@
 		A07075F621EFFC940013380D /* MapView */ = {
 			isa = PBXGroup;
 			children = (
+				A0B5A2D4226FE6BE006985A4 /* UserSearchView */,
 				A070760021F2CEAB0013380D /* MapView.xib */,
 				A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */,
 				A005042022616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift */,
@@ -504,7 +505,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		A0B5A2D4226FE6BE006985A4 /* Search */ = {
+		A0B5A2D4226FE6BE006985A4 /* UserSearchView */ = {
 			isa = PBXGroup;
 			children = (
 				A0B5A2D5226FE6E9006985A4 /* SearchView.xib */,
@@ -515,7 +516,7 @@
 				A03ECF8E22717EBE0034C7F1 /* AddNewUserTableViewCell.swift */,
 				A03ECF8F22717EBE0034C7F1 /* AddNewUserTableViewCell.xib */,
 			);
-			path = Search;
+			path = UserSearchView;
 			sourceTree = "<group>";
 		};
 		A0C5C06721FE808500846B82 /* Model */ = {
@@ -636,7 +637,6 @@
 		A0F223B121B8A75E0096C25D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A0B5A2D4226FE6BE006985A4 /* Search */,
 				A0120E6021C6DF68000454EC /* SwipeCards stage */,
 				A031885521C33A1E008D1198 /* HUD */,
 				A002F47821B9EFAE006E8660 /* Jung Chat */,

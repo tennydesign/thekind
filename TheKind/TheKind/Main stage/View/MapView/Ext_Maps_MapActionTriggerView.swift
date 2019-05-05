@@ -56,7 +56,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         
         self.mapBoxView.setCenter(coordinates, zoomLevel: MAXZOOMLEVEL,animated: true)
 
-        if !isSelectedTemporaryCircleAnnotation() {
+        if !CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
             // load data into controls.
             guard let set = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails else {return}
             self.circlePlotName = set.circlePlotName
@@ -167,11 +167,14 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
                 UIView.animate(withDuration: 1, animations: {
                     self.mainViewController?.hudView.alpha = 1
                     annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                    annotationView.alpha = self.isSelectedTemporaryCircleAnnotation() ? 0 : 0.9
+                    annotationView.alpha = CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation ? 0 : 0.9
                     annotationView.button.alpha = 0
                 }) { (completed) in
                     
-                    if self.isSelectedTemporaryCircleAnnotation() {
+                    //If user was creating circle and cancelled.
+                    if CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
+                        self.circleNameTextField.resignFirstResponder()
+                        self.usersInCircle = []
                         if let annotation = annotationView.annotation {
                             self.mapBoxView.removeAnnotation(annotation)
                         }

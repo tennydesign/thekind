@@ -29,6 +29,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
             searchTableView.reloadData()
         }
     }
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -179,7 +180,13 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         guard let tappedIndexPath = searchTableView.indexPath(for: sender) else {return}
         if let cell = searchTableView.cellForRow(at: tappedIndexPath) as? UserSearchTableViewCell {
             guard let userId = cell.user?.uid else {return}
-            CircleAnnotationManagement.sharedInstance.addUserToCircle(userId: userId, completion: nil)
+            if !CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
+                CircleAnnotationManagement.sharedInstance.addUserToCircle(userId: userId, completion: nil)
+            } else {
+                // shots event in the client to increment list of users without having a saved circle.
+                CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListObserver?(userId)
+            }
+
         }
         print("clicked at \(tappedIndexPath)")
     }

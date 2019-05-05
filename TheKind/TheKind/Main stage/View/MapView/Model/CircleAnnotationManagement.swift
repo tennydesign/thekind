@@ -16,16 +16,24 @@ class CircleAnnotationManagement {
     static let sharedInstance = CircleAnnotationManagement()
     private init() {}
     var circleAnnotationObserver: (([CircleAnnotationSet])->())?
+    var userAddedToTemporaryCircleListObserver: ((String)->())?
     var circles: [CircleAnnotationSet] = []
     
     //Receive Currently Selected circle or nil. If nil, will kill the observer.
+    
+    var isSelectedTemporaryCircleAnnotation:Bool {
+        get {
+            guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return false}
+            return CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView != nil &&  CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.annotation?.title == uid
+        }
+    }
     
     var currentlySelectedAnnotationView: CircleAnnotationView? {
         didSet {
             if let annotationView = currentlySelectedAnnotationView {
                 if let circleId = annotationView.circleDetails?.circleId {
                     //fire up observer only once per circleID
-                    if circleId != oldValue?.circleDetails?.circleId {
+                    if circleId != oldValue?.circleDetails?.circleId && !isSelectedTemporaryCircleAnnotation {
                         observeCircleSetFirebase(circleId: circleId)
                     }
                 }
@@ -114,6 +122,7 @@ class CircleAnnotationManagement {
     func addUserToCircle(userId: String, completion: (()->())?) {
         let db = Firestore.firestore()
         guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
+
         let circlesRef = db.collection("kindcircles").document(circleId)
         //updates array by keeping it unique
         circlesRef.updateData(["users" : FieldValue.arrayUnion([userId])]) { (err) in
@@ -124,6 +133,22 @@ class CircleAnnotationManagement {
             completion?()
         }
 
+    }
+    
+    func addUserToCircle(userIds: [String], completion: (()->())?) {
+        let db = Firestore.firestore()
+        guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
+        let circlesRef = db.collection("kindcircles").document(circleId)
+        //updates array by keeping it unique
+        
+        circlesRef.updateData(["users" : FieldValue.arrayUnion([userIds])]) { (err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            completion?()
+        }
+        
     }
     
     
@@ -180,6 +205,7 @@ class CircleAnnotationManagement {
             }
         }
     }
+
     
     func observeCircleSetFirebase(circleId: String) {
         let db = Firestore.firestore()
@@ -189,7 +215,7 @@ class CircleAnnotationManagement {
                 return
             }
             guard (document?.data()) != nil else {
-                print("no snapshot data on observeUserKindDeck")
+                print("no snapshot data on observeCircleSetFirebase")
                 return
             }
             print("userchanged")
