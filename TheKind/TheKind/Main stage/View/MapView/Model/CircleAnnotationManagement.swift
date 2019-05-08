@@ -17,6 +17,7 @@ class CircleAnnotationManagement {
     private init() {}
     var circleAnnotationObserver: (([CircleAnnotationSet])->())?
     var userAddedToTemporaryCircleListObserver: ((String)->())?
+    var userRemovedFromTemporaryCircleListObserver: ((String)->())?
     var circles: [CircleAnnotationSet] = []
     
     //Receive Currently Selected circle or nil. If nil, will kill the observer.
@@ -119,12 +120,39 @@ class CircleAnnotationManagement {
         }
     }
     
+    func changeCircleAdminTo(userId: String, completion: (()->())?) {
+        let db = Firestore.firestore()
+        guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
+        
+        let circlesRef = db.collection("kindcircles").document(circleId)
+        //ArrayUnion() adds elements to an array but only elements not already present.
+        circlesRef.updateData(["admin" : userId]) { (err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            completion?()
+        }
+        
+    }
+    
+    func checkIfUserBelongsToCircle(userId: String, completion: ((Bool?)->())?) {
+        guard let set = currentlySelectedAnnotationView?.circleDetails else {return}
+        loadUserIDsInCircle(set: set) { (users) in
+            if let users = users {
+                completion?(users.contains(userId))
+            } else {
+                completion?(nil)
+            }
+        }
+    }
+    
     func addUserToCircle(userId: String, completion: (()->())?) {
         let db = Firestore.firestore()
         guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
 
         let circlesRef = db.collection("kindcircles").document(circleId)
-        //updates array by keeping it unique
+        //ArrayUnion() adds elements to an array but only elements not already present.
         circlesRef.updateData(["users" : FieldValue.arrayUnion([userId])]) { (err) in
             if let err = err {
                 print(err)
@@ -139,8 +167,7 @@ class CircleAnnotationManagement {
         let db = Firestore.firestore()
         guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
         let circlesRef = db.collection("kindcircles").document(circleId)
-        //updates array by keeping it unique
-        
+        //ArrayUnion() adds elements to an array but only elements not already present.
         circlesRef.updateData(["users" : FieldValue.arrayUnion([userIds])]) { (err) in
             if let err = err {
                 print(err)
@@ -152,12 +179,17 @@ class CircleAnnotationManagement {
     }
     
     
-    func removeFromUserCircleArray(set: CircleAnnotationSet, removingElement: String) {
+    func removeUserFromCircle(userId: String, completion: (()->())?) {
         let db = Firestore.firestore()
-        guard let circleId = set.circleId else {return}
+        guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
         let circlesRef = db.collection("kindcircles").document(circleId)
-        circlesRef.updateData(["users" : FieldValue.arrayRemove([removingElement])
-            ])
+        circlesRef.updateData(["users" : FieldValue.arrayRemove([userId])]) { (err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            completion?()
+        }
     }
     
     func loadUserIDsInCircle(set: CircleAnnotationSet, completion: (([String]?)->())?) {

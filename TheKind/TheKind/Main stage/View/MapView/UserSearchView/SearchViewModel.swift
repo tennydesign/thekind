@@ -12,39 +12,30 @@ import FirebaseFirestore
 
 class SearchViewModel {
     var userFields: [String: Any] = [:]
-    var users: [KindUser] = []
     //TODO: Replace with retrieveAllUsers from KindUserManager
-    func retrieveAllUsers(completion:@escaping (Bool)->()) {
+    func retrieveAllUsers(completion:@escaping ([KindUser]?)->()) {
         let db = Firestore.firestore()
+        var users: [KindUser] = []
         db.collection("usersettings").getDocuments {  (document,err) in
             if let err = err {
                 print(err)
-                completion(false)
+                completion(nil)
                 return
             }
             document?.documents.forEach({ (document) in
                 let user: KindUser = KindUser(document: document)
-                self.users.append(user)
+                users.append(user)
             })
-            completion(true)
+            completion(users)
 
         }
     }
+    
+    // TODO OPT:
+    // IMPLEMENT
+    // func retrieveUsersByKeyStroke(keyword: String, completion:@escaping ([KindUser]?)->()) {
+    // USE:
+    //    citiesRef.whereField("state", isEqualTo: "CA")
+    //    citiesRef.whereField("population", isLessThan: 100000)
+    //    citiesRef.whereField("name", isGreaterThanOrEqualTo: "San Francisco")
 }
-//
-//struct KindUser {
-//    var name: String?
-//    var photoURL: String?
-//    var kind: Int?
-//    var uid: String
-//    var ref: DocumentReference?
-//    
-//    init(document: DocumentSnapshot) {
-//        name = document.data()?[UserFieldTitle.name.rawValue] as? String
-//        photoURL = document.data()?[UserFieldTitle.photoURL.rawValue] as? String
-//        kind = document.data()?[UserFieldTitle.kind.rawValue] as? Int
-//        uid = document.documentID
-//        ref = document.reference
-//    }
-//    
-//}

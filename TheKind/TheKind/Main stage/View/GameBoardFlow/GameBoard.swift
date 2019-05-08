@@ -53,7 +53,9 @@ class GameBoard: KindActionTriggerView {
     }
     
     override func activate() {
-        self.fadeInView()
+        mainViewController?.setHudDisplayGradientBg(on: true) {
+            self.fadeInView()
+        }
         self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
         gameBoardScene?.mainViewController = self.mainViewController
         gameBoardScene?.routineFinishedPostObserver()

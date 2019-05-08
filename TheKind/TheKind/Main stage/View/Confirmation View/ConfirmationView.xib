@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConfirmationView" customModule="TheKind" customModuleProvider="target">
+            <connections>
+                <outlet property="cancelAction" destination="zyk-40-tFJ" id="4kc-FF-3s8"/>
+                <outlet property="confirmAction" destination="0kI-ub-aBg" id="VHv-bS-GBW"/>
+                <outlet property="mainView" destination="iN0-l3-epB" id="YXa-h5-3dX"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="mainView" customClass="PassthroughView" customModule="TheKind" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="Jv9-8F-nEF">
+                    <rect key="frame" x="72.5" y="267.5" width="230" height="132"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0kI-ub-aBg" customClass="KindButton" customModule="TheKind" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="230" height="52"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="52" id="T9A-kX-ZOv"/>
+                                <constraint firstAttribute="width" constant="230" id="qVx-ho-pQl"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                            <state key="normal" title="Confirm delete user"/>
+                            <connections>
+                                <action selector="confirm:" destination="-1" eventType="touchUpInside" id="t27-Y6-jlQ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zyk-40-tFJ" customClass="KindButton" customModule="TheKind" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="80" width="230" height="52"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="52" id="QaL-kY-co6"/>
+                                <constraint firstAttribute="width" constant="230" id="Z6e-P6-joY"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                            <state key="normal" title="Cancel"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColorKind">
+                                    <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="cancelled:" destination="-1" eventType="touchUpInside" id="nWD-7z-Q3G"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="132" id="Ix6-Iu-e58"/>
+                        <constraint firstAttribute="width" constant="230" id="e8e-RO-q3c"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Jv9-8F-nEF" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="32O-4x-Ujp"/>
+                <constraint firstItem="Jv9-8F-nEF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Lfn-BB-EWG"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
+        </view>
+    </objects>
+</document>

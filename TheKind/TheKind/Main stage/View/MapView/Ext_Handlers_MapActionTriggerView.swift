@@ -53,7 +53,6 @@ extension MapActionTriggerView: UITextFieldDelegate {
             let dateNow = dateformat.string(from: Date())
             
             // UI prepare.
-            showEditInnerCircleViews()
             circleNameTextField.text = "Type a name."
             adaptLineToTextSize(circleNameTextField, lineWidth: newCirclelineWidthConstraint)
             self.userIsAdmin = true
@@ -62,6 +61,8 @@ extension MapActionTriggerView: UITextFieldDelegate {
             let location = CLLocationCoordinate2D(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
             
             guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
+            
+            
             let users:[String] = [uid] // initiates with the creator
             
             let set = CircleAnnotationSet(location: location, circlePlotName: "", isPrivate: false, circleId: nil, admin: uid, users: users, dateCreated: dateNow)
@@ -167,21 +168,103 @@ extension MapActionTriggerView: UITextFieldDelegate {
         
         return overlayView
     }
-    
+ 
 }
 
-extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UserInCirclePhotoStripCellProtocol {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return usersInCircle.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoStripCollectionViewCell", for: indexPath) as! PhotoStripCollectionViewCell
+        
+        
         if let imageUrl = usersInCircle[indexPath.row].photoURL {
             cell.userPhotoImageView.loadImageUsingCacheWithUrlString(urlString:imageUrl)
         }
+        cell.user = usersInCircle[indexPath.row]
+        cell.userNameLabel.text = usersInCircle[indexPath.row].name
+        cell.photoArc.tintColor = UIColor.white
+        cell.delegate = self
+        
+        if let adminId = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.admin {
+            if usersInCircle[indexPath.row].uid == adminId {
+                cell.photoArc.tintColor = UIColor(r: 255, g: 45, b: 85).withAlphaComponent(0.7)
+            }
+            
+            // Selected cell.
+            if let selectedRow = selectedPhotoStripCellIndexPath {
+                if indexPath.row == selectedRow {
+                    cell.adminControls.alpha = checkIfIsAdmin(adminId) ? 1 : 0
+                    selectedKindUser = usersInCircle[indexPath.row]
+                }
+            }
+        }
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 59, height: 130)
+    }
+    
+
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("selected")
+        self.selectedPhotoStripCellIndexPath = indexPath.row
+        collectionView.reloadData()
+        
+    }
+    //UserInCirclePhotoStripCellProtocol
+    func deleteUserFromCircleBtn(userId:String) {
+        mainViewController?.confirmationView.delegate = self
+        mainViewController?.confirmationView.actionEnum = .removeUserFromCircle
+        guard let user = selectedKindUser, let name = user.name else {return}
+        mainViewController?.confirmationView.confirmAction.setTitle("Remove \(name)", for: .normal)
+        mainViewController?.confirmationView.activate()
+
+    }
+    
+
+    
+    func makeUserAdminForCircleBtn(userId:String) {
+        mainViewController?.confirmationView.delegate = self
+        mainViewController?.confirmationView.actionEnum = .transferCircleToUser
+        guard let user = selectedKindUser, let name = user.name else {return}
+        mainViewController?.confirmationView.confirmAction.setTitle("Transfer circle to \(name) ", for: .normal)
+        mainViewController?.confirmationView.activate()
     }
     
 }
 
+extension MapActionTriggerView: ConfirmationViewProtocol {
+    
+    func userConfirmed() {
+        guard let action = mainViewController?.confirmationView.actionEnum else {return}
+        switch action {
+            case .removeUserFromCircle:
+                guard let user = selectedKindUser, let id = user.uid else {return}
+                CircleAnnotationManagement.sharedInstance.removeUserFromCircle(userId: id) {
+                    print("user removed from array in Firebase")
+                    self.mainViewController?.confirmationView.deactivate()
+                }
+            case .transferCircleToUser:
+                print("hello makeUserAdminForCircleBtn")
+                 guard let user = selectedKindUser, let id = user.uid else {return}
+                CircleAnnotationManagement.sharedInstance.changeCircleAdminTo(userId: id) {
+                    self.mainViewController?.confirmationView.deactivate()
+                }
+            
+        }
+        
+
+    }
+    
+    func userCancelled() {
+        mainViewController?.confirmationView.deactivate()
+    }
+    
+    
+}

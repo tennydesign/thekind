@@ -33,7 +33,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     @IBOutlet var lockTopImage: UIImageView!
     @IBOutlet var lockBottomImage: UIImageView!
     @IBOutlet var addUserBtn: UIButton!
-    
+    var selectedPhotoStripCellIndexPath: Int?
 
     
     @IBOutlet var mapBoxView: MGLMapView! {
@@ -70,13 +70,13 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         }
     }
     
-    
     var mainViewController: MainViewController?
     var talkbox: JungTalkBox?
     var latitude: CLLocationDegrees!
     var longitude: CLLocationDegrees!
     var longPressGesture: UIGestureRecognizer!
-
+    var selectedKindUser: KindUser?
+    
     // INIT VALUES
     // HERE: Maybe add a little bit more space from top of jungchatlogger and map.
     let MAXZOOMLEVEL: Double = 18
@@ -140,7 +140,8 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         openLock()
         // setupCircleInformationObserver
         updateCircleInformationOnObserver()
-        userAddedToCircleListObserver()
+        userAddedToTemporaryCircleListObserver()
+        userRemovedFromTemporaryCircleListObserver()
     }
 
     
@@ -269,6 +270,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     override func deactivate() {
+        self.fadeOutView()
     }
     
     func clearJungChatLog() {
@@ -276,7 +278,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.mainViewController?.jungChatLogger.hideOptionLabels(true, completion: nil)
     }
     
-    func initializeNewCircleDescription() {
+    func initializeNewCircleExplainer() {
         
         if CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
             explainerCircleCreation()
@@ -320,8 +322,9 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
                 // This will switch it from temporary to permanent
                 // isSelectedTemporaryCircleAnnotation will return false from now on.
                 annotation.title = set.circleId
-                annotation.circleDetails?.circleId =  set.circleId
+                annotation.circleDetails = set
                 
+                CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
                 self.deActivateOnDeselection(completion: nil)
                 
             }
@@ -334,10 +337,14 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     @IBAction func addUserBtnClicked(_ sender: UIButton) {
         print("add user clicked")
         mainViewController?.searchView.activate()
-        //HERE .. trying to think about the workflow back and forth the photostrip wiith add user.
     }
     
-    //HERE + sign on photostrip is not showing on first view (only second view)
+    @IBAction func editCircleClicked(_ sender: UIButton) {
+        showEditInnerCircleViews()
+    }
+    
+    
+    
     func updateCircleInformationOnObserver() {
         CircleAnnotationManagement.sharedInstance.userListChangedOnCircleObserver = { [unowned self] in
     
@@ -351,12 +358,25 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     //triggered when user is added at the SearchView.
-    func userAddedToCircleListObserver() {
+    func userAddedToTemporaryCircleListObserver() {
         CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListObserver  = { [unowned self] id in
             print("FIRED: userAddedToCircleListObserver")
             KindUserSettingsManager.sharedInstance.retrieveAnyUserSettings(userId: id, completion: { (kindUser) in
                 if let kindUser = kindUser {
+                    CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.users.append(id)
                     self.usersInCircle.append(kindUser)
+                }
+            })
+        }
+    }
+    
+    func userRemovedFromTemporaryCircleListObserver() {
+        CircleAnnotationManagement.sharedInstance.userRemovedFromTemporaryCircleListObserver  = { [unowned self] id in
+            print("FIRED: userRemovedFromTemporaryCircleListObserver")
+            KindUserSettingsManager.sharedInstance.retrieveAnyUserSettings(userId: id, completion: { (kindUser) in
+                if let kindUser = kindUser {
+                    CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.users.removeAll {$0 == id}
+                    self.usersInCircle.removeAll{ $0.uid == kindUser.uid}
                 }
             })
         }

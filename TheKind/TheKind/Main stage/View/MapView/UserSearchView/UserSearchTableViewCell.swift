@@ -9,7 +9,7 @@
 import UIKit
 
 protocol UserSearchViewCellDelegate:AnyObject {
-    func addUserClicked(_ sender: UserSearchTableViewCell)
+    func addRemoveUserClicked(_ sender: UserSearchTableViewCell)
 }
 
 class UserSearchTableViewCell: UITableViewCell {
@@ -41,6 +41,10 @@ class UserSearchTableViewCell: UITableViewCell {
         }
     }
     
+    
+    override func prepareForReuse() {
+        addRemoveButton.setImage(UIImage(named: "adduser"), for: .normal)
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -53,7 +57,7 @@ class UserSearchTableViewCell: UITableViewCell {
     }
     
     @IBAction func addRemoveButtonClicked(sender: AnyObject) {
-        delegate?.addUserClicked(self)
+        delegate?.addRemoveUserClicked(self)
     }
     
     

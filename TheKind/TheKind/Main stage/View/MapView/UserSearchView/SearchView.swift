@@ -58,14 +58,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         let tapOutsideHandler = UITapGestureRecognizer(target: self, action: #selector(tapOutsideSearch))
         
         searchTableView.addGestureRecognizer(tapOutsideHandler)
-        searchViewModel.retrieveAllUsers { (completed) in
-            if completed {
-                print("great")
-                self.data = self.searchViewModel.users + self.searchViewModel.users + self.searchViewModel.users + self.searchViewModel.users
 
-                self.filteredData = self.data
-            }
-        }
 
     }
 
@@ -110,12 +103,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         searchBar.endEditing(true)
 
     }
-//
-//    override var inputAccessoryView: UIView? {
-//        get {
-//            return newlyProgramaticallyCreatedView
-//        }
-//    }
+
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -136,8 +124,22 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         
         if !addUserMode {
             let userFoundCell = tableView.dequeueReusableCell(withIdentifier: "UserSearchTableViewCell", for: indexPath) as! UserSearchTableViewCell
+            
             userFoundCell.user = filteredData[indexPath.row]
             userFoundCell.delegate = self
+            
+            if let userId = filteredData[indexPath.row].uid {
+                CircleAnnotationManagement.sharedInstance.checkIfUserBelongsToCircle(userId: userId) { (userBelongs) in
+                    if let userBelongs = userBelongs {
+                        if userBelongs == true {
+                            userFoundCell.addRemoveButton.setImage(UIImage(named: "addedIcon"), for: .normal)
+                        }
+                    }
+                }
+            
+            }
+
+
             cell = userFoundCell
         } else {
             let addUsercell = tableView.dequeueReusableCell(withIdentifier: "AddNewUserTableViewCell", for: indexPath) as! AddNewUserTableViewCell
@@ -172,27 +174,56 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     }
 
     func retrieveuAllUsersFromFirestore() {
-        //Todo: This has to be optimized to something smarter when we scale.
-        
+
     }
     
-    func addUserClicked(_ sender: UserSearchTableViewCell) {
+    func addRemoveUserClicked(_ sender: UserSearchTableViewCell) {
         guard let tappedIndexPath = searchTableView.indexPath(for: sender) else {return}
         if let cell = searchTableView.cellForRow(at: tappedIndexPath) as? UserSearchTableViewCell {
             guard let userId = cell.user?.uid else {return}
+            let image = cell.addRemoveButton.image(for: .normal)
             if !CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
-                CircleAnnotationManagement.sharedInstance.addUserToCircle(userId: userId, completion: nil)
+                // This will update Firestore triggering the observer to update the UI.
+                
+                if image == UIImage(named: "adduser") {
+                    CircleAnnotationManagement.sharedInstance.addUserToCircle(userId: userId, completion: nil)
+                } else {
+                    CircleAnnotationManagement.sharedInstance.removeUserFromCircle(userId: userId, completion: nil)
+                }
+                
             } else {
-                // shots event in the client to increment list of users without having a saved circle.
-                CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListObserver?(userId)
+                // This will not update Firestore just yet, just the SET for the circle.
+                // Firestore will be updated on "SAVE" see actiontriggerview action "right clicked"
+                
+                //HERE: THIS IS NOT WORKING PROPERLY
+                if image == UIImage(named: "adduser") {
+                    CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListObserver?(userId)
+                } else {
+                    CircleAnnotationManagement.sharedInstance.userRemovedFromTemporaryCircleListObserver?(userId)
+                }
             }
+            searchTableView.reloadData()
 
         }
         print("clicked at \(tappedIndexPath)")
     }
     
     override func activate() {
-      self.fadeInView()
+    // start loading
+    //Todo: This has to be optimized to something smarter when we scale.
+    // Actually, search must happen only after typing (deny empty string = all), like AppleTV
+        
+        
+        searchViewModel.retrieveAllUsers { (users) in
+            if let users = users {
+                print("great")
+                self.data = users + users + users + users
+                
+                self.filteredData = self.data
+                self.fadeInView()
+                // kill loading
+            }
+        }
     }
     
     override func deactivate() {

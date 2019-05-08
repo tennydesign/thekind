@@ -107,6 +107,7 @@ class MainViewController: UIViewController {
     
     let talkbox = JungTalkBox()
     
+    @IBOutlet var confirmationView: ConfirmationView!
     
     fileprivate func initMainViewControllerForViews() {
         hudView.mainViewController = self
@@ -205,6 +206,15 @@ class MainViewController: UIViewController {
         
     }
     
+    func setHudDisplayGradientBg(on:Bool, completion: (()->())?) {
+        UIView.animate(withDuration: 0.4, animations: {
+            self.hudView.hudCenterDisplay.alpha = on ? 1 : 0
+            self.hudView.hudGradient.alpha = on ? 1 : 0
+        }) { (completed) in
+            self.hudView.isUserInteractionEnabled = on ? true : false
+            completion?()
+        }
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent // .default

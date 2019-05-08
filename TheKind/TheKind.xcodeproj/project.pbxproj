@@ -73,6 +73,8 @@
 		A070760121F2CEAB0013380D /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A070760021F2CEAB0013380D /* MapView.xib */; };
 		A08902E122554A8900EE2F79 /* PhotoStripCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08902DF22554A8900EE2F79 /* PhotoStripCollectionViewCell.swift */; };
 		A08902E222554A8900EE2F79 /* PhotoStripCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A08902E022554A8900EE2F79 /* PhotoStripCollectionViewCell.xib */; };
+		A096B7772280B68F003E52FE /* ConfirmationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A096B7762280B68F003E52FE /* ConfirmationView.xib */; };
+		A096B7792280B6D9003E52FE /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A096B7782280B6D9003E52FE /* ConfirmationView.swift */; };
 		A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1721F53B0F00DDEC6C /* ports.geojson */; };
 		A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */; };
 		A0A69F1C2186687C00AA5C61 /* AcylicalHand-Small.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */; };
@@ -196,6 +198,8 @@
 		A070760021F2CEAB0013380D /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
 		A08902DF22554A8900EE2F79 /* PhotoStripCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStripCollectionViewCell.swift; sourceTree = "<group>"; };
 		A08902E022554A8900EE2F79 /* PhotoStripCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoStripCollectionViewCell.xib; sourceTree = "<group>"; };
+		A096B7762280B68F003E52FE /* ConfirmationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfirmationView.xib; sourceTree = "<group>"; };
+		A096B7782280B6D9003E52FE /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		A0A45E1721F53B0F00DDEC6C /* ports.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ports.geojson; sourceTree = "<group>"; };
 		A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapActionTriggerView.swift; sourceTree = "<group>"; };
 		A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Small.ttf"; sourceTree = "<group>"; };
@@ -496,6 +500,15 @@
 			path = MapView;
 			sourceTree = "<group>";
 		};
+		A096B7752280B63C003E52FE /* Confirmation View */ = {
+			isa = PBXGroup;
+			children = (
+				A096B7762280B68F003E52FE /* ConfirmationView.xib */,
+				A096B7782280B6D9003E52FE /* ConfirmationView.swift */,
+			);
+			path = "Confirmation View";
+			sourceTree = "<group>";
+		};
 		A0A45E2421FBA78300DDEC6C /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -643,6 +656,7 @@
 				A0301D652190B1CA00E023F7 /* GameBoardFlow */,
 				A002F47721B9EF41006E8660 /* userProfilingFlow */,
 				A07075F621EFFC940013380D /* MapView */,
+				A096B7752280B63C003E52FE /* Confirmation View */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -816,6 +830,7 @@
 				A08902E222554A8900EE2F79 /* PhotoStripCollectionViewCell.xib in Resources */,
 				A0D086EB215EA61300011A54 /* AcylicalHand-Small-SVG.ttf in Resources */,
 				A0C5C06B21FF58CE00846B82 /* CreateNewUser.xib in Resources */,
+				A096B7772280B68F003E52FE /* ConfirmationView.xib in Resources */,
 				A0320B5F212F2873008A96E2 /* Main.storyboard in Resources */,
 				A0C5D234212A4A7600BF1B0C /* LaunchScreen.storyboard in Resources */,
 				A0320B4F212B69BA008A96E2 /* LoginExistingUser.xib in Resources */,
@@ -1004,6 +1019,7 @@
 				A03ECF9022717EBE0034C7F1 /* AddNewUserTableViewCell.swift in Sources */,
 				A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */,
 				A05150F621E4002800795172 /* UserNameView.swift in Sources */,
+				A096B7792280B6D9003E52FE /* ConfirmationView.swift in Sources */,
 				A0FBB7372213A97800405440 /* xt_ActionTriggerGameBoardScene.swift in Sources */,
 				A0320B53212B69DD008A96E2 /* LoginExistingUser.swift in Sources */,
 				A025F6F322248E790010BDA1 /* KindDeckModel.swift in Sources */,
