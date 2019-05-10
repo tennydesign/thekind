@@ -266,6 +266,30 @@ public class KindUserSettingsManager {
             
         }
     }
+    
+    func retrieveUserByKeyword(keyword: String, completion:@escaping ((KindUser?)->())) {
+        let db = Firestore.firestore()
+        let ref = db.collection("usersettings")
+        let keyword = keyword.lowercased()
+        let query = ref.whereField("email", isEqualTo: keyword)
+        query.getDocuments {  (document,err) in
+            if let err = err {
+                print(err)
+                completion(nil)
+                return
+            }
+
+            if let document = document?.documents.first {
+                let user: KindUser = KindUser(document: document)
+                completion(user)
+                return
+            }
+            //otherwise
+            completion(nil)
+
+
+        }
+    }
 
 }
 

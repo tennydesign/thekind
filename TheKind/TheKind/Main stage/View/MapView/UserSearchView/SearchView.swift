@@ -19,7 +19,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     var addUserMode = false
     @IBOutlet var searchTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
-    
+    var isValidNewEmail: Bool = false
     let searchViewModel = SearchViewModel()
 
     var data:[KindUser] = []
@@ -143,33 +143,59 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
             cell = userFoundCell
         } else {
             let addUsercell = tableView.dequeueReusableCell(withIdentifier: "AddNewUserTableViewCell", for: indexPath) as! AddNewUserTableViewCell
-            addUsercell.inviteUserButton.disableButton()
+            
+            if !isValidNewEmail {
+                addUsercell.inviteUserButton.disableButton()
+            } else {
+                addUsercell.inviteUserButton.enableButton()
+            }
             cell = addUsercell
         }
         return cell!
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.filteredData = []
+    }
+    
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // When there is no text, filteredData is the same as the original data
-        // When user has entered text into the search box
-        // Use the filter method to iterate over all items in the data array
-        // For each item, return true if the item should be included and false if the
-        // item should NOT be included
 
-        filteredData = searchText.isEmpty ? data : data.filter({(user) -> Bool in
-            // If dataItem matches the searchText, return true to include it
-            return user.name?.range(of: searchText, options: .caseInsensitive) != nil
-        })
-        
-        // THIS CHECKS IF ITS AN EMAIL TO ENABLE ADD BUTTON.
-        let indexPath = IndexPath(item: 0, section: 0)
-        if let cell = searchTableView.cellForRow(at: indexPath) as? AddNewUserTableViewCell {
-            if searchText.isEmail() {
-                cell.inviteUserButton.enableButton()
-            } else {
-                cell.inviteUserButton.disableButton()
-            }
+        if searchText.isEmpty {
+            self.filteredData = []
         }
+        
+        let keywords = searchText.lowercased()
+        if keywords.isEmail() {
+            var retrievedUser:KindUser?
+            
+            //super nice pattern for cancelling previous async calls.
+            // with dispatchgroup.
+            // leave when you find, but don't leave if you don't.
+            let group = DispatchGroup()
+            group.enter()
+            KindUserSettingsManager.sharedInstance.retrieveUserByKeyword(keyword: keywords) { (kindUser) in
+                if let user = kindUser {
+                    self.isValidNewEmail = false
+                    retrievedUser = user
+                    // leave group of calls if user is found (cancels previous calls)
+                    group.leave()
+                } else {
+                    //don't leave.
+                    self.isValidNewEmail = true
+                    self.filteredData = []
+                }
+                
+                group.notify(queue: .main) {
+                    guard let retrievedUser = retrievedUser else {return}
+                    self.filteredData = [retrievedUser]
+                }
+            }
+        } else {
+            self.filteredData = []
+            self.isValidNewEmail = false
+        }
+
 
     }
 
@@ -209,21 +235,8 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     }
     
     override func activate() {
-    // start loading
-    //Todo: This has to be optimized to something smarter when we scale.
-    // Actually, search must happen only after typing (deny empty string = all), like AppleTV
+        self.fadeInView()
         
-        
-        searchViewModel.retrieveAllUsers { (users) in
-            if let users = users {
-                print("great")
-                self.data = users + users + users + users
-                
-                self.filteredData = self.data
-                self.fadeInView()
-                // kill loading
-            }
-        }
     }
     
     override func deactivate() {

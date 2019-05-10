@@ -11,6 +11,8 @@ import Foundation
 import UIKit
 import SpriteKit
 
+//TODO: HAVE A SWITCH FOR TILES THAT ARE PHOTOS NOT ICONS.
+
 class GameBoard: KindActionTriggerView {
     
 
