@@ -50,6 +50,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         searchBar.delegate = self
         setupKeyboardObservers()
         searchTableView.rowHeight = 89
+        
         searchTableView.register(UINib(nibName: "UserSearchTableViewCell", bundle: nil), forCellReuseIdentifier: "UserSearchTableViewCell")
         
         searchTableView.register(UINib(nibName: "AddNewUserTableViewCell", bundle: nil), forCellReuseIdentifier: "AddNewUserTableViewCell")
@@ -86,6 +87,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
                 if subview.isKind(of: UITextField.self) {
                     let textField: UITextField = subview as! UITextField
                     textField.backgroundColor = UIColor.white
+                    textField.autocapitalizationType = .none
                     //textField.borderStyle = .line
                     
                 }
@@ -122,26 +124,35 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         var cell:UITableViewCell?
         //cell.textLabel?.text = "teste"
         
-        if !addUserMode {
+        if !addUserMode { // user found.
+            
             let userFoundCell = tableView.dequeueReusableCell(withIdentifier: "UserSearchTableViewCell", for: indexPath) as! UserSearchTableViewCell
             
             userFoundCell.user = filteredData[indexPath.row]
             userFoundCell.delegate = self
-            
             if let userId = filteredData[indexPath.row].uid {
-                CircleAnnotationManagement.sharedInstance.checkIfUserBelongsToCircle(userId: userId) { (userBelongs) in
-                    if let userBelongs = userBelongs {
-                        if userBelongs == true {
-                            userFoundCell.addRemoveButton.setImage(UIImage(named: "addedIcon"), for: .normal)
+                if !CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
+                    CircleAnnotationManagement.sharedInstance.checkIfUserBelongsToCircle(userId: userId) { (userBelongs) in
+                        if let userBelongs = userBelongs {
+                            if userBelongs == true {
+                                userFoundCell.addRemoveButton.setImage(UIImage(named: "addedIcon"), for: .normal)
+                            }
+                        }
+                    }
+                } else { //circle is temporary
+                    CircleAnnotationManagement.sharedInstance.checkIfUserBelongsToTemporaryCircle(userId: userId) { (userBelongs) in
+                        if let userBelongs = userBelongs {
+                            if userBelongs == true {
+                                userFoundCell.addRemoveButton.setImage(UIImage(named: "addedIcon"), for: .normal)
+                            }
                         }
                     }
                 }
-            
             }
 
-
             cell = userFoundCell
-        } else {
+            
+        } else { // user not found
             let addUsercell = tableView.dequeueReusableCell(withIdentifier: "AddNewUserTableViewCell", for: indexPath) as! AddNewUserTableViewCell
             
             if !isValidNewEmail {
@@ -151,6 +162,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
             }
             cell = addUsercell
         }
+        
         return cell!
     }
     
@@ -203,32 +215,48 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
 
     }
     
+    //refactor by linking users in set with tableview counter.
     func addRemoveUserClicked(_ sender: UserSearchTableViewCell) {
         guard let tappedIndexPath = searchTableView.indexPath(for: sender) else {return}
         if let cell = searchTableView.cellForRow(at: tappedIndexPath) as? UserSearchTableViewCell {
             guard let userId = cell.user?.uid else {return}
             let image = cell.addRemoveButton.image(for: .normal)
+            
             if !CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
                 // This will update Firestore triggering the observer to update the UI.
                 
                 if image == UIImage(named: "adduser") {
-                    CircleAnnotationManagement.sharedInstance.addUserToCircle(userId: userId, completion: nil)
+                    CircleAnnotationManagement.sharedInstance.addUserToCircle(userId: userId) {
+                        self.searchTableView.reloadData()
+                    }
                 } else {
-                    CircleAnnotationManagement.sharedInstance.removeUserFromCircle(userId: userId, completion: nil)
+                    CircleAnnotationManagement.sharedInstance.removeUserFromCircle(userId: userId) {
+                        self.searchTableView.reloadData()
+                    }
                 }
                 
             } else {
                 // This will not update Firestore just yet, just the SET for the circle.
                 // Firestore will be updated on "SAVE" see actiontriggerview action "right clicked"
-                
-                //HERE: THIS IS NOT WORKING PROPERLY
+
                 if image == UIImage(named: "adduser") {
-                    CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListObserver?(userId)
+   
+                    CircleAnnotationManagement.sharedInstance.addUserToTemporaryCircle(userId: userId) { (kindUser) in
+                        if let kindUser = kindUser {
+                            CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListObserver?(kindUser)
+                            self.searchTableView.reloadData()
+                        }
+                    }
                 } else {
-                    CircleAnnotationManagement.sharedInstance.userRemovedFromTemporaryCircleListObserver?(userId)
+                    CircleAnnotationManagement.sharedInstance.removeUserFromTemporaryCircle(userId: userId) { (kindUser) in
+                        if let kindUser = kindUser {
+                            CircleAnnotationManagement.sharedInstance.userRemovedFromTemporaryCircleListObserver?(kindUser)
+                            self.searchTableView.reloadData()
+                        }
+                    }
                 }
             }
-            searchTableView.reloadData()
+            
 
         }
         print("clicked at \(tappedIndexPath)")

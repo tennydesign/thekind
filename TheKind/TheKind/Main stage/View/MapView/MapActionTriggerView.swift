@@ -357,28 +357,16 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         }
     }
     
-    //triggered when user is added at the SearchView.
+    //triggered when user is added at the SearchView FOR TEMPORARY CIRCLES only.
     func userAddedToTemporaryCircleListObserver() {
-        CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListObserver  = { [unowned self] id in
-            print("FIRED: userAddedToCircleListObserver")
-            KindUserSettingsManager.sharedInstance.retrieveAnyUserSettings(userId: id, completion: { (kindUser) in
-                if let kindUser = kindUser {
-                    CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.users.append(id)
-                    self.usersInCircle.append(kindUser)
-                }
-            })
+        CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListObserver  = { [unowned self] user in
+            self.usersInCircle.append(user)
         }
     }
     
     func userRemovedFromTemporaryCircleListObserver() {
-        CircleAnnotationManagement.sharedInstance.userRemovedFromTemporaryCircleListObserver  = { [unowned self] id in
-            print("FIRED: userRemovedFromTemporaryCircleListObserver")
-            KindUserSettingsManager.sharedInstance.retrieveAnyUserSettings(userId: id, completion: { (kindUser) in
-                if let kindUser = kindUser {
-                    CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.users.removeAll {$0 == id}
-                    self.usersInCircle.removeAll{ $0.uid == kindUser.uid}
-                }
-            })
+        CircleAnnotationManagement.sharedInstance.userRemovedFromTemporaryCircleListObserver  = { [unowned self] user in
+            self.usersInCircle.removeAll{ $0.uid == user.uid}
         }
     }
 

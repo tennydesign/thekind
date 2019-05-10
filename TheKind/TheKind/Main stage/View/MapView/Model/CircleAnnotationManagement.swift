@@ -16,8 +16,8 @@ class CircleAnnotationManagement {
     static let sharedInstance = CircleAnnotationManagement()
     private init() {}
     var circleAnnotationObserver: (([CircleAnnotationSet])->())?
-    var userAddedToTemporaryCircleListObserver: ((String)->())?
-    var userRemovedFromTemporaryCircleListObserver: ((String)->())?
+    var userAddedToTemporaryCircleListObserver: ((KindUser)->())?
+    var userRemovedFromTemporaryCircleListObserver: ((KindUser)->())?
     var circles: [CircleAnnotationSet] = []
     
     //Receive Currently Selected circle or nil. If nil, will kill the observer.
@@ -147,6 +147,11 @@ class CircleAnnotationManagement {
         }
     }
     
+    func checkIfUserBelongsToTemporaryCircle(userId: String, completion: ((Bool?)->())?) {
+        guard let set = currentlySelectedAnnotationView?.circleDetails else {return}
+        completion?(set.users.contains(userId))
+    }
+    
     func addUserToCircle(userId: String, completion: (()->())?) {
         let db = Firestore.firestore()
         guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
@@ -190,6 +195,25 @@ class CircleAnnotationManagement {
             }
             completion?()
         }
+    }
+    
+    func addUserToTemporaryCircle(userId: String, completion: ((KindUser?)->())?) {
+      KindUserSettingsManager.sharedInstance.retrieveAnyUserSettings(userId: userId, completion: { (kindUser) in
+            if let kindUser = kindUser {
+                CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.users.append(userId)
+                completion?(kindUser)
+            }
+        })
+    }
+    
+    func removeUserFromTemporaryCircle(userId: String, completion: (((KindUser?))->())?) {
+        KindUserSettingsManager.sharedInstance.retrieveAnyUserSettings(userId: userId, completion: { (kindUser) in
+            if let kindUser = kindUser {
+                CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.users.removeAll {$0 == userId}
+                completion?(kindUser)
+            }
+        })
+        
     }
     
     func loadUserIDsInCircle(set: CircleAnnotationSet, completion: (([String]?)->())?) {

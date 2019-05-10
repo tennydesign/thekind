@@ -37,7 +37,7 @@
                 <searchBar contentMode="redraw" placeholder="Type email to search or add a friend" translatesAutoresizingMaskIntoConstraints="NO" id="DX4-PS-Z4h">
                     <rect key="frame" x="0.0" y="100" width="375" height="56"/>
                     <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
+                    <textInputTraits key="textInputTraits" keyboardAppearance="alert" textContentType="email"/>
                     <scopeButtonTitles>
                         <string>Title</string>
                         <string>Title</string>

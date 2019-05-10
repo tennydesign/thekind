@@ -171,7 +171,9 @@ extension MapActionTriggerView: UITextFieldDelegate {
  
 }
 
+// PHOTOSTRIP COLLECTIONVIEW
 extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UserInCirclePhotoStripCellProtocol {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return usersInCircle.count
     }
@@ -217,7 +219,9 @@ extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSo
         collectionView.reloadData()
         
     }
-    //UserInCirclePhotoStripCellProtocol
+    
+    
+    //Btns in UserInCirclePhotoStripCellProtocol
     func deleteUserFromCircleBtn(userId:String) {
         mainViewController?.confirmationView.delegate = self
         mainViewController?.confirmationView.actionEnum = .removeUserFromCircle

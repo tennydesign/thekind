@@ -56,6 +56,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         
         self.mapBoxView.setCenter(coordinates, zoomLevel: MAXZOOMLEVEL,animated: true)
 
+        // Load users to photoStrip array
         CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile() { (kindUsers) in
             self.usersInCircle = kindUsers ?? []
         }
