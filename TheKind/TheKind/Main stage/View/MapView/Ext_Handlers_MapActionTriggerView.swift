@@ -48,7 +48,6 @@ extension MapActionTriggerView: UITextFieldDelegate {
             
             // UI prepare.
             circleNameTextField.attributedText = formatLabelTextWithLineSpacing(text: "Enter name")
-            self.labelCircleName.attributedText  = formatLabelTextWithLineSpacing(text: "Enter name")
             self.userIsAdmin = true
             self.circleIsInEditMode = true
 
@@ -83,13 +82,15 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     func toggleEditMode(on: Bool) {
         if on {
-            adaptLineToTextSize(circleNameTextField, lineWidthConstraint: newCirclelineWidthConstraint, view: self, animated: false) {
-                self.labelCircleName.alpha = 0
-                self.circleNameTextFieldView.alpha = 1
+            lockerView.isUserInteractionEnabled = true
+            circleNameTextFieldView.isUserInteractionEnabled = true
+            lineUnderTexboxView.alpha = 1
+            adaptLineToTextSize(circleNameTextField, lineWidthConstraint: newCirclelineWidthConstraint, view: self, animated: true) {
             }
         } else {
-            labelCircleName.alpha = 1
-            circleNameTextFieldView.alpha = 0
+            lockerView.isUserInteractionEnabled = false
+            circleNameTextFieldView.isUserInteractionEnabled = false
+            lineUnderTexboxView.alpha = 0
         }
     }
  
@@ -104,12 +105,17 @@ extension MapActionTriggerView: UITextFieldDelegate {
     }
     
     func togglePrivateOrPublic() {
-        if circleIsPrivate {
-            viewSkatingX(lockTopImage, left: false, -20, reverse: false)
-            fadeInPhotoStrip()
-        } else {
-            viewSkatingX(lockTopImage, left: true, reverse: true)
-            fadeOutPhotoStrip()
+        CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.isPrivate = self.circleIsPrivate
+        CircleAnnotationManagement.sharedInstance.updateCircleSettings { (set, err) in
+            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
+            
+            if self.circleIsPrivate {
+                viewSkatingX(self.lockTopImage, left: false, -20, reverse: false)
+                self.fadeInPhotoStrip()
+            } else {
+                viewSkatingX(self.lockTopImage, left: true, reverse: true)
+                self.fadeOutPhotoStrip()
+            }
         }
     }
     

@@ -66,7 +66,6 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         
         if !set.circlePlotName.isEmpty {
             self.circlePlotName = set.circlePlotName
-            self.labelCircleName.attributedText = formatLabelTextWithLineSpacing(text: set.circlePlotName)
             self.circleNameTextField.attributedText = formatLabelTextWithLineSpacing(text: set.circlePlotName)
         }
         
@@ -133,20 +132,15 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         borderProtectionRight.isUserInteractionEnabled = false
         
     }
-    
-    //HERE: EDIT VIEW SHOULD GET INFO FROM PRESENT VIEW. AND VICE VERSA.
-    // LAST USER CAN"T BE DELETED ON PHOTOSTRIP
-    // REFACTOR AND ORGANIZE A BIT THE PHOTOSTRIP DELETION CYCLE.
-    func showEditInnerCircleViews() {
-        adaptLineToTextSize(circleNameTextField, lineWidthConstraint: newCirclelineWidthConstraint, view: self, animated: true) {
-            self.presentExpandedCircleView.isHidden = true
-            self.presentExpandedCircleView.alpha = 0
+
+    func togglePresentInnerCircleViews(on: Bool) {
+        if on {
+            presentExpandedCircleView.alpha = 1
+            presentExpandedCircleView.isHidden = false
+        } else {
+            presentExpandedCircleView.alpha = 0
+            presentExpandedCircleView.isHidden = true
         }
-    }
-    
-    func showPresentInnerCircleViews() {
-        presentExpandedCircleView.alpha = 1
-        presentExpandedCircleView.isHidden = false
     }
     
     
@@ -158,7 +152,6 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     func deActivateOnDeselection(completion: (()->())?) {
         guard let annotationView = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView else {return}
         self.mapBoxView.isUserInteractionEnabled = true
-        self.clearJungChatLog()
         mainViewController?.setHudDisplayGradientBg(on: true) {
             self.presentMapViews {
                 UIView.animate(withDuration: 1, animations: {
@@ -181,8 +174,8 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
                     CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView = nil
                     self.longPressGesture.isEnabled = true
                 
-                    self.labelCircleName.alpha = 0
-                    self.circleNameTextFieldView.alpha = 0
+                    self.togglePresentInnerCircleViews(on: false)
+                    //self.circleNameTextFieldView.alpha = 0
                     self.circleIsInEditMode = false
                     
                     completion?()

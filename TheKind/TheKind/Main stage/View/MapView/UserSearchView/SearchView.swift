@@ -272,6 +272,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     }
     
     @IBAction func closeBtnClicked(_ sender: UIButton) {
+        searchBar.resignFirstResponder()
         self.deactivate()
     }
 }

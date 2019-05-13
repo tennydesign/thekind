@@ -23,11 +23,11 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     @IBOutlet var overlayExpandedCircleViews: UIView!
     @IBOutlet var presentExpandedCircleView: UIView!
     @IBOutlet var circleNameTextField: KindTransparentTextField!
-
+    @IBOutlet var lineUnderTexboxView: UIView!
+    
     
     @IBOutlet var circleNameTextFieldView: UIView!
     @IBOutlet var insideExpandedCircleViewYConstraint: NSLayoutConstraint!
-    @IBOutlet var labelCircleName: UILabel!
     @IBOutlet var lockerView: UIView!
     @IBOutlet var lockTopImage: UIImageView!
     @IBOutlet var lockBottomImage: UIImageView!
@@ -288,7 +288,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             
         } else {
             explainerCircleExploration()
-            showPresentInnerCircleViews()
+            togglePresentInnerCircleViews(on: true)
         }
 
     }
@@ -299,15 +299,8 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     override func leftOptionClicked() {
         // THis will reset the cached Set before closing the circle (ignoring any variable changes that may have occurred in the client)
-        if let set = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails {
-            CircleAnnotationManagement.sharedInstance.retrieveCircleById(circleId: set.circleId) { (set) in
-                self.deActivateOnDeselection(completion: nil)
-                CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
-            }
-        } else {
-            self.deActivateOnDeselection(completion: nil)
-        }
-
+        self.clearJungChatLog()
+        self.deActivateOnDeselection(completion: nil)
     }
 
     //HERE: MAKE SAVE CIRCLE SAVE LIST OF USERS TOO
