@@ -97,7 +97,9 @@ class JungChatLogger: KindActionTriggerView {
     }
 
     func resetJungChat() {
-        self.messagesCollection = ["","","","","",""]
+        DispatchQueue.main.async {
+            self.messagesCollection = ["","","","","",""]
+        }
         //resetAnswerViewWidthAnchor()
     }
     
@@ -114,8 +116,7 @@ class JungChatLogger: KindActionTriggerView {
                 self.rightAnswerLabel.alpha = 1
                 self.holdToAnswerBar.alpha = 1
             }) { (completed) in
-                guard let completion = completion else {return}
-                completion()
+                completion?()
             }
         } else {
             UIView.animate(withDuration: 0.5, animations: {
@@ -124,8 +125,7 @@ class JungChatLogger: KindActionTriggerView {
                 self.holdToAnswerBar.alpha = 0
                 
             }) { (completed) in
-                guard let completion = completion else {return}
-                completion()
+                completion?()
             }
         }
     }

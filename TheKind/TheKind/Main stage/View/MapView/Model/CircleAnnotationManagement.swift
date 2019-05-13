@@ -19,6 +19,8 @@ class CircleAnnotationManagement {
     var userAddedToTemporaryCircleListObserver: ((KindUser)->())?
     var userRemovedFromTemporaryCircleListObserver: ((KindUser)->())?
     var circles: [CircleAnnotationSet] = []
+    var circleSnapShotListener: ListenerRegistration?
+    var userListChangedOnCircleObserver: ((CircleAnnotationSet)->())?
     
     //Receive Currently Selected circle or nil. If nil, will kill the observer.
     
@@ -45,9 +47,6 @@ class CircleAnnotationManagement {
         }
     }
     
-    var circleSnapShotListener: ListenerRegistration?
-    var userListChangedOnCircleObserver: (()->())?
-    
     func retrieveCirclesCloseToPlayer(completion: @escaping (()->()))  {
         let db = Firestore.firestore()
         
@@ -70,7 +69,7 @@ class CircleAnnotationManagement {
     }
     
     
-    func saveCircleSet(completion: @escaping (CircleAnnotationSet?, Error?)->()) {
+    func saveNewCircleSet(completion: @escaping (CircleAnnotationSet?, Error?)->()) {
         let db = Firestore.firestore()
         guard let set = currentlySelectedAnnotationView?.circleDetails else { return}
         var documentRef: DocumentReference? = nil
@@ -99,6 +98,34 @@ class CircleAnnotationManagement {
         }
     }
     
+
+    func updateCircleSettings(completion: @escaping (CircleAnnotationSet?, Error?)->()) {
+        let db = Firestore.firestore()
+        guard let set = currentlySelectedAnnotationView?.circleDetails else { return}
+        guard let circleDict = set.asDictionary() else {return}
+        db.collection("kindcircles").document(set.circleId).updateData(circleDict) { (err) in
+            if let err = err {
+                //SAVE CAUSE NO CIRCLE EXIST
+                if err.localizedDescription.contains("No document to update") {
+                    //Create circle from scratch
+                    self.saveNewCircleSet(completion: { (set,err)  in
+                        if let err = err {
+                            completion(nil,err)
+                        }
+                        completion(set,nil)
+                        return
+                        
+                    })
+                    
+                }
+            } else {
+                //UPDATE CAUSE IT EXISTS
+                completion(set,nil)
+            }
+            
+        }
+    }
+ 
     
     func retrieveCircleById(circleId: String, completion: ((CircleAnnotationSet?)->())?) {
         let db = Firestore.firestore()
@@ -274,12 +301,12 @@ class CircleAnnotationManagement {
                 print("no snapshot data on observeCircleSetFirebase")
                 return
             }
-            print("userchanged")
+            print("circle changed")
             let set:CircleAnnotationSet = CircleAnnotationSet(document: document!)
             // reload SET with new info.
             self.currentlySelectedAnnotationView?.circleDetails = set
             // let client now there is a new loaded set.
-            self.userListChangedOnCircleObserver?()
+            self.userListChangedOnCircleObserver?(set)
             
         }
     }

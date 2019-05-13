@@ -67,6 +67,7 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         }
     }
     
+    //TODO: REMOVE THIS AND USE THE GLOBAL ONE
     fileprivate func adaptLineToTextSize(_ textField: UITextField) {
         let textBoundingSize = textField.frame.size
         guard let text = textField.text else {return}

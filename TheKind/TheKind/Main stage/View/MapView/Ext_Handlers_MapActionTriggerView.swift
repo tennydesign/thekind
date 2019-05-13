@@ -13,30 +13,24 @@ import Mapbox
 extension MapActionTriggerView: UITextFieldDelegate {
     
     
-    func adaptLineToTextSize(_ textField: UITextField, lineWidth: NSLayoutConstraint) {
-        let textBoundingSize = textField.frame.size
-        guard let text = textField.text else {return}
-        let frameForText = estimateFrameFromText(text, bounding: textBoundingSize, fontSize: textField.font!.pointSize, fontName: textField.font!.fontName)// UIFont.systemFont(ofSize: 16).fontName)//SECONDARYFONT)
-        
-        lineWidth.constant = frameForText.width
-        UIView.animate(withDuration: 1) {
-            self.layoutIfNeeded()
-        }
-    }
-    
     @objc func textFieldDidChange(textField: UITextField){
         guard let circleName = textField.text, !(circleName.trimmingCharacters(in: .whitespaces).isEmpty) else {return}
         circlePlotName = circleName
-        adaptLineToTextSize(textField, lineWidth: newCirclelineWidthConstraint)
-        CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.circlePlotName = self.circlePlotName
+        adaptLineToTextSize(textField, lineWidthConstraint: newCirclelineWidthConstraint, view: self, animated: true, completion: nil)
     }
     
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        adaptLineToTextSize(textField, lineWidth: newCirclelineWidthConstraint)
+        adaptLineToTextSize(textField, lineWidthConstraint: newCirclelineWidthConstraint, view: self, animated: true, completion: nil)
+    
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.circlePlotName = self.circlePlotName
+        CircleAnnotationManagement.sharedInstance.updateCircleSettings { (set, err) in
+            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
+        }
+        
         textField.resignFirstResponder()
         return true
     }
@@ -53,22 +47,24 @@ extension MapActionTriggerView: UITextFieldDelegate {
             let dateNow = dateformat.string(from: Date())
             
             // UI prepare.
-            circleNameTextField.text = "Type a name."
-            adaptLineToTextSize(circleNameTextField, lineWidth: newCirclelineWidthConstraint)
+            circleNameTextField.attributedText = formatLabelTextWithLineSpacing(text: "Enter name")
+            self.labelCircleName.attributedText  = formatLabelTextWithLineSpacing(text: "Enter name")
             self.userIsAdmin = true
-            
+            self.circleIsInEditMode = true
 
             let location = CLLocationCoordinate2D(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
             
             guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
             
+            circleIsPrivate = false
             
             let users:[String] = [uid] // initiates with the creator
             
-            let set = CircleAnnotationSet(location: location, circlePlotName: "", isPrivate: false, circleId: nil, admin: uid, users: users, dateCreated: dateNow)
+            let set = CircleAnnotationSet(location: location, circlePlotName: "", isPrivate: circleIsPrivate, circleId: nil, admin: uid, users: users, dateCreated: dateNow)
             let point = KindPointAnnotation(circleAnnotationSet: set)
             point.title = uid
-            openLock()
+            
+            
             self.mapBoxView.addAnnotation(point)
             
             self.mapBoxView.selectAnnotation(point, animated: true)
@@ -85,34 +81,41 @@ extension MapActionTriggerView: UITextFieldDelegate {
         }
     }
     
-    
+    func toggleEditMode(on: Bool) {
+        if on {
+            adaptLineToTextSize(circleNameTextField, lineWidthConstraint: newCirclelineWidthConstraint, view: self, animated: false) {
+                self.labelCircleName.alpha = 0
+                self.circleNameTextFieldView.alpha = 1
+            }
+        } else {
+            labelCircleName.alpha = 1
+            circleNameTextFieldView.alpha = 0
+        }
+    }
+ 
     func openLock() {
-        circleIsPrivate = false // didset triggers self.togglePrivateOrPublic()
-        viewSkatingX(lockTopImage, left: true, reverse: true)
+        circleIsPrivate = false
+        togglePrivateOrPublic()
     }
     
     func closeLock() {
-        circleIsPrivate = true // didset triggers self.togglePrivateOrPublic()
-        viewSkatingX(lockTopImage, left: false, -20, reverse: false)
+        circleIsPrivate = true
+        togglePrivateOrPublic()
     }
     
     func togglePrivateOrPublic() {
-        CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.isPrivate = circleIsPrivate
         if circleIsPrivate {
-            let keyImage = UIImage(named: "privatekey")?.withRenderingMode(.alwaysOriginal)
-            self.enterCircleButton.setBackgroundImage(keyImage, for: .normal)
+            viewSkatingX(lockTopImage, left: false, -20, reverse: false)
             fadeInPhotoStrip()
         } else {
+            viewSkatingX(lockTopImage, left: true, reverse: true)
             fadeOutPhotoStrip()
-            let enterImage = UIImage(named: "newEye")
-            self.enterCircleButton.setBackgroundImage(enterImage, for: .normal)
         }
     }
     
     func fadeOutPhotoStrip() {
         UIView.animate(withDuration: 0.4, animations: {
             self.photoStripView.alpha = 0
-            self.addUserBtn.alpha = 0
         }) { (completed) in
             self.photoStripView.isHidden = true
         }
@@ -120,11 +123,20 @@ extension MapActionTriggerView: UITextFieldDelegate {
 
     //also opens space for the + button when admin
     fileprivate func fadeInPhotoStrip() {
+        toggleAddUserButton(on: userIsAdmin)
         photoStripView.isHidden = false
-        if self.userIsAdmin{
+          UIView.animate(withDuration: 0.4, animations: {
+                self.photoStripView.alpha = 1
+          }) { (completed) in
+           
+        }
+    }
+    
+    
+    func toggleAddUserButton(on: Bool) {
+        if on {
             photoStripLeadingConstraint.constant = 50
             UIView.animate(withDuration: 0.4) {
-                self.photoStripView.alpha = 1
                 self.addUserBtn.alpha = 1
                 self.photoStripView.layoutIfNeeded()
             }
@@ -132,14 +144,10 @@ extension MapActionTriggerView: UITextFieldDelegate {
             photoStripLeadingConstraint.constant = 0
             UIView.animate(withDuration: 0.4) {
                 self.addUserBtn.alpha = 0
-                self.photoStripView.alpha = 1
                 self.photoStripView.layoutIfNeeded()
             }
         }
     }
-    
-    
-    
     
     func createOverlay(frame: CGRect,
                        xOffset: CGFloat,
@@ -202,6 +210,7 @@ extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSo
                     selectedKindUser = usersInCircle[indexPath.row]
                 }
             }
+                
         }
         
         return cell

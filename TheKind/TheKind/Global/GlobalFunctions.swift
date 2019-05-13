@@ -25,6 +25,24 @@ func returnActionTriggerView(by tag: Int) -> KindActionTriggerViewProtocol? {
     return targetView
 }
 
+func adaptLineToTextSize(_ textField: UITextField, lineWidthConstraint: NSLayoutConstraint, view: UIView, animated: Bool, completion: (()->())?) {
+    let textBoundingSize = textField.frame.size
+    guard let text = textField.text else {return}
+    let frameForText = estimateFrameFromText(text, bounding: textBoundingSize, fontSize: textField.font!.pointSize, fontName: textField.font!.fontName)
+    
+    lineWidthConstraint.constant = frameForText.width
+    
+    if animated {
+        UIView.animate(withDuration: 1, animations: {
+            view.layoutIfNeeded()
+        }) { (completed) in
+            completion?()
+        }
+    } else {
+        view.layoutIfNeeded()
+        completion?()
+    }
+}
 
 func formatLabelTextWithLineSpacing(text: String) -> NSAttributedString {
     let attr = NSMutableAttributedString(string: text)

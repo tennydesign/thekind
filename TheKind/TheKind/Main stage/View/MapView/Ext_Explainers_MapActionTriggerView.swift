@@ -21,6 +21,15 @@ extension MapActionTriggerView {
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
     
+    func explainerCircleEdit() {
+        let txt = "You are editing a circle.-Click save whenever you are done."
+        
+        let actions: [KindActionType] = [.none, .none ]
+        let actionViews: [ActionViewName] = [.none,.none]
+        let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+    }
+    
     func explainerCircleExploration() {
         let dominantKind = "founder"
         let chanceScore = "high"
