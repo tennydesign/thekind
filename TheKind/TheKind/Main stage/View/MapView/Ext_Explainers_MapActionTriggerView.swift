@@ -30,6 +30,15 @@ extension MapActionTriggerView {
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
     
+    func explainerCircleGotDeleted() {
+        let txt = "The circle you activated was deactivated."
+        
+        let actions: [KindActionType] = [.none ]
+        let actionViews: [ActionViewName] = [.none]
+      //  let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+    }
+    
     func explainerCircleExploration() {
         let dominantKind = "founder"
         let chanceScore = "high"

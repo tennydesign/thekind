@@ -160,6 +160,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
             } else {
                 addUsercell.inviteUserButton.enableButton()
             }
+            
             cell = addUsercell
         }
         
@@ -174,6 +175,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
         if searchText.isEmpty {
+            self.isValidNewEmail = false
             self.filteredData = []
         }
         
@@ -204,8 +206,8 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
                 }
             }
         } else {
-            self.filteredData = []
             self.isValidNewEmail = false
+            self.filteredData = []
         }
 
 
@@ -215,7 +217,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
 
     }
     
-    //refactor by linking users in set with tableview counter.
+    
     func addRemoveUserClicked(_ sender: UserSearchTableViewCell) {
         guard let tappedIndexPath = searchTableView.indexPath(for: sender) else {return}
         if let cell = searchTableView.cellForRow(at: tappedIndexPath) as? UserSearchTableViewCell {
@@ -257,13 +259,15 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
                 }
             }
             
-
         }
         print("clicked at \(tappedIndexPath)")
     }
     
     override func activate() {
         self.fadeInView()
+        self.isValidNewEmail = false
+        searchBar.text = ""
+        filteredData = []
         
     }
     

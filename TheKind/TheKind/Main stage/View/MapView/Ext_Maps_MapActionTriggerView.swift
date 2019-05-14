@@ -62,30 +62,23 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
             self.usersInCircle = kindUsers ?? []
         }
         
-        guard let set =  CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails else {return}
-        
-        if !set.circlePlotName.isEmpty {
-            self.circlePlotName = set.circlePlotName
-            self.circleNameTextField.attributedText = formatLabelTextWithLineSpacing(text: set.circlePlotName)
-        }
-        
-        self.userIsAdmin = checkIfIsAdmin(set.admin)
-        self.circleIsPrivate = set.isPrivate
-        
+
     
         // #2 - activation with animations.
         activateOnSelection(annotationView) {
-            //after all functions below, #1 and #2 are completed
-            if self.userIsAdmin || self.circleIsInEditMode {
-                self.toggleEditMode(on: true)
-            } else {
-                self.toggleEditMode(on: false)
-            }
-            self.togglePrivateOrPublic()
+            
+            self.setupUIWithSetInfo()
+            
+            delay(bySeconds: 0.2, closure: {
+                self.togglePresentInnerCircleViews(on: true)
+            })
+            
             self.initializeCircleExplainer()
+            
         }
         
     }
+    
     
     //========================================================
     // #2 -Presenting annotation fullscreen.
@@ -135,10 +128,14 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
 
     func togglePresentInnerCircleViews(on: Bool) {
         if on {
-            presentExpandedCircleView.alpha = 1
+            UIView.animate(withDuration: 0.4) {
+                self.presentExpandedCircleView.alpha = 1
+            }
             presentExpandedCircleView.isHidden = false
         } else {
-            presentExpandedCircleView.alpha = 0
+            UIView.animate(withDuration: 0.4) {
+                self.presentExpandedCircleView.alpha = 0
+            }
             presentExpandedCircleView.isHidden = true
         }
     }
@@ -151,6 +148,8 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     // #1 Animate deactivation
     func deActivateOnDeselection(completion: (()->())?) {
         guard let annotationView = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView else {return}
+        guard let set = annotationView.circleDetails else {return}
+        
         self.mapBoxView.isUserInteractionEnabled = true
         mainViewController?.setHudDisplayGradientBg(on: true) {
             self.presentMapViews {
@@ -161,8 +160,9 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
                     annotationView.button.alpha = 0
                 }) { (completed) in
                     
-                    //If user was creating circle and cancelled.
-                    if CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
+                    //DELETION
+                    //If user was creating circle and cancelled OR if circle was deleted
+                    if CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation || set.deleted {
                         self.circleNameTextField.resignFirstResponder()
                         if let annotation = annotationView.annotation {
                             self.mapBoxView.removeAnnotation(annotation)
@@ -170,10 +170,12 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
                     } else {
                         annotationView.setSelected(false, animated: false)
                     }
+                    
                     self.usersInCircle = []
                     CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView = nil
                     self.longPressGesture.isEnabled = true
-                
+                    
+                    self.presentPhotoStrip(on: false)
                     self.togglePresentInnerCircleViews(on: false)
                     //self.circleNameTextFieldView.alpha = 0
                     self.circleIsInEditMode = false

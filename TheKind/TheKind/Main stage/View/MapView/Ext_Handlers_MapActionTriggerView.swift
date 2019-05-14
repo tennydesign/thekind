@@ -22,14 +22,19 @@ extension MapActionTriggerView: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         adaptLineToTextSize(textField, lineWidthConstraint: newCirclelineWidthConstraint, view: self, animated: true, completion: nil)
+        
+        if CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
+            textField.clearsOnInsertion = true
+        } else {
+            textField.clearsOnInsertion = false
+        }
     
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.circlePlotName = self.circlePlotName
-        CircleAnnotationManagement.sharedInstance.updateCircleSettings { (set, err) in
-            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
-        }
+        
+        saveCircleSetIfNotTemporary()
         
         textField.resignFirstResponder()
         return true
@@ -71,15 +76,6 @@ extension MapActionTriggerView: UITextFieldDelegate {
         }
     }
     
-    // + users not working on NEW circles.
-    @objc func handleTapOnLocker(gestureRecognizer: UITapGestureRecognizer) {
-        if lockTopImage.transform == .identity {
-            closeLock()
-        } else {
-            openLock()
-        }
-    }
-    
     func toggleEditMode(on: Bool) {
         if on {
             lockerView.isUserInteractionEnabled = true
@@ -93,48 +89,45 @@ extension MapActionTriggerView: UITextFieldDelegate {
             lineUnderTexboxView.alpha = 0
         }
     }
- 
-    func openLock() {
-        circleIsPrivate = false
-        togglePrivateOrPublic()
-    }
     
-    func closeLock() {
-        circleIsPrivate = true
-        togglePrivateOrPublic()
-    }
-    
-    func togglePrivateOrPublic() {
-        CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.isPrivate = self.circleIsPrivate
-        CircleAnnotationManagement.sharedInstance.updateCircleSettings { (set, err) in
-            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
-            
-            if self.circleIsPrivate {
-                viewSkatingX(self.lockTopImage, left: false, -20, reverse: false)
-                self.fadeInPhotoStrip()
-            } else {
-                viewSkatingX(self.lockTopImage, left: true, reverse: true)
-                self.fadeOutPhotoStrip()
-            }
+    // + users not working on NEW circles.
+    @objc func handleTapOnLocker(gestureRecognizer: UITapGestureRecognizer) {
+        if lockTopImage.transform == .identity {
+            circleIsPrivate = true
+        } else {
+            circleIsPrivate = false
         }
-    }
-    
-    func fadeOutPhotoStrip() {
-        UIView.animate(withDuration: 0.4, animations: {
-            self.photoStripView.alpha = 0
-        }) { (completed) in
-            self.photoStripView.isHidden = true
-        }
+        
+        toggleLock(closed: circleIsPrivate)
+        saveCircleSetIfNotTemporary()
     }
 
-    //also opens space for the + button when admin
-    fileprivate func fadeInPhotoStrip() {
-        toggleAddUserButton(on: userIsAdmin)
-        photoStripView.isHidden = false
-          UIView.animate(withDuration: 0.4, animations: {
+    func toggleLock(closed: Bool) {
+        if closed {
+            viewSkatingX(self.lockTopImage, left: false, -20, reverse: false, completion: nil)
+            presentPhotoStrip(on: true)
+        } else {
+            viewSkatingX(self.lockTopImage, left: true, reverse: true, completion: nil)
+            presentPhotoStrip(on: false)
+        }
+    }
+    
+    func presentPhotoStrip(on: Bool) {
+        if on {
+            toggleAddUserButton(on: userIsAdmin)
+            photoStripView.isHidden = false
+            UIView.animate(withDuration: 0.4, animations: {
                 self.photoStripView.alpha = 1
-          }) { (completed) in
-           
+            }) { (completed) in
+                
+            }
+
+        } else {
+            UIView.animate(withDuration: 0.4, animations: {
+                self.photoStripView.alpha = 0
+            }) { (completed) in
+                self.photoStripView.isHidden = true
+            }
         }
     }
     
@@ -207,13 +200,19 @@ extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSo
         if let adminId = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.admin {
             if usersInCircle[indexPath.row].uid == adminId {
                 cell.photoArc.tintColor = UIColor(r: 255, g: 45, b: 85).withAlphaComponent(0.7)
+                
             }
             
             // Selected cell.
             if let selectedRow = selectedPhotoStripCellIndexPath {
                 if indexPath.row == selectedRow {
-                    cell.adminControls.alpha = checkIfIsAdmin(adminId) ? 1 : 0
                     selectedKindUser = usersInCircle[indexPath.row]
+                    
+                    //protects from delete or make admin the admin user.
+                    if !(usersInCircle[indexPath.row].uid == adminId) {
+                        cell.adminControls.alpha = checkIfIsAdmin(adminId) ? 1 : 0
+                    }
+
                 }
             }
                 

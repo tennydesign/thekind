@@ -14,6 +14,7 @@ import MapKit
 class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
 
+    @IBOutlet var deactivationMessageLabel: UILabel!
     @IBOutlet var borderProtectionLeft: UIView!
     @IBOutlet var borderProtectionRight: UIView!
     @IBOutlet var photoStripView: UIView!
@@ -283,12 +284,10 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     func initializeCircleExplainer() {
         
         if circleIsInEditMode {
-            //showEditInnerCircleViews() //TODO: Animate
             explainerCircleCreation()
             
         } else {
             explainerCircleExploration()
-            togglePresentInnerCircleViews(on: true)
         }
 
     }
@@ -298,14 +297,15 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
     
     override func leftOptionClicked() {
-        // THis will reset the cached Set before closing the circle (ignoring any variable changes that may have occurred in the client)
+
         self.clearJungChatLog()
         self.deActivateOnDeselection(completion: nil)
+        
     }
-
+    
     //HERE: MAKE SAVE CIRCLE SAVE LIST OF USERS TOO
     override func rightOptionClicked() {
-
+        self.clearJungChatLog()
         if circleIsInEditMode { //save circle
             CircleAnnotationManagement.sharedInstance.updateCircleSettings() { (circleAnnotationSet,err)  in
                 if let err = err {
@@ -342,6 +342,15 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
     }
     
+    
+    @IBAction func deleteBtnClicked(_ sender: UIButton) {
+        self.clearJungChatLog()
+        CircleAnnotationManagement.sharedInstance.flagCircleAsDeleted {
+            
+        }
+    }
+    
+
     @IBAction func addUserBtnClicked(_ sender: UIButton) {
         print("add user clicked")
         mainViewController?.searchView.activate()
@@ -349,17 +358,60 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
  
     // CIRCLE SET OBSERVER
     func updateCircleInformationOnObserver() {
-        CircleAnnotationManagement.sharedInstance.userListChangedOnCircleObserver = { [unowned self] set in
-    
-            //get unew set information and update UI
-            self.userIsAdmin = self.checkIfIsAdmin(set.admin)
-            self.toggleAddUserButton(on: self.userIsAdmin)
-            self.toggleEditMode(on: self.userIsAdmin)
+        CircleAnnotationManagement.sharedInstance.setChangedOnCircleObserver = { [unowned self] set in
+            
+            self.setupUIWithSetInfo()
             CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile() { (kindUsers) in
                 self.usersInCircle = kindUsers ?? []
                 print("reloaded")
             }
 
+        }
+    }
+    
+    //TODO: ACL (for real)
+    // CONTROL for: Only circles you belong or are public get downloaded from FB.
+    // Should be a query. 
+    func setupUIWithSetInfo() {
+        guard let set =  CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails else {return}
+        
+        //If flagged as deleted, deactivate and cancel everything else (return).
+        if set.deleted {
+            deActivateOnDeselection() {
+                self.deactivationMessageLabel.alpha = 1
+                UIView.animate(withDuration: 0.4, delay: 1.2, options: .curveEaseIn, animations: {
+                    self.deactivationMessageLabel.alpha = 0
+                }, completion: { (completed) in
+                    
+                })
+            }
+            return
+        }
+        
+        if !set.circlePlotName.isEmpty {
+            self.circlePlotName = set.circlePlotName
+            self.circleNameTextField.attributedText = formatLabelTextWithLineSpacing(text: set.circlePlotName)
+        }
+        
+        self.userIsAdmin = checkIfIsAdmin(set.admin)
+        self.circleIsPrivate = set.isPrivate
+        
+        if self.userIsAdmin || self.circleIsInEditMode {
+            self.toggleEditMode(on: true)
+        } else {
+            self.toggleEditMode(on: false)
+        }
+        
+        self.toggleLock(closed: self.circleIsPrivate)
+        
+    }
+    
+    func saveCircleSetIfNotTemporary() {
+        if !CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
+            CircleAnnotationManagement.sharedInstance.updateCircleSettings { (set, err) in
+                CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
+                
+            }
         }
     }
     

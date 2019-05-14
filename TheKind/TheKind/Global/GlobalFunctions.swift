@@ -122,16 +122,20 @@ func viewTransitionUsingAlphaAndSkatingX(_ originView: UIView, _ destinationView
     }
 }
 
-func viewSkatingX(_ viewToSlide: UIView, left: Bool,_ slideAmount: CGFloat = 0, reverse: Bool) {
+func viewSkatingX(_ viewToSlide: UIView, left: Bool,_ slideAmount: CGFloat = 0, reverse: Bool, completion: (()->())?) {
     if !reverse {
         let slide:CGFloat = left ? (0 - slideAmount) : slideAmount
             UIView.animate(withDuration: 0.3, animations: {
                 viewToSlide.transform = CGAffineTransform(translationX: slide, y: 0)
-            })
+            }) { (completed) in
+                completion?()
+            }
     } else {
         UIView.animate(withDuration: 0.3, animations: {
             viewToSlide.transform = .identity
-        })
+        }) { (completed) in
+            completion?()
+        }
     }
 }
 

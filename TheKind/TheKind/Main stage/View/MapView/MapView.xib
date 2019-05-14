@@ -22,6 +22,7 @@
                 <outlet property="borderProtectionRight" destination="f05-9b-jrt" id="Es4-Yc-ju7"/>
                 <outlet property="circleNameTextField" destination="Wky-b4-S07" id="3zg-tZ-Hbh"/>
                 <outlet property="circleNameTextFieldView" destination="z3K-l4-sWj" id="orb-mx-KmR"/>
+                <outlet property="deactivationMessageLabel" destination="KPE-0G-48w" id="JOe-WV-WVL"/>
                 <outlet property="expandedCircleViewYConstraint" destination="rHc-ui-cpp" id="ngv-jW-wi5"/>
                 <outlet property="insideExpandedCircleViewYConstraint" destination="rHc-ui-cpp" id="u2n-Oh-uqY"/>
                 <outlet property="lineUnderTexboxView" destination="tcp-mT-clr" id="XsE-xC-zJv"/>
@@ -51,6 +52,16 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Circle was deactivated." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPE-0G-48w" userLabel="CircleDeletedMessage">
+                    <rect key="frame" x="129" y="317" width="117" height="33"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="33" id="Bbb-eO-5ii"/>
+                        <constraint firstAttribute="width" constant="117" id="Y3k-HC-Oxs"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="AcrylicHandSans-Regular" family="Acrylic Hand Sans" pointSize="10"/>
+                    <color key="textColor" red="0.69019607839999997" green="0.14901960780000001" blue="0.25490196079999999" alpha="0.91414276541095896" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f05-9b-jrt" userLabel="border_protection_right">
                     <rect key="frame" x="348" y="0.0" width="27" height="667"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -132,13 +143,26 @@
                                         <constraint firstAttribute="height" constant="33" id="vWd-gH-XgG"/>
                                     </constraints>
                                 </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HeI-QR-NSb" userLabel="DeleteCircle">
+                                    <rect key="frame" x="258.5" y="107.5" width="18" height="18"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="18" id="AZ2-51-Wgq"/>
+                                        <constraint firstAttribute="height" constant="18" id="VXg-Rj-hr5"/>
+                                    </constraints>
+                                    <state key="normal" backgroundImage="closeIcon"/>
+                                    <connections>
+                                        <action selector="deleteBtnClicked:" destination="-1" eventType="touchUpInside" id="dlO-cq-KNF"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="z3K-l4-sWj" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="45" id="BWK-Dx-lpr"/>
+                                <constraint firstItem="HeI-QR-NSb" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" constant="80" id="CBL-6Q-45R"/>
                                 <constraint firstAttribute="height" constant="393" id="Q80-NO-cTQ"/>
                                 <constraint firstItem="TyX-do-Mcq" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" id="cTt-VQ-9bB"/>
                                 <constraint firstItem="TyX-do-Mcq" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" id="hXo-KV-SOy"/>
+                                <constraint firstItem="HeI-QR-NSb" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="-80" id="hjn-Ed-pYJ"/>
                                 <constraint firstItem="z3K-l4-sWj" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" id="ouI-SC-nHk"/>
                             </constraints>
                         </view>
@@ -200,9 +224,11 @@
                 <constraint firstItem="lZ4-AR-kv6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="NAF-ri-oKv"/>
                 <constraint firstItem="V9E-SM-J71" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="60" id="Re1-Z7-Qee"/>
                 <constraint firstItem="V9E-SM-J71" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Xfm-N4-u5g"/>
+                <constraint firstItem="KPE-0G-48w" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="auP-vd-J7p"/>
                 <constraint firstItem="6C4-Ce-GiV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="bAe-uF-4c9"/>
                 <constraint firstItem="6C4-Ce-GiV" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="d5e-X8-nHg"/>
                 <constraint firstItem="lZ4-AR-kv6" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="eV2-gf-uVp"/>
+                <constraint firstItem="KPE-0G-48w" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ec1-tD-T8X"/>
                 <constraint firstItem="V9E-SM-J71" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fC2-J8-SCN"/>
                 <constraint firstItem="f05-9b-jrt" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="kRF-s1-lKc"/>
                 <constraint firstItem="V9E-SM-J71" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="30" id="oHO-E4-19G"/>
@@ -217,6 +243,7 @@
     </objects>
     <resources>
         <image name="addCircleIcon" width="148" height="148"/>
+        <image name="closeIcon" width="60" height="60"/>
         <image name="lock_bottom" width="40" height="30"/>
         <image name="lock_top" width="30" height="14"/>
     </resources>

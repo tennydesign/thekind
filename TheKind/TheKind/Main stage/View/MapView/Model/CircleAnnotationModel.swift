@@ -40,7 +40,7 @@ struct CircleAnnotationSet {
     // For equatability.
     var latitude: CLLocationDegrees!
     var longitude: CLLocationDegrees!
-    
+    var deleted: Bool!
     var circlePlotName: String!
     var isPrivate: Bool!
     var circleId: String!
@@ -57,6 +57,7 @@ struct CircleAnnotationSet {
         admin = document.data()?["admin"] as? String
         users = document.data()?["users"] as? [String]
         dateCreated = document.data()?["created"] as? String
+        deleted = document.data()?["deleted"] as? Bool
         ref = document.reference
      }
     
@@ -68,13 +69,14 @@ struct CircleAnnotationSet {
         self.circleId = circleId ?? "temporary"
         self.admin = admin
         self.users = users
+        self.deleted = false
         self.dateCreated = dateCreated
     }
 
     func asDictionary() -> [String:Any]? {
         guard let locationGeoPoint = cLLocationCoordinate2dToGeoPoint(location) else {return nil}
         let circleDict: [String:Any] = ["name": circlePlotName as String, "location": locationGeoPoint as GeoPoint,
-                "isprivate": isPrivate as Bool, "circleid": circleId as String, "admin": admin as String, "users": users as [String], "created": dateCreated as String]
+                                        "isprivate": isPrivate as Bool, "circleid": circleId as String, "admin": admin as String, "users": users as [String], "created": dateCreated as String, "deleted": deleted as Bool]
         return circleDict
     }
     
