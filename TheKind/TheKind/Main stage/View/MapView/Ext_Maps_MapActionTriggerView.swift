@@ -46,13 +46,29 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     
     func mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView) {
         
-        
+        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
         guard let annotationView = annotationView as? CircleAnnotationView else {return}
         guard let coordinates = annotationView.circleDetails?.location else {return}
         
         
         CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView = annotationView
 
+        guard let set = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails else { return}
+        
+        // ACL control
+        if (set.isPrivate && !set.users.contains(uid)) {
+            showAccessDeniedLabel(message: "Access denied!")
+            return
+        }
+        
+        // Deletion control
+        if set.deleted {
+            self.showAccessDeniedLabel(message: "Deactivated by admin.")
+            if let annotation = annotationView.annotation {
+                self.mapBoxView.removeAnnotation(annotation)
+            }
+            return
+        }
         
         self.mapBoxView.setCenter(coordinates, zoomLevel: MAXZOOMLEVEL,animated: true)
         self.mapBoxView.isUserInteractionEnabled = false

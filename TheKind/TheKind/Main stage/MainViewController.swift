@@ -148,7 +148,6 @@ class MainViewController: UIViewController {
         self.adaptHUDAndPanelToIphoneXFamily()
 
         self.updateViewTagWithCurrentState()
-        self.intro()
         
         KindDeckManagement.sharedInstance.initializeDeckObserver()
     }
@@ -158,6 +157,11 @@ class MainViewController: UIViewController {
         guard let tag = KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] as? Int  else {return}
         if let actionViewNameEnum = ActionViewName(rawValue: tag) {
             self.firstViewToPresent = actionViewNameEnum
+            
+            delay(bySeconds: 0.3, dispatchLevel: .main) {
+                self.intro()
+           }
+            
         }
     }
     
@@ -182,9 +186,12 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func intro() {
-        let actions: [KindActionType] = [.activate]
-        let actionViews: [ActionViewName] = [self.firstViewToPresent]
-        self.talkbox.displayRoutine(routine: self.talkbox.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        let txt = "Hi. Welcome to The Kind.-My name is Jung.-It sounds like 'Yung'.-I'm pretty good at introducing people to each other-...and can help you make friends and have great conversations"
+        let actions: [KindActionType] = [.none, .none, .none, .none, .activate]
+        let actionViews: [ActionViewName] = [.none, .none, .none, .none, self.firstViewToPresent]
+        //self.talkbox.displayRoutine(routine: self.talkbox.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+
     }
 
     

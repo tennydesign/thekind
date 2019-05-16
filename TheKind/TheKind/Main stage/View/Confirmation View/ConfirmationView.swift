@@ -14,11 +14,12 @@ protocol ConfirmationViewProtocol {
 }
 
 enum ConfirmButtonActions: Int {
-    case removeUserFromCircle = 1, transferCircleToUser = 2
+    case removeUserFromCircle = 1, transferCircleToUser = 2, removeCircle = 3, makeCircleStealth = 4
 }
 
 class ConfirmationView: KindActionTriggerView {
 
+    @IBOutlet var detailsLabel: UILabel!
     @IBOutlet var mainView: PassthroughView!
     var delegate: ConfirmationViewProtocol?
     var actionEnum: ConfirmButtonActions?

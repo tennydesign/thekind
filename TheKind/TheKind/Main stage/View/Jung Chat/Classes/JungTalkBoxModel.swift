@@ -17,10 +17,10 @@ struct JungRoutine: JungRoutineProtocol {
 
 // ===> A snippet is the line to be //printed in the chat window <===
 struct Snippet: SnippetProtocol {
-    var message: String
-    var action: KindActionType
-    var id: Int
-    var actionView: ActionViewName?
+    var message: String //printed message
+    var action: KindActionType // will be executed at the same time Jung "speaks" the line.
+    var id: Int // not being used.
+    var actionView: ActionViewName? //view in which the action is executed.
   //  var sender: Sender
     
 }

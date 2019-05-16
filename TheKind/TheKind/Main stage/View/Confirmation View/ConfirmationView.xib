@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="cancelAction" destination="zyk-40-tFJ" id="4kc-FF-3s8"/>
                 <outlet property="confirmAction" destination="0kI-ub-aBg" id="VHv-bS-GBW"/>
+                <outlet property="detailsLabel" destination="6c8-0v-9wt" id="Vzo-Zv-zby"/>
                 <outlet property="mainView" destination="iN0-l3-epB" id="YXa-h5-3dX"/>
             </connections>
         </placeholder>
@@ -22,6 +23,15 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When a circle is on stealth mode users can't see it on the map. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6c8-0v-9wt">
+                    <rect key="frame" x="87.5" y="419" width="200" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="h1D-jx-pPg"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="Jv9-8F-nEF">
                     <rect key="frame" x="72.5" y="267.5" width="230" height="132"/>
                     <subviews>
@@ -64,7 +74,9 @@
             <color key="backgroundColor" white="0.0" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Jv9-8F-nEF" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="32O-4x-Ujp"/>
+                <constraint firstItem="6c8-0v-9wt" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="DeX-7s-kKk"/>
                 <constraint firstItem="Jv9-8F-nEF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Lfn-BB-EWG"/>
+                <constraint firstItem="6c8-0v-9wt" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="100" id="ysj-ol-wuH"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>

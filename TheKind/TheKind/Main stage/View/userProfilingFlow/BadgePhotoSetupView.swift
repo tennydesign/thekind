@@ -79,7 +79,9 @@ class BadgePhotoSetupView: KindActionTriggerView {
         let actions: [KindActionType] = [.none,.activate]
         let actionViews: [ActionViewName] = [.none, .DobOnboardingView]
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+        delay(bySeconds: 0.3, dispatchLevel: .main) {
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+        }
     }
     
     override func leftOptionClicked() {

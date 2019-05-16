@@ -21,10 +21,10 @@ class JungTalkBox {
     
     func displayRoutine(routine: JungRoutineProtocol?, wait: Double? = nil) {
         //if !isProcessingSpeech {
-            delay(bySeconds: wait ?? 0) {
+           // delay(bySeconds: wait ?? 0) {
                 self.injectRoutineMessageObserver?(routine)
                 self.isProcessingSpeech = true
-            }
+          //  }
         //}
     }
     
@@ -41,9 +41,9 @@ class JungTalkBox {
         let jungPostRoutine = retrieveRoutineForUserOption(userOptionId: userResponseOption.id)
 
         // 3 - Send response routine to chat.
-        delay(bySeconds: tempoBetweenPlayerResponseAndJungResponse) {
-            self.injectRoutineMessageObserver?(jungPostRoutine)
-        }
+        //delay(bySeconds: tempoBetweenPlayerResponseAndJungResponse) {
+        self.injectRoutineMessageObserver?(jungPostRoutine)
+        //}
     }
 
     // BASED ON USER RESPONSE
@@ -73,7 +73,7 @@ class JungTalkBox {
         if messages.count != action.count || messages.count != actionView.count {
             fatalError("Messages count is diff than action and actionView count")
         }
-        //print(messages)
+
         var snippets:[Snippet] = []
         
         for index in 0...messages.count-1 {

@@ -121,8 +121,9 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
             userNameTextField.text = KindUserSettingsManager.sharedInstance.loggedUserName
             txt = "Can I call you \(KindUserSettingsManager.sharedInstance.loggedUserName!)?-If that's not good please change above."
         } else {
-             userNameTextField.text = "[Type your name]"
-             txt = "Hummm... I tried but didn't find your name.-Please enter your name above"
+            userNameTextField.text = "[Type your name]"
+            userNameTextField.clearsOnInsertion = true
+            txt = "Hummm... I tried but didn't find your name.-Please enter your name above"
         }
        
         adaptLineToTextSize(userNameTextField)

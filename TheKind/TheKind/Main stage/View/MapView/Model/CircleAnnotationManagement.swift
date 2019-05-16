@@ -49,7 +49,7 @@ class CircleAnnotationManagement {
     
     func retrieveCirclesCloseToPlayer(completion: @escaping (()->()))  {
         let db = Firestore.firestore()
-        
+        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
         db.collection("kindcircles").getDocuments { (snapshot, err) in
             if let err = err {
                 print(err)
@@ -57,10 +57,14 @@ class CircleAnnotationManagement {
             }
             
             snapshot?.documents.forEach({ (document) in
-                let circleAnnotationSet = CircleAnnotationSet(document: document)
-                //TODO: FILTER THIS IN THE QUERY NOT HERE.
-                if !circleAnnotationSet.deleted {
-                    self.circles.append(circleAnnotationSet)
+                let set = CircleAnnotationSet(document: document)
+                
+                //TODO: FILTER THIS IN THE QUERY NOT HERE MAYBE.
+                // Show only not private or private with user in.
+                if !set.isPrivate || set.users.contains(uid) {
+                    if !set.deleted {
+                        self.circles.append(set)
+                    }
                 }
             })
 
@@ -69,36 +73,6 @@ class CircleAnnotationManagement {
             completion()
         }
         
-    }
-    
-    
-    func saveNewCircleSet(completion: @escaping (CircleAnnotationSet?, Error?)->()) {
-        let db = Firestore.firestore()
-        guard let set = currentlySelectedAnnotationView?.circleDetails else { return}
-        var documentRef: DocumentReference? = nil
-        guard let circleDict = set.asDictionary() else {return}
-        documentRef = db.collection("kindcircles").addDocument(data: circleDict) { err in
-            if let err = err {
-                print(err)
-                completion(nil, err)
-                return
-            }
-            if let circleid = documentRef?.documentID {
-                documentRef?.setData(["circleid":circleid], merge: true)
-            }
-            
-            documentRef?.getDocument(completion: { (document,error) in
-                if let error = error {
-                    completion(nil, error)
-                    return
-                }
-                
-                guard let document = document, document.exists else {return}
-                let circleAnnotationSet = CircleAnnotationSet(document: document)
-                completion(circleAnnotationSet,nil)
-                
-            })
-        }
     }
     
 
@@ -128,26 +102,35 @@ class CircleAnnotationManagement {
             
         }
     }
-    
-//    func removeCurrentlySelectedCircle(completion: @escaping ((Bool)->())) {
-//        let db = Firestore.firestore()
-//        if !isSelectedTemporaryCircleAnnotation {
-//            guard let set = currentlySelectedAnnotationView?.circleDetails else { return}
-//            db.collection("kindcircles").document(set.circleId).delete() { err in
-//                if let err = err {
-//                    print("Error removing document: \(err)")
-//                    completion(false)
-//                } else {
-//                    print("Document successfully removed!")
-//                    completion(true)
-//                    self.currentlySelectedAnnotationView = nil
-//                    //self.setDeletedCircleObserver?(set)
-//                }
-//            }
-//        }
-//
-//    }
  
+    private func saveNewCircleSet(completion: @escaping (CircleAnnotationSet?, Error?)->()) {
+        let db = Firestore.firestore()
+        guard let set = currentlySelectedAnnotationView?.circleDetails else { return}
+        var documentRef: DocumentReference? = nil
+        guard let circleDict = set.asDictionary() else {return}
+        documentRef = db.collection("kindcircles").addDocument(data: circleDict) { err in
+            if let err = err {
+                print(err)
+                completion(nil, err)
+                return
+            }
+            if let circleid = documentRef?.documentID {
+                documentRef?.setData(["circleid":circleid], merge: true)
+            }
+            
+            documentRef?.getDocument(completion: { (document,error) in
+                if let error = error {
+                    completion(nil, error)
+                    return
+                }
+                
+                guard let document = document, document.exists else {return}
+                let circleAnnotationSet = CircleAnnotationSet(document: document)
+                completion(circleAnnotationSet,nil)
+                
+            })
+        }
+    }
     
     func retrieveCircleById(circleId: String, completion: ((CircleAnnotationSet?)->())?) {
         let db = Firestore.firestore()
@@ -167,38 +150,6 @@ class CircleAnnotationManagement {
             let set:CircleAnnotationSet = CircleAnnotationSet(document: document!)
             completion?(set)
         }
-    }
-    
-    func changeCircleAdminTo(userId: String, completion: (()->())?) {
-        let db = Firestore.firestore()
-        guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
-        
-        let circlesRef = db.collection("kindcircles").document(circleId)
-        //ArrayUnion() adds elements to an array but only elements not already present.
-        circlesRef.updateData(["admin" : userId]) { (err) in
-            if let err = err {
-                print(err)
-                return
-            }
-            completion?()
-        }
-        
-    }
-    
-    func flagCircleAsDeleted(completion: (()->())?) {
-        let db = Firestore.firestore()
-        guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
-        
-        let circlesRef = db.collection("kindcircles").document(circleId)
-        //ArrayUnion() adds elements to an array but only elements not already present.
-        circlesRef.updateData(["deleted" : true]) { (err) in
-            if let err = err {
-                print(err)
-                return
-            }
-            completion?()
-        }
-        
     }
     
     func checkIfUserBelongsToCircle(userId: String, completion: ((Bool?)->())?) {
@@ -233,7 +184,7 @@ class CircleAnnotationManagement {
 
     }
     
-    func addUserToCircle(userIds: [String], completion: (()->())?) {
+    func addUsersToCircle(userIds: [String], completion: (()->())?) {
         let db = Firestore.firestore()
         guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
         let circlesRef = db.collection("kindcircles").document(circleId)
@@ -351,3 +302,74 @@ class CircleAnnotationManagement {
     
     
 }
+
+
+//========
+// Old - before refactoring
+
+//    func changeCircleAdminTo(userId: String, completion: (()->())?) {
+//        let db = Firestore.firestore()
+//        guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
+//
+//        let circlesRef = db.collection("kindcircles").document(circleId)
+//        //ArrayUnion() adds elements to an array but only elements not already present.
+//        circlesRef.updateData(["admin" : userId]) { (err) in
+//            if let err = err {
+//                print(err)
+//                return
+//            }
+//            completion?()
+//        }
+//
+//    }
+
+//    func flagCircleAsDeleted(completion: (()->())?) {
+//        let db = Firestore.firestore()
+//        guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
+//
+//        let circlesRef = db.collection("kindcircles").document(circleId)
+//        //ArrayUnion() adds elements to an array but only elements not already present.
+//        circlesRef.updateData(["deleted" : true]) { (err) in
+//            if let err = err {
+//                print(err)
+//                return
+//            }
+//            completion?()
+//        }
+//
+//    }
+
+//    func togglePublicOrPrivate(isPrivate: Bool, completion: (()->())?) {
+//        let db = Firestore.firestore()
+//        guard let circleId = currentlySelectedAnnotationView?.circleDetails?.circleId else {return}
+//
+//        let circlesRef = db.collection("kindcircles").document(circleId)
+//        //ArrayUnion() adds elements to an array but only elements not already present.
+//        circlesRef.updateData(["isprivate" : isPrivate]) { (err) in
+//            if let err = err {
+//                print(err)
+//                return
+//            }
+//            completion?()
+//        }
+//
+//    }
+
+//    func removeCurrentlySelectedCircle(completion: @escaping ((Bool)->())) {
+//        let db = Firestore.firestore()
+//        if !isSelectedTemporaryCircleAnnotation {
+//            guard let set = currentlySelectedAnnotationView?.circleDetails else { return}
+//            db.collection("kindcircles").document(set.circleId).delete() { err in
+//                if let err = err {
+//                    print("Error removing document: \(err)")
+//                    completion(false)
+//                } else {
+//                    print("Document successfully removed!")
+//                    completion(true)
+//                    self.currentlySelectedAnnotationView = nil
+//                    //self.setDeletedCircleObserver?(set)
+//                }
+//            }
+//        }
+//
+//    }

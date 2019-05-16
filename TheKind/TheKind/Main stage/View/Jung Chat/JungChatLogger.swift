@@ -104,7 +104,7 @@ class JungChatLogger: KindActionTriggerView {
     }
     
     var animationCount: Int = 0
-    var tempoInBetweenPosts: Double = 1
+    var tempoInBetweenPosts: Double = 2
     var delayJungPostInSecs: Double = 0
     
     
@@ -145,7 +145,7 @@ class JungChatLogger: KindActionTriggerView {
                 if jungRoutine.sender == .Jung {
                     self.startLoadingAnimator(for: jungRoutine.snippets.count)
                     // gives animation a sec start appearance before posting starts.
-                    delay(bySeconds: 0.5, closure: {
+                    delay(bySeconds: 0.1, dispatchLevel: .main) {
                         self.performPostsWithTimeInterval(jungRoutine) { (success) in
                             self.stopLoadingAnimator()
                             // release jung lock.
@@ -156,7 +156,7 @@ class JungChatLogger: KindActionTriggerView {
                             self.routineHasPosted?()
                         }
                         
-                    })
+                    }
                 }
                 else if jungRoutine.sender == .Player { // POSTS IMMEDIATELY
                     guard let message = jungRoutine.snippets.first?.message,

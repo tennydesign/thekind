@@ -54,7 +54,7 @@
                                 <constraint firstItem="rOu-ac-IIP" firstAttribute="top" secondItem="HIt-8J-2dn" secondAttribute="top" id="xzd-JI-xBz"/>
                             </constraints>
                         </view>
-                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8vQ-xq-ppk" userLabel="hudRightDisplay">
+                        <view clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8vQ-xq-ppk" userLabel="hudRightDisplay">
                             <rect key="frame" x="300" y="52.5" width="60" height="60"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoArc" translatesAutoresizingMaskIntoConstraints="NO" id="DMl-s2-61A" userLabel="photoArc">
@@ -119,7 +119,7 @@
                                         <constraint firstItem="UM4-5d-yja" firstAttribute="top" secondItem="ko6-Mp-okn" secondAttribute="top" id="zsU-i3-CnO"/>
                                     </constraints>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="equalSpacing" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Keu-g5-6U1" userLabel="listViewButton">
+                                <stackView opaque="NO" alpha="0.0" contentMode="scaleAspectFit" axis="vertical" distribution="equalSpacing" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Keu-g5-6U1" userLabel="listViewButton">
                                     <rect key="frame" x="77.5" y="26" width="40" height="38"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VB2-Ia-8hL">

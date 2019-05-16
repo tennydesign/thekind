@@ -32,9 +32,12 @@ extension MapActionTriggerView: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let name = textField.text else {return false}
+        self.circlePlotName = name
         CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.circlePlotName = self.circlePlotName
-        
-        saveCircleSetIfNotTemporary()
+        saveCircleSetIfNotTemporary() {
+            
+        }
         
         textField.resignFirstResponder()
         return true
@@ -64,7 +67,7 @@ extension MapActionTriggerView: UITextFieldDelegate {
             
             let users:[String] = [uid] // initiates with the creator
             
-            let set = CircleAnnotationSet(location: location, circlePlotName: "", isPrivate: circleIsPrivate, circleId: nil, admin: uid, users: users, dateCreated: dateNow)
+            let set = CircleAnnotationSet(location: location, circlePlotName: "", isPrivate: circleIsPrivate, circleId: nil, admin: uid, users: users, dateCreated: dateNow, stealthMode: false)
             let point = KindPointAnnotation(circleAnnotationSet: set)
             point.title = uid
             
@@ -99,7 +102,8 @@ extension MapActionTriggerView: UITextFieldDelegate {
         }
         
         toggleLock(closed: circleIsPrivate)
-        saveCircleSetIfNotTemporary()
+        CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.isPrivate = circleIsPrivate
+        saveCircleSetIfNotTemporary {}
     }
 
     func toggleLock(closed: Bool) {
@@ -131,6 +135,15 @@ extension MapActionTriggerView: UITextFieldDelegate {
         }
     }
     
+    func toggleDeleteCircleButton(on: Bool) {
+        if !on {
+            deleteCircleBtn.isHidden = true
+            deleteCircleBtn.alpha = 0
+        } else {
+            deleteCircleBtn.isHidden = false
+            deleteCircleBtn.alpha = 1
+        }
+    }
     
     func toggleAddUserButton(on: Bool) {
         if on {
@@ -235,29 +248,19 @@ extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     
-    //Btns in UserInCirclePhotoStripCellProtocol
-    func deleteUserFromCircleBtn(userId:String) {
-        mainViewController?.confirmationView.delegate = self
-        mainViewController?.confirmationView.actionEnum = .removeUserFromCircle
-        guard let user = selectedKindUser, let name = user.name else {return}
-        mainViewController?.confirmationView.confirmAction.setTitle("Remove \(name)", for: .normal)
-        mainViewController?.confirmationView.activate()
 
-    }
-    
-
-    
-    func makeUserAdminForCircleBtn(userId:String) {
-        mainViewController?.confirmationView.delegate = self
-        mainViewController?.confirmationView.actionEnum = .transferCircleToUser
-        guard let user = selectedKindUser, let name = user.name else {return}
-        mainViewController?.confirmationView.confirmAction.setTitle("Transfer circle to \(name) ", for: .normal)
-        mainViewController?.confirmationView.activate()
-    }
     
 }
 
 extension MapActionTriggerView: ConfirmationViewProtocol {
+    
+    func setupConfirmationBtn(withMessage: String, detail: String?, action: ConfirmButtonActions) {
+        mainViewController?.confirmationView.delegate = self
+        mainViewController?.confirmationView.actionEnum = action
+        mainViewController?.confirmationView.confirmAction.setTitle(withMessage, for: .normal)
+        mainViewController?.confirmationView.detailsLabel.text = detail ?? ""
+        mainViewController?.confirmationView.activate()
+    }
     
     func userConfirmed() {
         guard let action = mainViewController?.confirmationView.actionEnum else {return}
@@ -271,10 +274,21 @@ extension MapActionTriggerView: ConfirmationViewProtocol {
             case .transferCircleToUser:
                 print("hello makeUserAdminForCircleBtn")
                  guard let user = selectedKindUser, let id = user.uid else {return}
-                CircleAnnotationManagement.sharedInstance.changeCircleAdminTo(userId: id) {
+                CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.admin = id
+                saveCircleSetIfNotTemporary() {
                     self.mainViewController?.confirmationView.deactivate()
-                }
-            
+            }
+
+            case .removeCircle:
+                CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.deleted = true
+                saveCircleSetIfNotTemporary() {
+                    self.mainViewController?.confirmationView.deactivate()
+            }
+        case .makeCircleStealth:
+                CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.stealthMode = self.circleIsStealthMode
+            saveCircleSetIfNotTemporary() {
+                self.mainViewController?.confirmationView.deactivate()
+            }
         }
         
 

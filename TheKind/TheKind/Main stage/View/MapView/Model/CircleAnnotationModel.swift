@@ -46,6 +46,7 @@ struct CircleAnnotationSet {
     var circleId: String!
     var admin: String!
     var users: [String]!
+    var stealthMode: Bool!
     var dateCreated: String!
     var ref: DocumentReference!
     
@@ -58,11 +59,12 @@ struct CircleAnnotationSet {
         users = document.data()?["users"] as? [String]
         dateCreated = document.data()?["created"] as? String
         deleted = document.data()?["deleted"] as? Bool
+        stealthMode = document.data()?["stealthmode"] as? Bool
         ref = document.reference
      }
     
     init(location: CLLocationCoordinate2D, circlePlotName: String, isPrivate: Bool, circleId: String?,
-         admin: String, users: [String], dateCreated: String) {
+         admin: String, users: [String], dateCreated: String, stealthMode: Bool) {
         self.location = location
         self.circlePlotName = circlePlotName
         self.isPrivate = isPrivate
@@ -70,13 +72,14 @@ struct CircleAnnotationSet {
         self.admin = admin
         self.users = users
         self.deleted = false
+        self.stealthMode = stealthMode
         self.dateCreated = dateCreated
     }
 
     func asDictionary() -> [String:Any]? {
         guard let locationGeoPoint = cLLocationCoordinate2dToGeoPoint(location) else {return nil}
         let circleDict: [String:Any] = ["name": circlePlotName as String, "location": locationGeoPoint as GeoPoint,
-                                        "isprivate": isPrivate as Bool, "circleid": circleId as String, "admin": admin as String, "users": users as [String], "created": dateCreated as String, "deleted": deleted as Bool]
+                                        "isprivate": isPrivate as Bool, "circleid": circleId as String, "admin": admin as String, "users": users as [String], "created": dateCreated as String, "deleted": deleted as Bool, "stealthmode": stealthMode as Bool]
         return circleDict
     }
     

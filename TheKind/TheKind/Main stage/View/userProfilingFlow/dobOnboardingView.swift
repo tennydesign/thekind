@@ -68,7 +68,9 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Confirm this year.", actionView: self)
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        delay(bySeconds: 0.3, dispatchLevel: .main) {
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        }
     }
     
 

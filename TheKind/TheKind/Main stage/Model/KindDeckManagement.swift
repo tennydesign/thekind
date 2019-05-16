@@ -16,8 +16,15 @@ class KindDeckManagement {
     //Singleton
     static let sharedInstance = KindDeckManagement()
     var userKindDeck: [Int] = []
+    
     var userMainKind: Int?
-    var isBrowsingAnotherUserKindDeck = false
+    var isMainKind: Bool {
+        get {
+            
+            return true
+        }
+    }
+    var isBrowsingAnotherUserKindDeck = false // This is used to change the behaviour of the browsing kinds screen. Todo: Find a better automatic flagger condition to this.
     
     //Computed properties.
     var kindsdict: [String: Any] {
@@ -40,34 +47,15 @@ class KindDeckManagement {
     }
     
     
-    //SAVE
-    //KINDS
-    func safeAddKindToDeck(kindID: Int, completion:@escaping (Bool)->()) {
-        if !userKindDeck.contains(kindID) {
-            userKindDeck.append(kindID)
-            self.updateKindDeck { (err) in
-                if let err = err {
-                    print(err)
-                    completion(false)
-                }
-                
-                completion(true)
-                return
-            }
-        } else {
-            print("safeAddKindToDeck: kind already exists")
-            completion(false)
-        }
-        
+    func cleanPreviousMainKindsFromDeck() {
+        let twelveMainKinds = GameKinds.twelveKindsOriginalArray.map {$0.kindId.rawValue}
+        userKindDeck = userKindDeck.filter { !twelveMainKinds.contains($0) }
     }
-    
-    //TODO: Implement here the array manipulation
-    
     
     func updateKindDeck(completion: ((Error?)->())?) {
         let db = Firestore.firestore()
-        
-        db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).updateData(kindsdict) { (err) in
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        db.collection(KindDeckDocument.alldecks.rawValue).document(uid).updateData(kindsdict) { (err) in
             if let err = err {
                 if err.localizedDescription.contains("No document to update") {
                     //Create deck from scratch
@@ -90,10 +78,69 @@ class KindDeckManagement {
         }
         
     }
+
+    
+    func safeAddMainKindToDeck(kindID: Int, completion:@escaping (Bool)->()) {
+        // This will make sure we never have two or more Main kinds in a deck.
+        let twelveMainKinds = GameKinds.twelveKindsOriginalArray.map {$0.kindId.rawValue}
+        if twelveMainKinds.contains(kindID) {
+            cleanPreviousMainKindsFromDeck()
+        }
+        
+        if !userKindDeck.contains(kindID) {
+            userKindDeck.append(kindID)
+            self.updateKindDeck { (err) in
+                if let err = err {
+                    print(err)
+                    completion(false)
+                }
+                
+                completion(true)
+                return
+            }
+        } else {
+            print("safeAddKindToDeck: kind already exists")
+            completion(false)
+        }
+        
+    }
+    
+
+    //TODO: Implement here the array manipulation
+    
+    func addKindToDeck(kindId: Int, completion: (()->())?) {
+        let db = Firestore.firestore()
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        let kindDeckRef = db.collection(KindDeckDocument.alldecks.rawValue).document(uid)
+        //ArrayUnion() adds elements to an array but only elements not already present.
+        kindDeckRef.updateData(["userKindDeck" : FieldValue.arrayUnion([kindId])]) { (err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            completion?()
+        }
+        
+    }
+    
+    func removeKindFromDeck(kindId: Int, completion: (()->())?) {
+        let db = Firestore.firestore()
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        let circlesRef = db.collection("kindcircles").document(uid)
+        circlesRef.updateData(["userKindDeck" : FieldValue.arrayRemove([kindId])]) { (err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            completion?()
+        }
+    }
+    
     
     private func createUserKindDeck(completion: @escaping (Error?)->()) {
         let db = Firestore.firestore()
-        db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).setData(kindsdict, merge: true, completion: { (err) in
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        db.collection(KindDeckDocument.alldecks.rawValue).document(uid).setData(kindsdict, merge: true, completion: { (err) in
             if let err = err {
                 completion(err)
                 return
@@ -109,25 +156,24 @@ class KindDeckManagement {
         let db = Firestore.firestore()
         guard let mainkind = userMainKind else {return}
         let mainKindDict = ["userMainKind":mainkind]
-        db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).updateData(mainKindDict) { (err) in
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        db.collection(KindDeckDocument.alldecks.rawValue).document(uid).updateData(mainKindDict) { (err) in
             if let err = err {
                 if err.localizedDescription.contains("No document to update") {
-                    //create
+                    //create instead
                     self.createMainCardEntry(mainKindDict, completion: { (err) in
                         if let err = err {
                             completion?(err)
                         }
-                        //print("New main Kind Document created successfully")
                     })
                 }
             }
-            self.safeAddKindToDeck(kindID: mainkind, completion: { (success) in
-                if success {
-                    completion?(nil)
-                    self.updateMainKindOnClient?()
-                    return
-                }
+            // Now add it to the deck.
+            self.safeAddMainKindToDeck(kindID: mainkind, completion: { (success) in
+                self.updateMainKindOnClient?()
+                completion?(nil) // <- this completes saveMainKind
             })
+            
         }
         
     }
@@ -135,7 +181,8 @@ class KindDeckManagement {
     
     private func createMainCardEntry(_ mainKindDict: [String:Int], completion: @escaping (Error?)->()) {
         let db = Firestore.firestore()
-        db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).setData(mainKindDict, completion: { (err) in
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        db.collection(KindDeckDocument.alldecks.rawValue).document(uid).setData(mainKindDict, completion: { (err) in
             if let err = err {
                 completion(err)
                 return
@@ -149,7 +196,8 @@ class KindDeckManagement {
     //RETRIEVE
     func getCurrentUserDeck(completion:@escaping (Bool)->()) {
         let db = Firestore.firestore()
-        db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).getDocument {  (document,err) in
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        db.collection(KindDeckDocument.alldecks.rawValue).document(uid).getDocument {  (document,err) in
             if let err = err {
                 print(err)
                 completion(false)
@@ -176,7 +224,8 @@ class KindDeckManagement {
     //HERE: OBSERVE MAINKIND!
     func observeUserKindDeck() {
         let db = Firestore.firestore()
-        db.collection(KindDeckDocument.alldecks.rawValue).document((Auth.auth().currentUser?.uid)!).addSnapshotListener { (snapshot, err) in
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        db.collection(KindDeckDocument.alldecks.rawValue).document(uid).addSnapshotListener { (snapshot, err) in
             if let err = err {
                 print(err)
                 return
@@ -187,6 +236,7 @@ class KindDeckManagement {
             }
             
             //Only update client if (and where) there are differences.
+            
             if let kindDeck = data["userKindDeck"] as? [Int] {
                 if kindDeck != self.userKindDeck {
                     self.userKindDeck = kindDeck

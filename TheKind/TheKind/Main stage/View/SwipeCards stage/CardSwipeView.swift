@@ -73,10 +73,11 @@ class CardSwipeView: UIView {
         KindDeckManagement.sharedInstance.getCurrentUserDeck { (success) in
             //print("retrieval of deck is \(success)")
         }
-        KindDeckManagement.sharedInstance.updateMainKindOnClient = { [unowned self] in
-            self.chosenKindsCollectionView.reloadData()
-            
-        }
+        
+        // PUT A PIN ON THIS. This may not being called.
+//        KindDeckManagement.sharedInstance.updateMainKindOnClient = { [unowned self] in
+//            self.chosenKindsCollectionView.reloadData()
+//        }
         
     
     }

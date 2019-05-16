@@ -110,12 +110,13 @@ class BrowseKindCardView: KindActionTriggerView {
     }
     
     override func rightOptionClicked() {
+        print("right clicked")
         if !KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
             let kind = self.availableKindsForDriver[selectedIndex]
             let kindName = kind.kindName.rawValue
-            let txt = "You chose\(kindName). -Also know as The Mage.-Moving on..."
-            let actions: [KindActionType] = [.activate, .deactivate,.activate]
-            let actionViews: [ActionViewName] = [.HudView,.BrowseKindView,.MapView]
+            let txt = "You chose\(kindName). -Now, let me show you the map.-Use it to find circles to join."
+            let actions: [KindActionType] = [.activate, .deactivate, .activate]
+            let actionViews: [ActionViewName] = [.HudView,.BrowseKindView, .MapView]
             
             // update user settings
             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.kind.rawValue] = kind.kindId.rawValue
@@ -125,7 +126,7 @@ class BrowseKindCardView: KindActionTriggerView {
             KindDeckManagement.sharedInstance.userMainKind = kind.kindId.rawValue
             KindDeckManagement.sharedInstance.saveMainKind() { (err) in
                 if let err = err {
-                    print("AQUI!!! \(err)")
+                    print("KindDeckManagement.sharedInstance.saveMainKind(): \(err)")
                     return
                 }
                 self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))

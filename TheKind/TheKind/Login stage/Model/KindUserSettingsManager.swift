@@ -87,12 +87,11 @@ public class KindUserSettingsManager {
                 }
             } else {
                 // Update all interface controls with retrieved data.
+                self.loggedUserName = self.loggedUser?.name ?? ""
                 self.updateHUDWithUserSettings?()
 
             }
-            
- //           self.userFields[UserFieldTitle.uid.rawValue] = (Auth.auth().currentUser?.uid)!
-            
+
             // let the client know user signed in
             self.userSignedIn?()
             // turn observer ON.
@@ -229,7 +228,8 @@ public class KindUserSettingsManager {
     //Login purposes only
     private func attemptToRetrieveLoggedUserSettings(completion:@escaping (Bool)->()) {
         let db = Firestore.firestore()
-        db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).getDocument {  (document,err) in
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        db.collection("usersettings").document(uid).getDocument {  (document,err) in
             if let err = err {
                 print(err)
                 completion(false)

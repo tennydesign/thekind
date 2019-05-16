@@ -25,8 +25,10 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     @IBOutlet var presentExpandedCircleView: UIView!
     @IBOutlet var circleNameTextField: KindTransparentTextField!
     @IBOutlet var lineUnderTexboxView: UIView!
+    @IBOutlet var deleteCircleBtn: UIButton!
     
     
+    @IBOutlet var stealthModeBtn: UIButton!
     @IBOutlet var circleNameTextFieldView: UIView!
     @IBOutlet var insideExpandedCircleViewYConstraint: NSLayoutConstraint!
     @IBOutlet var lockerView: UIView!
@@ -47,12 +49,8 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     @IBOutlet var expandedCircleViewYConstraint: NSLayoutConstraint!
     
     var circlePlotName: String = ""
-    var circleIsPrivate: Bool = false {
-        didSet{
-            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.isPrivate = circleIsPrivate
-        }
-    }
-    
+    var circleIsPrivate: Bool = false 
+    var circleIsStealthMode: Bool = false
     var circleIsInEditMode: Bool = false 
     
     var userIsAdmin: Bool = false
@@ -173,6 +171,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         mapBoxView.tintColor = .lightGray
         mapBoxView.logoView.isHidden = true
         mapBoxView.attributionButton.isHidden = true
+        mapBoxView.compassView.isHidden = true
         
         self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
         self.mapBoxView.setCenter(CLLocationCoordinate2D(latitude: 37.778491,
@@ -241,6 +240,10 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     override func talk() {
         //Jung should talk here
+        let txt = "Tap a circle to enter it.-Or tap and hold anywhere to create a new circle.-If public anyone 0.5 miles away-...will be able to join."
+        let actions: [KindActionType] = [.none,.none,.none,.none]
+        let actionViews: [ActionViewName] = [.none,.none,.none,.none]
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }
     
     @IBAction func enterCircleTouched(_ sender: UIButton) {
@@ -256,6 +259,9 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.isHidden = false
         self.talkbox?.delegate = self
         self.mainViewController?.jungChatLogger.backgroundColor = UIColor.clear
+        UIView.animate(withDuration: 0.3) {
+            self.mainViewController?.jungChatLogger.bottomGradient.alpha = 1
+        }
         self.fadeInView() //fades in the view, not the map yet.
     
         presentMapViews() {
@@ -342,15 +348,46 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
     }
     
-    
+     //Btns in UserInCirclePhotoStripCellProtocol
     @IBAction func deleteBtnClicked(_ sender: UIButton) {
-        self.clearJungChatLog()
-        CircleAnnotationManagement.sharedInstance.flagCircleAsDeleted {
-            
-        }
+        guard let set = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails else {return}
+        let detail = "Removing a circle will make it disappear from the map. "
+        let message = "Remove \(set.circlePlotName ?? "circle")?"
+        setupConfirmationBtn(withMessage: message, detail: detail, action: .removeCircle)
+
     }
     
-
+//    @IBAction func hideBtnClicked(_ sender: UIButton) {
+//        guard let set = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails else {return}
+//        var message = ""
+//        var detail = ""
+//        //HERE THIS IF IS NOT THERE YET
+//        if circleIsStealthMode == true {
+//            message = "Show \(set.circlePlotName ?? "circle")?"
+//            circleIsStealthMode = false
+//        } else {
+//            message = "Hide \(set.circlePlotName ?? "circle")?"
+//            circleIsStealthMode = true
+//        }
+//        setupConfirmationBtn(withMessage: message, detail: detail, action: .makeCircleStealth)
+//    }
+    
+    func deleteUserFromCircleBtn(userId:String) {
+        guard let user = selectedKindUser, let name = user.name else {return}
+        let message = "Remove \(name)"
+        let detail = "Removed users can't join private circles."
+        setupConfirmationBtn(withMessage: message, detail: detail, action: .removeUserFromCircle)
+    }
+    
+    
+    
+    func makeUserAdminForCircleBtn(userId:String) {
+        guard let user = selectedKindUser, let name = user.name else {return}
+        let message = "Transfer circle to \(name) "
+        let detail = "You will lose your admin access to this circle."
+        setupConfirmationBtn(withMessage: message, detail: detail, action: .transferCircleToUser)
+    }
+    
     @IBAction func addUserBtnClicked(_ sender: UIButton) {
         print("add user clicked")
         mainViewController?.searchView.activate()
@@ -371,19 +408,26 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     //TODO: ACL (for real)
     // CONTROL for: Only circles you belong or are public get downloaded from FB.
-    // Should be a query. 
+    // Should be a query.
+    func showAccessDeniedLabel(message: String) {
+        self.deactivationMessageLabel.text = message
+        self.deactivationMessageLabel.alpha = 1
+        UIView.animate(withDuration: 0.4, delay: 1.2, options: .curveEaseIn, animations: {
+            self.deactivationMessageLabel.alpha = 0
+        }, completion: { (completed) in
+            
+        })
+    }
+    
+    //THis gets called everytime there is a Set update on Firestore
     func setupUIWithSetInfo() {
         guard let set =  CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails else {return}
         
-        //If flagged as deleted, deactivate and cancel everything else (return).
+        //Checks again just in case user was already opening the circle before flag.
         if set.deleted {
             deActivateOnDeselection() {
-                self.deactivationMessageLabel.alpha = 1
-                UIView.animate(withDuration: 0.4, delay: 1.2, options: .curveEaseIn, animations: {
-                    self.deactivationMessageLabel.alpha = 0
-                }, completion: { (completed) in
-                    
-                })
+                self.showAccessDeniedLabel(message: "Deactivated by admin.")
+                self.clearJungChatLog()
             }
             return
         }
@@ -402,15 +446,21 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             self.toggleEditMode(on: false)
         }
         
+        if !CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation{
+            self.toggleDeleteCircleButton(on: self.userIsAdmin)
+        }
+        
         self.toggleLock(closed: self.circleIsPrivate)
+        
+        
         
     }
     
-    func saveCircleSetIfNotTemporary() {
+    func saveCircleSetIfNotTemporary(completion: (()->())?) {
         if !CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
             CircleAnnotationManagement.sharedInstance.updateCircleSettings { (set, err) in
                 CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
-                
+                completion?()
             }
         }
     }

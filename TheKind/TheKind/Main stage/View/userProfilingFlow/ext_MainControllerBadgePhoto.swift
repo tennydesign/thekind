@@ -82,18 +82,19 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
                 } else {
 
                     self.hudView.userPictureImageVIew.image = image
-                    self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: result.rawValue, action: [.none], actionView: [.none], options: nil))
+//                    self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: result.rawValue, action: [.none], actionView: [.none], options: nil))
 
 
-                    let txt = "Let me show how you look like.-Look up ☝️."
-                    let actions: [KindActionType] = [.none, .activate]
-                    let actionViews: [ActionViewName] = [.none,.HudView]
+                    let txt = result.rawValue + "-Let me show how you look like.-Look up ☝️."
+                    let actions: [KindActionType] = [.none, .none, .activate]
+                    let actionViews: [ActionViewName] = [.none, .none,.HudView]
 
                     // TODO: all should look like this one.
                     let options = self.talkbox.createUserOptions(opt1: "Take another", opt2: "Keep this one", actionViews: (.BadgePhotoSetupView,.BadgePhotoSetupView))
 
+                      self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options), wait: 1)
+                 
 
-                    self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options), wait: 1)
 
 
                 }
