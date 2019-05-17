@@ -32,6 +32,7 @@ class JungTalkBox {
         guard let userResponseOption = userResponseOption else {return}
 
         let playerMessage = Snippet.init(message: userResponseOption.message, action: userResponseOption.action, id: userResponseOption.id, actionView: userResponseOption.actionView ?? .none)
+        
         let playerPostRoutine = JungRoutine.init(snippets: [playerMessage], userResponseOptions: nil, sender: .Player)
 
         // 1 - send the user message to the chat
@@ -102,6 +103,7 @@ class JungTalkBox {
         
     }
     
+    // Create user option labels. Return as touple to
     func createUserOptions(opt1: String, opt2: String, actionViews: (ActionViewName, ActionViewName), id: Int? = nil) -> (Snippet,Snippet)? {
         
         let actionOpt: (KindActionType, KindActionType) = (.leftOptionClicked, .rightOptionClicked)

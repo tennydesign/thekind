@@ -125,8 +125,10 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     }
     
     func activate() {
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
-                self.alpha = 1}, completion: nil)
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations:
+            {
+                self.hudView.alpha = 1
+        }, completion: nil)
         
         revealUserPhoto()
     }

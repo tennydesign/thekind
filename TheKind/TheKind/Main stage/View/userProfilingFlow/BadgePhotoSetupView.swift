@@ -49,7 +49,7 @@ class BadgePhotoSetupView: KindActionTriggerView {
     }
     
     override func talk() {
-        let txt = "Please take a selife.-This will help when meeting other people.-Just tap the camera above."
+        let txt = "First, take a selife.-This will help when meeting other people.-Justtap the camera above."
         let actions: [KindActionType] = [.none,.fadeInView, .none]
         let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView, .none]
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))

@@ -18,7 +18,8 @@ class MainViewController: UIViewController {
     var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
     
-    @IBOutlet var hudView: HUDview! // content is here.
+    @IBOutlet var hudView: HUDview! 
+    
     @IBOutlet var hudWindow: UIView! // overall top
     
     @IBOutlet var jungChatWindow: UIView! {
@@ -147,20 +148,28 @@ class MainViewController: UIViewController {
 
         self.adaptHUDAndPanelToIphoneXFamily()
 
-        self.updateViewTagWithCurrentState()
+        //self.updateViewTagWithCurrentState()
         
         KindDeckManagement.sharedInstance.initializeDeckObserver()
+
+        self.updateViewTagWithCurrentState()
+
     }
     
     fileprivate func updateViewTagWithCurrentState() {
         //update tag:
-        guard let tag = KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] as? Int  else {return}
+        let tag = KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] as? Int ?? firstViewToPresent.rawValue
         if let actionViewNameEnum = ActionViewName(rawValue: tag) {
             self.firstViewToPresent = actionViewNameEnum
-            
-            delay(bySeconds: 0.3, dispatchLevel: .main) {
-                self.intro()
-           }
+            if self.firstViewToPresent == ActionViewName.UserNameView {
+                delay(bySeconds: 0.1, dispatchLevel: .main) {
+                    self.intro()
+               }
+            } else {
+                delay(bySeconds: 0.1, dispatchLevel: .main) {
+                    self.welcomeBack()
+                }
+            }
             
         }
     }
@@ -176,22 +185,31 @@ class MainViewController: UIViewController {
     
     func adaptHUDAndPanelToIphoneXFamily() {
         if UIScreen.isPhoneXfamily {
-            UIView.animate(withDuration: 0.3) {
+            //UIView.animate(withDuration: 0.3) {
                 self.hudView.hudControls.transform = CGAffineTransform.init(translationX: 0, y: 20)
                 self.bottomCurtainView.transform = CGAffineTransform(translationX: 0, y: -20)
-            }
+           // }
             
         }
         
     }
     
     fileprivate func intro() {
-        let txt = "Hi. Welcome to The Kind.-My name is Jung.-It sounds like 'Yung'.-I'm pretty good at introducing people to each other-...and can help you make friends and have great conversations"
-        let actions: [KindActionType] = [.none, .none, .none, .none, .activate]
-        let actionViews: [ActionViewName] = [.none, .none, .none, .none, self.firstViewToPresent]
+        let txt = "Hi. Welcome to The Kind.-My name is Jung.-I'm pretty good at introducing people to each other-...and can help you make friends and have great conversations"
+        let actions: [KindActionType] = [.none, .activate, .none, .activate]
+        let actionViews: [ActionViewName] = [.none, .HudView, .none, self.firstViewToPresent]
         //self.talkbox.displayRoutine(routine: self.talkbox.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
         self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
 
+    }
+    
+    fileprivate func welcomeBack() {
+        let txt = "Hi \(KindUserSettingsManager.sharedInstance.loggedUserName ?? "") -Welcome back."
+        let actions: [KindActionType] = [.activate,.activate]
+        let actionViews: [ActionViewName] = [.HudView,self.firstViewToPresent]
+        //self.talkbox.displayRoutine(routine: self.talkbox.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        
     }
 
     

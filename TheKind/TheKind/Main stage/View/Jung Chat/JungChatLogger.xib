@@ -39,7 +39,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottom_gradient" translatesAutoresizingMaskIntoConstraints="NO" id="sK1-zN-Q8U" userLabel="bottomGradient">
-                            <rect key="frame" x="0.0" y="-70" width="375" height="295"/>
+                            <rect key="frame" x="0.0" y="-90" width="375" height="315"/>
                         </imageView>
                         <label opaque="NO" alpha="0.0" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAKE ANOTHER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfN-ey-Vla" customClass="KindJungOptionLabel" customModule="TheKind" customModuleProvider="target">
                             <rect key="frame" x="32.5" y="107" width="110" height="63"/>
@@ -115,7 +115,7 @@
                         <constraint firstAttribute="trailing" secondItem="sK1-zN-Q8U" secondAttribute="trailing" id="eQw-aj-gmr"/>
                         <constraint firstItem="cKD-xW-40i" firstAttribute="centerY" secondItem="gFN-uh-qgM" secondAttribute="centerY" id="h4K-GW-tkk"/>
                         <constraint firstItem="7kP-Zp-pCJ" firstAttribute="bottom" secondItem="gFN-uh-qgM" secondAttribute="bottom" constant="8" id="i7D-Ah-qrq"/>
-                        <constraint firstItem="sK1-zN-Q8U" firstAttribute="top" secondItem="9xs-vB-b1j" secondAttribute="top" constant="-70" id="kr8-aB-SqK"/>
+                        <constraint firstItem="sK1-zN-Q8U" firstAttribute="top" secondItem="9xs-vB-b1j" secondAttribute="top" constant="-90" id="kr8-aB-SqK"/>
                         <constraint firstItem="cKD-xW-40i" firstAttribute="centerX" secondItem="9xs-vB-b1j" secondAttribute="centerX" constant="100" id="lCb-dp-F7M"/>
                         <constraint firstItem="gFN-uh-qgM" firstAttribute="centerY" secondItem="8Zb-m6-dcN" secondAttribute="centerY" id="nhf-dW-y0J"/>
                         <constraint firstItem="gFN-uh-qgM" firstAttribute="top" secondItem="7dT-VQ-BOy" secondAttribute="bottom" constant="20" id="oK9-rm-ivh"/>

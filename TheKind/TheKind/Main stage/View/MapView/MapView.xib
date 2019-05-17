@@ -82,7 +82,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="727"/>
                     <subviews>
                         <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMQ-OI-6tS" userLabel="presentExpandedCircleView">
-                            <rect key="frame" x="0.0" y="127" width="375" height="393"/>
+                            <rect key="frame" x="0.0" y="122" width="375" height="393"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3K-l4-sWj" userLabel="circleNameTextFieldView">
                                     <rect key="frame" x="87.5" y="206.5" width="200" height="70"/>
@@ -118,7 +118,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TyX-do-Mcq" userLabel="locker">
-                                    <rect key="frame" x="168" y="180" width="39" height="33"/>
+                                    <rect key="frame" x="168" y="185" width="39" height="33"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock_top" translatesAutoresizingMaskIntoConstraints="NO" id="PZK-EP-lVV" userLabel="lock_top">
                                             <rect key="frame" x="32.5" y="0.5" width="14" height="6"/>
@@ -146,7 +146,7 @@
                                     </constraints>
                                 </view>
                                 <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HeI-QR-NSb" userLabel="DeleteCircle">
-                                    <rect key="frame" x="258.5" y="107.5" width="18" height="18"/>
+                                    <rect key="frame" x="248.5" y="117.5" width="18" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="18" id="AZ2-51-Wgq"/>
                                         <constraint firstAttribute="height" constant="18" id="VXg-Rj-hr5"/>
@@ -171,13 +171,13 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="z3K-l4-sWj" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="45" id="BWK-Dx-lpr"/>
-                                <constraint firstItem="HeI-QR-NSb" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" constant="80" id="CBL-6Q-45R"/>
+                                <constraint firstItem="HeI-QR-NSb" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" constant="70" id="CBL-6Q-45R"/>
                                 <constraint firstAttribute="height" constant="393" id="Q80-NO-cTQ"/>
                                 <constraint firstItem="mnh-F8-RqW" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="-80" id="V1j-bh-wvI"/>
-                                <constraint firstItem="TyX-do-Mcq" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" id="cTt-VQ-9bB"/>
+                                <constraint firstItem="TyX-do-Mcq" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="5" id="cTt-VQ-9bB"/>
                                 <constraint firstItem="mnh-F8-RqW" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" constant="-80" id="fZv-bt-2iF"/>
                                 <constraint firstItem="TyX-do-Mcq" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" id="hXo-KV-SOy"/>
-                                <constraint firstItem="HeI-QR-NSb" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="-80" id="hjn-Ed-pYJ"/>
+                                <constraint firstItem="HeI-QR-NSb" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="-70" id="hjn-Ed-pYJ"/>
                                 <constraint firstItem="z3K-l4-sWj" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" id="ouI-SC-nHk"/>
                             </constraints>
                         </view>
@@ -226,7 +226,7 @@
                         <constraint firstAttribute="trailing" secondItem="jX0-Ym-h0s" secondAttribute="trailing" id="dkw-7f-zHv"/>
                         <constraint firstAttribute="trailing" secondItem="aMQ-OI-6tS" secondAttribute="trailing" id="eB0-fT-5t7"/>
                         <constraint firstItem="jX0-Ym-h0s" firstAttribute="top" secondItem="V9E-SM-J71" secondAttribute="top" constant="90" id="qVl-QL-tbF"/>
-                        <constraint firstItem="aMQ-OI-6tS" firstAttribute="centerY" secondItem="V9E-SM-J71" secondAttribute="centerY" constant="-40" id="rHc-ui-cpp"/>
+                        <constraint firstItem="aMQ-OI-6tS" firstAttribute="centerY" secondItem="V9E-SM-J71" secondAttribute="centerY" constant="-45" id="rHc-ui-cpp"/>
                         <constraint firstItem="jX0-Ym-h0s" firstAttribute="leading" secondItem="V9E-SM-J71" secondAttribute="leading" id="zkq-yj-sCL"/>
                     </constraints>
                 </view>

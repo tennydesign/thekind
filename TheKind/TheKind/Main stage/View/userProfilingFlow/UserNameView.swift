@@ -147,7 +147,7 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         
         if let username = userNameTextField.text, !(username.trimmingCharacters(in: .whitespaces).isEmpty) {
             KindUserSettingsManager.sharedInstance.loggedUserName = username
-            txt = "Great, \(KindUserSettingsManager.sharedInstance.loggedUserName ?? username) nice to meet you.-Welcome to The Kind."
+            txt = "Great, nice to meet you \(KindUserSettingsManager.sharedInstance.loggedUserName ?? username).-This setup will only take a few more seconds"
             
             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.name.rawValue] = username
             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)

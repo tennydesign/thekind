@@ -12,6 +12,14 @@ import Mapbox
 
 extension MapActionTriggerView {
     
+    func mapExplainer() {
+        let txt = "Tap a circle to enter it or tap & hold anywhere to create a circle.-People within 0.5 miles will be able join."
+        let actions: [KindActionType] = [.none,.none]
+        let actionViews: [ActionViewName] = [.none,.none]
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+    }
+    
     func explainerCircleCreation() {
         let txt = "You are creating a circle.-Click the locker to toggle between public and private.-If private only invited people can join.-Name the circle and hit save when you are done."
         
@@ -20,6 +28,8 @@ extension MapActionTriggerView {
         let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
+    
+    
     
     func explainerCircleEdit() {
         let txt = "You are editing a circle.-Click save whenever you are done."

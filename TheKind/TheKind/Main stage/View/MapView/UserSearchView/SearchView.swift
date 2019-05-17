@@ -20,7 +20,6 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     @IBOutlet var searchTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     var isValidNewEmail: Bool = false
-    let searchViewModel = SearchViewModel()
 
     var data:[KindUser] = []
 
@@ -202,7 +201,10 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
                 
                 group.notify(queue: .main) {
                     guard let retrievedUser = retrievedUser else {return}
-                    self.filteredData = [retrievedUser]
+                    //Only add if user has minimum setup: choosen kind.
+                    if retrievedUser.kind != nil {
+                        self.filteredData = [retrievedUser]
+                    }
                 }
             }
         } else {

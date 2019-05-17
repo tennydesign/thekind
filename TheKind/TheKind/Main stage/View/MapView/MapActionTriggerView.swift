@@ -143,6 +143,16 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         updateCircleInformationOnObserver()
         userAddedToTemporaryCircleListObserver()
         userRemovedFromTemporaryCircleListObserver()
+        
+        // Setup map refresh (only refreshes when user is not seeing a circle to not conflict.
+        Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { timer in
+            if self.mapBoxView.isUserInteractionEnabled {
+                CircleAnnotationManagement.sharedInstance.retrieveCirclesCloseToPlayer {
+                    
+                }
+                print("Timer fired!")
+            }
+        }
     }
 
     
@@ -181,9 +191,9 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     fileprivate func adjustScreenforXFamily() {
         if UIScreen.isPhoneXfamily {
-            expandedCircleViewYConstraint.constant = -5
+          //  expandedCircleViewYConstraint.constant = -5
             insideExpandedCircleViewYConstraint.constant = -40
-            photoStripViewTopConstraint.constant = 200
+            photoStripViewTopConstraint.constant = 130
             self.layoutIfNeeded()
             
         }
@@ -225,6 +235,11 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     func plotAnnotations() {
         CircleAnnotationManagement.sharedInstance.circleAnnotationObserver = { [unowned self](circleAnnotationSets) in
             var pointAnnotations = [KindPointAnnotation]()
+            
+            if let annotations = self.mapBoxView.annotations {
+                self.mapBoxView.removeAnnotations(annotations)
+            }
+            
             for set in circleAnnotationSets {
                 let point = KindPointAnnotation(circleAnnotationSet: set)
                 pointAnnotations.append(point)
@@ -240,11 +255,12 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     override func talk() {
         //Jung should talk here
-        let txt = "Tap a circle to enter it.-Or tap and hold anywhere to create a new circle.-If public anyone 0.5 miles away-...will be able to join."
-        let actions: [KindActionType] = [.none,.none,.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none,.none,.none]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        mapExplainer()
+        
     }
+    
+    
+    
     
     @IBAction func enterCircleTouched(_ sender: UIButton) {
     
@@ -268,10 +284,11 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             //start loader
             CircleAnnotationManagement.sharedInstance.retrieveCirclesCloseToPlayer() {
                 // the observer will fire, see: plotAnnotations()
-                UIView.animate(withDuration: 0.4) {
-                    self.mapBoxView.alpha = 1 //fades in the map.
-                    //stop loader
-                }
+                UIView.animate(withDuration: 0.4, animations: {
+                    self.mapBoxView.alpha = 1
+                }, completion: { (completed) in
+                    self.talk()
+                })
             }
         }
         
@@ -357,21 +374,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
     }
     
-//    @IBAction func hideBtnClicked(_ sender: UIButton) {
-//        guard let set = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails else {return}
-//        var message = ""
-//        var detail = ""
-//        //HERE THIS IF IS NOT THERE YET
-//        if circleIsStealthMode == true {
-//            message = "Show \(set.circlePlotName ?? "circle")?"
-//            circleIsStealthMode = false
-//        } else {
-//            message = "Hide \(set.circlePlotName ?? "circle")?"
-//            circleIsStealthMode = true
-//        }
-//        setupConfirmationBtn(withMessage: message, detail: detail, action: .makeCircleStealth)
-//    }
-    
+
     func deleteUserFromCircleBtn(userId:String) {
         guard let user = selectedKindUser, let name = user.name else {return}
         let message = "Remove \(name)"

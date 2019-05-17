@@ -31,6 +31,7 @@ class JungChatLogger: KindActionTriggerView {
     
     let serialPostsQueue = DispatchQueue(label: "com.thekind.jungPosts")
     var messagesPipe: [String] = []
+    var dispatchGroup: DispatchGroup?
     
     //var animator: UIViewPropertyAnimator()
     var messagesCollection: [String] = [] {
@@ -109,23 +110,25 @@ class JungChatLogger: KindActionTriggerView {
     
     
     func hideOptionLabels(_ isHidden: Bool, completion: (()->())?) {
-        if isHidden == false {
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
-                self.resetAnswerViewWidthAnchor()
-                self.leftAnswerLabel.alpha = 1
-                self.rightAnswerLabel.alpha = 1
-                self.holdToAnswerBar.alpha = 1
-            }) { (completed) in
-                completion?()
-            }
-        } else {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.leftAnswerLabel.alpha = 0
-                self.rightAnswerLabel.alpha = 0
-                self.holdToAnswerBar.alpha = 0
-                
-            }) { (completed) in
-                completion?()
+        DispatchQueue.main.async {
+            if isHidden == false {
+                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+                    self.resetAnswerViewWidthAnchor()
+                    self.leftAnswerLabel.alpha = 1
+                    self.rightAnswerLabel.alpha = 1
+                    self.holdToAnswerBar.alpha = 1
+                }) { (completed) in
+                    completion?()
+                }
+            } else {
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.leftAnswerLabel.alpha = 0
+                    self.rightAnswerLabel.alpha = 0
+                    self.holdToAnswerBar.alpha = 0
+                    
+                }) { (completed) in
+                    completion?()
+                }
             }
         }
     }
@@ -144,20 +147,17 @@ class JungChatLogger: KindActionTriggerView {
                 // 2 - After label work is complete. Start and tempo the animator if Jung is chatting.
                 if jungRoutine.sender == .Jung {
                     self.startLoadingAnimator(for: jungRoutine.snippets.count)
-                    // gives animation a sec start appearance before posting starts.
-                    delay(bySeconds: 0.1, dispatchLevel: .main) {
-                        self.performPostsWithTimeInterval(jungRoutine) { (success) in
-                            self.stopLoadingAnimator()
-                            // release jung lock.
-                            self.talkbox.isProcessingSpeech = false
-                            if labelsUpdated {
-                                self.hideOptionLabels(false, completion: nil)
-                            }
-                            self.routineHasPosted?()
+                    self.performPostsWithTimeInterval(jungRoutine) { (success) in
+                        self.stopLoadingAnimator()
+                        // release jung lock.
+                        self.talkbox.isProcessingSpeech = false
+                        if labelsUpdated {
+                            self.hideOptionLabels(false, completion: nil)
                         }
-                        
+                        self.routineHasPosted?()
                     }
                 }
+                    
                 else if jungRoutine.sender == .Player { // POSTS IMMEDIATELY
                     guard let message = jungRoutine.snippets.first?.message,
                         let snippet = jungRoutine.snippets.first else {return}
@@ -192,12 +192,13 @@ class JungChatLogger: KindActionTriggerView {
         var snippets: [Snippet] = jungRoutine.snippets
         var messageIndex = 0
         
+
         Timer.scheduledTimer(withTimeInterval: timeInterval ?? self.tempoInBetweenPosts, repeats: true){ t in
-            
+
             if !snippets[messageIndex].message.isEmpty {
                 self.postMessageToJungChat(message: snippets[messageIndex].message)
             }
-            
+
             self.talkbox.executeSnippetAction(snippets[messageIndex])
             self.animationCount -= 1
             // 3 - Stops timer
@@ -207,14 +208,13 @@ class JungChatLogger: KindActionTriggerView {
                 }
                 t.invalidate()
             }
-            
+
             messageIndex = min(messageIndex+1, snippets.count-1)
-            
+
         }
     }
     
     func stopLoadingAnimator() {
-        
         if self.animationCount == 0 {
             if let transform = self.jungSymbolImageView.layer.presentation()?.transform {
                 self.jungSymbolImageView.layer.removeAllAnimations()
@@ -226,13 +226,15 @@ class JungChatLogger: KindActionTriggerView {
     
     func startLoadingAnimator(for count: Int) {
         self.animationCount += count
-        if !jungLoadingAnimator.isAnimating {
-            let rotate = CABasicAnimation(keyPath: "transform.rotation")
-            rotate.byValue = 2 * CGFloat.pi
-            rotate.duration = 4
-            rotate.repeatCount = .greatestFiniteMagnitude
-            self.jungSymbolImageView.layer.add(rotate, forKey: nil)
-            jungLoadingAnimator.startAnimating()
+        DispatchQueue.main.async {
+            if !self.jungLoadingAnimator.isAnimating {
+                let rotate = CABasicAnimation(keyPath: "transform.rotation")
+                rotate.byValue = 2 * CGFloat.pi
+                rotate.duration = 4
+                rotate.repeatCount = .greatestFiniteMagnitude
+                self.jungSymbolImageView.layer.add(rotate, forKey: nil)
+                self.jungLoadingAnimator.startAnimating()
+            }
         }
     }
     

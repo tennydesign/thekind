@@ -43,30 +43,23 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         
         pickerView.frame = CGRect(x: -100, y: 0, width: self.frame.width - 200, height: 100)
         pickerView.translatesAutoresizingMaskIntoConstraints = false
-        //pickerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        //pickerView.centerYAnchor.constraint(equalTo: s elf.centerYAnchor).isActive = true
-        
+      
         pickerView.selectRow(90, inComponent:0, animated:true)
  
         
     }
     
     override func activate() {
-
-//             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.DobOnboardingView.rawValue
-//             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             self.logCurrentLandingView(tag: ActionViewName.DobOnboardingView.rawValue)
             self.talk()
-  
-        
     }
     
     override func talk() {
-        let txt = "Ok.-Now tell me what year you were born.-Choose from the options above."
+        let txt = "Sorry,not trying to be indiscrete.-But...what is your year of birth?-Choose from the options above."
         let actions: [KindActionType] = [.none, .none,.fadeInView]
         let actionViews: [ActionViewName] = [.none,.none, .DobOnboardingView]
         
-        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Confirm this year.", actionView: self)
+        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Confirm year.", actionView: self)
         
         delay(bySeconds: 0.3, dispatchLevel: .main) {
             self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))

@@ -246,6 +246,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     func mapView(_ mapView: MGLMapView, regionWillChangeAnimated animated: Bool) {
         // using didDragMap instead.
         // this method fires too often and for everything.
+        
 
     }
     
