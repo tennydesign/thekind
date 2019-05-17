@@ -127,15 +127,21 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     func activate() {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations:
             {
+                self.alpha = 1
                 self.hudView.alpha = 1
         }, completion: nil)
         
-        revealUserPhoto()
+        if self.userPictureImageVIew.image != nil {
+            revealUserPhoto()
+       }
     }
     
     func revealUserPhoto() {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
-            self.viewForAvatar.alpha = 1}, completion: nil)
+            
+            self.viewForAvatar.alpha = 1
+            
+        }, completion: nil)
     }
     
     func fadeOutUserPhoto() {

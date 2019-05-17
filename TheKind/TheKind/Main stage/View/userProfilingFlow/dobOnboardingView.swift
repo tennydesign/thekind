@@ -98,7 +98,7 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
          KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.year.rawValue] = selectedYear
          KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
         
-        let txt = "I understand you are about \(age) years old.- We are almost finished with the setup."
+        let txt = "I understand you are about \(age) years old.-We are almost finished with the setup."
         let actions: [KindActionType] = [.none,.activate]
         let actionViews: [ActionViewName] = [.none,.ChooseDriverView]
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
