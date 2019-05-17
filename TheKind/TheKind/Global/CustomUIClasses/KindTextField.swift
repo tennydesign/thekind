@@ -31,9 +31,9 @@ class KindTextField: UITextField {
     func commonInit() {
         borderStyle = .none
         layer.borderWidth = 1
-        layer.borderColor = UIColor.lightGray.cgColor
+        layer.borderColor = LIGHTGREYCOLOR.cgColor // UIColor.lightGray.cgColor
         layer.cornerRadius = 10
-        textColor = UIColor(r: 237, g: 237, b: 237)
+        textColor = LIGHTGREYCOLOR //UIColor(r: 237, g: 237, b: 237)
         layer.masksToBounds = true
     
     }
@@ -65,7 +65,7 @@ class KindTransparentTextField: UITextField {
         borderStyle = .none
         layer.borderWidth = 0
         layer.cornerRadius = 10
-        textColor = UIColor(r: 237, g: 237, b: 237)
+        textColor = LIGHTGREYCOLOR //UIColor(r: 237, g: 237, b: 237)
         layer.masksToBounds = true
     }
     

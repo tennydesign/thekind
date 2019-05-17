@@ -139,7 +139,7 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
             pickerLabel.textAlignment = .center
         }
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white,
+            .foregroundColor: FULLWHITECOLOR,
             .font: UIFont.init(name: PRIMARYFONT, size: 21) ?? UIFont.systemFont(ofSize: 21) ]//UIFont.systemFont(ofSize: 21)]
         pickerLabel.attributedText = NSAttributedString(string: String(pickerData[row]), attributes: attributes)
 

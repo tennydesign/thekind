@@ -15,13 +15,13 @@ class kindCollectioViewCell: UICollectionViewCell {
     @IBOutlet var imageFrame: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
-         icon.tintColor = UIColor(r: 95, g: 95, b: 97)
+         icon.tintColor = DARKGREYCOLOR
          icon_color.alpha = 0
 
     }
 
     override func prepareForReuse() {
-        icon.tintColor = UIColor(r: 95, g: 95, b: 97)
+        icon.tintColor = DARKGREYCOLOR
         icon_color.alpha = 0
     }
 }

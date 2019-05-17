@@ -180,7 +180,7 @@ extension CardSwipeView: KolodaViewDataSource {
         currentlyShowingCardImage = UIImage(named: currentlyShowingKindCard.iconImageName.rawValue)!
         
         customView?.imageView.image = currentlyShowingCardImage.withRenderingMode(.alwaysTemplate)
-        customView?.imageView.tintColor = UIColor(r: 210, g: 183, b: 102)
+        customView?.imageView.tintColor = GOLDCOLOR
         customView?.kindDescriptionLabel.text = currentlyShowingKindCard.kindName.rawValue
 
         //Describe incoming Kind.
@@ -218,9 +218,9 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.kindImageView.image = image.withRenderingMode(.alwaysTemplate)
         //print(didSelectUserChosenKindIndex)
         if didSelectUserChosenKindIndex == indexPath.row {
-            cell.kindImageView.tintColor = UIColor(r: 210, g: 183, b: 102)
+            cell.kindImageView.tintColor = GOLDCOLOR //UIColor(r: 210, g: 183, b: 102)
         } else {
-            cell.kindImageView.tintColor = UIColor(r: 171, g: 171, b: 171)
+            cell.kindImageView.tintColor = DARKGREYCOLOR
         }
     
         //print("DECK CARDS: \(KindDeckManagement.sharedInstance.userKindDeck)")

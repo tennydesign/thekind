@@ -30,7 +30,7 @@ class MainViewController: UIViewController {
     
     
     @IBOutlet var searchView: SearchView!
-    @IBOutlet var chatMask: UIImageView!
+//    @IBOutlet var chatMask: UIImageView!
     @IBOutlet var chatMaskView: UIView!
     
     // TODO: Gameboard is hidden
@@ -91,19 +91,7 @@ class MainViewController: UIViewController {
     
     @IBOutlet var bottomCurtainView: UIView!
     @IBOutlet weak var topCurtainView: UIView!
-    @IBOutlet var bottomCurtainImage: UIImageView! {
-        didSet {
-            bottomCurtainImage.image = bottomCurtainImage.image?.withRenderingMode(.alwaysTemplate)
-            bottomCurtainImage.tintColor = UIColor.black
-        }
-    }
-    @IBOutlet var bottomCurtainImageBase: UIImageView! {
-        didSet {
-            bottomCurtainImageBase.image = bottomCurtainImage.image?.withRenderingMode(.alwaysTemplate)
-            bottomCurtainImageBase.tintColor = UIColor(r: 34, g: 34, b: 34)
-        }
-    }
-    
+
     @IBOutlet var jungChatLogger: JungChatLogger!
     
     let talkbox = JungTalkBox()

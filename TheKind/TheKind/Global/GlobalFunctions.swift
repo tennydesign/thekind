@@ -13,7 +13,16 @@ import UIKit
 let PRIMARYFONT = "Acrylic Hand Sans"
 let SECONDARYFONT = "Horizon Rounded"
 let PINKCOLOR:UIColor = UIColor(r: 255, g: 45, b: 85)
+let PINKCOLORWITHALPHA:UIColor = PINKCOLOR.withAlphaComponent(0.7)
 let DARKPINKCOLOR:UIColor = UIColor(r: 176, g: 38, b: 65)
+let LIGHTGREYCOLOR:UIColor = UIColor(r: 237, g: 237, b: 237)
+let MEDGREYCOLOR:UIColor = UIColor(r: 171, g: 171, b: 171)
+let DARKGREYCOLOR:UIColor = UIColor(r: 95, g: 95, b: 97)
+let FULLBLACKCOLOR: UIColor = UIColor.black
+let GOLDCOLOR: UIColor = UIColor(r: 210, g: 183, b: 102)
+let FULLWHITECOLOR : UIColor = UIColor.white
+let OVERLAYCOLORWITHALPHA: UIColor = FULLBLACKCOLOR.withAlphaComponent(0.7)
+
 // This var is true when user clicks to see the carousel of another user.
 // It is used to distinguish two functions for the same view
 // 1) ChooseKind 2) UserCarousel. 
@@ -170,16 +179,6 @@ public enum DispatchLevel {
         }
     }
 }
-
-//not in use
-func random() -> CGFloat {
-    return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
-}
-
-func random(min: CGFloat, max: CGFloat) -> CGFloat {
-    return random() * (max - min) + min
-}
-
 
 // EMAIL VALIDATION
 let __firstpart = "[A-Z0-9a-z]([A-Z0-9a-z._%+-]{0,30}[A-Z0-9a-z])?"

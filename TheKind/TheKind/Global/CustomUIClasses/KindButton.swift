@@ -25,10 +25,10 @@ class KindButton: UIButton {
     
     func commonInit() {
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor(r: 255, g: 36, b: 81).cgColor
+        self.layer.borderColor = PINKCOLOR.cgColor//UIColor(r: 255, g: 36, b: 81).cgColor
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
-        self.tintColor = UIColor(r: 237, g: 237, b: 237)
+        self.tintColor = LIGHTGREYCOLOR//UIColor(r: 237, g: 237, b: 237)
     }
     
     
@@ -43,12 +43,12 @@ class KindButton: UIButton {
     }
     
     func enableButton() {
-        self.layer.borderColor = UIColor(r: 255, g: 36, b: 81).cgColor
+        self.layer.borderColor = PINKCOLOR.cgColor //UIColor(r: 255, g: 36, b: 81).cgColor
         self.isEnabled = true
     }
     
     func disableButton() {
-        self.layer.borderColor = UIColor.lightGray.cgColor
+        self.layer.borderColor = LIGHTGREYCOLOR.cgColor //UIColor.lightGray.cgColor
         self.isEnabled = false
     }
     

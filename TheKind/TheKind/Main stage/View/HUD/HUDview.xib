@@ -34,13 +34,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hudGradient" translatesAutoresizingMaskIntoConstraints="NO" id="L0H-Rh-d5e">
-                            <rect key="frame" x="0.0" y="-29" width="375" height="270"/>
+                            <rect key="frame" x="0.0" y="-29" width="375.00000000000011" height="270"/>
                         </imageView>
                         <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HIt-8J-2dn" userLabel="hudLeftDisplay">
                             <rect key="frame" x="15" y="55" width="55" height="55"/>
                             <subviews>
                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="12" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="hud_kind_icon" translatesAutoresizingMaskIntoConstraints="NO" id="rOu-ac-IIP" userLabel="kindimage">
-                                    <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="55.000000000000028" height="55"/>
                                     <color key="tintColor" cyan="0.0" magenta="0.0" yellow="0.0" black="0.0318042652027027" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                 </imageView>
                             </subviews>
@@ -96,10 +96,10 @@
                                 <stackView opaque="NO" alpha="0.0" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ko6-Mp-okn" userLabel="circleName">
                                     <rect key="frame" x="20" y="28.5" width="155" height="21"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="circleIcon" translatesAutoresizingMaskIntoConstraints="NO" id="YuW-Yr-hWy">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circleIcon" translatesAutoresizingMaskIntoConstraints="NO" id="YuW-Yr-hWy">
                                             <rect key="frame" x="0.0" y="0.0" width="21" height="21"/>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Philz Coffee @ Berry" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UM4-5d-yja">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Philz Coffee @ Berry" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UM4-5d-yja">
                                             <rect key="frame" x="27" y="0.0" width="128" height="21"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -107,16 +107,8 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="UM4-5d-yja" firstAttribute="leading" secondItem="YuW-Yr-hWy" secondAttribute="trailing" constant="6" id="976-gr-79i"/>
                                         <constraint firstAttribute="height" constant="21" id="FUB-V3-yeX"/>
-                                        <constraint firstAttribute="bottom" secondItem="YuW-Yr-hWy" secondAttribute="bottom" id="HyB-wz-YBm"/>
-                                        <constraint firstItem="YuW-Yr-hWy" firstAttribute="leading" secondItem="ko6-Mp-okn" secondAttribute="leading" id="JNk-wJ-2i0"/>
-                                        <constraint firstAttribute="bottom" secondItem="UM4-5d-yja" secondAttribute="bottom" id="PRr-kO-vh2"/>
-                                        <constraint firstItem="YuW-Yr-hWy" firstAttribute="top" secondItem="ko6-Mp-okn" secondAttribute="top" id="S40-mZ-TK9"/>
-                                        <constraint firstAttribute="trailing" secondItem="UM4-5d-yja" secondAttribute="trailing" id="WsZ-Kf-Tcr"/>
-                                        <constraint firstItem="UM4-5d-yja" firstAttribute="leading" secondItem="YuW-Yr-hWy" secondAttribute="trailing" constant="6" id="apX-F4-ceu"/>
                                         <constraint firstAttribute="width" constant="155" id="em5-3K-QRs"/>
-                                        <constraint firstItem="UM4-5d-yja" firstAttribute="top" secondItem="ko6-Mp-okn" secondAttribute="top" id="zsU-i3-CnO"/>
                                     </constraints>
                                 </stackView>
                                 <stackView opaque="NO" alpha="0.0" contentMode="scaleAspectFit" axis="vertical" distribution="equalSpacing" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Keu-g5-6U1" userLabel="listViewButton">

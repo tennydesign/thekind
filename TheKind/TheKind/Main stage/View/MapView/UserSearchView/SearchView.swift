@@ -85,7 +85,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
             for subview in view.subviews {
                 if subview.isKind(of: UITextField.self) {
                     let textField: UITextField = subview as! UITextField
-                    textField.backgroundColor = UIColor.white
+                    textField.backgroundColor = FULLWHITECOLOR
                     textField.autocapitalizationType = .none
                     //textField.borderStyle = .line
                     

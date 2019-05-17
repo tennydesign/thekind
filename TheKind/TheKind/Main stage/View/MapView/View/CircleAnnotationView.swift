@@ -54,7 +54,7 @@ class CircleAnnotationView: MGLAnnotationView {
         super.layoutSubviews()
         // Use CALayer’s corner radius to turn this view into a circle.
         layer.cornerRadius = bounds.width / 2
-        layer.backgroundColor = UIColor(r: 176, g: 38, b: 65).cgColor
+        layer.backgroundColor = DARKPINKCOLOR.cgColor
         layer.borderColor = UIColor.clear.cgColor
         layer.borderWidth = 0
         

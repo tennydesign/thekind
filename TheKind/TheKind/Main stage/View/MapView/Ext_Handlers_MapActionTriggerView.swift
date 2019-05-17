@@ -167,7 +167,7 @@ extension MapActionTriggerView: UITextFieldDelegate {
                        radius: CGFloat) -> UIView {
         // Step 1
         let overlayView = UIView(frame: frame)
-        overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        overlayView.backgroundColor = OVERLAYCOLORWITHALPHA
         // Step 2
         let path = CGMutablePath()
         path.addArc(center: CGPoint(x: xOffset, y: yOffset),
@@ -178,7 +178,7 @@ extension MapActionTriggerView: UITextFieldDelegate {
         path.addRect(CGRect(origin: .zero, size: overlayView.frame.size))
         // Step 3
         let maskLayer = CAShapeLayer()
-        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.backgroundColor = FULLBLACKCOLOR.cgColor
         maskLayer.path = path
         // For Swift 4.2
         maskLayer.fillRule = .evenOdd
@@ -212,7 +212,7 @@ extension MapActionTriggerView: UICollectionViewDelegate, UICollectionViewDataSo
         
         if let adminId = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.admin {
             if usersInCircle[indexPath.row].uid == adminId {
-                cell.photoArc.tintColor = UIColor(r: 255, g: 45, b: 85).withAlphaComponent(0.7)
+                cell.photoArc.tintColor = PINKCOLORWITHALPHA
                 
             }
             

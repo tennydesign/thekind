@@ -100,12 +100,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pt-Di-eiT" userLabel="bottom_curtain" customClass="PassthroughView" customModule="TheKind" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="491.5" width="375" height="385.5"/>
                                 <subviews>
-                                    <imageView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain_final" translatesAutoresizingMaskIntoConstraints="NO" id="TdV-gj-duV" userLabel="bottom_curtain_slice">
-                                        <rect key="frame" x="0.0" y="-6" width="375" height="385.5"/>
-                                    </imageView>
-                                    <imageView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain_final" translatesAutoresizingMaskIntoConstraints="NO" id="uFA-4x-IUP" userLabel="bottom_curtain">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="385.5"/>
-                                    </imageView>
                                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C7V-aM-7ZV" userLabel="chatMaskView" customClass="PassthroughView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="10" width="375" height="385.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -126,32 +120,16 @@
                                             <constraint firstItem="4FF-H6-M6b" firstAttribute="height" secondItem="Psy-SE-XbL" secondAttribute="height" id="O3S-by-RLr"/>
                                         </constraints>
                                     </view>
-                                    <imageView hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="bottom_courtain_final" translatesAutoresizingMaskIntoConstraints="NO" id="Thy-bB-cDC" userLabel="chatmask">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="385.5"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="C7V-aM-7ZV" firstAttribute="width" secondItem="9pt-Di-eiT" secondAttribute="width" id="0w9-h9-hkg"/>
-                                    <constraint firstItem="TdV-gj-duV" firstAttribute="centerY" secondItem="9pt-Di-eiT" secondAttribute="centerY" constant="-6" id="5BO-3b-OTf"/>
                                     <constraint firstItem="Psy-SE-XbL" firstAttribute="height" secondItem="9pt-Di-eiT" secondAttribute="height" id="5Gp-4u-guc"/>
-                                    <constraint firstItem="uFA-4x-IUP" firstAttribute="height" secondItem="9pt-Di-eiT" secondAttribute="height" id="AdD-0b-LOW"/>
-                                    <constraint firstItem="Thy-bB-cDC" firstAttribute="height" secondItem="9pt-Di-eiT" secondAttribute="height" id="CF0-Ve-j39"/>
-                                    <constraint firstItem="Thy-bB-cDC" firstAttribute="centerX" secondItem="9pt-Di-eiT" secondAttribute="centerX" id="CWI-fU-ZLU"/>
-                                    <constraint firstItem="uFA-4x-IUP" firstAttribute="width" secondItem="9pt-Di-eiT" secondAttribute="width" id="ItY-eO-5tn"/>
                                     <constraint firstItem="C7V-aM-7ZV" firstAttribute="centerY" secondItem="9pt-Di-eiT" secondAttribute="centerY" constant="10" id="MMH-yu-fEf"/>
-                                    <constraint firstItem="uFA-4x-IUP" firstAttribute="centerX" secondItem="9pt-Di-eiT" secondAttribute="centerX" id="Mfq-7l-o6n"/>
-                                    <constraint firstItem="TdV-gj-duV" firstAttribute="height" secondItem="9pt-Di-eiT" secondAttribute="height" id="Mq5-Cz-G69"/>
                                     <constraint firstItem="Psy-SE-XbL" firstAttribute="leading" secondItem="9pt-Di-eiT" secondAttribute="leading" id="RSM-i0-ngm"/>
                                     <constraint firstAttribute="trailing" secondItem="Psy-SE-XbL" secondAttribute="trailing" id="SEv-Ij-O2N"/>
-                                    <constraint firstItem="uFA-4x-IUP" firstAttribute="centerY" secondItem="9pt-Di-eiT" secondAttribute="centerY" id="VDO-Dc-b5u"/>
-                                    <constraint firstItem="Thy-bB-cDC" firstAttribute="centerY" secondItem="9pt-Di-eiT" secondAttribute="centerY" id="b0E-nd-xZp"/>
                                     <constraint firstAttribute="bottom" secondItem="Psy-SE-XbL" secondAttribute="bottom" id="cWJ-XF-rtg"/>
-                                    <constraint firstItem="Thy-bB-cDC" firstAttribute="width" secondItem="9pt-Di-eiT" secondAttribute="width" id="djU-bH-Et6"/>
-                                    <constraint firstItem="TdV-gj-duV" firstAttribute="centerX" secondItem="9pt-Di-eiT" secondAttribute="centerX" id="gfv-wL-iZo"/>
                                     <constraint firstAttribute="height" constant="385.5" id="hb2-dB-WlU"/>
-                                    <constraint firstItem="TdV-gj-duV" firstAttribute="width" secondItem="9pt-Di-eiT" secondAttribute="width" id="k4X-Te-Azd"/>
                                     <constraint firstItem="C7V-aM-7ZV" firstAttribute="centerX" secondItem="9pt-Di-eiT" secondAttribute="centerX" id="lVK-eb-CSh"/>
                                     <constraint firstItem="C7V-aM-7ZV" firstAttribute="height" secondItem="9pt-Di-eiT" secondAttribute="height" id="zEY-hg-rCW"/>
                                 </constraints>
@@ -226,11 +204,8 @@
                     <connections>
                         <outlet property="badgePhotoSetupViewHost" destination="xZ8-CM-mff" id="fT2-DK-Ddp"/>
                         <outlet property="bottomConstraintPanelMover" destination="Tez-TZ-ad9" id="32q-7x-x9J"/>
-                        <outlet property="bottomCurtainImage" destination="uFA-4x-IUP" id="6fZ-4x-Lv0"/>
-                        <outlet property="bottomCurtainImageBase" destination="TdV-gj-duV" id="T84-OR-plr"/>
                         <outlet property="bottomCurtainView" destination="9pt-Di-eiT" id="odJ-9c-K3I"/>
                         <outlet property="cardSwipeViewHost" destination="mmM-Wn-hre" id="C0P-fe-KrA"/>
-                        <outlet property="chatMask" destination="Thy-bB-cDC" id="Uj5-c3-kKp"/>
                         <outlet property="chatMaskView" destination="C7V-aM-7ZV" id="9hS-od-1Fq"/>
                         <outlet property="chooseDriverView" destination="eTK-Ov-xyB" id="vp6-R0-bvz"/>
                         <outlet property="chooseKindCardViewHost" destination="bvV-Ka-rMx" id="hu6-9O-PPk"/>
@@ -252,7 +227,4 @@
             <point key="canvasLocation" x="224.80000000000001" y="118.29085457271366"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="bottom_courtain_final" width="375" height="386"/>
-    </resources>
 </document>

@@ -376,7 +376,7 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
         
         // Color if its player's text.
         if text == leftAnswerLabel.attributedText?.string || text == rightAnswerLabel.attributedText?.string {
-            attr.addAttribute(.foregroundColor, value: UIColor(r: 230, g: 37, b: 101), range: NSMakeRange(0, attr.length))
+            attr.addAttribute(.foregroundColor, value: PINKCOLOR, range: NSMakeRange(0, attr.length))
         }
         
         attr.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attr.length))

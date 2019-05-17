@@ -134,7 +134,7 @@ extension ChooseDriverView: UIPickerViewDelegate, UIPickerViewDataSource {
             pickerLabel.textAlignment = .left
         }
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white,
+            .foregroundColor: FULLWHITECOLOR,
             .font:  UIFont.init(name: PRIMARYFONT, size: 18) ?? UIFont.systemFont(ofSize: 18)]
         pickerLabel.attributedText = NSAttributedString(string: pickerData[row], attributes: attributes)
         return pickerLabel

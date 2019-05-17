@@ -23,7 +23,7 @@ class KindJungOptionLabel:UILabel {
     func commonInit() {
         layer.cornerRadius = 10
         layer.borderWidth = 0
-        layer.borderColor = UIColor.lightGray.cgColor 
+        layer.borderColor = LIGHTGREYCOLOR.cgColor //UIColor.lightGray.cgColor
     }
     
     var userOptionId: Int?
