@@ -163,11 +163,15 @@
                                     <constraint firstAttribute="height" constant="241" id="ynu-sT-zFd"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pf0-Qz-dZ3" userLabel="109-SearchViewHost" customClass="SearchView" customModule="TheKind" customModuleProvider="target">
+                            <view alpha="0.0" tag="109" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pf0-Qz-dZ3" userLabel="109-SearchViewHost" customClass="SearchView" customModule="TheKind" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view hidden="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCE-bL-SWl" userLabel="1000-confirmation-View" customClass="ConfirmationView" customModule="TheKind" customModuleProvider="target">
+                            <view alpha="0.0" tag="110" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qEY-O3-jWp" userLabel="110-ListCircleViewHost" customClass="ListCircleView" customModule="TheKind" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view hidden="YES" alpha="0.0" tag="1000" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCE-bL-SWl" userLabel="1000-confirmation-View" customClass="ConfirmationView" customModule="TheKind" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -175,10 +179,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="RCE-bL-SWl" firstAttribute="bottom" secondItem="adk-ga-bKs" secondAttribute="bottom" id="0nN-Em-uDb"/>
+                            <constraint firstItem="qEY-O3-jWp" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" id="3Ik-0E-Rcm"/>
                             <constraint firstItem="1LH-Se-bVM" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="4hX-3Y-RhK"/>
                             <constraint firstItem="aGE-Wo-HLs" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="8nY-e8-Rgf"/>
                             <constraint firstItem="9pt-Di-eiT" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="Art-dF-laV"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="CcH-iA-kZz"/>
+                            <constraint firstItem="qEY-O3-jWp" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="ELA-h9-YM3"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="bottom" secondItem="OgW-vl-BuR" secondAttribute="bottom" id="HDh-Ev-nZo"/>
                             <constraint firstItem="pf0-Qz-dZ3" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="Hbx-Hl-B4q"/>
                             <constraint firstItem="1LH-Se-bVM" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="I7O-MS-38p"/>
@@ -186,6 +192,7 @@
                             <constraint firstItem="pf0-Qz-dZ3" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="LME-H4-DtM"/>
                             <constraint firstItem="pf0-Qz-dZ3" firstAttribute="bottom" secondItem="adk-ga-bKs" secondAttribute="bottom" id="OMK-eG-29Q"/>
                             <constraint firstItem="RCE-bL-SWl" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="Oom-8x-mIx"/>
+                            <constraint firstItem="qEY-O3-jWp" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="QpE-Gf-zCu"/>
                             <constraint firstItem="p0c-2d-LM8" firstAttribute="trailing" secondItem="adk-ga-bKs" secondAttribute="trailing" id="RlQ-Dt-6dI"/>
                             <constraint firstAttribute="bottom" secondItem="9pt-Di-eiT" secondAttribute="bottom" constant="-210" id="Tez-TZ-ad9"/>
                             <constraint firstItem="aGE-Wo-HLs" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" constant="-28" id="Wxt-lx-of8"/>
@@ -196,6 +203,7 @@
                             <constraint firstItem="pf0-Qz-dZ3" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" id="gxo-vA-jxl"/>
                             <constraint firstItem="adk-ga-bKs" firstAttribute="trailing" secondItem="RCE-bL-SWl" secondAttribute="trailing" id="lRp-T9-RwD"/>
                             <constraint firstItem="aGE-Wo-HLs" firstAttribute="leading" secondItem="adk-ga-bKs" secondAttribute="leading" id="pKt-Ve-6Zf"/>
+                            <constraint firstItem="qEY-O3-jWp" firstAttribute="bottom" secondItem="adk-ga-bKs" secondAttribute="bottom" id="tKX-l5-evA"/>
                             <constraint firstItem="1LH-Se-bVM" firstAttribute="top" secondItem="OgW-vl-BuR" secondAttribute="top" id="w3n-jI-Q9L"/>
                             <constraint firstItem="aGE-Wo-HLs" firstAttribute="centerX" secondItem="OgW-vl-BuR" secondAttribute="centerX" id="yaF-6b-NAP"/>
                         </constraints>
@@ -216,6 +224,7 @@
                         <outlet property="hudWindow" destination="xyb-mU-8lf" id="6sJ-uX-hjl"/>
                         <outlet property="jungChatLogger" destination="4FF-H6-M6b" id="XFY-Ae-FN5"/>
                         <outlet property="jungChatWindow" destination="Psy-SE-XbL" id="94Q-OO-Vc1"/>
+                        <outlet property="listCircleView" destination="qEY-O3-jWp" id="abL-35-g42"/>
                         <outlet property="mapViewHost" destination="0eo-O7-Oer" id="9Vj-Nh-jT4"/>
                         <outlet property="searchView" destination="pf0-Qz-dZ3" id="Ftq-kA-WCG"/>
                         <outlet property="topCurtainView" destination="aGE-Wo-HLs" id="Ap2-30-Rio"/>

@@ -17,6 +17,7 @@ pod 'NVActivityIndicatorView'
 pod 'AWSRekognition'
 pod 'Mapbox-iOS-SDK', '4.8.0-alpha.2'
 pod 'Koloda'
+pod 'GeoFire'
 
   target 'TheKindTests' do
     inherit! :search_paths

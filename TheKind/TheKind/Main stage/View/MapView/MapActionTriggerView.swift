@@ -54,7 +54,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     var circleIsInEditMode: Bool = false 
     
     var userIsAdmin: Bool = false
-    var locationManager: CLLocationManager?
+    var locationManager = CLLocationManager()
 
     var usersInCircle: [KindUser] = [] {
         didSet {
@@ -108,11 +108,16 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         
         circleNameTextField.delegate = self
         mapBoxView.delegate = self
-        locationManager?.delegate = self
+        locationManager.delegate = self
         self.talkbox?.delegate = self
         photoStripCollectionView.dataSource = self
         photoStripCollectionView.delegate = self
-      
+
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLLocationAccuracyHundredMeters
+        locationManager.startUpdatingLocation()
+
+        
         circleNameTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         let tapLockerGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOnLocker))
         lockerView.addGestureRecognizer(tapLockerGesture)
@@ -133,10 +138,9 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         // add the gesture to the mapView
         mapBoxView.addGestureRecognizer(panGesture)
 
-        locationManager = CLLocationManager()
         locationServicesSetup()
         //setup annotation plotter observer
-        plotAnnotations()
+        plotAnnotationCallBacks()
         
         
         // setupCircleInformationObserver
@@ -144,15 +148,6 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         userAddedToTemporaryCircleListObserver()
         userRemovedFromTemporaryCircleListObserver()
         
-        // Setup map refresh (only refreshes when user is not seeing a circle to not conflict.
-        Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { timer in
-            if self.mapBoxView.isUserInteractionEnabled {
-                CircleAnnotationManagement.sharedInstance.retrieveCirclesCloseToPlayer {
-                    
-                }
-                print("Timer fired!")
-            }
-        }
     }
 
     
@@ -167,6 +162,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.overlayExpandedCircleViews.sendSubviewToBack(overlay)
         
         configMapbox()
+        
 
     }
     
@@ -192,63 +188,15 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     fileprivate func adjustScreenforXFamily() {
         if UIScreen.isPhoneXfamily {
           //  expandedCircleViewYConstraint.constant = -5
-            insideExpandedCircleViewYConstraint.constant = -40
+            insideExpandedCircleViewYConstraint.constant = -30
             photoStripViewTopConstraint.constant = 130
             self.layoutIfNeeded()
             
         }
     }
     
-    fileprivate func locationServicesSetup() {
-        //TODO: COntrol for locationmanager absense here
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager?.startUpdatingLocation()
-            switch CLLocationManager.authorizationStatus() {
-            case .notDetermined, .restricted, .denied:
-                print("No access to location services")
-            case .authorizedAlways, .authorizedWhenInUse:
-                self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-                if let coordinate = locationManager?.location?.coordinate {
-                    self.mapBoxView.setCenter(coordinate,
-                                              zoomLevel: 14, animated: false)
-                } else {
-                    self.mapBoxView.setCenter(CLLocationCoordinate2D(latitude: 37.778491,
-                                                                     longitude: -122.389246),
-                                              zoomLevel: 14, animated: false)
-                }
+    
 
-                //print("Access")
-            @unknown default:
-                print("Location services test resulted something unknown")
-            }
-        } else {
-            //print("Location services are not enabled")
-            self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-            self.mapBoxView.setCenter(CLLocationCoordinate2D(latitude: 37.778491,
-                                                             longitude: -122.389246),
-                                      zoomLevel: 14, animated: false)
-        }
-    }
-    
-    
-    func plotAnnotations() {
-        CircleAnnotationManagement.sharedInstance.circleAnnotationObserver = { [unowned self](circleAnnotationSets) in
-            var pointAnnotations = [KindPointAnnotation]()
-            
-            if let annotations = self.mapBoxView.annotations {
-                self.mapBoxView.removeAnnotations(annotations)
-            }
-            
-            for set in circleAnnotationSets {
-                let point = KindPointAnnotation(circleAnnotationSet: set)
-                pointAnnotations.append(point)
-            }
-            
-            self.mapBoxView.addAnnotations(pointAnnotations)
-        }
-        
-    }
     
     
     ///JUNG ACTIONS
@@ -274,25 +222,75 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.alpha = 0
         self.isHidden = false
         self.talkbox?.delegate = self
+        self.mainViewController?.listCircleView.delegate = self
         self.mainViewController?.jungChatLogger.backgroundColor = UIColor.clear
         UIView.animate(withDuration: 0.3) {
             self.mainViewController?.jungChatLogger.bottomGradient.alpha = 1
         }
+        
         self.fadeInView() //fades in the view, not the map yet.
+
+        prepareMapViewsForPresentation() {
+            var latitude: CLLocationDegrees?
+            var longitude: CLLocationDegrees?
+            
+            var attempts: Int = 0
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+                attempts+=1
+                print("attempt \(attempts)")
+                latitude = self.locationManager.location?.coordinate.latitude
+                longitude = self.locationManager.location?.coordinate.longitude
+                
+                if attempts == 5 {
+                    timer.invalidate()
+                    print("We tried 5 times to grab location and failed 5 times")
+                    self.cantFindLocationExplainer()
+                    attempts = 0
+                }
+                
+                if ((latitude != nil) && (longitude != nil)) {
+                    //present map
+                    print("Got location at attempt \(attempts)")
+                    UIView.animate(withDuration: 0.4, animations: {
+                        self.mapBoxView.alpha = 1
+                    }, completion: { (completed) in
+                        self.talk()
+                    })
+                    
+                    //plot circles
+                    CircleAnnotationManagement.sharedInstance.getCirclesWithinRadiusObserver(latitude: latitude!, longitude: longitude!, radius: 0.6, completion: {
+                        print("executed geoFireTestingQuery")
+                    })
+                    
+                    timer.invalidate()
+                    attempts = 0
+                }
+            }
+        }
     
-        presentMapViews() {
-            //start loader
-            CircleAnnotationManagement.sharedInstance.retrieveCirclesCloseToPlayer() {
-                // the observer will fire, see: plotAnnotations()
-                UIView.animate(withDuration: 0.4, animations: {
-                    self.mapBoxView.alpha = 1
-                }, completion: { (completed) in
-                    self.talk()
-                })
+    }
+    
+    
+    func plotAnnotationCallBacks() {
+        
+        CircleAnnotationManagement.sharedInstance.plotCircleCloseToPlayerCallback = { [unowned self](set) in
+            guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
+            let isAlreadyPlotted = self.mapBoxView.annotations?.contains{$0.title == set.circleId || $0.title == uid } ?? false
+            
+            if !isAlreadyPlotted {
+                let pointAnnotation:MGLPointAnnotation = KindPointAnnotation(circleAnnotationSet: set)
+                pointAnnotation.title = set.circleId
+                
+                self.mapBoxView.addAnnotation(pointAnnotation)
             }
         }
         
-
+        CircleAnnotationManagement.sharedInstance.unPlotCircleCloseToPlayerCallback = { [unowned self](set) in
+            let isAlreadyPlotted = self.mapBoxView.annotations?.contains{$0.title == set.circleId} ?? false
+            if isAlreadyPlotted {
+                self.mapBoxView.removeAnnotation((self.mapBoxView.annotations?.filter{$0.title == set.circleId}.first)!)
+            }
+        }
     }
     
     override func deactivate() {
@@ -303,19 +301,6 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.mainViewController?.jungChatLogger.resetJungChat()
         self.mainViewController?.jungChatLogger.hideOptionLabels(true, completion: nil)
     }
-    
-    func initializeCircleExplainer() {
-        
-        if circleIsInEditMode {
-            explainerCircleCreation()
-            
-        } else {
-            explainerCircleExploration()
-        }
-
-    }
-
-    
     
 
     
@@ -328,41 +313,69 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     //HERE: MAKE SAVE CIRCLE SAVE LIST OF USERS TOO
     override func rightOptionClicked() {
-        self.clearJungChatLog()
-        if circleIsInEditMode { //save circle
-            CircleAnnotationManagement.sharedInstance.updateCircleSettings() { (circleAnnotationSet,err)  in
-                if let err = err {
-                    print(err)
-                    return
-                }
-                
-                guard let set = circleAnnotationSet else {
-                    //Save failed. Treat it here.
-                    self.explainerNameCircleBeforeSavingIt()
-                    return
-                }
-                
-                // New Circle Only: This finds the newest created circle and gives it its official circleId
-                if CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
-                    // Give right ID to temporary circle
-                    // This will switch it from temporary to permanent
-                    // isSelectedTemporaryCircleAnnotation will return false from now on.
-                    
-                    guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
-                    guard let annotation = (self.mapBoxView.annotations?.filter{$0.title == uid}.first) as? KindPointAnnotation else {return}
-                    annotation.title = set.circleId
-                    annotation.circleDetails = set
-                }
-                
-
-                CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
-                self.deActivateOnDeselection(completion: nil)
-                
-            }
-        } else { // enter circle
-            explainerGoToGameBoard()
+        //self.clearJungChatLog()
+         if self.circleIsInEditMode { //save circle
+            self.saveCircle()
+         } else { // enter circle
+            self.explainerGoToGameBoard()
         }
-
+    }
+    
+    func saveCircle() {
+        guard let location = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.location else {return}
+        
+        let mapSnapShot: CrumbSnapShot = CrumbSnapShot(location: location)
+        
+        //Snaps a photo from the region for listing purposese.
+        //Uploads it.
+        //Update or Save Circle
+        mapSnapShot.snapMapPhoto { (image) in
+            // let imageInNoir = image.noir
+            guard let uploadData = image.jpegData(compressionQuality: 0.7) else {
+                fatalError("error compressing image")
+            }
+            
+            self.saveLoadingExplainer()
+            
+            CircleAnnotationManagement.sharedInstance.uploadMapSnap(mapImageData: uploadData, completion: { (url) in
+                if let urlstring = url {
+                    CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.locationSnapShot = urlstring
+                }
+                
+                
+                
+                CircleAnnotationManagement.sharedInstance.updateCircleSettings() { (circleAnnotationSet,completed)  in
+                    if completed == false {
+                        //print(err)
+                        self.explainerSaveFailed()
+                        return
+                    }
+                    
+                    guard let set = circleAnnotationSet else {
+                        //Save failed. Treat it here.
+                        self.explainerSaveFailed()
+                        return
+                    }
+                    
+                    // New Circle Only: This finds the newest created circle and gives it its official circleId
+                    if CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
+                        // Give right ID to temporary circle
+                        // This is what differentiates it from "temporary" to "persisted"
+                        // isSelectedTemporaryCircleAnnotation will return false from now on.
+                        
+                        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
+                        guard let annotation = (self.mapBoxView.annotations?.filter{$0.title == uid}.first) as? KindPointAnnotation else {return}
+                        annotation.title = set.circleId
+                        annotation.circleDetails = set
+                    }
+                    
+                    
+                    CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
+                    self.deActivateOnDeselection(completion: nil)
+                    
+                }
+            })
+        }
     }
     
      //Btns in UserInCirclePhotoStripCellProtocol
@@ -398,7 +411,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
  
     // CIRCLE SET OBSERVER
     func updateCircleInformationOnObserver() {
-        CircleAnnotationManagement.sharedInstance.setChangedOnCircleObserver = { [unowned self] set in
+        CircleAnnotationManagement.sharedInstance.setChangedOnCircleCallback = { [unowned self] set in
             
             self.setupUIWithSetInfo()
             CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile() { (kindUsers) in
@@ -470,16 +483,17 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     //triggered when user is added at the SearchView FOR TEMPORARY CIRCLES only.
     func userAddedToTemporaryCircleListObserver() {
-        CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListObserver  = { [unowned self] user in
+        CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListCallback  = { [unowned self] user in
             self.usersInCircle.append(user)
         }
     }
     
     func userRemovedFromTemporaryCircleListObserver() {
-        CircleAnnotationManagement.sharedInstance.userRemovedFromTemporaryCircleListObserver  = { [unowned self] user in
+        CircleAnnotationManagement.sharedInstance.userRemovedFromTemporaryCircleListCallback  = { [unowned self] user in
             self.usersInCircle.removeAll{ $0.uid == user.uid}
         }
     }
 
 }
+
 

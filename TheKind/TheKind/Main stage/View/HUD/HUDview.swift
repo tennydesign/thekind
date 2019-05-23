@@ -158,6 +158,8 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     }
     
     @IBAction func mapListViewBtnClicked(_ sender: Any) {
+        print("clicked")
+        self.mainViewController?.listCircleView.activate()
     }
     
     

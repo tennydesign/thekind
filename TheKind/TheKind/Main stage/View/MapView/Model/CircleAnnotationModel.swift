@@ -30,6 +30,7 @@ struct CircleAnnotationSet {
 //        return !(lhs.circleId == rhs.circleId)
 //    }
 
+    //somethings off here. 
     var location: CLLocationCoordinate2D! {
         didSet {
             latitude = location.latitude
@@ -48,6 +49,7 @@ struct CircleAnnotationSet {
     var users: [String]!
     var stealthMode: Bool!
     var dateCreated: String!
+    var locationSnapShot: String!
     var ref: DocumentReference!
     
     init(document: DocumentSnapshot) {
@@ -60,11 +62,12 @@ struct CircleAnnotationSet {
         dateCreated = document.data()?["created"] as? String
         deleted = document.data()?["deleted"] as? Bool
         stealthMode = document.data()?["stealthmode"] as? Bool
+        locationSnapShot = document.data()?["locationsnapshot"] as? String
         ref = document.reference
      }
     
     init(location: CLLocationCoordinate2D, circlePlotName: String, isPrivate: Bool, circleId: String?,
-         admin: String, users: [String], dateCreated: String, stealthMode: Bool) {
+         admin: String, users: [String], dateCreated: String, stealthMode: Bool,mapSnapShot: String? ) {
         self.location = location
         self.circlePlotName = circlePlotName
         self.isPrivate = isPrivate
@@ -73,16 +76,18 @@ struct CircleAnnotationSet {
         self.users = users
         self.deleted = false
         self.stealthMode = stealthMode
+        self.locationSnapShot = mapSnapShot ?? ""
         self.dateCreated = dateCreated
     }
 
     func asDictionary() -> [String:Any]? {
         guard let locationGeoPoint = cLLocationCoordinate2dToGeoPoint(location) else {return nil}
         let circleDict: [String:Any] = ["name": circlePlotName as String, "location": locationGeoPoint as GeoPoint,
-                                        "isprivate": isPrivate as Bool, "circleid": circleId as String, "admin": admin as String, "users": users as [String], "created": dateCreated as String, "deleted": deleted as Bool, "stealthmode": stealthMode as Bool]
+                                        "isprivate": isPrivate as Bool, "circleid": circleId as String, "admin": admin as String, "users": users as [String], "created": dateCreated as String, "deleted": deleted as Bool, "stealthmode": stealthMode as Bool, "locationsnapshot": locationSnapShot as String]
         return circleDict
     }
     
+    //Somethings off here.
     func geoPointToCLLocationCoordinate2d(_ geoPoint: GeoPoint?) -> CLLocationCoordinate2D? {
         if let geoPointFB = geoPoint {
             return  CLLocationCoordinate2D(latitude: geoPointFB.latitude, longitude: geoPointFB.longitude)

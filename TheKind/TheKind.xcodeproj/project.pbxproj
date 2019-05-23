@@ -69,12 +69,16 @@
 		A06BF623224C69C800B97A94 /* HorizonRounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A06BF622224C69C800B97A94 /* HorizonRounded-Bold.otf */; };
 		A06BF625224EDE3B00B97A94 /* CircleAnnotationManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06BF624224EDE3B00B97A94 /* CircleAnnotationManagement.swift */; };
 		A06BF627224EE68200B97A94 /* CircleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06BF626224EE68200B97A94 /* CircleAnnotationView.swift */; };
-		A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07075FC21F158B60013380D /* MapPhotoSnapper.swift */; };
 		A070760121F2CEAB0013380D /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A070760021F2CEAB0013380D /* MapView.xib */; };
 		A08902E122554A8900EE2F79 /* PhotoStripCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08902DF22554A8900EE2F79 /* PhotoStripCollectionViewCell.swift */; };
 		A08902E222554A8900EE2F79 /* PhotoStripCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A08902E022554A8900EE2F79 /* PhotoStripCollectionViewCell.xib */; };
 		A096B7772280B68F003E52FE /* ConfirmationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A096B7762280B68F003E52FE /* ConfirmationView.xib */; };
 		A096B7792280B6D9003E52FE /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A096B7782280B6D9003E52FE /* ConfirmationView.swift */; };
+		A09A0DB2228F5EFB002FC533 /* ListCircleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A09A0DB1228F5EFB002FC533 /* ListCircleView.xib */; };
+		A09A0DB4228F5F15002FC533 /* ListCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09A0DB3228F5F15002FC533 /* ListCircleView.swift */; };
+		A09A0DB7228F9AFF002FC533 /* CircleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09A0DB5228F9AFF002FC533 /* CircleListTableViewCell.swift */; };
+		A09A0DB8228F9AFF002FC533 /* CircleListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A09A0DB6228F9AFF002FC533 /* CircleListTableViewCell.xib */; };
+		A09A0DBA228FBBA9002FC533 /* MapSnapShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09A0DB9228FBBA9002FC533 /* MapSnapShot.swift */; };
 		A0A45E1821F53B0F00DDEC6C /* ports.geojson in Resources */ = {isa = PBXBuildFile; fileRef = A0A45E1721F53B0F00DDEC6C /* ports.geojson */; };
 		A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */; };
 		A0A69F1C2186687C00AA5C61 /* AcylicalHand-Small.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */; };
@@ -96,6 +100,7 @@
 		A0C5D23F212A4A7600BF1B0C /* TheKindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5D23E212A4A7600BF1B0C /* TheKindTests.swift */; };
 		A0C5D24A212A4A7600BF1B0C /* TheKindUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5D249212A4A7600BF1B0C /* TheKindUITests.swift */; };
 		A0C5D2C7212B511E00BF1B0C /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5D2C6212B511E00BF1B0C /* LandingViewController.swift */; };
+		A0CBA6782294BB0D0088F581 /* TestLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A0CBA6772294BB0C0088F581 /* TestLocations.gpx */; };
 		A0D086EB215EA61300011A54 /* AcylicalHand-Small-SVG.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0D086EA215EA61200011A54 /* AcylicalHand-Small-SVG.ttf */; };
 		A0D960CD21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D960CB21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift */; };
 		A0D960CE21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0D960CC21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib */; };
@@ -194,12 +199,16 @@
 		A06BF622224C69C800B97A94 /* HorizonRounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HorizonRounded-Bold.otf"; sourceTree = "<group>"; };
 		A06BF624224EDE3B00B97A94 /* CircleAnnotationManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnnotationManagement.swift; sourceTree = "<group>"; };
 		A06BF626224EE68200B97A94 /* CircleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnnotationView.swift; sourceTree = "<group>"; };
-		A07075FC21F158B60013380D /* MapPhotoSnapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPhotoSnapper.swift; sourceTree = "<group>"; };
 		A070760021F2CEAB0013380D /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
 		A08902DF22554A8900EE2F79 /* PhotoStripCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStripCollectionViewCell.swift; sourceTree = "<group>"; };
 		A08902E022554A8900EE2F79 /* PhotoStripCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoStripCollectionViewCell.xib; sourceTree = "<group>"; };
 		A096B7762280B68F003E52FE /* ConfirmationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfirmationView.xib; sourceTree = "<group>"; };
 		A096B7782280B6D9003E52FE /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
+		A09A0DB1228F5EFB002FC533 /* ListCircleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListCircleView.xib; sourceTree = "<group>"; };
+		A09A0DB3228F5F15002FC533 /* ListCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCircleView.swift; sourceTree = "<group>"; };
+		A09A0DB5228F9AFF002FC533 /* CircleListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleListTableViewCell.swift; sourceTree = "<group>"; };
+		A09A0DB6228F9AFF002FC533 /* CircleListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircleListTableViewCell.xib; sourceTree = "<group>"; };
+		A09A0DB9228FBBA9002FC533 /* MapSnapShot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSnapShot.swift; sourceTree = "<group>"; };
 		A0A45E1721F53B0F00DDEC6C /* ports.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ports.geojson; sourceTree = "<group>"; };
 		A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapActionTriggerView.swift; sourceTree = "<group>"; };
 		A0A69F1B2186687C00AA5C61 /* AcylicalHand-Small.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Small.ttf"; sourceTree = "<group>"; };
@@ -227,6 +236,7 @@
 		A0C5D249212A4A7600BF1B0C /* TheKindUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheKindUITests.swift; sourceTree = "<group>"; };
 		A0C5D24B212A4A7600BF1B0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C5D2C6212B511E00BF1B0C /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
+		A0CBA6772294BB0C0088F581 /* TestLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestLocations.gpx; sourceTree = "<group>"; };
 		A0D086EA215EA61200011A54 /* AcylicalHand-Small-SVG.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Small-SVG.ttf"; sourceTree = "<group>"; };
 		A0D960CB21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kindCollectioViewCell.swift; sourceTree = "<group>"; };
 		A0D960CC21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = kindCollectioViewCell.xib; sourceTree = "<group>"; };
@@ -281,7 +291,6 @@
 				A002F48D21BDC9D6006E8660 /* Bindable.swift */,
 				A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */,
 				A0F223A921B88E370096C25D /* CustomUIClasses */,
-				A07075FC21F158B60013380D /* MapPhotoSnapper.swift */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -487,6 +496,8 @@
 		A07075F621EFFC940013380D /* MapView */ = {
 			isa = PBXGroup;
 			children = (
+				A09A0DB9228FBBA9002FC533 /* MapSnapShot.swift */,
+				A09A0DB0228F5E7C002FC533 /* ListCirclesView */,
 				A0B5A2D4226FE6BE006985A4 /* UserSearchView */,
 				A070760021F2CEAB0013380D /* MapView.xib */,
 				A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */,
@@ -507,6 +518,17 @@
 				A096B7782280B6D9003E52FE /* ConfirmationView.swift */,
 			);
 			path = "Confirmation View";
+			sourceTree = "<group>";
+		};
+		A09A0DB0228F5E7C002FC533 /* ListCirclesView */ = {
+			isa = PBXGroup;
+			children = (
+				A09A0DB1228F5EFB002FC533 /* ListCircleView.xib */,
+				A09A0DB3228F5F15002FC533 /* ListCircleView.swift */,
+				A09A0DB5228F9AFF002FC533 /* CircleListTableViewCell.swift */,
+				A09A0DB6228F9AFF002FC533 /* CircleListTableViewCell.xib */,
+			);
+			path = ListCirclesView;
 			sourceTree = "<group>";
 		};
 		A0A45E2421FBA78300DDEC6C /* Model */ = {
@@ -544,6 +566,7 @@
 		A0C5D21A212A4A7500BF1B0C = {
 			isa = PBXGroup;
 			children = (
+				A0CBA6772294BB0C0088F581 /* TestLocations.gpx */,
 				A0C5D225212A4A7500BF1B0C /* TheKind */,
 				A0C5D297212A75CD00BF1B0C /* Font */,
 				A0C5D23D212A4A7600BF1B0C /* TheKindTests */,
@@ -832,6 +855,7 @@
 				A0C5C06B21FF58CE00846B82 /* CreateNewUser.xib in Resources */,
 				A096B7772280B68F003E52FE /* ConfirmationView.xib in Resources */,
 				A0320B5F212F2873008A96E2 /* Main.storyboard in Resources */,
+				A09A0DB2228F5EFB002FC533 /* ListCircleView.xib in Resources */,
 				A0C5D234212A4A7600BF1B0C /* LaunchScreen.storyboard in Resources */,
 				A0320B4F212B69BA008A96E2 /* LoginExistingUser.xib in Resources */,
 				A05150F421E3FFFC00795172 /* UserNameView.xib in Resources */,
@@ -850,11 +874,13 @@
 				A0320B4B212B6363008A96E2 /* LoginOptionsView.xib in Resources */,
 				A0C5D231212A4A7600BF1B0C /* Assets.xcassets in Resources */,
 				A0E9C04E2216415E00C949D4 /* KindSwipeView.xib in Resources */,
+				A0CBA6782294BB0D0088F581 /* TestLocations.gpx in Resources */,
 				A002F48521B9EFAE006E8660 /* JungChatBubbleCollectionViewCell.xib in Resources */,
 				A0301D672190B21100E023F7 /* thedeck.sks in Resources */,
 				A0B5A2D6226FE6E9006985A4 /* SearchView.xib in Resources */,
 				A03A46AA21C6C18200D90190 /* OnBoarding.storyboard in Resources */,
 				A025F6E222172D720010BDA1 /* ChosenKindCollectionViewCell.xib in Resources */,
+				A09A0DB8228F9AFF002FC533 /* CircleListTableViewCell.xib in Resources */,
 				A0D960CE21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib in Resources */,
 				A0C5D22C212A4A7500BF1B0C /* Login.storyboard in Resources */,
 			);
@@ -1005,11 +1031,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0C5D22F212A4A7500BF1B0C /* TheKind.xcdatamodeld in Sources */,
+				A09A0DB7228F9AFF002FC533 /* CircleListTableViewCell.swift in Sources */,
 				A0F223A821B88E0F0096C25D /* KindTextField.swift in Sources */,
 				A0FBB735221395C700405440 /* GameBoardModel.swift in Sources */,
 				A002F48421B9EFAE006E8660 /* JungChatBubbleCollectionViewCell.swift in Sources */,
 				A002F48321B9EFAE006E8660 /* KindJungOptionLabel.swift in Sources */,
 				A005042122616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift in Sources */,
+				A09A0DB4228F5F15002FC533 /* ListCircleView.swift in Sources */,
 				A0320B56212B8AB6008A96E2 /* Extensions.swift in Sources */,
 				A0547F22222CBE59001EE736 /* HandleLoginWithFirestore.swift in Sources */,
 				A0B61C7B2139EE83004DD447 /* GlobalFunctions.swift in Sources */,
@@ -1024,12 +1052,12 @@
 				A0320B53212B69DD008A96E2 /* LoginExistingUser.swift in Sources */,
 				A025F6F322248E790010BDA1 /* KindDeckModel.swift in Sources */,
 				A03D77F321B7518A00DCF627 /* JungTalkBox.swift in Sources */,
+				A09A0DBA228FBBA9002FC533 /* MapSnapShot.swift in Sources */,
 				A0D960CD21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift in Sources */,
 				A002F49121BDD01F006E8660 /* LandingViewControllerViewModel.swift in Sources */,
 				A0E9C0502216416D00C949D4 /* KindSwipeView.swift in Sources */,
 				A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */,
 				A025F6E6221B403C0010BDA1 /* CustomSwipeOverlay.swift in Sources */,
-				A07075FD21F158B60013380D /* MapPhotoSnapper.swift in Sources */,
 				A02D71A521C6BC7200EBBD12 /* OnBoardingViewController.swift in Sources */,
 				A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */,
 				A04DE173227033500028A1E8 /* UserSearchTableViewCell.swift in Sources */,

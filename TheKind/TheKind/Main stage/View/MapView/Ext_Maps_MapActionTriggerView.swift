@@ -13,10 +13,16 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
+extension MapActionTriggerView: MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
-        
+
+    }
+    
+    func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
+        mapBoxView.showsUserLocation = true
+        // mapBoxView.userTrackingMode = .followWithCourse
+        mapBoxView.setUserTrackingMode(.follow, animated: true)
     }
     
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
@@ -95,6 +101,16 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         
     }
     
+    func initializeCircleExplainer() {
+        
+        if circleIsInEditMode {
+            explainerCircleCreation()
+            
+        } else {
+            explainerCircleExploration()
+        }
+        
+    }
     
     //========================================================
     // #2 -Presenting annotation fullscreen.
@@ -139,6 +155,10 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
         borderProtectionLeft.isUserInteractionEnabled = false
         borderProtectionRight.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.5, animations: {
+            self.mainViewController?.hudView.hudCenterDisplay.alpha = 0
+            self.mainViewController?.hudView.listViewStack.alpha = 1
+        })
         
     }
 
@@ -168,7 +188,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         
         self.mapBoxView.isUserInteractionEnabled = true
         mainViewController?.setHudDisplayGradientBg(on: true) {
-            self.presentMapViews {
+            self.prepareMapViewsForPresentation {
                 UIView.animate(withDuration: 1, animations: {
                     self.mainViewController?.hudView.alpha = 1
                     annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
@@ -204,7 +224,7 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
     }
     
     
-    func presentMapViews(completion: (()->())?) {
+    func prepareMapViewsForPresentation(completion: (()->())?) {
         mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
         mapBoxView.isUserInteractionEnabled = true
         overlayExpandedCircleViews.isUserInteractionEnabled = false
@@ -212,6 +232,8 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         borderProtectionLeft.isUserInteractionEnabled = true
         borderProtectionRight.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.5, animations: {
+            self.mainViewController?.hudView.hudCenterDisplay.alpha = 1
+            self.mainViewController?.hudView.listViewStack.alpha = 1
             self.overlayExpandedCircleViews.alpha = 0
         }) { (completed) in
             completion?()
@@ -262,4 +284,62 @@ extension MapActionTriggerView: MGLMapViewDelegate, CLLocationManagerDelegate {
         return false
     }
     
+}
+
+extension MapActionTriggerView: ListCircleViewProtocol {
+    
+    func goToCircleAndActivateIt(circleId: String) {
+        print(circleId)
+        if let annotation = self.mapBoxView.annotations?.filter({$0.title == circleId}).first {
+            self.mapBoxView.selectAnnotation(annotation, animated: true)
+        }
+    }
+    
+}
+
+extension MapActionTriggerView: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("location updated")
+        if let location = manager.location {
+            CircleAnnotationManagement.sharedInstance.geoFireQuery?.center = location
+        }
+        
+    }
+    
+    
+    func locationServicesSetup() {
+        //TODO: COntrol for locationmanager absense here
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+     
+            switch CLLocationManager.authorizationStatus() {
+                case .notDetermined, .restricted, .denied:
+                    print("No access to location services")
+                
+                case .authorizedAlways, .authorizedWhenInUse:
+                    self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
+                    
+                    if let coordinate = locationManager.location?.coordinate {
+                        self.mapBoxView.setCenter(coordinate,
+                                                  zoomLevel: 14, animated: false)
+                        print("location manager got location")
+                    } else {
+                        self.mapBoxView.setCenter(CLLocationCoordinate2D(latitude: 37.778491,
+                                                                         longitude: -122.389246),
+                                                  zoomLevel: 14, animated: false)
+                    }
+            @unknown default:
+                print("Location services test resulted something unknown")
+            }
+            
+        } else {
+            //print("Location services are not enabled")
+            self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
+            self.mapBoxView.setCenter(CLLocationCoordinate2D(latitude: 37.778491,
+                                                             longitude: -122.389246),
+                                      zoomLevel: 14, animated: false)
+        }
+    }
 }

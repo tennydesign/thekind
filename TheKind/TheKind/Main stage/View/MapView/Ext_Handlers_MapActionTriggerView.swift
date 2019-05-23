@@ -67,7 +67,7 @@ extension MapActionTriggerView: UITextFieldDelegate {
             
             let users:[String] = [uid] // initiates with the creator
             
-            let set = CircleAnnotationSet(location: location, circlePlotName: "", isPrivate: circleIsPrivate, circleId: nil, admin: uid, users: users, dateCreated: dateNow, stealthMode: false)
+            let set = CircleAnnotationSet(location: location, circlePlotName: "", isPrivate: circleIsPrivate, circleId: nil, admin: uid, users: users, dateCreated: dateNow, stealthMode: false, mapSnapShot: "")
             let point = KindPointAnnotation(circleAnnotationSet: set)
             point.title = uid
             

@@ -85,7 +85,7 @@
                             <rect key="frame" x="0.0" y="122" width="375" height="393"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3K-l4-sWj" userLabel="circleNameTextFieldView">
-                                    <rect key="frame" x="87.5" y="206.5" width="200" height="70"/>
+                                    <rect key="frame" x="87.5" y="211.5" width="200" height="70"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wky-b4-S07" customClass="KindTransparentTextField" customModule="TheKind" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="24" width="200" height="22"/>
@@ -170,7 +170,7 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="z3K-l4-sWj" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="45" id="BWK-Dx-lpr"/>
+                                <constraint firstItem="z3K-l4-sWj" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="50" id="BWK-Dx-lpr"/>
                                 <constraint firstItem="HeI-QR-NSb" firstAttribute="centerX" secondItem="aMQ-OI-6tS" secondAttribute="centerX" constant="70" id="CBL-6Q-45R"/>
                                 <constraint firstAttribute="height" constant="393" id="Q80-NO-cTQ"/>
                                 <constraint firstItem="mnh-F8-RqW" firstAttribute="centerY" secondItem="aMQ-OI-6tS" secondAttribute="centerY" constant="-80" id="V1j-bh-wvI"/>

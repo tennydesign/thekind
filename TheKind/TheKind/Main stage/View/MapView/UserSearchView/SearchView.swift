@@ -247,14 +247,14 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
    
                     CircleAnnotationManagement.sharedInstance.addUserToTemporaryCircle(userId: userId) { (kindUser) in
                         if let kindUser = kindUser {
-                            CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListObserver?(kindUser)
+                            CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListCallback?(kindUser)
                             self.searchTableView.reloadData()
                         }
                     }
                 } else {
                     CircleAnnotationManagement.sharedInstance.removeUserFromTemporaryCircle(userId: userId) { (kindUser) in
                         if let kindUser = kindUser {
-                            CircleAnnotationManagement.sharedInstance.userRemovedFromTemporaryCircleListObserver?(kindUser)
+                            CircleAnnotationManagement.sharedInstance.userRemovedFromTemporaryCircleListCallback?(kindUser)
                             self.searchTableView.reloadData()
                         }
                     }

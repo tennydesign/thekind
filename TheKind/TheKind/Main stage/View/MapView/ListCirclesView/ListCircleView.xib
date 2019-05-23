@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ListCircleView" customModule="TheKind" customModuleProvider="target">
+            <connections>
+                <outlet property="circleListTableView" destination="AcP-3j-eoG" id="uCz-HT-cZH"/>
+                <outlet property="mainView" destination="iN0-l3-epB" id="BKR-V1-zAF"/>
+                <outlet property="searchBar" destination="IEN-vu-bxa" id="5i2-ni-KSS"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="mainView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nzE-G5-dBp" userLabel="background">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="740"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AcP-3j-eoG">
+                    <rect key="frame" x="0.0" y="166" width="375" height="501"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <searchBar contentMode="redraw" placeholder="Type to search circle by name" translatesAutoresizingMaskIntoConstraints="NO" id="IEN-vu-bxa">
+                    <rect key="frame" x="0.0" y="100" width="375" height="56"/>
+                    <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <textInputTraits key="textInputTraits" keyboardAppearance="alert" textContentType="email"/>
+                    <scopeButtonTitles>
+                        <string>Title</string>
+                        <string>Title</string>
+                    </scopeButtonTitles>
+                </searchBar>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="wZ0-mw-EgY">
+                    <rect key="frame" x="18" y="48" width="30" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jfF-e2-HPX">
+                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="VMw-Fw-OnV"/>
+                                <constraint firstAttribute="width" constant="30" id="vmD-1d-NJu"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="closeIcon"/>
+                            <connections>
+                                <action selector="closeBtnClicked:" destination="-1" eventType="touchUpInside" id="1FR-rB-0i0"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="close" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="StU-Yq-eYe">
+                            <rect key="frame" x="0.0" y="32" width="30" height="12"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="cXe-hr-c1n"/>
+                        <constraint firstAttribute="height" constant="44" id="f2U-zC-et7"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="IEN-vu-bxa" firstAttribute="top" secondItem="wZ0-mw-EgY" secondAttribute="bottom" constant="8" id="041-zR-c0I"/>
+                <constraint firstItem="AcP-3j-eoG" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="8Hl-Ah-AxN"/>
+                <constraint firstItem="nzE-G5-dBp" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="I7T-di-Ntw"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="AcP-3j-eoG" secondAttribute="trailing" id="WnI-1O-hfe"/>
+                <constraint firstItem="nzE-G5-dBp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="X4O-pG-vbG"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="AcP-3j-eoG" secondAttribute="bottom" id="XAO-eN-RYp"/>
+                <constraint firstItem="wZ0-mw-EgY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="18" id="abA-cU-hTG"/>
+                <constraint firstItem="IEN-vu-bxa" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="bC0-jj-pVv"/>
+                <constraint firstItem="nzE-G5-dBp" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="dRR-FH-TZb"/>
+                <constraint firstItem="IEN-vu-bxa" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="gOn-k4-7f2"/>
+                <constraint firstItem="wZ0-mw-EgY" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="28" id="gux-Qm-ZaY"/>
+                <constraint firstAttribute="bottom" secondItem="nzE-G5-dBp" secondAttribute="bottom" constant="-73" id="rLe-yj-wGS"/>
+                <constraint firstItem="AcP-3j-eoG" firstAttribute="top" secondItem="IEN-vu-bxa" secondAttribute="bottom" constant="10" id="uQG-PJ-Ykl"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="closeIcon" width="60" height="60"/>
+    </resources>
+</document>

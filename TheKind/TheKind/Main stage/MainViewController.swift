@@ -30,7 +30,8 @@ class MainViewController: UIViewController {
     
     
     @IBOutlet var searchView: SearchView!
-//    @IBOutlet var chatMask: UIImageView!
+    @IBOutlet var listCircleView: ListCircleView!
+    //    @IBOutlet var chatMask: UIImageView!
     @IBOutlet var chatMaskView: UIView!
     
     // TODO: Gameboard is hidden

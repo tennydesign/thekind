@@ -20,6 +20,39 @@ extension MapActionTriggerView {
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
     }
     
+    
+    func saveLoadingExplainer() {
+        let txt = "Retrieved coordinates.-Saving circle configuration."
+        let actions: [KindActionType] = [.none,.none]
+        let actionViews: [ActionViewName] = [.none,.none]
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+    }
+    
+    func doneExplainer() {
+        let txt = "Done."
+        let actions: [KindActionType] = [.none]
+        let actionViews: [ActionViewName] = [.none]
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+    }
+    
+
+    func cantFindLocationExplainer() {
+        var txt = ""
+        if let name = KindUserSettingsManager.sharedInstance.loggedUser {
+            txt = "Sorry \(name).-I could not fetch your location.-I need your location in order to open the map."
+        } else {
+            txt = "Sorry.-I could not fetch your location.-I need your location in order to open the map."
+        }
+        let actions: [KindActionType] = [.none,.none,.none]
+        let actionViews: [ActionViewName] = [.none,.none,.none]
+        
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+    }
+    
+    
+    
     func explainerCircleCreation() {
         let txt = "You are creating a circle.-Click the locker to toggle between public and private.-If private only invited people can join.-Name the circle and hit save when you are done."
         
@@ -66,8 +99,8 @@ extension MapActionTriggerView {
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
     }
     
-    func explainerNameCircleBeforeSavingIt() {
-        let txt = "Name the circle before saving it.-Tap above to do so."
+    func explainerSaveFailed() {
+        let txt = "I could not save the circle.-Check the name and try again."
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)

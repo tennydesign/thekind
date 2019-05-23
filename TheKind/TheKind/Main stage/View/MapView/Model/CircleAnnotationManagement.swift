@@ -4,24 +4,30 @@
 //
 //  Created by Tenny on 3/29/19.
 //  Copyright © 2019 tenny. All rights reserved.
-//
+// https://github.com/firebase/geofire-objc
 
 import Foundation
 import MapKit
 import Mapbox
 import FirebaseFirestore
 import Firebase
+import FirebaseStorage
+import GeoFire
 
 class CircleAnnotationManagement {
     static let sharedInstance = CircleAnnotationManagement()
-    private init() {}
-    var circleAnnotationObserver: (([CircleAnnotationSet])->())?
-    var userAddedToTemporaryCircleListObserver: ((KindUser)->())?
-    var userRemovedFromTemporaryCircleListObserver: ((KindUser)->())?
-    var circles: [CircleAnnotationSet] = []
+    var plotCircleCloseToPlayerCallback: ((CircleAnnotationSet)->())?
+    var unPlotCircleCloseToPlayerCallback: ((CircleAnnotationSet)->())?
+    var userAddedToTemporaryCircleListCallback: ((KindUser)->())?
+    var userRemovedFromTemporaryCircleListCallback: ((KindUser)->())?
+    var visibleCircles: [CircleAnnotationSet] = []
     var circleSnapShotListener: ListenerRegistration?
-    var setChangedOnCircleObserver: ((CircleAnnotationSet)->())?
-
+    var setChangedOnCircleCallback: ((CircleAnnotationSet)->())?
+    var updateCircleListOnMapPlotUnplot: (()->())?
+    var geoFireQuery: GFCircleQuery?
+    
+    private init() {}
+    
     //Receive Currently Selected circle or nil. If nil, will kill the observer.
     
     var isSelectedTemporaryCircleAnnotation:Bool {
@@ -47,36 +53,10 @@ class CircleAnnotationManagement {
         }
     }
     
-    func retrieveCirclesCloseToPlayer(completion: @escaping (()->()))  {
-        let db = Firestore.firestore()
-        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
-        db.collection("kindcircles").getDocuments { (snapshot, err) in
-            if let err = err {
-                print(err)
-                return
-            }
-            
-            snapshot?.documents.forEach({ (document) in
-                let set = CircleAnnotationSet(document: document)
-                
-                //TODO: FILTER THIS IN THE QUERY NOT HERE MAYBE.
-                // Show only not private or private with user in.
-                if !set.isPrivate || set.users.contains(uid) {
-                    if !set.deleted {
-                        self.circles.append(set)
-                    }
-                }
-            })
 
-            self.circleAnnotationObserver?(self.circles)
-            
-            completion()
-        }
-        
-    }
     
-
-    func updateCircleSettings(completion: @escaping (CircleAnnotationSet?, Error?)->()) {
+    
+    func updateCircleSettings(completion: @escaping (CircleAnnotationSet?, Bool)->()) {
         let db = Firestore.firestore()
         guard let set = currentlySelectedAnnotationView?.circleDetails else { return}
         guard let circleDict = set.asDictionary() else {return}
@@ -85,51 +65,181 @@ class CircleAnnotationManagement {
                 //SAVE CAUSE NO CIRCLE EXIST
                 if err.localizedDescription.contains("No document to update") {
                     //Create circle from scratch
-                    self.saveNewCircleSet(completion: { (set,err)  in
-                        if let err = err {
-                            completion(nil,err)
+                    self.saveNewCircleSet(completion: { (set,completed)  in
+                        if completed == false {
+                            completion(nil,false)
+                            return
                         }
-                        completion(set,nil)
+                        
+                        guard let set = set else {
+                            completion(nil,false)
+                            return
+                        }
+                        
+                        completion(set,true)
                         return
                         
                     })
-                    
                 }
             } else {
                 //UPDATE CAUSE IT EXISTS
-                completion(set,nil)
+                completion(set,true)
             }
-            
+
         }
     }
  
-    private func saveNewCircleSet(completion: @escaping (CircleAnnotationSet?, Error?)->()) {
+    
+    //REFACTOR THIS LATER
+    private func saveNewCircleSet(completion: @escaping (CircleAnnotationSet?, Bool)->()) {
         let db = Firestore.firestore()
         guard let set = currentlySelectedAnnotationView?.circleDetails else { return}
         var documentRef: DocumentReference? = nil
         guard let circleDict = set.asDictionary() else {return}
+        var resultingSet: CircleAnnotationSet!
+        let group = DispatchGroup()
+        
+        group.enter() // ==== ENTER (+ 1)  = 1
         documentRef = db.collection("kindcircles").addDocument(data: circleDict) { err in
             if let err = err {
                 print(err)
-                completion(nil, err)
+                //completion(nil, err)
+                group.leave() // OR LEAVE (- 1) = 0
                 return
             }
-            if let circleid = documentRef?.documentID {
-                documentRef?.setData(["circleid":circleid], merge: true)
+            
+            guard let circleid = documentRef?.documentID else {
+                group.leave() // OR LEAVE (- 1) = 0
+                return
             }
             
-            documentRef?.getDocument(completion: { (document,error) in
-                if let error = error {
-                    completion(nil, error)
+
+            documentRef?.setData(["circleid":circleid], merge: true, completion: { (err) in
+                if let err = err {
+                    print(err)
+                    group.leave() // OR LEAVE (- 1) = 0
                     return
                 }
                 
+            })
+
+        
+            documentRef?.getDocument(completion: { (document,error) in
+                if let error = error {
+                    print(error)
+                    group.leave()
+                    return
+                }
+                
+                // SET SAVED SUCCESSFULLY - NOW GET SET AND SAVE IT FOR GEOFIRE
+                group.enter() // === ENTER (+ 1) = 2
+                let fireBaseRef = Database.database().reference()
+                
                 guard let document = document, document.exists else {return}
                 let circleAnnotationSet = CircleAnnotationSet(document: document)
-                completion(circleAnnotationSet,nil)
+                resultingSet = circleAnnotationSet
+                
+                // FIRST half completed
+                group.leave() // === LEAVE (- 1) = 1 // Still on task to go
+
+                
+                let geoFire = GeoFire(firebaseRef: fireBaseRef)
+                geoFire.setLocation(CLLocation(latitude: resultingSet.location.latitude, longitude: resultingSet.location.longitude), forKey: resultingSet.circleId) { (error) in
+                    if (error != nil) {
+                        print("An error occured: \(String(describing: error))")
+                        db.collection("kindcircles").document(resultingSet.circleId).delete()
+                        resultingSet = nil
+                        group.leave()  // === LEAVE (- 1) = 0 <- back to
+                        return
+                    }
+
+                    // ALL SUCCESS
+                    group.leave()  // === LEAVE (- 1) = 0 <- back to
+                }
                 
             })
         }
+
+    
+        group.notify(queue: .main) {
+            if resultingSet != nil {
+                completion(resultingSet, true)
+            } else {
+                completion(nil, false)
+            }
+        }
+    }
+    
+    
+    //DEPRECARED FIX IT
+    func retrieveCirclesCloseToPlayerDeprecated(completion: @escaping (([CircleAnnotationSet])->()))  {
+        let db = Firestore.firestore()
+        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
+        db.collection("kindcircles").getDocuments { (snapshot, err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            self.visibleCircles = []
+            snapshot?.documents.forEach({ (document) in
+                let set = CircleAnnotationSet(document: document)
+                
+                //TODO: FILTER THIS IN THE QUERY NOT HERE MAYBE.
+                // Show only not private or private with user in.
+                if !set.isPrivate || set.users.contains(uid) {
+                    if !set.deleted {
+                        self.visibleCircles.append(set)
+                    }
+                }
+            })
+            
+            completion(self.visibleCircles)
+        }
+        
+    }
+    
+
+
+    func getCirclesWithinRadiusObserver(latitude: CLLocationDegrees, longitude: CLLocationDegrees,radius: Double, completion: @escaping (()->()))  {
+        let fireBaseRef = Database.database().reference()
+        let geoFire = GeoFire(firebaseRef: fireBaseRef)
+        let center = CLLocation(latitude: latitude, longitude: longitude)
+        geoFireQuery = geoFire.query(at: center, withRadius: radius)
+        geoFireQuery?.observe(.keyEntered, with: { (key: String!, location: CLLocation!) in
+            //print("Key '\(String(describing: key))' entered the search area and is at location '\(String(describing: location))'")
+            
+            self.retrieveCircleById(circleId: key, completion: { (set) in
+                guard let set = set else {
+                    completion()
+                    return
+                }
+                self.visibleCircles.append(set)
+                self.plotCircleCloseToPlayerCallback?(set)
+                self.updateCircleListOnMapPlotUnplot?()
+            })
+            
+        })
+        
+        geoFireQuery?.observe(.keyExited, with: { (key: String!, location: CLLocation!) in
+            print("Key '\(String(describing: key))' exited the search area and is at location '\(String(describing: location))'")
+            
+            self.retrieveCircleById(circleId: key, completion: { (set) in
+                guard let set = set else {
+                    completion()
+                    return
+                }
+                
+                self.visibleCircles.removeAll(where: { (setToRemove) -> Bool in
+                    if setToRemove.circleId == set.circleId {
+                        return true
+                    }
+                    return false
+                })
+                self.updateCircleListOnMapPlotUnplot?()
+                self.unPlotCircleCloseToPlayerCallback?(set)
+            })
+            
+        })
     }
     
     func retrieveCircleById(circleId: String, completion: ((CircleAnnotationSet?)->())?) {
@@ -277,6 +387,35 @@ class CircleAnnotationManagement {
             }
         }
     }
+    
+    //SAVE MAP SNAP
+    func uploadMapSnap(mapImageData: Data, completion: ((String?)->())?) {
+        let imageName = NSUUID().uuidString
+        let storageRef = Storage.storage().reference(withPath: "map_images").child("\(imageName).jpg")
+        
+        storageRef.putData(mapImageData, metadata: nil, completion: { (metadata, error) in
+            if error != nil {
+                print(error!)
+                return
+            }
+            
+            storageRef.downloadURL(completion: { (url, error) in
+                if error != nil {
+                    print(error!)
+                    return
+                }
+                
+                if let urlstring = url?.absoluteString {
+                    completion?(urlstring)
+                } else {
+                    completion?(nil)
+                }
+ 
+            })
+            
+            
+        })
+    }
 
     
     func observeCircleSetFirebase(circleId: String) {
@@ -295,7 +434,7 @@ class CircleAnnotationManagement {
             // reload SET with new info.
             self.currentlySelectedAnnotationView?.circleDetails = set
             // let client now there is a new loaded set.
-            self.setChangedOnCircleObserver?(set)
+            self.setChangedOnCircleCallback?(set)
             
         }
     }
