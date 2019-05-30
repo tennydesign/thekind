@@ -49,14 +49,14 @@ class ListCircleView: KindActionTriggerView, UITableViewDataSource, UITableViewD
         
         circleListTableView.register(UINib(nibName: "CircleListTableViewCell", bundle: nil), forCellReuseIdentifier: "CircleListTableViewCell")
         
-        CircleAnnotationManagement.sharedInstance.updateCircleListOnMapPlotUnplot = { [unowned self] in
+        CircleAnnotationManagement.sharedInstance.reloadCircleListCallback = { [unowned self] in
             self.reloadCircleList()
         }
         
     }
     
     func reloadCircleList() {
-        filteredCircleSets = CircleAnnotationManagement.sharedInstance.visibleCircles
+        filteredCircleSets = CircleAnnotationManagement.sharedInstance.visibleCirclesInListView
         circleListTableView.reloadData()
     }
     
@@ -79,7 +79,7 @@ class ListCircleView: KindActionTriggerView, UITableViewDataSource, UITableViewD
             self.alpha = 1
         })
         
-        filteredCircleSets = CircleAnnotationManagement.sharedInstance.visibleCircles
+        filteredCircleSets = CircleAnnotationManagement.sharedInstance.visibleCirclesInListView
         
     }
     
@@ -96,7 +96,7 @@ class ListCircleView: KindActionTriggerView, UITableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("clicked table")
-        delegate?.goToCircleAndActivateIt(circleId: self.circleSets[indexPath.row].circleId)
+        delegate?.goToCircleAndActivateIt(circleId: filteredCircleSets[indexPath.row].circleId)
         searchBar.resignFirstResponder()
         self.deactivate()
     }
@@ -112,20 +112,15 @@ class ListCircleView: KindActionTriggerView, UITableViewDataSource, UITableViewD
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty || searchText == "" {
-           self.filteredCircleSets = circleSets
+           self.filteredCircleSets = CircleAnnotationManagement.sharedInstance.visibleCirclesInListView
             return
         }
         
-        filteredCircleSets = circleSets.filter({( set : CircleAnnotationSet) -> Bool in
+        filteredCircleSets = CircleAnnotationManagement.sharedInstance.visibleCirclesInListView.filter({( set : CircleAnnotationSet) -> Bool in
             return set.circlePlotName.lowercased().contains(searchText.lowercased())
         })
     }
     
 }
-
-//
-//if let imageUrl = usersInCircle[indexPath.row].photoURL {
-//    cell.userPhotoImageView.loadImageUsingCacheWithUrlString(urlString:imageUrl)
-//}
 
 

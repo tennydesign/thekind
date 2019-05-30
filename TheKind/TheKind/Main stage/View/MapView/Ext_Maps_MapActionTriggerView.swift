@@ -206,7 +206,7 @@ extension MapActionTriggerView: MGLMapViewDelegate {
                     } else {
                         annotationView.setSelected(false, animated: false)
                     }
-                    
+            
                     self.usersInCircle = []
                     CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView = nil
                     self.longPressGesture.isEnabled = true
@@ -217,6 +217,7 @@ extension MapActionTriggerView: MGLMapViewDelegate {
                     self.circleIsInEditMode = false
                     
                     completion?()
+                    
                 }
             }
         }
@@ -299,18 +300,30 @@ extension MapActionTriggerView: ListCircleViewProtocol {
 
 extension MapActionTriggerView: CLLocationManagerDelegate {
     
+    //TODO: IN the simulator if location is granted after first load circles will not show.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("location updated")
         if let location = manager.location {
             CircleAnnotationManagement.sharedInstance.geoFireQuery?.center = location
+            //TODO: probably needs an && for the case where user is not using the map
+            // Maybe refactor non-used views to "isHidden=tue" in addition to alpha (better!)
+            if self.mapBoxView.alpha == 0 {
+                UIView.animate(withDuration: 0.4, animations: {
+                    self.mapBoxView.alpha = 1
+                }, completion: { (completed) in
+                    self.talk()
+                })
+            }
         }
         
     }
     
     
     func locationServicesSetup() {
-        //TODO: COntrol for locationmanager absense here
-        
+
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLLocationAccuracyHundredMeters
+ 
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
      
@@ -335,7 +348,7 @@ extension MapActionTriggerView: CLLocationManagerDelegate {
             }
             
         } else {
-            //print("Location services are not enabled")
+            print("Location services are not enabled")
             self.mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
             self.mapBoxView.setCenter(CLLocationCoordinate2D(latitude: 37.778491,
                                                              longitude: -122.389246),

@@ -23,7 +23,7 @@
                         <rect key="frame" x="95" y="11.5" width="185" height="90"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mariana Fernandes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQa-KJ-qkA">
-                                <rect key="frame" x="8" y="0.0" width="177" height="21"/>
+                                <rect key="frame" x="8" y="20" width="177" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="177" id="7xL-iQ-o4V"/>
                                     <constraint firstAttribute="height" constant="21" id="a40-P7-hSs"/>
@@ -32,18 +32,8 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Trailblazer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RVc-P7-P7W">
-                                <rect key="frame" x="42" y="33" width="107" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="107" id="hgH-XO-oBx"/>
-                                    <constraint firstAttribute="height" constant="21" id="twS-ye-HmK"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trailblazer_board" translatesAutoresizingMaskIntoConstraints="NO" id="w97-rH-6z6">
-                                <rect key="frame" x="2" y="19" width="40" height="40"/>
+                                <rect key="frame" x="2" y="39" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="oNX-sa-A71"/>
                                     <constraint firstAttribute="width" constant="40" id="pV4-n3-NkM"/>
@@ -52,14 +42,12 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="pQa-KJ-qkA" firstAttribute="top" secondItem="rb0-SF-VBv" secondAttribute="top" id="0hy-Az-CwB"/>
+                            <constraint firstItem="pQa-KJ-qkA" firstAttribute="top" secondItem="rb0-SF-VBv" secondAttribute="top" constant="20" id="0hy-Az-CwB"/>
                             <constraint firstItem="pQa-KJ-qkA" firstAttribute="leading" secondItem="rb0-SF-VBv" secondAttribute="leadingMargin" id="6jj-Ha-eiX"/>
                             <constraint firstAttribute="width" constant="185" id="NCa-ta-7C5"/>
                             <constraint firstAttribute="height" constant="90" id="ORu-rk-1zb"/>
                             <constraint firstItem="w97-rH-6z6" firstAttribute="top" secondItem="pQa-KJ-qkA" secondAttribute="bottom" constant="-2" id="Wio-lh-5HF"/>
-                            <constraint firstItem="RVc-P7-P7W" firstAttribute="leading" secondItem="w97-rH-6z6" secondAttribute="trailing" id="XHC-45-Hbu"/>
                             <constraint firstItem="w97-rH-6z6" firstAttribute="leading" secondItem="rb0-SF-VBv" secondAttribute="leading" constant="2" id="dFa-pD-Wi7"/>
-                            <constraint firstItem="RVc-P7-P7W" firstAttribute="top" secondItem="pQa-KJ-qkA" secondAttribute="bottom" constant="12" id="xLk-Rl-8Vt"/>
                         </constraints>
                     </view>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePr-35-T2a" userLabel="CircleImagePhotoFrame">

@@ -20,10 +20,10 @@ class CircleAnnotationManagement {
     var unPlotCircleCloseToPlayerCallback: ((CircleAnnotationSet)->())?
     var userAddedToTemporaryCircleListCallback: ((KindUser)->())?
     var userRemovedFromTemporaryCircleListCallback: ((KindUser)->())?
-    var visibleCircles: [CircleAnnotationSet] = []
+    var visibleCirclesInListView: [CircleAnnotationSet] = []
     var circleSnapShotListener: ListenerRegistration?
     var setChangedOnCircleCallback: ((CircleAnnotationSet)->())?
-    var updateCircleListOnMapPlotUnplot: (()->())?
+    var reloadCircleListCallback: (()->())?
     var geoFireQuery: GFCircleQuery?
     
     private init() {}
@@ -180,7 +180,7 @@ class CircleAnnotationManagement {
                 print(err)
                 return
             }
-            self.visibleCircles = []
+            self.visibleCirclesInListView = []
             snapshot?.documents.forEach({ (document) in
                 let set = CircleAnnotationSet(document: document)
                 
@@ -188,12 +188,12 @@ class CircleAnnotationManagement {
                 // Show only not private or private with user in.
                 if !set.isPrivate || set.users.contains(uid) {
                     if !set.deleted {
-                        self.visibleCircles.append(set)
+                        self.visibleCirclesInListView.append(set)
                     }
                 }
             })
             
-            completion(self.visibleCircles)
+            completion(self.visibleCirclesInListView)
         }
         
     }
@@ -205,6 +205,8 @@ class CircleAnnotationManagement {
         let geoFire = GeoFire(firebaseRef: fireBaseRef)
         let center = CLLocation(latitude: latitude, longitude: longitude)
         geoFireQuery = geoFire.query(at: center, withRadius: radius)
+        
+        //Entered region - Show
         geoFireQuery?.observe(.keyEntered, with: { (key: String!, location: CLLocation!) in
             //print("Key '\(String(describing: key))' entered the search area and is at location '\(String(describing: location))'")
             
@@ -213,13 +215,14 @@ class CircleAnnotationManagement {
                     completion()
                     return
                 }
-                self.visibleCircles.append(set)
+                self.visibleCirclesInListView.append(set)
                 self.plotCircleCloseToPlayerCallback?(set)
-                self.updateCircleListOnMapPlotUnplot?()
+                self.reloadCircleListCallback?() // uses visibleCircles
             })
             
         })
         
+        //Leave region - Hide
         geoFireQuery?.observe(.keyExited, with: { (key: String!, location: CLLocation!) in
             print("Key '\(String(describing: key))' exited the search area and is at location '\(String(describing: location))'")
             
@@ -229,13 +232,13 @@ class CircleAnnotationManagement {
                     return
                 }
                 
-                self.visibleCircles.removeAll(where: { (setToRemove) -> Bool in
+                self.visibleCirclesInListView.removeAll(where: { (setToRemove) -> Bool in
                     if setToRemove.circleId == set.circleId {
                         return true
                     }
                     return false
                 })
-                self.updateCircleListOnMapPlotUnplot?()
+                self.reloadCircleListCallback?() // uses visibleCircles
                 self.unPlotCircleCloseToPlayerCallback?(set)
             })
             
@@ -259,6 +262,28 @@ class CircleAnnotationManagement {
             
             let set:CircleAnnotationSet = CircleAnnotationSet(document: document!)
             completion?(set)
+        }
+    }
+    
+    func retrieveAllCirclesUserIsAdmin(completion: (([CircleAnnotationSet]?)->())?) {
+        let db = Firestore.firestore()
+        var circleSets:[CircleAnnotationSet] = []
+        let ref = db.collection("kindcircles")
+        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
+        let query = ref.whereField("admin", isEqualTo: uid)
+        query.getDocuments {  (document,err) in
+            if let err = err {
+                print(err)
+                completion?(nil)
+                return
+            }
+            
+            document?.documents.forEach({ (document) in
+                let set: CircleAnnotationSet = CircleAnnotationSet(document: document)
+                circleSets.append(set)
+            })
+            
+            completion?(circleSets)
         }
     }
     

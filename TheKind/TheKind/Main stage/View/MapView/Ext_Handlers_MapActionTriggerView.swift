@@ -17,6 +17,8 @@ extension MapActionTriggerView: UITextFieldDelegate {
         guard let circleName = textField.text, !(circleName.trimmingCharacters(in: .whitespaces).isEmpty) else {return}
         circlePlotName = circleName
         adaptLineToTextSize(textField, lineWidthConstraint: newCirclelineWidthConstraint, view: self, animated: true, completion: nil)
+        
+        CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.circlePlotName = self.circlePlotName
     }
     
     

@@ -61,14 +61,6 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             self.photoStripCollectionView.reloadData()
         }
     }
-    var selectedAnnotationView: CircleAnnotationView? {
-        set {
-            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView = selectedAnnotationView
-        }
-        get {
-            return CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView
-        }
-    }
     
     var mainViewController: MainViewController?
     var talkbox: JungTalkBox?
@@ -77,18 +69,13 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     var longPressGesture: UIGestureRecognizer!
     var selectedKindUser: KindUser?
     
-    // INIT VALUES
-    // HERE: Maybe add a little bit more space from top of jungchatlogger and map.
     let MAXZOOMLEVEL: Double = 18
     let FLYOVERZOOMLEVEL: Double = 14
     let MAXSCIRCLESCALE: CGFloat = 6.0
-//    var openDrawerDistance: CGFloat = -220.0
-//    let hiddenDrawerDistance: CGFloat = -220.0 //-330
     let iphoneXFamilyOpenDrawerAdj:CGFloat = 48
     lazy var iphoneXFamilyExpandedCircleInnerContentAdj: CGFloat = -self.safeAreaInsets.bottom - 50//10
     let annotationBounds: CGRect = CGRect(x: 0, y: 0, width: 30, height: 30)
-    // ======
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -113,43 +100,17 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         photoStripCollectionView.dataSource = self
         photoStripCollectionView.delegate = self
 
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = kCLLocationAccuracyHundredMeters
-        locationManager.startUpdatingLocation()
-
-        
-        circleNameTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
-        let tapLockerGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOnLocker))
-        lockerView.addGestureRecognizer(tapLockerGesture)
-        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
-        mapBoxView.addGestureRecognizer(longPressGesture)
-        
-
         photoStripCollectionView?.register(UINib(nibName: "PhotoStripCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PhotoStripCollectionViewCell")
 
-        
-        // This was at LayoutSubviews
-        // add pan gesture to detect when the map moves
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.didDragMap(_:)))
-        
-        // make your class the delegate of the pan gesture
-        panGesture.delegate = self
-        
-        // add the gesture to the mapView
-        mapBoxView.addGestureRecognizer(panGesture)
+        gesturesAndActionsSetup()
 
         locationServicesSetup()
-        //setup annotation plotter observer
-        plotAnnotationCallBacks()
+
+        activateCallBacks()
         
-        
-        // setupCircleInformationObserver
-        updateCircleInformationOnObserver()
-        userAddedToTemporaryCircleListObserver()
-        userRemovedFromTemporaryCircleListObserver()
+
         
     }
-
     
     // prepares the overlay at expandedCircleViews (black alpha with a hole in the center)
     override func layoutSubviews() {
@@ -163,8 +124,35 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         
         configMapbox()
         
-
+        
     }
+    
+    func gesturesAndActionsSetup() {
+        circleNameTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        let tapLockerGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOnLocker))
+        lockerView.addGestureRecognizer(tapLockerGesture)
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
+        mapBoxView.addGestureRecognizer(longPressGesture)
+        
+        // This was at LayoutSubviews
+        // add pan gesture to detect when the map moves
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.didDragMap(_:)))
+        // make your class the delegate of the pan gesture
+        panGesture.delegate = self
+        // add the gesture to the mapView
+        mapBoxView.addGestureRecognizer(panGesture)
+    }
+    
+    func activateCallBacks() {
+        //setup annotation plotter observer
+        activatePlotMovingAnnotationCallBacks()
+        // setupCircleInformationObserver
+        activateSetChangedOnCircleCallBack()
+        activateUserAddedToTemporaryCircleListCallBack()
+        activateUserRemovedFromTemporaryCircleListCallBack()
+    }
+
+
     
     // This is to setup didDragMap delegate.
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -196,7 +184,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     
-
+    
     
     
     ///JUNG ACTIONS
@@ -257,7 +245,10 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
                         self.talk()
                     })
                     
-                    //plot circles
+                    self.plotCirclesUserIsAdmin()
+                    //plot circles && setup the observers
+                    // Will call self.plotCircleCloseToPlayerCallback?(set)
+                    
                     CircleAnnotationManagement.sharedInstance.getCirclesWithinRadiusObserver(latitude: latitude!, longitude: longitude!, radius: 0.6, completion: {
                         print("executed geoFireTestingQuery")
                     })
@@ -270,8 +261,22 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     }
     
+    func plotCirclesUserIsAdmin() {
+        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
+        CircleAnnotationManagement.sharedInstance.retrieveAllCirclesUserIsAdmin() { (sets) in
+            sets?.forEach({ (set) in
+                let pointAnnotation:MGLPointAnnotation = KindPointAnnotation(circleAnnotationSet: set)
+                let isAlreadyPlotted = self.mapBoxView.annotations?.contains{$0.title == set.circleId || $0.title == uid } ?? false
+                if !isAlreadyPlotted {
+                    pointAnnotation.title = set.circleId
+                    self.mapBoxView.addAnnotation(pointAnnotation)
+                }
+            })
+        }
+    }
     
-    func plotAnnotationCallBacks() {
+    // Plotters. Show and hide circles.
+    func activatePlotMovingAnnotationCallBacks() {
         
         CircleAnnotationManagement.sharedInstance.plotCircleCloseToPlayerCallback = { [unowned self](set) in
             guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
@@ -280,15 +285,20 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             if !isAlreadyPlotted {
                 let pointAnnotation:MGLPointAnnotation = KindPointAnnotation(circleAnnotationSet: set)
                 pointAnnotation.title = set.circleId
-                
                 self.mapBoxView.addAnnotation(pointAnnotation)
             }
         }
         
+        
         CircleAnnotationManagement.sharedInstance.unPlotCircleCloseToPlayerCallback = { [unowned self](set) in
+            guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
             let isAlreadyPlotted = self.mapBoxView.annotations?.contains{$0.title == set.circleId} ?? false
             if isAlreadyPlotted {
-                self.mapBoxView.removeAnnotation((self.mapBoxView.annotations?.filter{$0.title == set.circleId}.first)!)
+                if let annotation = (self.mapBoxView.annotations?.filter{$0.title == set.circleId}.first) {
+                    if set.admin != uid { // user does not own it
+                        self.mapBoxView.removeAnnotation(annotation)
+                    }
+                }
             }
         }
     }
@@ -321,14 +331,14 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         }
     }
     
+
+    
     func saveCircle() {
         guard let location = CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.location else {return}
         
         let mapSnapShot: CrumbSnapShot = CrumbSnapShot(location: location)
         
-        //Snaps a photo from the region for listing purposese.
-        //Uploads it.
-        //Update or Save Circle
+        //Snaps a photo from the region for listing purposes.
         mapSnapShot.snapMapPhoto { (image) in
             // let imageInNoir = image.noir
             guard let uploadData = image.jpegData(compressionQuality: 0.7) else {
@@ -337,44 +347,48 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             
             self.saveLoadingExplainer()
             
+            //Uploads it.
             CircleAnnotationManagement.sharedInstance.uploadMapSnap(mapImageData: uploadData, completion: { (url) in
                 if let urlstring = url {
                     CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.locationSnapShot = urlstring
                 }
                 
-                
-                
-                CircleAnnotationManagement.sharedInstance.updateCircleSettings() { (circleAnnotationSet,completed)  in
-                    if completed == false {
-                        //print(err)
-                        self.explainerSaveFailed()
-                        return
-                    }
-                    
-                    guard let set = circleAnnotationSet else {
-                        //Save failed. Treat it here.
-                        self.explainerSaveFailed()
-                        return
-                    }
-                    
-                    // New Circle Only: This finds the newest created circle and gives it its official circleId
-                    if CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
-                        // Give right ID to temporary circle
-                        // This is what differentiates it from "temporary" to "persisted"
-                        // isSelectedTemporaryCircleAnnotation will return false from now on.
-                        
-                        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
-                        guard let annotation = (self.mapBoxView.annotations?.filter{$0.title == uid}.first) as? KindPointAnnotation else {return}
-                        annotation.title = set.circleId
-                        annotation.circleDetails = set
-                    }
-                    
-                    
-                    CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
-                    self.deActivateOnDeselection(completion: nil)
-                    
-                }
+                //Update or Save Circle
+                self.updateCircleSettings()
             })
+        }
+    }
+    
+    fileprivate func updateCircleSettings() {
+        CircleAnnotationManagement.sharedInstance.updateCircleSettings() { (circleAnnotationSet,completed)  in
+            if completed == false {
+                //print(err)
+                self.explainerSaveFailed()
+                return
+            }
+            
+            guard let set = circleAnnotationSet else {
+                //Save failed. Treat it here.
+                self.explainerSaveFailed()
+                return
+            }
+            
+            // New Circle Only: This finds the newest created circle and gives it its official circleId
+            if CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
+                // Give right ID to temporary circle
+                // This is what differentiates it from "temporary" to "persisted"
+                // isSelectedTemporaryCircleAnnotation will return false from now on.
+                
+                guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
+                guard let annotation = (self.mapBoxView.annotations?.filter{$0.title == uid}.first) as? KindPointAnnotation else {return}
+                annotation.title = set.circleId
+                annotation.circleDetails = set
+            }
+            
+            
+            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
+            self.deActivateOnDeselection(completion: nil)
+            
         }
     }
     
@@ -410,9 +424,8 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
  
     // CIRCLE SET OBSERVER
-    func updateCircleInformationOnObserver() {
+    func activateSetChangedOnCircleCallBack() {
         CircleAnnotationManagement.sharedInstance.setChangedOnCircleCallback = { [unowned self] set in
-            
             self.setupUIWithSetInfo()
             CircleAnnotationManagement.sharedInstance.loadCircleUsersProfile() { (kindUsers) in
                 self.usersInCircle = kindUsers ?? []
@@ -482,13 +495,13 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     //triggered when user is added at the SearchView FOR TEMPORARY CIRCLES only.
-    func userAddedToTemporaryCircleListObserver() {
+    func activateUserAddedToTemporaryCircleListCallBack() {
         CircleAnnotationManagement.sharedInstance.userAddedToTemporaryCircleListCallback  = { [unowned self] user in
             self.usersInCircle.append(user)
         }
     }
     
-    func userRemovedFromTemporaryCircleListObserver() {
+    func activateUserRemovedFromTemporaryCircleListCallBack() {
         CircleAnnotationManagement.sharedInstance.userRemovedFromTemporaryCircleListCallback  = { [unowned self] user in
             self.usersInCircle.removeAll{ $0.uid == user.uid}
         }

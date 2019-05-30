@@ -40,7 +40,7 @@ extension MapActionTriggerView {
 
     func cantFindLocationExplainer() {
         var txt = ""
-        if let name = KindUserSettingsManager.sharedInstance.loggedUser {
+        if let name = KindUserSettingsManager.sharedInstance.loggedUserName {
             txt = "Sorry \(name).-I could not fetch your location.-I need your location in order to open the map."
         } else {
             txt = "Sorry.-I could not fetch your location.-I need your location in order to open the map."
