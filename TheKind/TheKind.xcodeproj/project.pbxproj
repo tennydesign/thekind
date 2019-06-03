@@ -312,8 +312,8 @@
 				A0D960CA21C1A78900DF1CB0 /* ChooseDriverAndKindViews */,
 				A02B24D221E0318500737ACC /* DobOnboardingView.xib */,
 				A02B24D421E031AA00737ACC /* dobOnboardingView.swift */,
-				A05150F321E3FFFC00795172 /* UserNameView.xib */,
 				A05150F521E4002800795172 /* UserNameView.swift */,
+				A05150F321E3FFFC00795172 /* UserNameView.xib */,
 				A02A5D0B21CB348E00F26463 /* Classes */,
 			);
 			path = userProfilingFlow;

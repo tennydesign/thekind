@@ -311,7 +311,7 @@ extension MapActionTriggerView: CLLocationManagerDelegate {
                 UIView.animate(withDuration: 0.4, animations: {
                     self.mapBoxView.alpha = 1
                 }, completion: { (completed) in
-                    self.talk()
+                   // self.talk()
                 })
             }
         }

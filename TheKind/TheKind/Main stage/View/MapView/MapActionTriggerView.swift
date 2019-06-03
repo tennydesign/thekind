@@ -304,7 +304,11 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     override func deactivate() {
-        self.fadeOutView()
+        UIView.animate(withDuration: 0.5) {
+            self.alpha = 0
+        }
+        self.deActivateOnDeselection(completion: nil)
+       // self.fadeOutView()
     }
     
     func clearJungChatLog() {
@@ -315,7 +319,6 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
     
     override func leftOptionClicked() {
-
         self.clearJungChatLog()
         self.deActivateOnDeselection(completion: nil)
         
