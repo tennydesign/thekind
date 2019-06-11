@@ -1,7 +1,7 @@
 PODS:
-  - AWSCore (2.9.7)
-  - AWSRekognition (2.9.7):
-    - AWSCore (= 2.9.7)
+  - AWSCore (2.9.9)
+  - AWSRekognition (2.9.9):
+    - AWSCore (= 2.9.9)
   - BoringSSL-GRPC (0.0.2):
     - BoringSSL-GRPC/Implementation (= 0.0.2)
     - BoringSSL-GRPC/Interface (= 0.0.2)
@@ -82,14 +82,14 @@ PODS:
     - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
     - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleToolboxForMac/DebugUtils (2.2.0):
-    - GoogleToolboxForMac/Defines (= 2.2.0)
-  - GoogleToolboxForMac/Defines (2.2.0)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.0)":
-    - GoogleToolboxForMac/DebugUtils (= 2.2.0)
-    - GoogleToolboxForMac/Defines (= 2.2.0)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.0)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.2.0)"
+  - GoogleToolboxForMac/DebugUtils (2.2.1):
+    - GoogleToolboxForMac/Defines (= 2.2.1)
+  - GoogleToolboxForMac/Defines (2.2.1)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.1)":
+    - GoogleToolboxForMac/DebugUtils (= 2.2.1)
+    - GoogleToolboxForMac/Defines (= 2.2.1)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.1)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.2.1)"
   - GoogleUtilities/AppDelegateSwizzler (5.8.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -124,8 +124,8 @@ PODS:
     - gRPC-Core/Interface (= 1.17.0)
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.17.0)
-  - GTMSessionFetcher/Core (1.2.1)
-  - Koloda (4.7):
+  - GTMSessionFetcher/Core (1.2.2)
+  - Koloda (5.0):
     - pop (~> 1.0)
   - leveldb-library (1.20)
   - Mapbox-iOS-SDK (4.8.0-alpha.2)
@@ -138,7 +138,7 @@ PODS:
     - NVActivityIndicatorView/Presenter (= 4.7.0)
   - NVActivityIndicatorView/Presenter (4.7.0)
   - pop (1.0.12)
-  - Protobuf (3.7.0)
+  - Protobuf (3.8.0)
 
 DEPENDENCIES:
   - AWSRekognition
@@ -184,8 +184,8 @@ SPEC REPOS:
     - Protobuf
 
 SPEC CHECKSUMS:
-  AWSCore: c98ab96784580d7a141c6f1999aa919ef45a312c
-  AWSRekognition: dabe8b21ec84c19053eb994db93e2b5f5e288d1f
+  AWSCore: 705dbb60efeec05bc6bbee416e7f5e9837af0749
+  AWSRekognition: a164698ac033c42c3f1de42dd426bc01ab19c625
   BoringSSL-GRPC: 2a230d9cd93e7ce39916044f645cebb31f37dde6
   Firebase: 0c8cf33f266410c61ab3e2265cfa412200351d9c
   FirebaseAnalytics: ece1aa57a4f43c64d53a648b5a5e05151aae947b
@@ -199,19 +199,19 @@ SPEC CHECKSUMS:
   GeoFire: e3ae6f4be3f2466c3467ef6c1c203db3af935c59
   GoogleAppMeasurement: ffe513e90551844a739e7bcbb1d2aca1c28a4338
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
-  GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
+  GoogleToolboxForMac: b3553629623a3b1bff17f555e736cd5a6d95ad55
   GoogleUtilities: 04fce34bcd5620c1ee76fb79172105c74a4df335
   "gRPC-C++": e76441995900ac90e9bd98644ab4733f12521edf
   gRPC-Core: 4028031ed2c5267cca0d846c876d8046b1ecb9b6
-  GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
-  Koloda: f456d003d2ce15ef9f10c2874a444f1f570b490c
+  GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
+  Koloda: 75302d21882cc3e274c1561b1155805ea5919dab
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   Mapbox-iOS-SDK: 621e599a8c0096600bc7116fb4f43a14aaaac8dc
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
-  Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
+  Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
 
 PODFILE CHECKSUM: 47e2b81a76e1913dfe10198344f759793ec39522
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.1

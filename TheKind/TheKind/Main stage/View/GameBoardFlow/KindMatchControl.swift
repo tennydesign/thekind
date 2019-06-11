@@ -37,12 +37,12 @@ class KindMatchControl: KindActionTriggerView {
     
     func preIntroduction() {
         let txt = "Tenny meet Alex.-Alex is the Founder Kind and I think you have a lot in common."
-        let actions: [KindActionType] = [.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none]
+//        let actions: [KindActionType] = [.none,.none]
+//        let actionViews: [ActionViewName] = [.none,.none]
 
         let options = self.talkbox?.createUserOptions(opt1: "See Kind deck.", opt2: "Intro us.", actionViews: (ActionViewName.KindMatchControlView,ActionViewName.KindMatchControlView))
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: nil, actionViews: nil, options: options))
     }
     
     override func activate() {
@@ -58,12 +58,12 @@ class KindMatchControl: KindActionTriggerView {
     }
     
     override func leftOptionClicked() {
-        let actions: [KindActionType] = [.activate]
-        let actionViews: [ActionViewName] = [ActionViewName.BrowseKindView]
+        let actions: [KindActionType] = [.activate, .none]
+        let actionViews: [ActionViewName] = [ActionViewName.BrowseKindView, ActionViewName.GameBoard]
+         KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck = true
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
-        
-        KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck = true
+       
     }
     
     override func fadeInView() {

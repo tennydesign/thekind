@@ -52,7 +52,7 @@ class BadgePhotoSetupView: KindActionTriggerView {
         let txt = "First, take a selife.-This will help when meeting other people.-Justtap the camera above."
         let actions: [KindActionType] = [.none,.fadeInView, .none]
         let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView, .none]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil))
     }
     
 
@@ -80,7 +80,7 @@ class BadgePhotoSetupView: KindActionTriggerView {
         let actionViews: [ActionViewName] = [.none, .DobOnboardingView]
         
         delay(bySeconds: 0.3, dispatchLevel: .main) {
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil))
         }
     }
     

@@ -189,7 +189,7 @@ class JungChatLogger: KindActionTriggerView {
         
         //print(messagesPipe)
         
-        var snippets: [Snippet] = jungRoutine.snippets
+        let snippets: [Snippet] = jungRoutine.snippets
         var messageIndex = 0
         
 

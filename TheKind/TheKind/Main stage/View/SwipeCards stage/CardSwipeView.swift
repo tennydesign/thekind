@@ -56,7 +56,7 @@ class CardSwipeView: UIView {
     }
 
     
-    
+    // Need to rething how these views are loading .THey are all loading at tghe same time on init.
     fileprivate func commonInit() {
         Bundle.main.loadNibNamed("CardSwipeView", owner: self, options: nil)
         addSubview(mainView)
@@ -177,7 +177,8 @@ extension CardSwipeView: KolodaViewDataSource {
         let kinds:[KindCard] = Array(GameKinds.minorKindsOriginal.values)
       
         currentlyShowingKindCard = kinds[indexOfDisplayedKind]
-        currentlyShowingCardImage = UIImage(named: currentlyShowingKindCard.iconImageName.rawValue)!
+        
+        currentlyShowingCardImage = UIImage(named: currentlyShowingKindCard.iconImageName.rawValue) ?? UIImage(named: "original")!
         
         customView?.imageView.image = currentlyShowingCardImage.withRenderingMode(.alwaysTemplate)
         customView?.imageView.tintColor = GOLDCOLOR
@@ -254,7 +255,7 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "Tell me more.", opt2: "Release kind.", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: options))
     }
 
     func deselectAllItemsInChosenKindCollection() {
@@ -276,7 +277,7 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
         let actionViews: [ActionViewName] = [.none,.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "Keep it.", opt2: "Don't keep it.", actionView: self)
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: options))
     }
     
     func talk() {
@@ -323,14 +324,14 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
                     let txt = "Done."
                     let actions: [KindActionType] = [.none]
                     let actionViews: [ActionViewName] = [.none]
-                    self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+                    self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil))
                 }
             } else {
                 print("YOU CANT REMOVE THE MAIN KIND FROM HERE!!!!!!!!!!!")
                 let txt = "You can only remove the main kind from the settings menu."
                 let actions: [KindActionType] = [.none]
                 let actionViews: [ActionViewName] = [.none]
-                self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+                self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil))
             }
 
         } else {
@@ -351,7 +352,7 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
         let actions: [KindActionType] = [.none,.none,.none]
         let actionViews: [ActionViewName] = [.none,.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Release kind.", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: options))
     }
     func fadeInView() {
         

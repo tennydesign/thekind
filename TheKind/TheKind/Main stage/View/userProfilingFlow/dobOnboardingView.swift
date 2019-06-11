@@ -62,7 +62,7 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Confirm year.", actionView: self)
         
         delay(bySeconds: 0.3, dispatchLevel: .main) {
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
         }
     }
     
@@ -101,7 +101,7 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         let txt = "I understand you are about \(age) years old.-We are almost finished with the setup."
         let actions: [KindActionType] = [.none,.activate]
         let actionViews: [ActionViewName] = [.none,.ChooseDriverView]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil))
         
         // Move next.
         self.fadeOutView()

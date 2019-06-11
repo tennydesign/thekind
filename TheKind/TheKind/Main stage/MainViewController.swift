@@ -43,7 +43,7 @@ class MainViewController: UIViewController {
 
     @IBOutlet var cardSwipeViewHost: CardSwipeView! {
         didSet{
-            cardSwipeViewHost.isHidden = false
+            cardSwipeViewHost.isHidden = true
             cardSwipeViewHost.alpha = 0
         }
     }
@@ -188,7 +188,7 @@ class MainViewController: UIViewController {
         let actions: [KindActionType] = [.none, .activate, .none, .activate]
         let actionViews: [ActionViewName] = [.none, .HudView, .none, self.firstViewToPresent]
         //self.talkbox.displayRoutine(routine: self.talkbox.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
-        self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
 
     }
     
@@ -197,7 +197,7 @@ class MainViewController: UIViewController {
         let actions: [KindActionType] = [.activate,.activate]
         let actionViews: [ActionViewName] = [.HudView,self.firstViewToPresent]
         //self.talkbox.displayRoutine(routine: self.talkbox.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
-        self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
         
     }
 

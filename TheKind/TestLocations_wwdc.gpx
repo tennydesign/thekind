@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="Xcode">
+  <wpt lat=" 37.791645498981502" lon="-122.40069614734723">
+    <time>2017-01-01T00:00:00Z</time>
+    <name>GA</name>
+  </wpt>
+  <wpt lat="37.801256" lon="-122.398113">
+      <time>2017-01-01T00:00:08Z</time>
+      <name>Exploratorium</name>
+  </wpt>
+  <wpt lat="37.774768" lon=" -122.394315">
+    <time>2017-01-01T00:00:16Z</time>
+    <name>Home</name>
+  </wpt>
+  <wpt lat=" 37.770172" lon="-122.452412">
+      <time>2017-01-01T00:00:27Z</time>
+      <name>Golden Gate</name>
+  </wpt>
+  <wpt lat=" 37.791645498981502" lon="-122.40069614734723">
+      <time>2017-01-01T00:00:34Z</time>
+      <name>GA</name>
+  </wpt>
+</gpx>

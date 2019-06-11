@@ -82,7 +82,7 @@ class BrowseKindCardView: KindActionTriggerView {
                 options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I'm like \(kindName)", actionView: self)
             }
             
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
         }
     }
     
@@ -91,17 +91,21 @@ class BrowseKindCardView: KindActionTriggerView {
             self.logCurrentLandingView(tag: ActionViewName.BrowseKindView.rawValue)
         }
             
-            guard let driver =  KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.driver.rawValue] as? String else {
-                fatalError("Cant find Driver choice, go back anc choose a driver")
-            }
-            guard let kindsForDriver = GameKinds.kindsForDriver[driver] else {fatalError("Cant find Kinds for driver choice")}
-            availableKindsForDriver = kindsForDriver
-            reloadAndResetCollectionView()
-            
-            fillAndPresentLabelWith(selectedIndex)
-            //Switch between user is browsing or choosing carousels.
+        guard let driver =  KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.driver.rawValue] as? String else {
+            fatalError("Cant find Driver choice, go back anc choose a driver")
+        }
+        
+        guard let kindsForDriver = GameKinds.kindsForDriver[driver] else {fatalError("Cant find Kinds for driver choice")}
+     
+        self.alpha=1
+        mainViewController?.chooseKindCardViewHost.isHidden = false
+        availableKindsForDriver = kindsForDriver
+        reloadAndResetCollectionView()
+        
+        fillAndPresentLabelWith(selectedIndex)
+        //Switch between user is browsing or choosing carousels.
 
-            talk()
+        talk()
 
     }
     
@@ -129,7 +133,7 @@ class BrowseKindCardView: KindActionTriggerView {
                     print("KindDeckManagement.sharedInstance.saveMainKind(): \(err)")
                     return
                 }
-                self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+                self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
             }
   
         }
@@ -148,7 +152,7 @@ class BrowseKindCardView: KindActionTriggerView {
         let actions: [KindActionType] = [.talk]
         let actionViews: [ActionViewName] = [ActionViewName.GameBoardSceneControlView]
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
         KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck = false
     }
     
@@ -156,7 +160,7 @@ class BrowseKindCardView: KindActionTriggerView {
         self.fadeOutView()
         let actions: [KindActionType] = [.activate]
         let actionViews: [ActionViewName] = [.ChooseDriverView]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
     }
     
     // EXECUTED WHEN CAROUSEL IS SHOWING USER KINDS (TELL ME MORE ABOUT THIS KIND).
@@ -169,7 +173,7 @@ class BrowseKindCardView: KindActionTriggerView {
         
         let options = self.talkbox?.createUserOptions(opt1: "Back to the board", opt2: "Introduce us.", actionViews: (ActionViewName.BrowseKindView,ActionViewName.KindMatchControlView))
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
     }
     
     // EXECUTED WHEN USER IS CHOOSING MAIN USER KIND FROM CAROUSEL (ONBOARDING)
@@ -182,7 +186,7 @@ class BrowseKindCardView: KindActionTriggerView {
         
         let options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I'm like \(kindName)", actionView: self)
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
     }
     
     

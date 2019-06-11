@@ -72,9 +72,11 @@ class GameBoard: KindActionTriggerView {
         
         let options = self.talkbox?.createUserOptions(opt1: "No... keep in wired-in mode.", opt2: "Yes... introduce me to someone.", actionViews: (ActionViewName.GameBoardSceneControlView,ActionViewName.GameBoardSceneControlView))
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
         
     }
+    
+    
     
     override func deactivate() {
         self.fadeOutView()

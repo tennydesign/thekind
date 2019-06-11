@@ -23,6 +23,7 @@
 		A0034F7522039ACA00E9810B /* CircleAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0034F7422039ACA00E9810B /* CircleAnnotationModel.swift */; };
 		A005041D225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */; };
 		A005042122616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005042022616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift */; };
+		A005DC8822A5B54200572F5C /* TestLocations_wwdc.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A005DC8722A5B54200572F5C /* TestLocations_wwdc.gpx */; };
 		A0120E6621C6E345000454EC /* BadgePhotoSetupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */; };
 		A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */; };
 		A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */; };
@@ -153,6 +154,7 @@
 		A0034F7422039ACA00E9810B /* CircleAnnotationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleAnnotationModel.swift; sourceTree = "<group>"; };
 		A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Explainers_MapActionTriggerView.swift; sourceTree = "<group>"; };
 		A005042022616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Maps_MapActionTriggerView.swift; sourceTree = "<group>"; };
+		A005DC8722A5B54200572F5C /* TestLocations_wwdc.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestLocations_wwdc.gpx; sourceTree = "<group>"; };
 		A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgePhotoSetupView.xib; sourceTree = "<group>"; };
 		A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePhotoSetupView.swift; sourceTree = "<group>"; };
 		A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xt_GesturesGameBoardScene.swift; sourceTree = "<group>"; };
@@ -566,6 +568,7 @@
 		A0C5D21A212A4A7500BF1B0C = {
 			isa = PBXGroup;
 			children = (
+				A005DC8722A5B54200572F5C /* TestLocations_wwdc.gpx */,
 				A0CBA6772294BB0C0088F581 /* TestLocations.gpx */,
 				A0C5D225212A4A7500BF1B0C /* TheKind */,
 				A0C5D297212A75CD00BF1B0C /* Font */,
@@ -881,6 +884,7 @@
 				A03A46AA21C6C18200D90190 /* OnBoarding.storyboard in Resources */,
 				A025F6E222172D720010BDA1 /* ChosenKindCollectionViewCell.xib in Resources */,
 				A09A0DB8228F9AFF002FC533 /* CircleListTableViewCell.xib in Resources */,
+				A005DC8822A5B54200572F5C /* TestLocations_wwdc.gpx in Resources */,
 				A0D960CE21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib in Resources */,
 				A0C5D22C212A4A7500BF1B0C /* Login.storyboard in Resources */,
 			);
@@ -908,47 +912,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TheKind/Pods-TheKind-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSRekognition/AWSRekognition.framework",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/Koloda/Koloda.framework",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
-				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-				"${BUILT_PRODUCTS_DIR}/pop/pop.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheKind/Pods-TheKind-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSRekognition.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Koloda.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
-				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/pop.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheKind/Pods-TheKind-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TheKind/Pods-TheKind-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TheKind/Pods-TheKind-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		41223984C8682D087B37285F /* [CP] Check Pods Manifest.lock */ = {
@@ -974,17 +947,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TheKind/Pods-TheKind-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheKind/Pods-TheKind-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheKind/Pods-TheKind-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TheKind/Pods-TheKind-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TheKind/Pods-TheKind-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DAB5C788E77F44F34891DF93 /* [CP] Check Pods Manifest.lock */ = {

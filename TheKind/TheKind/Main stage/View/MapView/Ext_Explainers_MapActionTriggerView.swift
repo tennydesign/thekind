@@ -17,7 +17,7 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
     }
     
     
@@ -26,7 +26,7 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
     }
     
     func doneExplainer() {
@@ -34,7 +34,7 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none]
         let actionViews: [ActionViewName] = [.none]
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
     }
     
 
@@ -48,7 +48,7 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none,.none,.none]
         let actionViews: [ActionViewName] = [.none,.none,.none]
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
     }
     
     
@@ -59,7 +59,7 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none, .none,.none, .none]
         let actionViews: [ActionViewName] = [.none,.none,.none, .none]
         let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
     }
     
     
@@ -70,7 +70,7 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none, .none ]
         let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
     }
     
     func explainerCircleGotDeleted() {
@@ -79,7 +79,7 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none ]
         let actionViews: [ActionViewName] = [.none]
       //  let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
     }
     
     func explainerCircleExploration() {
@@ -96,7 +96,7 @@ extension MapActionTriggerView {
                 actionViews.append(.none)
         }
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
     }
     
     func explainerSaveFailed() {
@@ -104,7 +104,7 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
         
     }
     
@@ -112,7 +112,7 @@ extension MapActionTriggerView {
         //enter circle
         let actions: [KindActionType] = [KindActionType.deactivate,KindActionType.activate]
         let actionViews: [ActionViewName] = [ActionViewName.MapView, ActionViewName.GameBoard]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(action: actions, actionView: actionViews, options: nil))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(actions: actions, actionViews: actionViews, options: nil))
         
         //Happens behind the scenes.
         //Will delay 2 second to allow alpha into board, and then it will deselect the annotation and turn Map to normal state.
@@ -125,6 +125,6 @@ extension MapActionTriggerView {
         let txt = "Done."
         let actions: [KindActionType] = [.none]
         let actionViews: [ActionViewName] = [.none]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, action: actions, actionView: actionViews))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, actions: actions, actionViews: actionViews))
     }
 }

@@ -68,7 +68,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
 
         let actions: [KindActionType] = [.deactivate]
         let actionViews: [ActionViewName] = [.HudView]
-        let routine = self.talkbox.routineFromText(dialog: SelfieCheckMSG.wait.rawValue, action: actions, actionView: actionViews, options: nil)
+        let routine = self.talkbox.routineFromText(dialog: SelfieCheckMSG.wait.rawValue, actions: actions, actionViews: actionViews, options: nil)
 
         self.talkbox.displayRoutine(routine: routine)
 
@@ -77,7 +77,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
 
 
                 if result != .good {
-                    self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: result.rawValue, action: [.none], actionView: [.none], options:nil))
+                    self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: result.rawValue, actions: [.none], actionViews: [.none], options:nil))
 
                 } else {
 
@@ -92,7 +92,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
                     // TODO: all should look like this one.
                     let options = self.talkbox.createUserOptions(opt1: "Take another", opt2: "Keep this one", actionViews: (.BadgePhotoSetupView,.BadgePhotoSetupView))
 
-                      self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options), wait: 1)
+                      self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options), wait: 1)
                  
 
 

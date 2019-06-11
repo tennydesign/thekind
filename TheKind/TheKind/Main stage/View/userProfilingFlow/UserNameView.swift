@@ -99,7 +99,7 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I'm good with that.", actionViews: (.none,.UserNameView))
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: options))
 
         return true
     }
@@ -128,10 +128,10 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
        
         adaptLineToTextSize(userNameTextField)
         
-        let actions: [KindActionType] = [.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none]
+//        let actions: [KindActionType] = [.none,.none]
+//        let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I'm good with that.", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: options))
+        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: nil, actionViews: nil, options: options))
         
     }
     
@@ -156,7 +156,7 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
             let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView]
             self.fadeOutView()
             
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, action: actions, actionView: actionViews, options: nil))
+            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil))
           
         } else {
             talk() // Talk to the user about the updated user name. (repeat the routine)

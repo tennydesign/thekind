@@ -57,6 +57,7 @@ class GameBoardSceneControlView: UIView, KindActionTriggerViewProtocol {
         
     }
     
+    
     func fadeInView() {
         
     }

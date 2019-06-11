@@ -31,7 +31,7 @@ class JungTalkBox {
     func displayRoutine(for userResponseOption: Snippet?, wait: Double? = nil) {
         guard let userResponseOption = userResponseOption else {return}
 
-        let playerMessage = Snippet.init(message: userResponseOption.message, action: userResponseOption.action, id: userResponseOption.id, actionView: userResponseOption.actionView ?? .none)
+        let playerMessage = Snippet.init(message: userResponseOption.message, action: userResponseOption.action, id: userResponseOption.id, actionView: userResponseOption.actionView ?? ActionViewName.none)
         
         let playerPostRoutine = JungRoutine.init(snippets: [playerMessage], userResponseOptions: nil, sender: .Player)
 
@@ -64,23 +64,29 @@ class JungTalkBox {
         
     }
 
-    func routineFromText(dialog: String, snippetId: [Int]? = nil, sender: Sender? = nil, action: [KindActionType], actionView: [ActionViewName], options: (Snippet,Snippet)? = nil) -> JungRoutine? {
+    func routineFromText(dialog: String, snippetId: [Int]? = nil, sender: Sender? = nil, actions: [KindActionType]?, actionViews: [ActionViewName]?, options: (Snippet,Snippet)? = nil) -> JungRoutine? {
         
+        //cuts the message at the special character "-"
         let messages = Array(dialog.split(separator: "-").map({ (substring) -> String in
             return String(substring)
         }))
-    
+        
         if messages.isEmpty {return nil}
-        if messages.count != action.count || messages.count != actionView.count {
-            fatalError("Messages count is diff than action and actionView count")
+    
+        
+        if let actions = actions,let actionViews = actionViews {
+            if messages.count != actions.count || messages.count != actionViews.count {
+                fatalError("Messages count is diff than action and actionView count")
+            }
         }
 
+        
         var snippets:[Snippet] = []
         
         for index in 0...messages.count-1 {
-            let snippet = Snippet.init(message: messages[index], action: action[index],
-                                       id: snippetId?[index] ?? 0, actionView: actionView[index])
-            snippets.append(snippet)
+            let snippet = Snippet.init(message: messages[index], action: actions?[index] ?? .none,
+                                       id: snippetId?[index] ?? 0, actionView: actionViews?[index] ?? ActionViewName.none)
+            snippets.append(snippet) 
         }
         
 
@@ -88,13 +94,14 @@ class JungTalkBox {
         
     }
     
-    func routineWithNoText(snippetId: [Int]? = nil, sender: Sender? = nil, action: [KindActionType], actionView: [ActionViewName], options: (Snippet,Snippet)? = nil) -> JungRoutine? {
+    func routineWithNoText(snippetId: [Int]? = nil, sender: Sender? = nil, actions: [KindActionType]?, actionViews: [ActionViewName]?, options: (Snippet,Snippet)? = nil) -> JungRoutine? {
         
         var snippets:[Snippet] = []
         
-        for index in 0...action.count-1 {
-            let snippet = Snippet.init(message: "", action: action[index],
-                                       id: snippetId?[index] ?? 0, actionView: actionView[index])
+        guard let actions = actions else {return nil}
+        for index in 0...actions.count-1 {
+            let snippet = Snippet.init(message: "", action: actions[index] ,
+                                       id: snippetId?[index] ?? 0, actionView: actionViews?[index] ?? ActionViewName.none)
             snippets.append(snippet)
         }
         
