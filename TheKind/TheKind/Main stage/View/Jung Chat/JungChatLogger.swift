@@ -66,6 +66,7 @@ class JungChatLogger: KindActionTriggerView {
     }
     
     private var gradient: CAGradientLayer!
+    
     func commonInit() {
         Bundle.main.loadNibNamed("JungChatLogger", owner: self, options: nil)
         addSubview(jungChatLogger)

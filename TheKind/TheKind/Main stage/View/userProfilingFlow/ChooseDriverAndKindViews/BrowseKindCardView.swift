@@ -75,8 +75,8 @@ class BrowseKindCardView: KindActionTriggerView {
     override func talk() {
         if !KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
             let txt = "Choose your kind. -Tap the icon to know more or go back to change your main driver."
-            let actions: [KindActionType] = [.none, .fadeInView]
-            let actionViews: [ActionViewName] = [.none,.BrowseKindView]
+            let actions: [KindActionType] = [.none, .none]
+            let actionViews: [ActionViewName] = [.none,.none]
             var options: (Snippet,Snippet)?
             if let kindName = availableKindsForDriver.first?.kindName.rawValue {
                 options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I'm like \(kindName)", actionView: self)
