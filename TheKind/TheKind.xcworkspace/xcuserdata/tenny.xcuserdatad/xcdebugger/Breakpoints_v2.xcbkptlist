@@ -63,7 +63,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheKind/Main stage/View/MapView/Model/CircleAnnotationManagement.swift"
-            timestampString = "581232929.51173"
+            timestampString = "582490565.403497"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "63"
@@ -79,12 +79,12 @@
                   moduleName = "TheKind"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tenny/Dropbox/TENNY%20PINHEIRO/Ventures/IOS/%233%20PROJECTS/TheKind_1.0/TheKind/TheKind/Main%20stage/View/MapView/Model/CircleAnnotationManagement.swift"
-                  timestampString = "582484574.342749"
+                  timestampString = "582492408.562618"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "63"
                   endingLineNumber = "63"
-                  offsetFromSymbolStart = "2147">
+                  offsetFromSymbolStart = "1376">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -94,12 +94,12 @@
                   moduleName = "TheKind"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tenny/Dropbox/TENNY%20PINHEIRO/Ventures/IOS/%233%20PROJECTS/TheKind_1.0/TheKind/TheKind/Main%20stage/View/MapView/Model/CircleAnnotationManagement.swift"
-                  timestampString = "582484574.344329"
+                  timestampString = "582492408.56462"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "64"
                   endingLineNumber = "64"
-                  offsetFromSymbolStart = "804">
+                  offsetFromSymbolStart = "492">
                </Location>
             </Locations>
          </BreakpointContent>

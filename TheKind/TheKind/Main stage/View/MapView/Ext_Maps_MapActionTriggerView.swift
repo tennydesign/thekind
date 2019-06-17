@@ -188,7 +188,7 @@ extension MapActionTriggerView: MGLMapViewDelegate {
         
         self.mapBoxView.isUserInteractionEnabled = true
         mainViewController?.setHudDisplayGradientBg(on: true) {
-            self.prepareMapViewsForPresentation {
+            self.prepareMapViewsForPresentation { viewsAreReady in
                 UIView.animate(withDuration: 1, animations: {
                     self.mainViewController?.hudView.alpha = 1
                     annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
@@ -224,23 +224,7 @@ extension MapActionTriggerView: MGLMapViewDelegate {
 
     }
     
-    
-    func prepareMapViewsForPresentation(completion: (()->())?) {
-        mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
-        mapBoxView.isUserInteractionEnabled = true
-        overlayExpandedCircleViews.isUserInteractionEnabled = false
-        mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
-        borderProtectionLeft.isUserInteractionEnabled = true
-        borderProtectionRight.isUserInteractionEnabled = true
-        UIView.animate(withDuration: 0.5, animations: {
-            self.mainViewController?.hudView.hudCenterDisplay.alpha = 1
-            self.mainViewController?.hudView.listViewStack.alpha = 1
-            self.overlayExpandedCircleViews.alpha = 0
-        }) { (completed) in
-            completion?()
-        }
-        
-    }
+
 
     func mapView(_ mapView: MGLMapView, didDeselect annotationView: MGLAnnotationView) {
         // not in use

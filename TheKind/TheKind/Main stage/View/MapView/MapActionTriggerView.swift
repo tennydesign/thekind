@@ -9,7 +9,7 @@
 import UIKit
 import Mapbox
 import MapKit
-
+import Lottie
 
 class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
@@ -52,6 +52,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     var circleIsPrivate: Bool = false 
     var circleIsStealthMode: Bool = false
     var circleIsInEditMode: Bool = false 
+
     
     var userIsAdmin: Bool = false
     var locationManager = CLLocationManager()
@@ -186,23 +187,6 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     
     
-    
-    ///JUNG ACTIONS
-    
-    override func talk() {
-        //Jung should talk here
-        mapExplainer()
-        
-    }
-    
-    
-    
-    
-    @IBAction func enterCircleTouched(_ sender: UIButton) {
-    
-    }
-    
-    
     override func activate() {
         KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.MapView.rawValue
         KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
@@ -216,63 +200,121 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             self.mainViewController?.jungChatLogger.bottomGradient.alpha = 1
         }
         
+        
         self.fadeInView() //fades in the view, not the map yet.
-
-        prepareMapViewsForPresentation() {
-            var latitude: CLLocationDegrees?
-            var longitude: CLLocationDegrees?
+        
+        prepareMapViewsForPresentation() { viewsAreReady in
+            self.tryToFetchUserLocation() { coordinates in
+                guard let coordinates = coordinates else {return}
+                self.plotAnnotations(coordinates: coordinates)
             
-            var attempts: Int = 0
-            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-                attempts+=1
-                print("attempt \(attempts)")
-                latitude = self.locationManager.location?.coordinate.latitude
-                longitude = self.locationManager.location?.coordinate.longitude
-                
-                if attempts == 5 {
-                    timer.invalidate()
-                    print("We tried 5 times to grab location and failed 5 times")
-                    self.cantFindLocationExplainer()
-                    attempts = 0
-                }
-                
-                if ((latitude != nil) && (longitude != nil)) {
-                    //present map
-                    print("Got location at attempt \(attempts)")
-                    UIView.animate(withDuration: 0.4, animations: {
-                        self.mapBoxView.alpha = 1
-                    }, completion: { (completed) in
-                        self.talk()
-                    })
-                    
-                    self.plotCirclesUserIsAdmin()
-                    //plot circles && setup the observers
-                    // Will call self.plotCircleCloseToPlayerCallback?(set)
-                    
-                    CircleAnnotationManagement.sharedInstance.getCirclesWithinRadiusObserver(latitude: latitude!, longitude: longitude!, radius: 0.6, completion: {
-                        print("executed geoFireTestingQuery")
-                    })
-                    
-                    timer.invalidate()
-                    attempts = 0
-                }
             }
         }
     
     }
     
-    func plotCirclesUserIsAdmin() {
-        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
-        CircleAnnotationManagement.sharedInstance.retrieveAllCirclesUserIsAdmin() { (sets) in
-            sets?.forEach({ (set) in
-                let pointAnnotation:MGLPointAnnotation = KindPointAnnotation(circleAnnotationSet: set)
-                let isAlreadyPlotted = self.mapBoxView.annotations?.contains{$0.title == set.circleId || $0.title == uid } ?? false
-                if !isAlreadyPlotted {
-                    pointAnnotation.title = set.circleId
-                    self.mapBoxView.addAnnotation(pointAnnotation)
-                }
+    
+    fileprivate func tryToFetchUserLocation(completion: @escaping ((CLLocationCoordinate2D?)->())) {
+        var latitude: CLLocationDegrees?
+        var longitude: CLLocationDegrees?
+        
+        var hasCoordinates: Bool {
+            get {
+                return ((latitude != nil) && (longitude != nil))
+            }
+        }
+        
+        var attempts: Int = 0
+        
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            attempts+=1
+            
+            print("attempt \(attempts)")
+            latitude = self.locationManager.location?.coordinate.latitude
+            longitude = self.locationManager.location?.coordinate.longitude
+            
+            if attempts == 5 && !hasCoordinates {
+                timer.invalidate()
+                print("We tried 5 times to grab location and failed 5 times")
+                self.cantFindLocationExplainer()
+                attempts = 0
+                completion(nil)
+                return
+            }
+            //if ((latitude != nil) && (longitude != nil)) {
+            if hasCoordinates {
+                completion(CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!))
+                print("Got location at attempt \(attempts)")
+                timer.invalidate()
+                attempts = 0
+            }
+        }
+    }
+    
+    fileprivate func plotAnnotations(coordinates: CLLocationCoordinate2D) {
+        //present map
+        let group = DispatchGroup()
+        group.enter()
+        self.plotCirclesUserIsAdmin() {
+            group.leave()
+            group.enter()
+            self.plotCirclesAroundUser(latitude: coordinates.latitude, longitude: coordinates.longitude, completion: { (plotted) in
+                print("executed geoFireTestingQuery")
+                group.leave()
             })
         }
+        
+        group.notify(queue: .main) {
+            self.showMap()
+        }
+    }
+    
+    func showMap() {
+        UIView.animate(withDuration: 0.4, animations: {
+            self.mapBoxView.alpha = 1
+        }, completion: { (completed) in
+            self.talk()
+        })
+    }
+    func plotCirclesAroundUser(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: ((Bool)->())?) {
+        CircleAnnotationManagement.sharedInstance.getCirclesWithinRadiusObserver(latitude: latitude, longitude: longitude, radius: 0.6, completion: {
+            print("executed geoFireTestingQuery")
+            completion?(true)
+        })
+    }
+    
+    func plotCirclesUserIsAdmin(completion: (()->())?) {
+        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
+        CircleAnnotationManagement.sharedInstance.retrieveAllCirclesUserIsAdmin() { (sets) in
+            if let sets = sets {
+                sets.forEach({ (set) in
+                    let pointAnnotation:MGLPointAnnotation = KindPointAnnotation(circleAnnotationSet: set)
+                    let isAlreadyPlotted = self.mapBoxView.annotations?.contains{$0.title == set.circleId || $0.title == uid } ?? false
+                    if !isAlreadyPlotted {
+                        pointAnnotation.title = set.circleId
+                        self.mapBoxView.addAnnotation(pointAnnotation)
+                    }
+                })
+                completion?()
+            }
+        }
+    }
+    
+    func prepareMapViewsForPresentation(completion: ((Bool)->())?) {
+        mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
+        mapBoxView.isUserInteractionEnabled = true
+        overlayExpandedCircleViews.isUserInteractionEnabled = false
+        mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
+        borderProtectionLeft.isUserInteractionEnabled = true
+        borderProtectionRight.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.5, animations: {
+            self.mainViewController?.hudView.hudCenterDisplay.alpha = 1
+            self.mainViewController?.hudView.listViewStack.alpha = 1
+            self.overlayExpandedCircleViews.alpha = 0
+        }) { (completed) in
+            completion?(true)
+        }
+        
     }
     
     // Plotters. Show and hide circles.
@@ -316,6 +358,13 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.mainViewController?.jungChatLogger.hideOptionLabels(true, completion: nil)
     }
     
+    ///JUNG ACTIONS
+    
+    override func talk() {
+        //Jung should talk here
+        mapExplainer()
+        
+    }
 
     
     override func leftOptionClicked() {
@@ -403,6 +452,13 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         setupConfirmationBtn(withMessage: message, detail: detail, action: .removeCircle)
 
     }
+    
+    
+    
+    @IBAction func enterCircleTouched(_ sender: UIButton) {
+        
+    }
+
     
 
     func deleteUserFromCircleBtn(userId:String) {
@@ -513,3 +569,51 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 }
 
 
+extension MapActionTriggerView: ConfirmationViewProtocol {
+    
+    func setupConfirmationBtn(withMessage: String, detail: String?, action: ConfirmButtonActions) {
+        mainViewController?.confirmationView.delegate = self
+        mainViewController?.confirmationView.actionEnum = action
+        mainViewController?.confirmationView.confirmAction.setTitle(withMessage, for: .normal)
+        mainViewController?.confirmationView.detailsLabel.text = detail ?? ""
+        mainViewController?.confirmationView.activate()
+    }
+    
+    func userConfirmed() {
+        guard let action = mainViewController?.confirmationView.actionEnum else {return}
+        switch action {
+        case .removeUserFromCircle:
+            guard let user = selectedKindUser, let id = user.uid else {return}
+            CircleAnnotationManagement.sharedInstance.removeUserFromCircle(userId: id) {
+                print("user removed from array in Firebase")
+                self.mainViewController?.confirmationView.deactivate()
+            }
+        case .transferCircleToUser:
+            print("hello makeUserAdminForCircleBtn")
+            guard let user = selectedKindUser, let id = user.uid else {return}
+            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.admin = id
+            saveCircleSetIfNotTemporary() {
+                self.mainViewController?.confirmationView.deactivate()
+            }
+            
+        case .removeCircle:
+            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.deleted = true
+            saveCircleSetIfNotTemporary() {
+                self.mainViewController?.confirmationView.deactivate()
+            }
+        case .makeCircleStealth:
+            CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.stealthMode = self.circleIsStealthMode
+            saveCircleSetIfNotTemporary() {
+                self.mainViewController?.confirmationView.deactivate()
+            }
+        }
+        
+        
+    }
+    
+    func userCancelled() {
+        mainViewController?.confirmationView.deactivate()
+    }
+    
+    
+}

@@ -10,6 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import AWSRekognition
 import FirebaseAuth
+import Lottie
 
 class MainViewController: UIViewController {
     
@@ -17,8 +18,9 @@ class MainViewController: UIViewController {
     @IBOutlet var bottomConstraintPanelMover: NSLayoutConstraint!
     var maxMapBottomPanelPosition: CGFloat!
     var rekognitionObject: AWSRekognition?
+  //  var loaderAnimationView: AnimationView = AnimationView(name: "51-preloader")
     
-    @IBOutlet var hudView: HUDview! 
+    @IBOutlet var hudView: HUDview!
     
     @IBOutlet var hudWindow: UIView! // overall top
     
@@ -138,26 +140,32 @@ class MainViewController: UIViewController {
         self.adaptHUDAndPanelToIphoneXFamily()
 
         //self.updateViewTagWithCurrentState()
-        
+     //   self.loaderAnimation(present: true) {}
         KindDeckManagement.sharedInstance.initializeDeckObserver()
 
-        self.updateViewTagWithCurrentState()
+        self.checkCurrentViewForUser() { onBoard in
+            if onBoard {
+                delay(bySeconds: 0.1, dispatchLevel: .main) {
+                    self.intro()
+                }
+            } else { //returning user
+                delay(bySeconds: 0.1, dispatchLevel: .main) {
+                    self.welcomeBack()
+                }
+            }
+        }
 
     }
     
-    fileprivate func updateViewTagWithCurrentState() {
+    fileprivate func checkCurrentViewForUser(completion: ((Bool)->())?) {
         //update tag:
         let tag = KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] as? Int ?? firstViewToPresent.rawValue
         if let actionViewNameEnum = ActionViewName(rawValue: tag) {
             self.firstViewToPresent = actionViewNameEnum
             if self.firstViewToPresent == ActionViewName.UserNameView {
-                delay(bySeconds: 0.1, dispatchLevel: .main) {
-                    self.intro()
-               }
+                completion?(true)
             } else {
-                delay(bySeconds: 0.1, dispatchLevel: .main) {
-                    self.welcomeBack()
-                }
+                completion?(false)
             }
             
         }
@@ -182,6 +190,31 @@ class MainViewController: UIViewController {
         }
         
     }
+    
+//    func loaderAnimation(present: Bool, completion: (()->())?) {
+//        if present {
+//               loaderAnimationView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+//                loaderAnimationView.center = self.view.center
+//                loaderAnimationView.alpha = 1
+//                loaderAnimationView.contentMode = .scaleAspectFill
+//                loaderAnimationView.tag = 51
+//                UIApplication.shared.keyWindow?.addSubview(loaderAnimationView)
+//                loaderAnimationView.animationSpeed = 1
+//                loaderAnimationView.play()
+//                completion?()
+//        } else {
+//            UIView.animate(withDuration: 0.4, animations: {
+//                self.loaderAnimationView.alpha = 0
+//            }) { (completed) in
+//                if let loaderAnimation = UIApplication.shared.keyWindow?.viewWithTag(51) as? AnimationView {
+//                   loaderAnimation.removeFromSuperview()
+//                }
+//                completion?()
+//            }
+//
+//        }
+//    }
+
     
     fileprivate func intro() {
         let txt = "Hi. Welcome to The Kind.-My name is Jung.-I'm pretty good at introducing people to each other-...and can help you make friends and have great conversations"

@@ -24,6 +24,7 @@
 		A005041D225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */; };
 		A005042122616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005042022616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift */; };
 		A005DC8822A5B54200572F5C /* TestLocations_wwdc.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A005DC8722A5B54200572F5C /* TestLocations_wwdc.gpx */; };
+		A00843AD22B8050100DCD318 /* 51-preloader.json in Resources */ = {isa = PBXBuildFile; fileRef = A00843AC22B8050100DCD318 /* 51-preloader.json */; };
 		A0120E6621C6E345000454EC /* BadgePhotoSetupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */; };
 		A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */; };
 		A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */; };
@@ -155,6 +156,7 @@
 		A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Explainers_MapActionTriggerView.swift; sourceTree = "<group>"; };
 		A005042022616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Maps_MapActionTriggerView.swift; sourceTree = "<group>"; };
 		A005DC8722A5B54200572F5C /* TestLocations_wwdc.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestLocations_wwdc.gpx; sourceTree = "<group>"; };
+		A00843AC22B8050100DCD318 /* 51-preloader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "51-preloader.json"; sourceTree = "<group>"; };
 		A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgePhotoSetupView.xib; sourceTree = "<group>"; };
 		A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePhotoSetupView.swift; sourceTree = "<group>"; };
 		A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xt_GesturesGameBoardScene.swift; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 			isa = PBXGroup;
 			children = (
 				A0C5D226212A4A7500BF1B0C /* AppDelegate.swift */,
+				A00843AC22B8050100DCD318 /* 51-preloader.json */,
 				A002F47221B9BE61006E8660 /* TheKind.entitlements */,
 				A0A45E1721F53B0F00DDEC6C /* ports.geojson */,
 				A0C5D230212A4A7600BF1B0C /* Assets.xcassets */,
@@ -859,6 +862,7 @@
 				A096B7772280B68F003E52FE /* ConfirmationView.xib in Resources */,
 				A0320B5F212F2873008A96E2 /* Main.storyboard in Resources */,
 				A09A0DB2228F5EFB002FC533 /* ListCircleView.xib in Resources */,
+				A00843AD22B8050100DCD318 /* 51-preloader.json in Resources */,
 				A0C5D234212A4A7600BF1B0C /* LaunchScreen.storyboard in Resources */,
 				A0320B4F212B69BA008A96E2 /* LoginExistingUser.xib in Resources */,
 				A05150F421E3FFFC00795172 /* UserNameView.xib in Resources */,

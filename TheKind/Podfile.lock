@@ -128,6 +128,7 @@ PODS:
   - Koloda (5.0):
     - pop (~> 1.0)
   - leveldb-library (1.20)
+  - lottie-ios (3.1.0)
   - Mapbox-iOS-SDK (4.8.0-alpha.2)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -150,6 +151,7 @@ DEPENDENCIES:
   - GeoFire
   - GoogleSignIn
   - Koloda
+  - lottie-ios
   - Mapbox-iOS-SDK (= 4.8.0-alpha.2)
   - NVActivityIndicatorView
 
@@ -177,6 +179,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - Koloda
     - leveldb-library
+    - lottie-ios
     - Mapbox-iOS-SDK
     - nanopb
     - NVActivityIndicatorView
@@ -206,12 +209,13 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
   Koloda: 75302d21882cc3e274c1561b1155805ea5919dab
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  lottie-ios: 9467723922dfff46f6d4e3019c32594a62440b7c
   Mapbox-iOS-SDK: 621e599a8c0096600bc7116fb4f43a14aaaac8dc
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
 
-PODFILE CHECKSUM: 47e2b81a76e1913dfe10198344f759793ec39522
+PODFILE CHECKSUM: 614be583663d3bc97df765ab72fcee5e63da8233
 
 COCOAPODS: 1.7.1
