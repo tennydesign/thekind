@@ -167,6 +167,13 @@ extension UIView {
         }
     }
     
+    func fadeIn(_ time: Double, ratio: CGFloat) {
+        UIView.animate(withDuration: time) {
+            self.alpha = ratio
+        }
+    }
+    
+    
     func fadeIn(_ time: Double, completion: (()->())?) {
         UIView.animate(withDuration: time, animations: {
             self.alpha = 1
@@ -182,6 +189,9 @@ extension UIView {
             completion?()
         }
     }
+    
+
+    
     
 //    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 //        return self.bounds.contains(point) ? self : nil

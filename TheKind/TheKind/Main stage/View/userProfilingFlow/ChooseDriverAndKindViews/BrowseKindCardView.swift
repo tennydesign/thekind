@@ -65,8 +65,8 @@ class BrowseKindCardView: KindActionTriggerView {
     }
     
     func commonInit() {
-        Bundle.main.loadNibNamed("BrowseKindCardView", owner: self, options: nil)
-        addSubview(chooseKindCard)
+//        Bundle.main.loadNibNamed("BrowseKindCardView", owner: self, options: nil)
+//        addSubview(chooseKindCard)
         
         //print("status bar: \(UIApplication.shared.statusBarFrame.height)")
     }
@@ -87,6 +87,9 @@ class BrowseKindCardView: KindActionTriggerView {
     }
     
     override func activate() {
+        Bundle.main.loadNibNamed("BrowseKindCardView", owner: self, options: nil)
+        addSubview(chooseKindCard)
+        
          if !KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
             self.logCurrentLandingView(tag: ActionViewName.BrowseKindView.rawValue)
         }
@@ -111,6 +114,7 @@ class BrowseKindCardView: KindActionTriggerView {
     
     override func deactivate() {
         self.fadeOutView()
+        chooseKindCard.removeFromSuperview()
     }
     
     override func rightOptionClicked() {

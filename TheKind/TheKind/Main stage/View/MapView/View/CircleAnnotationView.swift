@@ -57,11 +57,12 @@ class CircleAnnotationView: MGLAnnotationView {
         layer.backgroundColor = DARKPINKCOLOR.cgColor
         layer.borderColor = UIColor.clear.cgColor
         layer.borderWidth = 0
-        self.fadeIn(0.4)
+        self.fadeIn(0.4, ratio: 0.7)
+        
         
     }
     
-    
+
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

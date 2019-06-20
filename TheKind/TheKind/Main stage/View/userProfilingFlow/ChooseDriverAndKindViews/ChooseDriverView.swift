@@ -36,14 +36,14 @@ class ChooseDriverView: KindActionTriggerView {
     lazy var boudingRect = CGSize(width: pickerView.bounds.width, height: pickerView.bounds.height)
     
     func commonInit() {
-        Bundle.main.loadNibNamed("ChooseDriverView", owner: self, options: nil)
-        chooseDriverView.frame = self.bounds
-        chooseDriverView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
-        addSubview(chooseDriverView)
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        pickerView.selectRow(0, inComponent: 0, animated: false)
-        lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)).width
+//        Bundle.main.loadNibNamed("ChooseDriverView", owner: self, options: nil)
+//        chooseDriverView.frame = self.bounds
+//        chooseDriverView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
+//        addSubview(chooseDriverView)
+//        pickerView.delegate = self
+//        pickerView.dataSource = self
+//        pickerView.selectRow(0, inComponent: 0, animated: false)
+//        lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)).width
         
 
     }
@@ -68,15 +68,24 @@ class ChooseDriverView: KindActionTriggerView {
     }
     
     override func activate() {
+        Bundle.main.loadNibNamed("ChooseDriverView", owner: self, options: nil)
+        chooseDriverView.frame = self.bounds
+        chooseDriverView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
+        addSubview(chooseDriverView)
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        pickerView.selectRow(0, inComponent: 0, animated: false)
+        lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)).width
 
-            KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.ChooseDriverView.rawValue
-            KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
-            talk()
+        KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.ChooseDriverView.rawValue
+        KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+        talk()
 
         
     }
     
     override func deactivate() {
+        chooseDriverView.removeFromSuperview()
         self.fadeOutView()
     }
     

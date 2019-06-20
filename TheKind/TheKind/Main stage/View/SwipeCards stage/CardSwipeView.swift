@@ -58,21 +58,21 @@ class CardSwipeView: UIView {
     
     // Need to rething how these views are loading .THey are all loading at tghe same time on init.
     fileprivate func commonInit() {
-        Bundle.main.loadNibNamed("CardSwipeView", owner: self, options: nil)
-        addSubview(mainView)
-        
-        kolodaView.dataSource = self
-        kolodaView.delegate = self
-        chosenKindsCollectionView.dataSource = self
-        chosenKindsCollectionView.delegate = self
-        kolodaView.appearanceAnimationDuration = 0.3
-        chosenKindsCollectionView?.register(UINib(nibName: "ChosenKindCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ChosenKindCollectionViewCell")
-
-        
-        // triggers every time the deck is updated.
-        KindDeckManagement.sharedInstance.getCurrentUserDeck { (success) in
-            //print("retrieval of deck is \(success)")
-        }
+//        Bundle.main.loadNibNamed("CardSwipeView", owner: self, options: nil)
+//        addSubview(mainView)
+//
+//        kolodaView.dataSource = self
+//        kolodaView.delegate = self
+//        chosenKindsCollectionView.dataSource = self
+//        chosenKindsCollectionView.delegate = self
+//        kolodaView.appearanceAnimationDuration = 0.3
+//        chosenKindsCollectionView?.register(UINib(nibName: "ChosenKindCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ChosenKindCollectionViewCell")
+//
+//
+//        // triggers every time the deck is updated.
+//        KindDeckManagement.sharedInstance.getCurrentUserDeck { (success) in
+//            //print("retrieval of deck is \(success)")
+//        }
         
         // PUT A PIN ON THIS. This may not being called.
 //        KindDeckManagement.sharedInstance.updateMainKindOnClient = { [unowned self] in
@@ -285,12 +285,28 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
     }
     
     func activate() {
+        Bundle.main.loadNibNamed("CardSwipeView", owner: self, options: nil)
+        addSubview(mainView)
+        
+        kolodaView.dataSource = self
+        kolodaView.delegate = self
+        chosenKindsCollectionView.dataSource = self
+        chosenKindsCollectionView.delegate = self
+        kolodaView.appearanceAnimationDuration = 0.3
+        chosenKindsCollectionView?.register(UINib(nibName: "ChosenKindCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ChosenKindCollectionViewCell")
+        
+        
+        // triggers every time the deck is updated.
+        KindDeckManagement.sharedInstance.getCurrentUserDeck { (success) in
+            //print("retrieval of deck is \(success)")
+        }
+        
         self.alpha = 1
         chosenKindsCollectionView.reloadData()
     }
     
     func deactivate() {
-        
+        mainView.removeFromSuperview()
     }
     
     

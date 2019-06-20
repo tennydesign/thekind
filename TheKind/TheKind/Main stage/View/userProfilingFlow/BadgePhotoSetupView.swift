@@ -28,9 +28,9 @@ class BadgePhotoSetupView: KindActionTriggerView {
     }
     
     func commonInit() {
-        Bundle.main.loadNibNamed("BadgePhotoSetupView", owner: self, options: nil)
-        addSubview(mainView)
-        
+//        Bundle.main.loadNibNamed("BadgePhotoSetupView", owner: self, options: nil)
+//        addSubview(mainView)
+//
     }
     
     @IBAction func selfieButtonClicked(_ sender: UIButton) {
@@ -40,12 +40,15 @@ class BadgePhotoSetupView: KindActionTriggerView {
     override func activate() {
 //             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.BadgePhotoSetupView.rawValue
 //             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+        Bundle.main.loadNibNamed("BadgePhotoSetupView", owner: self, options: nil)
+        addSubview(mainView)
+
         self.logCurrentLandingView(tag: ActionViewName.BadgePhotoSetupView.rawValue)
         talk()
     }
     
     override func deactivate() {
-
+        mainView.removeFromSuperview()
     }
     
     override func talk() {

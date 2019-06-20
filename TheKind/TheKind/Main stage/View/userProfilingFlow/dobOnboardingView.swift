@@ -37,6 +37,22 @@ class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
     
     let rotationAngle: CGFloat = 90 * (.pi/180)
     func commonInit() {
+//        Bundle.main.loadNibNamed("DobOnboardingView", owner: self, options: nil)
+//        addSubview(mainView)
+//        pickerView.delegate = self
+//        pickerView.dataSource = self
+//
+//        pickerView.transform = CGAffineTransform(rotationAngle: -rotationAngle)
+//
+//        pickerView.frame = CGRect(x: -100, y: 0, width: self.frame.width - 200, height: 100)
+//        pickerView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        pickerView.selectRow(90, inComponent:0, animated:true)
+ 
+        
+    }
+    
+    override func activate() {
         Bundle.main.loadNibNamed("DobOnboardingView", owner: self, options: nil)
         addSubview(mainView)
         pickerView.delegate = self
@@ -46,15 +62,10 @@ class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         
         pickerView.frame = CGRect(x: -100, y: 0, width: self.frame.width - 200, height: 100)
         pickerView.translatesAutoresizingMaskIntoConstraints = false
-      
-        pickerView.selectRow(90, inComponent:0, animated:true)
- 
         
-    }
-    
-    override func activate() {
-            self.logCurrentLandingView(tag: ActionViewName.DobOnboardingView.rawValue)
-            self.talk()
+        pickerView.selectRow(90, inComponent:0, animated:true)
+        self.logCurrentLandingView(tag: ActionViewName.DobOnboardingView.rawValue)
+        self.talk()
     }
     
     override func talk() {

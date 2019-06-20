@@ -31,14 +31,6 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     @IBOutlet var mainView: UIView!
     
     func commonInit() {
-//        Bundle.main.loadNibNamed("UserNameView", owner: self, options: nil)
-//        addSubview(mainView)
-//        setupUserNameTextField()
-//
-//        adaptLineToTextSize(userNameTextField)
-//        //KindUser.loggedUserName = "" // test purposes only
-//        setupKeyboardObservers()
-//        self.talkbox?.delegate = self
     }
     
     fileprivate func setupKeyboardObservers() {

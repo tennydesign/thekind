@@ -35,6 +35,26 @@ class GameBoard: KindActionTriggerView {
     
     func commonInit() {
         
+//        Bundle.main.loadNibNamed("GameBoard", owner: self, options: nil)
+//        addSubview(gameBoardView)
+//
+//        gameBoardView.frame = self.bounds
+//        gameBoardView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
+//
+//        if let scene = SKScene(fileNamed: "gameboardScene") as? GameBoardScene {
+//            scene.scaleMode = .aspectFill
+//            boardSkView.presentScene(scene)
+//            gameBoardScene = scene
+//        } else {
+//            print("scene not found")
+//        }
+//
+//        boardSkView.ignoresSiblingOrder = true
+        
+        
+    }
+    
+    override func activate() {
         Bundle.main.loadNibNamed("GameBoard", owner: self, options: nil)
         addSubview(gameBoardView)
         
@@ -51,10 +71,6 @@ class GameBoard: KindActionTriggerView {
         
         boardSkView.ignoresSiblingOrder = true
         
-        
-    }
-    
-    override func activate() {
         mainViewController?.setHudDisplayGradientBg(on: true) {
             self.fadeInView()
         }
@@ -81,5 +97,6 @@ class GameBoard: KindActionTriggerView {
     
     override func deactivate() {
         self.fadeOutView()
+        gameBoardView.removeFromSuperview()
     }
 }
