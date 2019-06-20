@@ -53,21 +53,27 @@ class ConfirmationView: KindActionTriggerView {
     
     override func activate() {
         self.isHidden = false
-        UIView.animate(withDuration: 0.4) {
-            self.alpha = 1
-        }
+        self.fadeIn(0.4)
+//        UIView.animate(withDuration: 0.4) {
+//            self.alpha = 1
+//        }
 
 
     }
     
     override func deactivate() {
-        UIView.animate(withDuration: 0.4, animations: {
-            self.alpha = 0
-        }) { (completed) in
+        self.fadeOut(0.4) {
             self.isHidden = true
             self.confirmAction.setTitle("", for: .normal)
             self.delegate = nil
         }
+//        UIView.animate(withDuration: 0.4, animations: {
+//            self.alpha = 0
+//        }) { (completed) in
+//            self.isHidden = true
+//            self.confirmAction.setTitle("", for: .normal)
+//            self.delegate = nil
+//        }
 
 
     }

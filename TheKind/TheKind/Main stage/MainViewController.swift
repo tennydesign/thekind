@@ -50,7 +50,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    @IBOutlet var dobOnboardingViewHost: dobOnboardingView! {
+    @IBOutlet var dobOnboardingViewHost: DobOnboardingView! {
         didSet{
             dobOnboardingViewHost.isHidden = true
             dobOnboardingViewHost.alpha = 0

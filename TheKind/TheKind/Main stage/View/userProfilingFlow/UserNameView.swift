@@ -31,14 +31,14 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     @IBOutlet var mainView: UIView!
     
     func commonInit() {
-        Bundle.main.loadNibNamed("UserNameView", owner: self, options: nil)
-        addSubview(mainView)
-        setupUserNameTextField()
-        
-        adaptLineToTextSize(userNameTextField)
-        //KindUser.loggedUserName = "" // test purposes only
-        setupKeyboardObservers()
-        self.talkbox?.delegate = self
+//        Bundle.main.loadNibNamed("UserNameView", owner: self, options: nil)
+//        addSubview(mainView)
+//        setupUserNameTextField()
+//
+//        adaptLineToTextSize(userNameTextField)
+//        //KindUser.loggedUserName = "" // test purposes only
+//        setupKeyboardObservers()
+//        self.talkbox?.delegate = self
     }
     
     fileprivate func setupKeyboardObservers() {
@@ -105,9 +105,15 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     }
     
     override func activate() {
-        // save current view # to database (onboarding log)
-//        KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.UserNameView.rawValue
-//        KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
+
+        Bundle.main.loadNibNamed("UserNameView", owner: self, options: nil)
+        addSubview(mainView)
+        setupUserNameTextField()
+        
+        adaptLineToTextSize(userNameTextField)
+        //KindUser.loggedUserName = "" // test purposes only
+        setupKeyboardObservers()
+        self.talkbox?.delegate = self
         
         self.logCurrentLandingView(tag: ActionViewName.UserNameView.rawValue)
         self.fadeInView()
@@ -139,6 +145,8 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
 
     
     override  func deactivate() {
+        mainView.removeFromSuperview()
+        NotificationCenter.default.removeObserver(self)
         self.talkbox?.delegate = nil
     }
     

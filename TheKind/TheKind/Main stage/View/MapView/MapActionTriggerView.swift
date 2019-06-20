@@ -88,44 +88,11 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
 
     func commonInit() {
-        Bundle.main.loadNibNamed("MapView", owner: self, options: nil)
-        addSubview(mainView)
-        
-        //screen adjustments.
-        adjustScreenforXFamily()
-        
-        circleNameTextField.delegate = self
-        mapBoxView.delegate = self
-        locationManager.delegate = self
-        self.talkbox?.delegate = self
-        photoStripCollectionView.dataSource = self
-        photoStripCollectionView.delegate = self
 
-        photoStripCollectionView?.register(UINib(nibName: "PhotoStripCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PhotoStripCollectionViewCell")
-
-        gesturesAndActionsSetup()
-
-        locationServicesSetup()
-
-        activateCallBacks()
-        
-
-        
     }
     
-    // prepares the overlay at expandedCircleViews (black alpha with a hole in the center)
     override func layoutSubviews() {
-        let overlay = self.createOverlay(frame: self.frame,
-                                         xOffset: self.frame.midX,
-                                         yOffset: self.frame.midY,
-                                         radius: 90.0)
-        
-        self.overlayExpandedCircleViews.addSubview(overlay)
-        self.overlayExpandedCircleViews.sendSubviewToBack(overlay)
-        
-        configMapbox()
-        
-        
+
     }
     
     func gesturesAndActionsSetup() {
@@ -162,7 +129,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     fileprivate func configMapbox() {
         mapBoxView.styleURL = MGLStyle.darkStyleURL
-        mapBoxView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+       // mapBoxView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapBoxView.tintColor = .lightGray
         mapBoxView.logoView.isHidden = true
         mapBoxView.attributionButton.isHidden = true
@@ -188,6 +155,38 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     
     override func activate() {
+        Bundle.main.loadNibNamed("MapView", owner: self, options: nil)
+        mainView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        mainView.alpha = 0
+        addSubview(mainView)
+        
+        circleNameTextField.delegate = self
+        mapBoxView.delegate = self
+        locationManager.delegate = self
+        self.talkbox?.delegate = self
+        photoStripCollectionView.dataSource = self
+        photoStripCollectionView.delegate = self
+        
+        photoStripCollectionView?.register(UINib(nibName: "PhotoStripCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PhotoStripCollectionViewCell")
+        
+        //screen adjustments.
+        adjustScreenforXFamily()
+        gesturesAndActionsSetup()
+        
+        locationServicesSetup()
+        
+        activateCallBacks()
+        
+        let overlay = self.createOverlay(frame: self.frame,
+                                         xOffset: self.frame.midX,
+                                         yOffset: self.frame.midY,
+                                         radius: 90.0)
+        
+        self.overlayExpandedCircleViews.addSubview(overlay)
+        self.overlayExpandedCircleViews.sendSubviewToBack(overlay)
+        
+        configMapbox()
+        
         KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.MapView.rawValue
         KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
 
@@ -196,9 +195,8 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.talkbox?.delegate = self
         self.mainViewController?.listCircleView.delegate = self
         self.mainViewController?.jungChatLogger.backgroundColor = UIColor.clear
-        UIView.animate(withDuration: 0.3) {
-            self.mainViewController?.jungChatLogger.bottomGradient.alpha = 1
-        }
+        self.mainViewController?.jungChatLogger.bottomGradient.fadeIn(0.3)
+
         
         
         self.fadeInView() //fades in the view, not the map yet.
@@ -207,10 +205,8 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             self.tryToFetchUserLocation() { coordinates in
                 guard let coordinates = coordinates else {return}
                 self.plotAnnotations(coordinates: coordinates)
-            
             }
         }
-    
     }
     
     
@@ -270,11 +266,10 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     func showMap() {
-        UIView.animate(withDuration: 0.4, animations: {
-            self.mapBoxView.alpha = 1
-        }, completion: { (completed) in
+        self.mapBoxView.fadeIn(0.4) {
             self.talk()
-        })
+        }
+        
     }
     func plotCirclesAroundUser(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: ((Bool)->())?) {
         CircleAnnotationManagement.sharedInstance.getCirclesWithinRadiusObserver(latitude: latitude, longitude: longitude, radius: 0.6, completion: {
@@ -283,6 +278,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         })
     }
     
+
     func plotCirclesUserIsAdmin(completion: (()->())?) {
         guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
         CircleAnnotationManagement.sharedInstance.retrieveAllCirclesUserIsAdmin() { (sets) in
@@ -346,10 +342,13 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     override func deactivate() {
-        UIView.animate(withDuration: 0.5) {
-            self.alpha = 0
-        }
+        self.fadeOut(0.5)
+//        UIView.animate(withDuration: 0.5) {
+//            self.alpha = 0
+//        }
         self.deActivateOnDeselection(completion: nil)
+        CircleAnnotationManagement.sharedInstance.removeAllGeoFireObservers()
+        mainView.removeFromSuperview()
        // self.fadeOutView()
     }
     

@@ -194,9 +194,7 @@ class BrowseKindCardView: KindActionTriggerView {
     fileprivate func fillAndPresentLabelWith(_ itemIndex: Int) {
         let kindName = self.availableKindsForDriver[itemIndex].kindName.rawValue
         self.kindNameLabel.attributedText = formatLabelTextWithLineSpacing(text:kindName)
-        UIView.animate(withDuration: 0.5) {
-            self.kindNameLabel.alpha = 1
-        }
+        self.kindNameLabel.fadeIn(0.5)
         
     }
     

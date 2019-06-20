@@ -122,18 +122,22 @@ extension MapActionTriggerView: UITextFieldDelegate {
         if on {
             toggleAddUserButton(on: userIsAdmin)
             photoStripView.isHidden = false
-            UIView.animate(withDuration: 0.4, animations: {
-                self.photoStripView.alpha = 1
-            }) { (completed) in
-                
-            }
+            self.photoStripView.fadeIn(0.4)
+//            UIView.animate(withDuration: 0.4, animations: {
+//                self.photoStripView.alpha = 1
+//            }) { (completed) in
+//
+//            }
 
         } else {
-            UIView.animate(withDuration: 0.4, animations: {
-                self.photoStripView.alpha = 0
-            }) { (completed) in
+            self.photoStripView.fadeOut(0.4) {
                 self.photoStripView.isHidden = true
             }
+//            UIView.animate(withDuration: 0.4, animations: {
+//                self.photoStripView.alpha = 0
+//            }) { (completed) in
+//                self.photoStripView.isHidden = true
+//            }
         }
     }
     

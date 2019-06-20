@@ -16,13 +16,14 @@ import FirebaseFirestore
 extension MapActionTriggerView: MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
-
+        
     }
     
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         mapBoxView.showsUserLocation = true
         // mapBoxView.userTrackingMode = .followWithCourse
         mapBoxView.setUserTrackingMode(.follow, animated: true)
+        mainView.fadeIn(1)
     }
     
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
@@ -164,14 +165,10 @@ extension MapActionTriggerView: MGLMapViewDelegate {
 
     func togglePresentInnerCircleViews(on: Bool) {
         if on {
-            UIView.animate(withDuration: 0.4) {
-                self.presentExpandedCircleView.alpha = 1
-            }
+            self.presentExpandedCircleView.fadeIn(0.4)
             presentExpandedCircleView.isHidden = false
         } else {
-            UIView.animate(withDuration: 0.4) {
-                self.presentExpandedCircleView.alpha = 0
-            }
+            self.presentExpandedCircleView.fadeOut(0.4)
             presentExpandedCircleView.isHidden = true
         }
     }
@@ -292,11 +289,12 @@ extension MapActionTriggerView: CLLocationManagerDelegate {
             //TODO: probably needs an && for the case where user is not using the map
             // Maybe refactor non-used views to "isHidden=tue" in addition to alpha (better!)
             if self.mapBoxView.alpha == 0 {
-                UIView.animate(withDuration: 0.4, animations: {
-                    self.mapBoxView.alpha = 1
-                }, completion: { (completed) in
-                   // self.talk()
-                })
+                self.mapBoxView.fadeIn(0.4)
+//                UIView.animate(withDuration: 0.4, animations: {
+//                    self.mapBoxView.alpha = 1
+//                }, completion: { (completed) in
+//                   // self.talk()
+//                })
             }
         }
         

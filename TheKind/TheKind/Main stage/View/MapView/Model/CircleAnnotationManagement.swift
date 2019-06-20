@@ -25,7 +25,8 @@ class CircleAnnotationManagement {
     var setChangedOnCircleCallback: ((CircleAnnotationSet)->())?
     var reloadCircleListCallback: (()->())?
     var geoFireQuery: GFCircleQuery?
-    
+    var geoFireEnterObserver: FirebaseHandle?
+    var geoFireExitObserver: FirebaseHandle?
     private init() {}
     
     //Receive Currently Selected circle or nil. If nil, will kill the observer.
@@ -207,7 +208,7 @@ class CircleAnnotationManagement {
         geoFireQuery = geoFire.query(at: center, withRadius: radius)
         
         //Entered region - Show
-        geoFireQuery?.observe(.keyEntered, with: { (key: String!, location: CLLocation!) in
+        geoFireEnterObserver = geoFireQuery?.observe(.keyEntered, with: { (key: String!, location: CLLocation!) in
             //print("Key '\(String(describing: key))' entered the search area and is at location '\(String(describing: location))'")
             
             self.retrieveCircleById(circleId: key, completion: { (set) in
@@ -223,7 +224,7 @@ class CircleAnnotationManagement {
         })
         
         //Leave region - Hide
-        geoFireQuery?.observe(.keyExited, with: { (key: String!, location: CLLocation!) in
+        geoFireExitObserver = geoFireQuery?.observe(.keyExited, with: { (key: String!, location: CLLocation!) in
             print("Key '\(String(describing: key))' exited the search area and is at location '\(String(describing: location))'")
             
             self.retrieveCircleById(circleId: key, completion: { (set) in
@@ -243,6 +244,10 @@ class CircleAnnotationManagement {
             })
             
         })
+    }
+    
+    func removeAllGeoFireObservers() {
+        geoFireQuery?.removeAllObservers()
     }
     
     func retrieveCircleById(circleId: String, completion: ((CircleAnnotationSet?)->())?) {

@@ -43,7 +43,7 @@ class CircleAnnotationView: MGLAnnotationView {
     
     
     func commonInit() {
-        alpha = 0.9
+        alpha = 0
     }
     
     override func prepareForReuse() {
@@ -57,6 +57,7 @@ class CircleAnnotationView: MGLAnnotationView {
         layer.backgroundColor = DARKPINKCOLOR.cgColor
         layer.borderColor = UIColor.clear.cgColor
         layer.borderWidth = 0
+        self.fadeIn(0.4)
         
     }
     

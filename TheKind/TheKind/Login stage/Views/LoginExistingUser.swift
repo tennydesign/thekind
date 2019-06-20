@@ -82,13 +82,16 @@ class LoginExistingUser: UIView,UITextFieldDelegate,loginValidationProtocol {
     
     // WILL CALL AFTER LOGIN WAS APPROVED.
     func fadeoutView() {
-        UIView.animate(withDuration: 0.5, animations: {
-            self.alpha = 0
-        }, completion: { (completed) in
-
+        self.fadeOut(0.5) {
             self.removeFromSuperview()
-            
-
-        })
+        }
+//        UIView.animate(withDuration: 0.5, animations: {
+//            self.alpha = 0
+//        }, completion: { (completed) in
+//
+//            self.removeFromSuperview()
+//
+//
+//        })
     }
 }

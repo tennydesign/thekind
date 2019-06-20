@@ -119,17 +119,20 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     func showKindOnHUD(_ id: Int) {
         guard let kind = GameKinds.createKindCard(id: id) else {fatalError("In showKindOnHUD")}
         kindIconImageView.image = UIImage(named: kind.iconImageName.rawValue)
-        UIView.animate(withDuration: 1) {
-            self.viewForKindCard.alpha = 1
-        }
+        self.viewForKindCard.fadeIn(1)
+//        UIView.animate(withDuration: 1) {
+//            self.viewForKindCard.alpha = 1
+//        }
     }
     
     func activate() {
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations:
-            {
-                self.alpha = 1
-                self.hudView.alpha = 1
-        }, completion: nil)
+        self.fadeIn(0.5)
+        self.hudView.fadeIn(0.5)
+//        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations:
+//            {
+//                self.alpha = 1
+//                self.hudView.alpha = 1
+//        }, completion: nil)
         
         if self.userPictureImageVIew.image != nil {
             revealUserPhoto()
@@ -137,24 +140,27 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     }
     
     func revealUserPhoto() {
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
-            
-            self.viewForAvatar.alpha = 1
-            
-        }, completion: nil)
+        self.viewForAvatar.fadeIn(0.5)
+//        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+//
+//            self.viewForAvatar.alpha = 1
+//
+//        }, completion: nil)
     }
     
     func fadeOutUserPhoto() {
-        UIView.animate(withDuration: 0.5, animations: {
-            self.viewForAvatar.alpha = 0
-        })
+        self.viewForAvatar.fadeOut(0.5)
+//        UIView.animate(withDuration: 0.5, animations: {
+//            self.viewForAvatar.alpha = 0
+//        })
     }
     
     func deactivate() {
         // hide it.
-        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {
-            self.alpha = 0
-        }, completion: nil)
+        self.fadeOut(1)
+//        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {
+//            self.alpha = 0
+//        }, completion: nil)
     }
     
     @IBAction func mapListViewBtnClicked(_ sender: Any) {

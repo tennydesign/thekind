@@ -62,9 +62,10 @@ class GameBoard: KindActionTriggerView {
         gameBoardScene?.mainViewController = self.mainViewController
         gameBoardScene?.routineFinishedPostObserver()
         
-        UIView.animate(withDuration: 0.3) {
-            self.gameBoardScene?.mainViewController?.jungChatLogger.bottomGradient.alpha = 1
-        }
+//        UIView.animate(withDuration: 0.3) {
+//            self.gameBoardScene?.mainViewController?.jungChatLogger.bottomGradient.alpha = 1
+//        }
+        self.gameBoardScene?.mainViewController?.jungChatLogger.bottomGradient.fadeIn(0.3)
         gameBoardScene?.talkbox = self.talkbox
         let txt = "Let me know if you want me to introduce you to someone."
         let actions: [KindActionType] = [.none]

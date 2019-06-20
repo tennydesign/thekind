@@ -10,7 +10,8 @@ import UIKit
 import GoogleSignIn
 //TODO: REFACTOR THIS
 
-class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerViewDataSource {
+
+class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerViewDataSource {
     
     var mainViewController: MainViewController?
     var talkbox: JungTalkBox?
@@ -22,6 +23,8 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -72,15 +75,14 @@ class dobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         self.alpha = 0
         self.isHidden = false
         self.talkbox?.delegate = self
-        UIView.animate(withDuration: 1) {
-            self.alpha = 1
-        }
+        self.fadeIn(1)
     }
     
      override func deactivate() {
-        UIView.animate(withDuration: 1) {
-            self.pickerView.alpha = 0
-        }
+        self.pickerView.fadeOut(1)
+//        UIView.animate(withDuration: 1) {
+//            self.pickerView.alpha = 0
+//        }
         self.talkbox?.delegate = nil
     }
     

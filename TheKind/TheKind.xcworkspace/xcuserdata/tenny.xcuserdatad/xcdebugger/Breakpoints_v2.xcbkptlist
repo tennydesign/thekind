@@ -46,7 +46,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheKind/Main stage/View/MapView/Ext_Handlers_MapActionTriggerView.swift"
-            timestampString = "580756084.715807"
+            timestampString = "582689176.5941499"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
@@ -63,11 +63,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheKind/Main stage/View/MapView/Model/CircleAnnotationManagement.swift"
-            timestampString = "582490565.403497"
+            timestampString = "582689176.594225"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "updateCircleSettings(completion:)"
             landmarkType = "7">
             <Locations>
@@ -79,12 +79,12 @@
                   moduleName = "TheKind"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tenny/Dropbox/TENNY%20PINHEIRO/Ventures/IOS/%233%20PROJECTS/TheKind_1.0/TheKind/TheKind/Main%20stage/View/MapView/Model/CircleAnnotationManagement.swift"
-                  timestampString = "582492408.562618"
+                  timestampString = "582689176.895288"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "63"
-                  endingLineNumber = "63"
-                  offsetFromSymbolStart = "1376">
+                  startingLineNumber = "64"
+                  endingLineNumber = "64"
+                  offsetFromSymbolStart = "2147">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -94,12 +94,12 @@
                   moduleName = "TheKind"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tenny/Dropbox/TENNY%20PINHEIRO/Ventures/IOS/%233%20PROJECTS/TheKind_1.0/TheKind/TheKind/Main%20stage/View/MapView/Model/CircleAnnotationManagement.swift"
-                  timestampString = "582492408.56462"
+                  timestampString = "582689176.898893"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "64"
-                  endingLineNumber = "64"
-                  offsetFromSymbolStart = "492">
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "804">
                </Location>
             </Locations>
          </BreakpointContent>

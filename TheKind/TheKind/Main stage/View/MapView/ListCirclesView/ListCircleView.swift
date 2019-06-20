@@ -74,11 +74,11 @@ class ListCircleView: KindActionTriggerView, UITableViewDataSource, UITableViewD
         }
     }
     override func activate() {
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            self.alpha = 1
-        })
-        
+        self.fadeIn(0.5)
+//        UIView.animate(withDuration: 0.5, animations: {
+//            self.alpha = 1
+//        })
+//        
         filteredCircleSets = CircleAnnotationManagement.sharedInstance.visibleCirclesInListView
         
     }

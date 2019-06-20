@@ -155,6 +155,34 @@ struct AnchoredConstraints {
 
 extension UIView {
     
+    func fadeIn(_ time: Double) {
+        UIView.animate(withDuration: time) {
+            self.alpha = 1
+        }
+    }
+    
+    func fadeOut(_ time: Double) {
+        UIView.animate(withDuration: time) {
+            self.alpha = 0
+        }
+    }
+    
+    func fadeIn(_ time: Double, completion: (()->())?) {
+        UIView.animate(withDuration: time, animations: {
+            self.alpha = 1
+        }) { (completed) in
+            completion?()
+        }
+    }
+    
+    func fadeOut(_ time: Double, completion: (()->())?) {
+        UIView.animate(withDuration: time, animations: {
+            self.alpha = 0
+        }) { (completed) in
+            completion?()
+        }
+    }
+    
 //    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 //        return self.bounds.contains(point) ? self : nil
 //    }

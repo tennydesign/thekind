@@ -37,7 +37,7 @@
 		A025F6F322248E790010BDA1 /* KindDeckModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A025F6F222248E790010BDA1 /* KindDeckModel.swift */; };
 		A02A5D0A21CB2E9400F26463 /* KindActionTriggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02A5D0921CB2E9400F26463 /* KindActionTriggerView.swift */; };
 		A02B24D321E0318500737ACC /* DobOnboardingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A02B24D221E0318500737ACC /* DobOnboardingView.xib */; };
-		A02B24D521E031AA00737ACC /* dobOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02B24D421E031AA00737ACC /* dobOnboardingView.swift */; };
+		A02B24D521E031AA00737ACC /* DobOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02B24D421E031AA00737ACC /* DobOnboardingView.swift */; };
 		A02D719F21C42FA300EBBD12 /* BrowseKindCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D719E21C42FA300EBBD12 /* BrowseKindCardView.swift */; };
 		A02D71A121C4300E00EBBD12 /* BrowseKindCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A02D71A021C4300E00EBBD12 /* BrowseKindCardView.xib */; };
 		A02D71A521C6BC7200EBBD12 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D71A421C6BC7200EBBD12 /* OnBoardingViewController.swift */; };
@@ -169,7 +169,7 @@
 		A025F6F222248E790010BDA1 /* KindDeckModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindDeckModel.swift; sourceTree = "<group>"; };
 		A02A5D0921CB2E9400F26463 /* KindActionTriggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindActionTriggerView.swift; sourceTree = "<group>"; };
 		A02B24D221E0318500737ACC /* DobOnboardingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DobOnboardingView.xib; sourceTree = "<group>"; };
-		A02B24D421E031AA00737ACC /* dobOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dobOnboardingView.swift; sourceTree = "<group>"; };
+		A02B24D421E031AA00737ACC /* DobOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DobOnboardingView.swift; sourceTree = "<group>"; };
 		A02D719E21C42FA300EBBD12 /* BrowseKindCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseKindCardView.swift; sourceTree = "<group>"; };
 		A02D71A021C4300E00EBBD12 /* BrowseKindCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowseKindCardView.xib; sourceTree = "<group>"; };
 		A02D71A421C6BC7200EBBD12 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -315,7 +315,7 @@
 				A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */,
 				A0D960CA21C1A78900DF1CB0 /* ChooseDriverAndKindViews */,
 				A02B24D221E0318500737ACC /* DobOnboardingView.xib */,
-				A02B24D421E031AA00737ACC /* dobOnboardingView.swift */,
+				A02B24D421E031AA00737ACC /* DobOnboardingView.swift */,
 				A05150F521E4002800795172 /* UserNameView.swift */,
 				A05150F321E3FFFC00795172 /* UserNameView.xib */,
 				A02A5D0B21CB348E00F26463 /* Classes */,
@@ -1056,7 +1056,7 @@
 				A0B6B29C21D1786900C58B3F /* JungTalkBoxModel.swift in Sources */,
 				A0F223A621B88DB10096C25D /* KindButton.swift in Sources */,
 				A0B6B29E21D1BADA00C58B3F /* ext_MainControllerBadgePhoto.swift in Sources */,
-				A02B24D521E031AA00737ACC /* dobOnboardingView.swift in Sources */,
+				A02B24D521E031AA00737ACC /* DobOnboardingView.swift in Sources */,
 				A002F48121B9EFAE006E8660 /* JungChatLogger.swift in Sources */,
 				A031885921C33A76008D1198 /* HUDview.swift in Sources */,
 				A0C5D227212A4A7500BF1B0C /* AppDelegate.swift in Sources */,

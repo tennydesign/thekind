@@ -99,6 +99,7 @@ func viewTransitionUsingAlpha(_ originView: UIView, _ destinationView: UIView,_ 
     originView.isUserInteractionEnabled = false
     destinationView.isUserInteractionEnabled = true
     
+    
     UIView.animate(withDuration: 0.5, animations: {
         originView.alpha = 0.0
         destinationView.alpha = 1.0

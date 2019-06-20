@@ -51,17 +51,11 @@ class KindActionTriggerView: UIView, KindActionTriggerViewProtocol {
         self.alpha = 0
         self.isHidden = false
         
-        UIView.animate(withDuration: 0.7, animations: {
-            self.alpha = 1
-        }) { (completed) in
-
-        }
+        self.fadeIn(0.7)
     }
     
     func fadeOutView() {
-        UIView.animate(withDuration: 0.7, animations: {
-            self.alpha = 0
-        }) { (completed) in
+        self.fadeOut(0.7) {
             self.isHidden = true
         }
     }
