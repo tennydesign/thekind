@@ -8,6 +8,9 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
+
 //PassthroughView
 //class HUDview: KindActionTriggerView {
 class HUDview: PassthroughView,KindActionTriggerViewProtocol {
@@ -48,12 +51,13 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     }
 
     private var gradient: CAGradientLayer!
+    private let bag = DisposeBag()
     
     fileprivate func commonInit() {
         Bundle.main.loadNibNamed("HUDview", owner: self, options: nil)
         addSubview(hudView)
-        updateHUDWithUserSettingsObserver()
-        
+        userSettingsSubscription()
+        //updateHUDWithUserSettingsObserver() - Old.
         
         KindDeckManagement.sharedInstance.updateMainKindOnClient = { [unowned self] in
             if let kindId = KindDeckManagement.sharedInstance.userMainKind {
@@ -76,8 +80,20 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
             // update kind
         }
         
+        
     }
     
+    fileprivate func userSettingsSubscription() {
+        KindUserSettingsManager.sharedInstance.userSettingsRxObserver
+            .share().subscribe(onNext: { [weak self] kindUser in
+                if kindUser != nil {
+                    self?.updateUserPhotoWithCurrentState()
+                }
+            })
+            .disposed(by: bag)
+        
+        
+    }
     fileprivate func updateUserPhotoWithCurrentState() {
         // update photo:
         if let urlString = KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.photoURL.rawValue] as? String {

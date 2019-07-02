@@ -9,6 +9,8 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import RxSwift
+import RxCocoa
 
 enum UserFieldTitle: String {
     case name = "name",
@@ -61,6 +63,7 @@ public class KindUserSettingsManager {
     var userFields: [String: Any] = [:]
     var loggedUser: KindUser?
     var currentUserImageURL: String = ""
+    var userSettingsRxObserver = BehaviorRelay<KindUser?>(value: nil)
     static let sharedInstance = KindUserSettingsManager()
     
     private init() {}
@@ -95,14 +98,18 @@ public class KindUserSettingsManager {
             // let the client know user signed in
             self.userSignedIn?()
             // turn observer ON.
-            self.observeUserSettings()
+            //self.observeUserSettings() - old
+            //Rx version.
+            self.userSettingsObserver()
         }
 
     }
     
     
     // OBSERVE!
-    func observeUserSettings() {
+    // Use a real observer here, just so all screens can  subscribe.
+    
+    func userSettingsObserver() {
         let db = Firestore.firestore()
         db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).addSnapshotListener { (document, err) in
             if let err = err {
@@ -120,9 +127,32 @@ public class KindUserSettingsManager {
             self.loggedUser = kindUser
             
             // Let the client know there were data retrieval
-            self.updateHUDWithUserSettings?()
-         }
+            self.userSettingsRxObserver.accept(kindUser)
+        }
+
     }
+    
+//    func observeUserSettings() {
+//        let db = Firestore.firestore()
+//        db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).addSnapshotListener { (document, err) in
+//            if let err = err {
+//                print(err)
+//                return
+//            }
+//            guard let data = document?.data() else {
+//                print("no snapshot data on observerUserSettings")
+//                return
+//            }
+//            self.userFields = data
+//
+//            //save user also as KindUser object. Always updating when it changes.
+//            let kindUser = KindUser(document: document!)
+//            self.loggedUser = kindUser
+//
+//            // Let the client know there were data retrieval
+//            self.updateHUDWithUserSettings?()
+//         }
+//    }
     
     //SAVE
     func updateUserSettings(completion: ((Error?)->())?) {

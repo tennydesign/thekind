@@ -140,6 +140,12 @@ PODS:
   - NVActivityIndicatorView/Presenter (4.7.0)
   - pop (1.0.12)
   - Protobuf (3.8.0)
+  - RxCocoa (5.0.0):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.0.0):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.0)
 
 DEPENDENCIES:
   - AWSRekognition
@@ -154,6 +160,8 @@ DEPENDENCIES:
   - lottie-ios
   - Mapbox-iOS-SDK (= 4.8.0-alpha.2)
   - NVActivityIndicatorView
+  - RxCocoa (~> 5)
+  - RxSwift (~> 5)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -185,6 +193,9 @@ SPEC REPOS:
     - NVActivityIndicatorView
     - pop
     - Protobuf
+    - RxCocoa
+    - RxRelay
+    - RxSwift
 
 SPEC CHECKSUMS:
   AWSCore: 705dbb60efeec05bc6bbee416e7f5e9837af0749
@@ -215,7 +226,10 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
+  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
 
-PODFILE CHECKSUM: 614be583663d3bc97df765ab72fcee5e63da8233
+PODFILE CHECKSUM: a56d52b02574a5b2f7ef1199f3818ac67cabf8f1
 
 COCOAPODS: 1.7.1

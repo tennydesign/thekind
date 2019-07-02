@@ -348,6 +348,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 //        }
         self.deActivateOnDeselection(completion: nil)
         CircleAnnotationManagement.sharedInstance.removeAllGeoFireObservers()
+        locationManager.stopUpdatingLocation()
         mainView.removeFromSuperview()
        // self.fadeOutView()
     }

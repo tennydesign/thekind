@@ -19,6 +19,8 @@ pod 'Mapbox-iOS-SDK', '4.8.0-alpha.2'
 pod 'Koloda'
 pod 'GeoFire'
 pod 'lottie-ios'
+pod 'RxSwift', '~> 5'
+pod 'RxCocoa', '~> 5'
 
   target 'TheKindTests' do
     inherit! :search_paths
