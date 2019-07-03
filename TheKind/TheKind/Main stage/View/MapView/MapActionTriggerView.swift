@@ -10,6 +10,8 @@ import UIKit
 import Mapbox
 import MapKit
 import Lottie
+import RxCocoa
+import RxSwift
 
 class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
@@ -36,7 +38,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     @IBOutlet var lockBottomImage: UIImageView!
     @IBOutlet var addUserBtn: UIButton!
     var selectedPhotoStripCellIndexPath: Int?
-
+    private var bag = DisposeBag()
     
     @IBOutlet var mapBoxView: MGLMapView! {
         didSet {
@@ -113,7 +115,9 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     func activateCallBacks() {
         //setup annotation plotter observer
-        activatePlotMovingAnnotationCallBacks()
+        //activatePlotMovingAnnotationCallBacks()
+        //using Rx
+        activateCirclePlotterObserver()
         // setupCircleInformationObserver
         activateSetChangedOnCircleCallBack()
         activateUserAddedToTemporaryCircleListCallBack()
@@ -313,30 +317,33 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         
     }
     
-    // Plotters. Show and hide circles.
-    func activatePlotMovingAnnotationCallBacks() {
-        
-        CircleAnnotationManagement.sharedInstance.plotCircleCloseToPlayerCallback = { [unowned self](set) in
-            guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
-            let isAlreadyPlotted = self.mapBoxView.annotations?.contains{$0.title == set.circleId || $0.title == uid } ?? false
-            
-            if !isAlreadyPlotted {
-                let pointAnnotation:MGLPointAnnotation = KindPointAnnotation(circleAnnotationSet: set)
-                pointAnnotation.title = set.circleId
-                self.mapBoxView.addAnnotation(pointAnnotation)
-            }
-        }
-        
-        
-        CircleAnnotationManagement.sharedInstance.unPlotCircleCloseToPlayerCallback = { [unowned self](set) in
-            guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
-            let isAlreadyPlotted = self.mapBoxView.annotations?.contains{$0.title == set.circleId} ?? false
+
+    
+    // Plotters. Show and hide circles. using Rx
+    func activateCirclePlotterObserver() {
+        CircleAnnotationManagement.sharedInstance.circlePlotterObserver.share()
+            .subscribe(onNext: { [weak self] set in
+                self?.circlePlotterOverMap(set: set, view: self)
+            })
+            .disposed(by: bag)
+    }
+    
+    private func circlePlotterOverMap(set: CircleAnnotationSet?, view: MapActionTriggerView?) {
+        guard let uid = KindUserSettingsManager.sharedInstance.loggedUser?.uid else {return}
+        if set != nil {
+            let isAlreadyPlotted = view?.mapBoxView.annotations?.contains{$0.title == set!.circleId || $0.title == uid } ?? false
             if isAlreadyPlotted {
-                if let annotation = (self.mapBoxView.annotations?.filter{$0.title == set.circleId}.first) {
-                    if set.admin != uid { // user does not own it
+                //unlpot
+                if let annotation = (view?.mapBoxView.annotations?.filter{$0.title == set!.circleId}.first) {
+                    if set!.admin != uid { // user does not own it
                         self.mapBoxView.removeAnnotation(annotation)
                     }
                 }
+            } else {
+                //plot
+                let pointAnnotation:MGLPointAnnotation = KindPointAnnotation(circleAnnotationSet: set!)
+                pointAnnotation.title = set!.circleId
+                view?.mapBoxView.addAnnotation(pointAnnotation)
             }
         }
     }

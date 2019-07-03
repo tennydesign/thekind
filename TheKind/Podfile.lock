@@ -128,7 +128,7 @@ PODS:
   - Koloda (5.0):
     - pop (~> 1.0)
   - leveldb-library (1.20)
-  - lottie-ios (3.1.0)
+  - lottie-ios (3.1.1)
   - Mapbox-iOS-SDK (4.8.0-alpha.2)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -220,7 +220,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
   Koloda: 75302d21882cc3e274c1561b1155805ea5919dab
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  lottie-ios: 9467723922dfff46f6d4e3019c32594a62440b7c
+  lottie-ios: 43a472d22b2dd2bed292cc4010c0b4d2e66d3ba8
   Mapbox-iOS-SDK: 621e599a8c0096600bc7116fb4f43a14aaaac8dc
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea

@@ -13,6 +13,8 @@ import FirebaseFirestore
 import Firebase
 import FirebaseStorage
 import GeoFire
+import RxSwift
+import RxCocoa
 
 class CircleAnnotationManagement {
     static let sharedInstance = CircleAnnotationManagement()
@@ -27,6 +29,7 @@ class CircleAnnotationManagement {
     var geoFireQuery: GFCircleQuery?
     var geoFireEnterObserver: FirebaseHandle?
     var geoFireExitObserver: FirebaseHandle?
+    var circlePlotterObserver = PublishSubject<CircleAnnotationSet?>()
     private init() {}
     
     //Receive Currently Selected circle or nil. If nil, will kill the observer.
@@ -217,8 +220,9 @@ class CircleAnnotationManagement {
                     return
                 }
                 self.visibleCirclesInListView.append(set)
-                self.plotCircleCloseToPlayerCallback?(set)
+              //  self.plotCircleCloseToPlayerCallback?(set) //deprecated
                 self.reloadCircleListCallback?() // uses visibleCircles
+                self.circlePlotterObserver.onNext(set)
             })
             
         })
@@ -240,7 +244,8 @@ class CircleAnnotationManagement {
                     return false
                 })
                 self.reloadCircleListCallback?() // uses visibleCircles
-                self.unPlotCircleCloseToPlayerCallback?(set)
+              //  self.unPlotCircleCloseToPlayerCallback?(set) deprecated
+                self.circlePlotterObserver.onNext(set)
             })
             
         })

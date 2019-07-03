@@ -126,7 +126,7 @@ public class KindUserSettingsManager {
             let kindUser = KindUser(document: document!)
             self.loggedUser = kindUser
             
-            // Let the client know there were data retrieval
+            // Let the client know there was data retrieval
             self.userSettingsRxObserver.accept(kindUser)
         }
 

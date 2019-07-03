@@ -91,9 +91,8 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
                 }
             })
             .disposed(by: bag)
-        
-        
     }
+    
     fileprivate func updateUserPhotoWithCurrentState() {
         // update photo:
         if let urlString = KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.photoURL.rawValue] as? String {
