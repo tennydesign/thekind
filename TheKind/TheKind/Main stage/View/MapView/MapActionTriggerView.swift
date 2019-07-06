@@ -117,7 +117,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         //setup annotation plotter observer
         //activatePlotMovingAnnotationCallBacks()
         //using Rx
-        activateCirclePlotterObserver()
+        activateCirclePlotterRxObserver()
         // setupCircleInformationObserver
         activateSetChangedOnCircleCallBack()
         activateUserAddedToTemporaryCircleListCallBack()
@@ -320,7 +320,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
     
     // Plotters. Show and hide circles. using Rx
-    func activateCirclePlotterObserver() {
+    func activateCirclePlotterRxObserver() {
         CircleAnnotationManagement.sharedInstance.circlePlotterObserver.share()
             .subscribe(onNext: { [weak self] set in
                 self?.circlePlotterOverMap(set: set, view: self)

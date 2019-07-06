@@ -63,7 +63,10 @@ public class KindUserSettingsManager {
     var userFields: [String: Any] = [:]
     var loggedUser: KindUser?
     var currentUserImageURL: String = ""
-    var userSettingsRxObserver = BehaviorRelay<KindUser?>(value: nil)
+    private var userSettingsRxBehaviorRelayPublisher = BehaviorRelay<KindUser?>(value: nil)
+    var userSettingsRxObserver:Observable<KindUser?> {
+        return userSettingsRxBehaviorRelayPublisher.asObservable()
+    }
     static let sharedInstance = KindUserSettingsManager()
     
     private init() {}
@@ -127,7 +130,7 @@ public class KindUserSettingsManager {
             self.loggedUser = kindUser
             
             // Let the client know there was data retrieval
-            self.userSettingsRxObserver.accept(kindUser)
+            self.userSettingsRxBehaviorRelayPublisher.accept(kindUser)
         }
 
     }

@@ -84,6 +84,7 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     }
     
     fileprivate func userSettingsSubscription() {
+        //KindUserSettingsManager.sharedInstance.userSettingsRxBehaviorRelayPublisher
         KindUserSettingsManager.sharedInstance.userSettingsRxObserver
             .share().subscribe(onNext: { [weak self] kindUser in
                 if kindUser != nil {

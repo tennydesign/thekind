@@ -29,7 +29,10 @@ class CircleAnnotationManagement {
     var geoFireQuery: GFCircleQuery?
     var geoFireEnterObserver: FirebaseHandle?
     var geoFireExitObserver: FirebaseHandle?
-    var circlePlotterObserver = PublishSubject<CircleAnnotationSet?>()
+    private var circlePlotterPublishSubject = PublishSubject<CircleAnnotationSet?>()
+    var circlePlotterObserver: Observable<CircleAnnotationSet?> {
+        return circlePlotterPublishSubject.asObservable()
+    }
     private init() {}
     
     //Receive Currently Selected circle or nil. If nil, will kill the observer.
@@ -222,7 +225,7 @@ class CircleAnnotationManagement {
                 self.visibleCirclesInListView.append(set)
               //  self.plotCircleCloseToPlayerCallback?(set) //deprecated
                 self.reloadCircleListCallback?() // uses visibleCircles
-                self.circlePlotterObserver.onNext(set)
+                self.circlePlotterPublishSubject.onNext(set)
             })
             
         })
@@ -245,7 +248,7 @@ class CircleAnnotationManagement {
                 })
                 self.reloadCircleListCallback?() // uses visibleCircles
               //  self.unPlotCircleCloseToPlayerCallback?(set) deprecated
-                self.circlePlotterObserver.onNext(set)
+                self.circlePlotterPublishSubject.onNext(set)
             })
             
         })
