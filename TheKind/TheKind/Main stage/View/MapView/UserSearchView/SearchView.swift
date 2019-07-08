@@ -19,7 +19,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     var addUserMode = false
     @IBOutlet var searchTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
-    var isValidNewEmail: Bool = false
+    var isValidNewUserEmail: Bool = false
 
     var data:[KindUser] = []
 
@@ -123,38 +123,22 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         var cell:UITableViewCell?
         //cell.textLabel?.text = "teste"
         
-        if !addUserMode { // user found.
+        if !addUserMode { // user found. Cell will show current user.
             
             let userFoundCell = tableView.dequeueReusableCell(withIdentifier: "UserSearchTableViewCell", for: indexPath) as! UserSearchTableViewCell
             
             userFoundCell.user = filteredData[indexPath.row]
             userFoundCell.delegate = self
             if let userId = filteredData[indexPath.row].uid {
-                if !CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
-                    CircleAnnotationManagement.sharedInstance.checkIfUserBelongsToCircle(userId: userId) { (userBelongs) in
-                        if let userBelongs = userBelongs {
-                            if userBelongs == true {
-                                userFoundCell.addRemoveButton.setImage(UIImage(named: "addedIcon"), for: .normal)
-                            }
-                        }
-                    }
-                } else { //circle is temporary
-                    CircleAnnotationManagement.sharedInstance.checkIfUserBelongsToTemporaryCircle(userId: userId) { (userBelongs) in
-                        if let userBelongs = userBelongs {
-                            if userBelongs == true {
-                                userFoundCell.addRemoveButton.setImage(UIImage(named: "addedIcon"), for: .normal)
-                            }
-                        }
-                    }
-                }
+                toggleBtnForShow(userId, userFoundCell)
             }
 
             cell = userFoundCell
             
-        } else { // user not found
+        } else { // user not found. Cell will show btn to add user.
             let addUsercell = tableView.dequeueReusableCell(withIdentifier: "AddNewUserTableViewCell", for: indexPath) as! AddNewUserTableViewCell
             
-            if !isValidNewEmail {
+            if !isValidNewUserEmail {
                 addUsercell.inviteUserButton.disableButton()
             } else {
                 addUsercell.inviteUserButton.enableButton()
@@ -166,6 +150,16 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         return cell!
     }
     
+    fileprivate func toggleBtnForShow(_ userId: String, _ userFoundCell: UserSearchTableViewCell) {
+        CircleAnnotationManagement.sharedInstance.checkIfUserBelongsToCircle(userId: userId) { (userBelongs) in
+            if let userBelongs = userBelongs {
+                if userBelongs == true {
+                    userFoundCell.addRemoveButton.setImage(UIImage(named: "addedIcon"), for: .normal)
+                }
+            }
+        }
+    }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.filteredData = []
     }
@@ -174,28 +168,32 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
         if searchText.isEmpty {
-            self.isValidNewEmail = false
+            self.isValidNewUserEmail = false
             self.filteredData = []
         }
         
         let keywords = searchText.lowercased()
+        
+        //this garanteee that the call is only sent when field matches email
         if keywords.isEmail() {
             var retrievedUser:KindUser?
             
             //super nice pattern for cancelling previous async calls.
             // with dispatchgroup.
             // leave when you find, but don't leave if you don't.
+            // Group notify will only be executed if enters = leaves.
             let group = DispatchGroup()
             group.enter()
+            //TODO: Use a throtle related publisher here.
             KindUserSettingsManager.sharedInstance.retrieveUserByKeyword(keyword: keywords) { (kindUser) in
                 if let user = kindUser {
-                    self.isValidNewEmail = false
+                    self.isValidNewUserEmail = false
                     retrievedUser = user
                     // leave group of calls if user is found (cancels previous calls)
                     group.leave()
                 } else {
                     //don't leave.
-                    self.isValidNewEmail = true
+                    self.isValidNewUserEmail = true
                     self.filteredData = []
                 }
                 
@@ -208,7 +206,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
                 }
             }
         } else {
-            self.isValidNewEmail = false
+            self.isValidNewUserEmail = false
             self.filteredData = []
         }
 
@@ -267,7 +265,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
     
     override func activate() {
         self.fadeInView()
-        self.isValidNewEmail = false
+        self.isValidNewUserEmail = false
         searchBar.text = ""
         filteredData = []
         
@@ -282,3 +280,25 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
         self.deactivate()
     }
 }
+
+
+
+//    fileprivate func prepareBtnForShow(_ userId: String, _ userFoundCell: UserSearchTableViewCell) {
+//        if !CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation {
+//            CircleAnnotationManagement.sharedInstance.checkIfUserBelongsToCircle(userId: userId) { (userBelongs) in
+//                if let userBelongs = userBelongs {
+//                    if userBelongs == true {
+//                        userFoundCell.addRemoveButton.setImage(UIImage(named: "addedIcon"), for: .normal)
+//                    }
+//                }
+//            }
+//        } else { //circle is temporary
+//            CircleAnnotationManagement.sharedInstance.checkIfUserBelongsToTemporaryCircle(userId: userId) { (userBelongs) in
+//                if let userBelongs = userBelongs {
+//                    if userBelongs == true {
+//                        userFoundCell.addRemoveButton.setImage(UIImage(named: "addedIcon"), for: .normal)
+//                    }
+//                }
+//            }
+//        }
+//    }
