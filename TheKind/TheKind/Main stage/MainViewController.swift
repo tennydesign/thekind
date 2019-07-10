@@ -11,6 +11,8 @@ import NVActivityIndicatorView
 import AWSRekognition
 import FirebaseAuth
 import Lottie
+import RxSwift
+import RxCocoa
 
 class MainViewController: UIViewController {
     
@@ -29,8 +31,7 @@ class MainViewController: UIViewController {
             //If you want to adjust chatbox window independently of bottomPanel.
         }
     }
-    
-    
+
     @IBOutlet var searchView: SearchView!
     @IBOutlet var listCircleView: ListCircleView!
     //    @IBOutlet var chatMask: UIImageView!
@@ -221,7 +222,17 @@ class MainViewController: UIViewController {
         let actions: [KindActionType] = [.none, .activate, .none, .activate]
         let actionViews: [ActionViewName] = [.none, .HudView, .none, self.firstViewToPresent]
         //self.talkbox.displayRoutine(routine: self.talkbox.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
-        self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        
+        //old non-rx
+       // self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        
+        //new-rx
+        let routine = self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
+        if let routine = routine {
+            //I dont like having to create this again everytime. Should be just onNext
+            let rm = RoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox.kindExplanationPublisher.onNext(rm)
+        }
 
     }
     
@@ -229,8 +240,16 @@ class MainViewController: UIViewController {
         let txt = "Hi \(KindUserSettingsManager.sharedInstance.loggedUserName ?? "") -Welcome back."
         let actions: [KindActionType] = [.activate,.activate]
         let actionViews: [ActionViewName] = [.HudView,self.firstViewToPresent]
+        
         //self.talkbox.displayRoutine(routine: self.talkbox.routineWithNoText(snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: nil))
-        self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        //self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        
+        //new-rx
+        let routine = self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
+        if let routine = routine {
+            let rm = RoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox.kindExplanationPublisher.onNext(rm)
+        }
         
     }
 

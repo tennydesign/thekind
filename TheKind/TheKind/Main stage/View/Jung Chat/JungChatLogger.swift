@@ -9,6 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 
+
 class JungChatLogger: KindActionTriggerView {
 
     

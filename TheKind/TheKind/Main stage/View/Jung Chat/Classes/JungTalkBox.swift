@@ -8,7 +8,24 @@
 
 import Foundation
 import UIKit
+import RxCocoa
+import RxSwift
+
+
+struct RoutineToEmission {
+    let routine: BehaviorSubject<JungRoutineProtocol>
+}
+
+
 class JungTalkBox {
+    
+    var kindExplanationPublisher = PublishSubject<RoutineToEmission>()
+    var kindExplanationObserver: Observable<RoutineToEmission> {
+        return kindExplanationPublisher.asObserver()
+    }
+    var disposeBag = DisposeBag()
+    
+  //  private var clearJungChatPublisher = Completable()
     
     var isProcessingSpeech = false
     let tempoBetweenPlayerResponseAndJungResponse: Double = 2
@@ -18,6 +35,18 @@ class JungTalkBox {
     
     var injectRoutineMessageObserver: ((JungRoutineProtocol?)->())?
     
+    init(){
+        kindExplanationObserver
+            .flatMapLatest {
+                $0.routine
+            }
+            .subscribe(onNext: { routine in
+                //print("THIS---->",routine.snippets[0].message)
+                self.injectRoutineMessageObserver?(routine)
+                self.isProcessingSpeech = true
+            })
+        .disposed(by: disposeBag)
+    }
     
     func displayRoutine(routine: JungRoutineProtocol?, wait: Double? = nil) {
         //if !isProcessingSpeech {

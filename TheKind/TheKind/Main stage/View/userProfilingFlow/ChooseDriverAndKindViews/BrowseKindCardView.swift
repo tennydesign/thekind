@@ -8,7 +8,8 @@
 
 
 import UIKit
-
+import RxCocoa
+import RxSwift
 
 class BrowseKindCardView: KindActionTriggerView {
     
@@ -19,6 +20,8 @@ class BrowseKindCardView: KindActionTriggerView {
     static var activeDistance: CGFloat = 160
     static var zoomFactor: CGFloat = 3.5
     //==============
+
+    
     
     @IBOutlet var kindNameLabel: UILabel! {
         didSet {
@@ -30,7 +33,7 @@ class BrowseKindCardView: KindActionTriggerView {
     var talkbox: JungTalkBox?
     var selectedIndex: Int = 0
     
-
+    
     var currentCellToTint: kindCollectioViewCell?
     var availableKindsForDriver: [KindCard] = []
     
@@ -88,6 +91,7 @@ class BrowseKindCardView: KindActionTriggerView {
     
     override func activate() {
         Bundle.main.loadNibNamed("BrowseKindCardView", owner: self, options: nil)
+        chooseKindCard.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         addSubview(chooseKindCard)
         
          if !KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
@@ -167,18 +171,38 @@ class BrowseKindCardView: KindActionTriggerView {
         self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
     }
     
-    // EXECUTED WHEN CAROUSEL IS SHOWING USER KINDS (TELL ME MORE ABOUT THIS KIND).
+// Old -nonRx
+//    func userIsBrowsingGameBoardKindsTalk() {
+//        let kindName = self.availableKindsForDriver[selectedIndex].kindName.rawValue
+//        let txt = "\(kindName) says: You can transform anything...-and turn any ordinary situations into extraordinary ones."
+//        let actions: [KindActionType] = [.none,.none]
+//        let actionViews: [ActionViewName] = [.none,.none]
+//
+//
+//        let options = self.talkbox?.createUserOptions(opt1: "Back to the board", opt2: "Introduce us.", actionViews: (ActionViewName.BrowseKindView,ActionViewName.KindMatchControlView))
+//
+//        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
+//    }
+    
+//   EXECUTED WHEN CAROUSEL IS SHOWING USER KINDS (TELL ME MORE ABOUT THIS KIND).
+//   Rx version
     func userIsBrowsingGameBoardKindsTalk() {
         let kindName = self.availableKindsForDriver[selectedIndex].kindName.rawValue
-        let txt = "\(kindName) says: You can transform anything...-and turn any ordinary situations into extraordinary ones."
-        let actions: [KindActionType] = [.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none]
+        let txt = "\(kindName) says: You can transform any sitation into an ideal one."
+        let actions: [KindActionType] = [.none]
+        let actionViews: [ActionViewName] = [.none]
         
         
         let options = self.talkbox?.createUserOptions(opt1: "Back to the board", opt2: "Introduce us.", actionViews: (ActionViewName.BrowseKindView,ActionViewName.KindMatchControlView))
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
+        
+        if let routine = routine {
+            let rm = RoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
+    
     
     // EXECUTED WHEN USER IS CHOOSING MAIN USER KIND FROM CAROUSEL (ONBOARDING)
     func userIsSelectingMainKindTalk() {
@@ -266,6 +290,7 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
         if !self.kindCollectionView.isDragging {
             self.selectedIndex = itemIndex
             self.fillAndPresentLabelWith(selectedIndex)
+            userIsBrowsingGameBoardKindsTalk()
         }
         
     }

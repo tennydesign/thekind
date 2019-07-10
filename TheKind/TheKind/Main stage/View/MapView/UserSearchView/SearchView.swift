@@ -206,6 +206,7 @@ class SearchView: KindActionTriggerView, UISearchBarDelegate, UITableViewDataSou
                 }
             }
         } else {
+            //Add code to search by name. Throtle
             self.isValidNewUserEmail = false
             self.filteredData = []
         }
