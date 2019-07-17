@@ -107,7 +107,7 @@ class JungChatLogger: KindActionTriggerView {
             self.messagesCollection = ["","","","","",""]
             self.resetAnswerViewWidthAnchor()
         }
-        //resetAnswerViewWidthAnchor()
+        
     }
     
     var animationCount: Int = 0
@@ -118,12 +118,19 @@ class JungChatLogger: KindActionTriggerView {
     
     fileprivate func jungChatRoutineObserverActivation() {
         
-        talkbox.jungChatRoutineObserver.share()
+        talkbox.jungChatUIRoutineObserver.share()
             .flatMapLatest {
                 $0.routine
             }
-            //HERE:
-            .distinctUntilChanged()
+            .distinctUntilChanged { a, b in
+                if a.sender == .Clear || b.sender == .Clear {
+                    // then its distinct.
+                    return true
+                } else {
+                    // check if messages are distinct, avoid duplicates.
+                    return (a == b)
+                }
+            }
             .subscribe(onNext: { jungRoutine in
                 var labelsUpdated = false
                 self.hideOptionLabels(true, completion: {
@@ -134,6 +141,8 @@ class JungChatLogger: KindActionTriggerView {
                         self.postJungRoutine(jungRoutine: jungRoutine, labelsUpdated: labelsUpdated)
                     } else if jungRoutine.sender == .Player { // POSTS IMMEDIATELY
                         self.postPlayerRoutine(jungRoutine: jungRoutine, labelsUpdated: labelsUpdated)
+                    } else if jungRoutine.sender == .Clear {
+                        self.resetJungChat()
                     }
                 })
                 
@@ -144,7 +153,7 @@ class JungChatLogger: KindActionTriggerView {
     
     private func postJungRoutine(jungRoutine: JungRoutine, labelsUpdated: Bool) {
 
-            self.startLoadingAnimator(for: jungRoutine.snippets.count)
+            self.startLoadingAnimator(for: jungRoutine.snippets?.count ?? 0)
             
             self.performPostsWithTimeInterval(jungRoutine) { (success) in
                 self.stopLoadingAnimator()
@@ -159,8 +168,8 @@ class JungChatLogger: KindActionTriggerView {
     }
     
     private func postPlayerRoutine(jungRoutine: JungRoutine, labelsUpdated: Bool) {
-        guard let message = jungRoutine.snippets.first?.message,
-            let snippet = jungRoutine.snippets.first else {return}
+        guard let message = jungRoutine.snippets?.first?.message,
+            let snippet = jungRoutine.snippets?.first else {return}
         
         self.postMessageToJungChat(message: message)
         self.talkbox.executeSnippetAction(snippet)
@@ -171,6 +180,7 @@ class JungChatLogger: KindActionTriggerView {
             self.hideOptionLabels(false, completion: nil)
         }
     }
+
     
     func hideOptionLabels(_ isHidden: Bool, completion: (()->())?) {
         if isHidden == false {
@@ -200,7 +210,7 @@ class JungChatLogger: KindActionTriggerView {
                                                   completion: ((Bool)->())?) {
         
     
-        let snippets: [Snippet] = jungRoutine.snippets
+        guard let snippets: [Snippet] = jungRoutine.snippets else { return}
         
         var messageIndex = 0
 
@@ -224,31 +234,6 @@ class JungChatLogger: KindActionTriggerView {
 
         }
         
-        /////
-        
-//        Observable<Int>.interval(1.0, scheduler: MainScheduler.instance)
-//            .debug("interval")
-//            .subscribe(onNext: {
-//                print($0)
-//
-//                self.postMessageToJungChat(message: snippets[messageIndex].message)
-//
-//                self.talkbox.executeSnippetAction(snippets[messageIndex])
-//                self.animationCount -= 1
-//                // 3 - Stops timer
-//                if messageIndex == snippets.count-1 {
-//                    if let completion = completion {
-//                        completion(true)
-//                    }
-//                    messageIndex = 0
-//                    return
-//                }
-//
-//                messageIndex = min(messageIndex+1, snippets.count-1)
-//            })
-//            .disposed(by: disposeBag)
-        
-
     }
     
     

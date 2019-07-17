@@ -19,33 +19,32 @@ struct JungRoutineToEmission {
 
 class JungTalkBox {
     
+    var jungClearRoutine: JungRoutine {
+        return JungRoutine(snippets: nil, userResponseOptions: nil, sender: .Clear)
+    }
+    
     var kindExplanationPublisher = PublishSubject<JungRoutineToEmission>()
     var kindExplanationObserver: Observable<JungRoutineToEmission> {
         return kindExplanationPublisher.asObservable()
     }
     
-    //To JungChatLogger
-    private var jungChatRoutinePublisher = PublishSubject<JungRoutineToEmission>()
-    var jungChatRoutineObserver: Observable<JungRoutineToEmission> {
-        return jungChatRoutinePublisher.asObservable()
+    //To JungChatLogger UI
+    private var jungChatUIRoutinePublisher = PublishSubject<JungRoutineToEmission>()
+    var jungChatUIRoutineObserver: Observable<JungRoutineToEmission> {
+        return jungChatUIRoutinePublisher.asObservable()
     }
     
     var disposeBag = DisposeBag()
     
-  //  private var clearJungChatPublisher = Completable()
-    
     var isProcessingSpeech = false
     let tempoBetweenPlayerResponseAndJungResponse: Double = 2
-    //var mainViewController: MainViewController?
-    
+
     var delegate: KindActionTriggerView?
     
-    var injectRoutineMessageObserver: ((JungRoutineProtocol?)->())?
-    
+   
     init(){
         setupkindExplanationObserver()
     }
-
     
     func setupkindExplanationObserver() {
         kindExplanationObserver.share()
@@ -53,12 +52,11 @@ class JungTalkBox {
                 $0.routine
             }
             .subscribe(onNext: { routine in
-                print("THIS---->",routine.snippets[0].message)
-                //self.injectRoutineMessageObserver?(routine)
-                
+                print("THIS---->",routine.snippets?[0].message ?? "No snippet")
+
                 //Sends it to JungChatLogger // old inject.
                 let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
-                self.jungChatRoutinePublisher.onNext(rm)
+                self.jungChatUIRoutinePublisher.onNext(rm)
                 
                 self.isProcessingSpeech = true
             })
@@ -177,6 +175,11 @@ class JungTalkBox {
             returnActionTriggerView(by: tag)?.talk()
         }
         
+    }
+    
+    func clearJungChat() {
+        let rm = JungRoutineToEmission(routine: BehaviorSubject(value: jungClearRoutine))
+        kindExplanationPublisher.onNext(rm)
     }
     
 }

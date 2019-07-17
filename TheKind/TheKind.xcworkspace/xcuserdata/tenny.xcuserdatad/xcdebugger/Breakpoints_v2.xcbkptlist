@@ -111,11 +111,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheKind/Main stage/View/SwipeCards stage/Ext_Explainers_CardSwipeView.swift"
-            timestampString = "585042041.989212"
+            timestampString = "585077639.142864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "kindCardIntroExplainer()"
             landmarkType = "7">
          </BreakpointContent>

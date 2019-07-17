@@ -361,7 +361,8 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     func clearJungChatLog() {
-        self.mainViewController?.jungChatLogger.resetJungChat()
+        //self.mainViewController?.jungChatLogger.resetJungChat()
+        self.talkbox?.clearJungChat()
         self.mainViewController?.jungChatLogger.hideOptionLabels(true, completion: nil)
     }
     

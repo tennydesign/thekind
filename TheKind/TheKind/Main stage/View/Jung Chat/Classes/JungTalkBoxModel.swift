@@ -12,12 +12,12 @@ import Foundation
 struct JungRoutine: JungRoutineProtocol, Equatable {
     
     static func == (lhs: JungRoutine, rhs: JungRoutine) -> Bool {
-       return ((lhs.snippets.first?.message == rhs.snippets.first?.message) &&
-                (lhs.snippets.last?.message == rhs.snippets.last?.message) &&
-                (lhs.snippets.count == rhs.snippets.count))
+        return ((lhs.snippets?.first?.message == rhs.snippets?.first?.message) &&
+                (lhs.snippets?.last?.message == rhs.snippets?.last?.message) &&
+                (lhs.snippets?.count == rhs.snippets?.count))
     }
     
-    var snippets : [Snippet]
+    var snippets : [Snippet]?
     var userResponseOptions : (Snippet,Snippet)?
     var sender: Sender
 }
@@ -34,7 +34,7 @@ struct Snippet: SnippetProtocol {
 
 // ===> Player means no animation and quick deliver <===
 enum Sender {
-    case Jung, Player
+    case Jung, Player, Clear
 }
 
 // ===> Refer to KindActionTriggerView for how the delegate uses this enum <====
@@ -77,6 +77,6 @@ protocol SnippetProtocol {
 // ===> This is used by functions to call a Routine parameter that can be generic <===
 // We may want to have more than one type of Routine in the future.
 protocol JungRoutineProtocol {
-    var snippets: [Snippet] {get}
+ //   var snippets: [Snippet] {get}
     var sender: Sender {get}
 }

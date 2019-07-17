@@ -225,7 +225,8 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
     
     func clearJungChat() {
         kindNameLabel.alpha = 0
-        self.mainViewController?.jungChatLogger.resetJungChat()
+        //self.mainViewController?.jungChatLogger.resetJungChat()
+        self.talkbox?.clearJungChat()
         self.mainViewController?.jungChatLogger.hideOptionLabels(true, completion: nil)
     }
 

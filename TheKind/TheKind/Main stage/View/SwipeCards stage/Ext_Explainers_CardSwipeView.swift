@@ -26,6 +26,7 @@ extension CardSwipeView {
         }
         
     }
+
     
     func kindCardIntroExplainer() {
         guard let currentlyShowingKindCard = currentlyShowingKindCard else {return}

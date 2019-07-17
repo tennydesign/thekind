@@ -81,7 +81,7 @@ extension CardSwipeView: KolodaViewDataSource {
         
         //HERE: These resets are causing crashes. Why ?
        // self.mainViewController?.jungChatLogger.resetJungChat()
-        
+
         chosenKindsCollectionView.reloadData()
         
         kindCardIntroExplainer()
@@ -92,7 +92,7 @@ extension CardSwipeView: KolodaViewDataSource {
         let customView = Bundle.main.loadNibNamed("KindSwipeView", owner: nil, options: nil)?.first as? KindCardView
         
        // self.mainViewController?.jungChatLogger.resetJungChat()
-        
+
         let kinds:[KindCard] = GameKinds.minorKindsOriginalArray //Array(GameKinds.minorKindsOriginal.values)
         
         currentlyShowingKindCard = kinds[indexOfDisplayedKind]
@@ -215,7 +215,8 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
         } else {
             cell.kindImageView.tintColor = DARKGREYCOLOR
         }
-    
+        
+        self.talkbox?.clearJungChat()
         return cell
         
     }
@@ -226,7 +227,7 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
         // tells the system the focus is not on the card being presented for swipe (modifies the behavior of the right/left buttons)
         isDescribingCardSwiping = false
         // cleans chat.
-        self.mainViewController?.jungChatLogger.resetJungChat()
+        //self.mainViewController?.jungChatLogger.resetJungChat()
     
         selectedKindFromUserDeck = indexPath.row
         // this forces change of color for item
@@ -278,6 +279,7 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
             print("retrieved")
             self.alpha = 1
             self.chosenKindsCollectionView.reloadData()
+            self.talkbox?.clearJungChat()
         }
         
  
