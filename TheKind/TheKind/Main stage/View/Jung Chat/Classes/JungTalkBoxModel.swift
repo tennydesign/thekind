@@ -9,7 +9,14 @@
 import Foundation
 
 // ===> A routine is a colleciton of timerized snippets and response options. <===
-struct JungRoutine: JungRoutineProtocol {
+struct JungRoutine: JungRoutineProtocol, Equatable {
+    
+    static func == (lhs: JungRoutine, rhs: JungRoutine) -> Bool {
+       return ((lhs.snippets.first?.message == rhs.snippets.first?.message) &&
+                (lhs.snippets.last?.message == rhs.snippets.last?.message) &&
+                (lhs.snippets.count == rhs.snippets.count))
+    }
+    
     var snippets : [Snippet]
     var userResponseOptions : (Snippet,Snippet)?
     var sender: Sender

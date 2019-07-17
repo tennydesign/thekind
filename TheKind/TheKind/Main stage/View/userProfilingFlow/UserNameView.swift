@@ -7,6 +7,8 @@
 //
 // FOR NAVIGATION ALWAYS SEARCH FOR THE RIGHTCLICKED OPTION.
 import UIKit
+import RxCocoa
+import RxSwift
 
 class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     var username: String = ""
@@ -91,7 +93,11 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I'm good with that.", actionViews: (.none,.UserNameView))
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: options))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: options)
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
 
         return true
     }
@@ -129,8 +135,12 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
 //        let actions: [KindActionType] = [.none,.none]
 //        let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I'm good with that.", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: nil, actionViews: nil, options: options))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: nil, actionViews: nil, options: options)
         
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
 
@@ -156,7 +166,11 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
             let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView]
             self.fadeOutView()
             
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil))
+            let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
+            if let routine = routine {
+                let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+                self.talkbox?.kindExplanationPublisher.onNext(rm)
+            }
           
         } else {
             talk() // Talk to the user about the updated user name. (repeat the routine)

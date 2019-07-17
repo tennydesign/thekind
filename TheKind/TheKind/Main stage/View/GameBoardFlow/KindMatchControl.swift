@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import SpriteKit
+import RxCocoa
+import RxSwift
 
 class KindMatchControl: KindActionTriggerView {
     override func deactivate() {
@@ -42,7 +44,12 @@ class KindMatchControl: KindActionTriggerView {
 
         let options = self.talkbox?.createUserOptions(opt1: "See Kind deck.", opt2: "Intro us.", actionViews: (ActionViewName.KindMatchControlView,ActionViewName.KindMatchControlView))
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: nil, actionViews: nil, options: options))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: nil, actionViews: nil, options: options)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
     override func activate() {
@@ -61,7 +68,12 @@ class KindMatchControl: KindActionTriggerView {
         let actions: [KindActionType] = [.activate, .none]
         let actionViews: [ActionViewName] = [ActionViewName.BrowseKindView, ActionViewName.GameBoard]
          KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck = true
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        let routine = self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
         
        
     }

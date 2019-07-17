@@ -79,7 +79,7 @@
                   moduleName = "TheKind"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tenny/Dropbox/TENNY%20PINHEIRO/Ventures/IOS/%233%20PROJECTS/TheKind_1.0/TheKind/TheKind/Main%20stage/View/MapView/Model/CircleAnnotationManagement.swift"
-                  timestampString = "584253509.680982"
+                  timestampString = "585013089.015457"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "70"
@@ -94,7 +94,7 @@
                   moduleName = "TheKind"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tenny/Dropbox/TENNY%20PINHEIRO/Ventures/IOS/%233%20PROJECTS/TheKind_1.0/TheKind/TheKind/Main%20stage/View/MapView/Model/CircleAnnotationManagement.swift"
-                  timestampString = "584253509.682797"
+                  timestampString = "585013089.017627"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "71"
@@ -102,6 +102,22 @@
                   offsetFromSymbolStart = "804">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheKind/Main stage/View/SwipeCards stage/Ext_Explainers_CardSwipeView.swift"
+            timestampString = "585042041.989212"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "kindCardIntroExplainer()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

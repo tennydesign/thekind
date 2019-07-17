@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import Koloda
 
-class KindSwipeView: UIView {
+class KindCardView: UIView {
 
     @IBOutlet var kindDescriptionLabel: UILabel!
     @IBOutlet var imageView: UIImageView!

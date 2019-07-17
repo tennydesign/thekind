@@ -12,17 +12,24 @@ import RxCocoa
 import RxSwift
 
 
-struct RoutineToEmission {
-    let routine: BehaviorSubject<JungRoutineProtocol>
+struct JungRoutineToEmission {
+    let routine: BehaviorSubject<JungRoutine>
 }
 
 
 class JungTalkBox {
     
-    var kindExplanationPublisher = PublishSubject<RoutineToEmission>()
-    var kindExplanationObserver: Observable<RoutineToEmission> {
-        return kindExplanationPublisher.asObserver()
+    var kindExplanationPublisher = PublishSubject<JungRoutineToEmission>()
+    var kindExplanationObserver: Observable<JungRoutineToEmission> {
+        return kindExplanationPublisher.asObservable()
     }
+    
+    //To JungChatLogger
+    private var jungChatRoutinePublisher = PublishSubject<JungRoutineToEmission>()
+    var jungChatRoutineObserver: Observable<JungRoutineToEmission> {
+        return jungChatRoutinePublisher.asObservable()
+    }
+    
     var disposeBag = DisposeBag()
     
   //  private var clearJungChatPublisher = Completable()
@@ -36,62 +43,31 @@ class JungTalkBox {
     var injectRoutineMessageObserver: ((JungRoutineProtocol?)->())?
     
     init(){
-        kindExplanationObserver
+        setupkindExplanationObserver()
+    }
+
+    
+    func setupkindExplanationObserver() {
+        kindExplanationObserver.share()
             .flatMapLatest {
                 $0.routine
             }
             .subscribe(onNext: { routine in
-                //print("THIS---->",routine.snippets[0].message)
-                self.injectRoutineMessageObserver?(routine)
+                print("THIS---->",routine.snippets[0].message)
+                //self.injectRoutineMessageObserver?(routine)
+                
+                //Sends it to JungChatLogger // old inject.
+                let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+                self.jungChatRoutinePublisher.onNext(rm)
+                
                 self.isProcessingSpeech = true
             })
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
     
-    func displayRoutine(routine: JungRoutineProtocol?, wait: Double? = nil) {
-        //if !isProcessingSpeech {
-           // delay(bySeconds: wait ?? 0) {
-                self.injectRoutineMessageObserver?(routine)
-                self.isProcessingSpeech = true
-          //  }
-        //}
-    }
-    
-    func displayRoutine(for userResponseOption: Snippet?, wait: Double? = nil) {
-        guard let userResponseOption = userResponseOption else {return}
-
-        let playerMessage = Snippet.init(message: userResponseOption.message, action: userResponseOption.action, id: userResponseOption.id, actionView: userResponseOption.actionView ?? ActionViewName.none)
-        
-        let playerPostRoutine = JungRoutine.init(snippets: [playerMessage], userResponseOptions: nil, sender: .Player)
-
-        // 1 - send the user message to the chat
-        injectRoutineMessageObserver?(playerPostRoutine)
-
-        // 2 - get Jung routine response to the chat. FIRESTORE
-        let jungPostRoutine = retrieveRoutineForUserOption(userOptionId: userResponseOption.id)
-
-        // 3 - Send response routine to chat.
-        //delay(bySeconds: tempoBetweenPlayerResponseAndJungResponse) {
-        self.injectRoutineMessageObserver?(jungPostRoutine)
-        //}
-    }
-
-    // BASED ON USER RESPONSE
-    private func retrieveRoutineForUserOption(userOptionId: Int ) -> JungRoutine {
-        
-        
-        // 1 - Use userOptionId
-        // 2 - find routine to play related to userOptionId. FIRESTORE
-        // 3 - post it
-        
-        //Dummy data:
-        let linesForJungReplyTest : [Snippet] = [Snippet(message: "", action: .none,id: 2, actionView: nil)]
-        
-        let testJungRoutine = JungRoutine.init(snippets: linesForJungReplyTest, userResponseOptions:nil, sender: .Jung)
-        
-        return testJungRoutine
-        
-    }
+//=============
+    // Constructors for routines and snippets
+//=============
 
     func routineFromText(dialog: String, snippetId: [Int]? = nil, sender: Sender? = nil, actions: [KindActionType]?, actionViews: [ActionViewName]?, options: (Snippet,Snippet)? = nil) -> JungRoutine? {
         
@@ -164,6 +140,11 @@ class JungTalkBox {
         
     }
     
+    
+//=============
+// Triggers
+//=============
+    
     func executeSnippetAction(_ snippet: SnippetProtocol) {
         guard let tag = snippet.actionView?.rawValue else {return}
         
@@ -200,19 +181,3 @@ class JungTalkBox {
     
 }
 
-
-
-// MODEL/TEST DATA.
-
-
-
-
-
-
-var userResponseOptionsForSelfie : [Snippet] = [Snippet.init(message: "A Something no trigger", action: .none, id: 1113, actionView: nil)]
-
-
-
-var linesForJungReplyPhotoTest : [Snippet] = [Snippet(message: "Thanks Tenny.", action: .none, id: 1, actionView: nil),
-                                         Snippet(message: "I totally understand.", action: .none,id: 2, actionView: nil),
-                                         Snippet(message: "Sometimes we need time alone.", action: .none, id: 3, actionView: nil)]

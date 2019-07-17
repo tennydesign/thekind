@@ -9,6 +9,8 @@
 import UIKit
 import MapKit
 import Mapbox
+import RxCocoa
+import RxSwift
 
 extension MapActionTriggerView {
     
@@ -17,7 +19,11 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
     
@@ -26,7 +32,12 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
     func doneExplainer() {
@@ -34,7 +45,12 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none]
         let actionViews: [ActionViewName] = [.none]
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
 
@@ -48,7 +64,12 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none,.none,.none]
         let actionViews: [ActionViewName] = [.none,.none,.none]
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
     
@@ -59,7 +80,12 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none, .none,.none, .none]
         let actionViews: [ActionViewName] = [.none,.none,.none, .none]
         let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
     
@@ -70,7 +96,12 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none, .none ]
         let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
     func explainerCircleGotDeleted() {
@@ -79,7 +110,11 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none ]
         let actionViews: [ActionViewName] = [.none]
       //  let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
     func explainerCircleExploration() {
@@ -96,7 +131,12 @@ extension MapActionTriggerView {
                 actionViews.append(.none)
         }
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
     func explainerSaveFailed() {
@@ -104,7 +144,12 @@ extension MapActionTriggerView {
         let actions: [KindActionType] = [.none,.none]
         let actionViews: [ActionViewName] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "Cancel", opt2: "Save", actionView: self)
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
         
     }
     
@@ -112,7 +157,12 @@ extension MapActionTriggerView {
         //enter circle
         let actions: [KindActionType] = [KindActionType.deactivate,KindActionType.activate]
         let actionViews: [ActionViewName] = [ActionViewName.MapView, ActionViewName.GameBoard]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(actions: actions, actionViews: actionViews, options: nil))
+        let routine = self.talkbox?.routineWithNoText(actions: actions, actionViews: actionViews, options: nil)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
         
         //Happens behind the scenes.
         //Will delay 2 second to allow alpha into board, and then it will deselect the annotation and turn Map to normal state.
@@ -125,6 +175,11 @@ extension MapActionTriggerView {
         let txt = "Done."
         let actions: [KindActionType] = [.none]
         let actionViews: [ActionViewName] = [.none]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, actions: actions, actionViews: actionViews))
+        let routine = self.talkbox?.routineFromText(dialog: txt, actions: actions, actionViews: actionViews)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
 }

@@ -7,26 +7,11 @@
 //
 
 import UIKit
-
+import RxCocoa
+import RxSwift
 
 extension MainViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    
-    //TODO: THis is a hacked version for test. Uncomment below for the real one.
-//    func hitPickerControl() {
-//        self.hudView.userPictureImageVIew.image = #imageLiteral(resourceName: "userPhoto")
-//
-//        let txt = "Let me show how you look like.-Look up ☝️."
-//        let actions: [KindActionType] = [.none, .activate]
-//        let actionViews: [ActionViewName] = [.none,.HudView]
-//
-//        // TODO: all should look like this one.
-//        let options = self.talkbox.createUserOptions(opt1: "Take another one.", opt2: "Keep this one.", actionViews: (.BadgePhotoSetupView,.BadgePhotoSetupView))
-//
-//
-//        self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, action: actions, actionView: actionViews, options: options), wait: 1)
-//
-//    }
     
     func hitPickerControl() {
         let pickerController = UIImagePickerController()
@@ -70,20 +55,26 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         let actionViews: [ActionViewName] = [.HudView]
         let routine = self.talkbox.routineFromText(dialog: SelfieCheckMSG.wait.rawValue, actions: actions, actionViews: actionViews, options: nil)
 
-        self.talkbox.displayRoutine(routine: routine)
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox.kindExplanationPublisher.onNext(rm)
+        }
+        
 
         jungAWSRekognition.sendImageToRekognition(imageData: badgeSelfieImage, completion: { (result) in
             delay(bySeconds: 1, closure: {
 
 
                 if result != .good {
-                    self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: result.rawValue, actions: [.none], actionViews: [.none], options:nil))
+                    let routine = self.talkbox.routineFromText(dialog: result.rawValue, actions: [.none], actionViews: [.none], options:nil)
+                    if let routine = routine {
+                        let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+                        self.talkbox.kindExplanationPublisher.onNext(rm)
+                    }
 
                 } else {
 
                     self.hudView.userPictureImageVIew.image = image
-//                    self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: result.rawValue, action: [.none], actionView: [.none], options: nil))
-
 
                     let txt = result.rawValue + "-Let me show how you look like.-Look up ☝️."
                     let actions: [KindActionType] = [.none, .none, .activate]
@@ -92,9 +83,13 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
                     // TODO: all should look like this one.
                     let options = self.talkbox.createUserOptions(opt1: "Take another", opt2: "Keep this one", actionViews: (.BadgePhotoSetupView,.BadgePhotoSetupView))
 
-                      self.talkbox.displayRoutine(routine: self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options), wait: 1)
+                    let routine = self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
                  
 
+                    if let routine = routine {
+                        let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+                        self.talkbox.kindExplanationPublisher.onNext(rm)
+                    }
 
 
                 }

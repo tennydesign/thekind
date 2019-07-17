@@ -8,7 +8,8 @@
 
 import UIKit
 import NVActivityIndicatorView
-
+import RxSwift
+import RxCocoa
 
 class JungChatLogger: KindActionTriggerView {
 
@@ -33,6 +34,7 @@ class JungChatLogger: KindActionTriggerView {
     let serialPostsQueue = DispatchQueue(label: "com.thekind.jungPosts")
     var messagesPipe: [String] = []
     var dispatchGroup: DispatchGroup?
+    var disposeBag = DisposeBag()
     
     //var animator: UIViewPropertyAnimator()
     var messagesCollection: [String] = [] {
@@ -52,7 +54,8 @@ class JungChatLogger: KindActionTriggerView {
     var talkbox: JungTalkBox! {
         didSet {
             // Setup Jung Listener
-            messagesAndRoutinesObservers()
+            jungChatRoutineObserverActivation()
+//            postToChatWithTimerObserverActivation()
         }
     }
     
@@ -88,20 +91,21 @@ class JungChatLogger: KindActionTriggerView {
         if self.messagesCollection.isEmpty {resetJungChat()}
   
         hideOptionLabels(true, completion: nil)
-
-    
     }
     
     func resetAnswerViewWidthAnchor() {
-        HoldToAnswerViewWidthAnchor.constant = targetStretcherValue
-        UIView.animate(withDuration: 0.3) {
-            self.layoutIfNeeded()
+        DispatchQueue.main.async {
+            self.HoldToAnswerViewWidthAnchor.constant = self.targetStretcherValue
+            UIView.animate(withDuration: 0.3) {
+                self.layoutIfNeeded()
+            }
         }
     }
 
     func resetJungChat() {
         DispatchQueue.main.async {
             self.messagesCollection = ["","","","","",""]
+            self.resetAnswerViewWidthAnchor()
         }
         //resetAnswerViewWidthAnchor()
     }
@@ -111,72 +115,83 @@ class JungChatLogger: KindActionTriggerView {
     var delayJungPostInSecs: Double = 0
     
     
-    func hideOptionLabels(_ isHidden: Bool, completion: (()->())?) {
-        DispatchQueue.main.async {
-            if isHidden == false {
-                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
-                    self.resetAnswerViewWidthAnchor()
-                    self.leftAnswerLabel.alpha = 1
-                    self.rightAnswerLabel.alpha = 1
-                    self.holdToAnswerBar.alpha = 1
-                }) { (completed) in
-                    completion?()
-                }
-            } else {
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.leftAnswerLabel.alpha = 0
-                    self.rightAnswerLabel.alpha = 0
-                    self.holdToAnswerBar.alpha = 0
-                    
-                }) { (completed) in
-                    completion?()
-                }
+    
+    fileprivate func jungChatRoutineObserverActivation() {
+        
+        talkbox.jungChatRoutineObserver.share()
+            .flatMapLatest {
+                $0.routine
             }
+            //HERE:
+            .distinctUntilChanged()
+            .subscribe(onNext: { jungRoutine in
+                var labelsUpdated = false
+                self.hideOptionLabels(true, completion: {
+                    // 2 - update (or don't touch) labels.
+                    labelsUpdated = self.updateOptionLabels(jungRoutine.userResponseOptions, rightLabel: self.rightAnswerLabel, leftLabel: self.leftAnswerLabel)
+                    // 2 - After label work is complete.
+                    if jungRoutine.sender == .Jung {
+                        self.postJungRoutine(jungRoutine: jungRoutine, labelsUpdated: labelsUpdated)
+                    } else if jungRoutine.sender == .Player { // POSTS IMMEDIATELY
+                        self.postPlayerRoutine(jungRoutine: jungRoutine, labelsUpdated: labelsUpdated)
+                    }
+                })
+                
+            })
+            .disposed(by: disposeBag)
+        
+    }
+    
+    private func postJungRoutine(jungRoutine: JungRoutine, labelsUpdated: Bool) {
+
+            self.startLoadingAnimator(for: jungRoutine.snippets.count)
+            
+            self.performPostsWithTimeInterval(jungRoutine) { (success) in
+                self.stopLoadingAnimator()
+                // release jung lock.
+                self.talkbox.isProcessingSpeech = false
+                
+                if labelsUpdated {
+                    self.hideOptionLabels(false, completion: nil)
+                }
+                self.routineHasPosted?()
+            }
+    }
+    
+    private func postPlayerRoutine(jungRoutine: JungRoutine, labelsUpdated: Bool) {
+        guard let message = jungRoutine.snippets.first?.message,
+            let snippet = jungRoutine.snippets.first else {return}
+        
+        self.postMessageToJungChat(message: message)
+        self.talkbox.executeSnippetAction(snippet)
+        // release jung lock.
+        self.talkbox.isProcessingSpeech = false
+        self.routineHasPosted?()
+        if labelsUpdated {
+            self.hideOptionLabels(false, completion: nil)
         }
     }
     
-    // Here: Btns are not showing for snippets with ONE message. 
-    fileprivate func messagesAndRoutinesObservers() {
-        talkbox.injectRoutineMessageObserver = { [unowned self](jungRoutine) in
-            
-            guard let jungRoutine = jungRoutine as? JungRoutine else {return}
-            var labelsUpdated = false
-            // 1 - Hide labels.
-            self.hideOptionLabels(true, completion: {
-                // 2 - update (or don't touch) labels.
-                labelsUpdated = self.updateOptionLabels(jungRoutine.userResponseOptions, rightLabel: self.rightAnswerLabel, leftLabel: self.leftAnswerLabel)
+    func hideOptionLabels(_ isHidden: Bool, completion: (()->())?) {
+        if isHidden == false {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+                self.resetAnswerViewWidthAnchor()
+                self.leftAnswerLabel.alpha = 1
+                self.rightAnswerLabel.alpha = 1
+                self.holdToAnswerBar.alpha = 1
+            }) { (completed) in
+                completion?()
+            }
+        } else {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.leftAnswerLabel.alpha = 0
+                self.rightAnswerLabel.alpha = 0
+                self.holdToAnswerBar.alpha = 0
                 
-                // 2 - After label work is complete. Start and tempo the animator if Jung is chatting.
-                if jungRoutine.sender == .Jung {
-                    self.startLoadingAnimator(for: jungRoutine.snippets.count)
-                    self.performPostsWithTimeInterval(jungRoutine) { (success) in
-                        self.stopLoadingAnimator()
-                        // release jung lock.
-                        self.talkbox.isProcessingSpeech = false
-                        if labelsUpdated {
-                            self.hideOptionLabels(false, completion: nil)
-                        }
-                        self.routineHasPosted?()
-                    }
-                }
-                    
-                else if jungRoutine.sender == .Player { // POSTS IMMEDIATELY
-                    guard let message = jungRoutine.snippets.first?.message,
-                        let snippet = jungRoutine.snippets.first else {return}
-                    
-                    self.postMessageToJungChat(message: message)
-                    self.talkbox.executeSnippetAction(snippet)
-                    // release jung lock.
-                    self.talkbox.isProcessingSpeech = false
-                    if labelsUpdated {
-                        self.hideOptionLabels(false, completion: nil)
-                    }
-                    
-                }
-            })
- 
+            }) { (completed) in
+                completion?()
+            }
         }
-        
     }
     
     fileprivate func performPostsWithTimeInterval(_ jungRoutine: JungRoutine,
@@ -185,15 +200,9 @@ class JungChatLogger: KindActionTriggerView {
                                                   completion: ((Bool)->())?) {
         
     
-        jungRoutine.snippets.forEach { (snippet) in
-            messagesPipe.append(snippet.message)
-        }
-        
-        //print(messagesPipe)
-        
         let snippets: [Snippet] = jungRoutine.snippets
-        var messageIndex = 0
         
+        var messageIndex = 0
 
         Timer.scheduledTimer(withTimeInterval: timeInterval ?? self.tempoInBetweenPosts, repeats: true){ t in
 
@@ -214,7 +223,35 @@ class JungChatLogger: KindActionTriggerView {
             messageIndex = min(messageIndex+1, snippets.count-1)
 
         }
+        
+        /////
+        
+//        Observable<Int>.interval(1.0, scheduler: MainScheduler.instance)
+//            .debug("interval")
+//            .subscribe(onNext: {
+//                print($0)
+//
+//                self.postMessageToJungChat(message: snippets[messageIndex].message)
+//
+//                self.talkbox.executeSnippetAction(snippets[messageIndex])
+//                self.animationCount -= 1
+//                // 3 - Stops timer
+//                if messageIndex == snippets.count-1 {
+//                    if let completion = completion {
+//                        completion(true)
+//                    }
+//                    messageIndex = 0
+//                    return
+//                }
+//
+//                messageIndex = min(messageIndex+1, snippets.count-1)
+//            })
+//            .disposed(by: disposeBag)
+        
+
     }
+    
+    
     
     func stopLoadingAnimator() {
         if self.animationCount == 0 {
@@ -259,9 +296,17 @@ class JungChatLogger: KindActionTriggerView {
             // post message only if indicator is full.
             if self.HoldToAnswerViewWidthAnchor.constant == 0{//self.targetStretcherValue {
                 self.holdToAnswerBar.alpha = 0
-                guard let snippet = userResponseOption else {return}
-                // retrieve and display routine for Option chosen
-                self.talkbox.displayRoutine(for: snippet)
+                
+                
+                guard let userResponseOption = userResponseOption else {return}
+
+                let playerMessage = Snippet.init(message: userResponseOption.message, action: userResponseOption.action, id: userResponseOption.id, actionView: userResponseOption.actionView ?? ActionViewName.none)
+                
+                let playerPostRoutine = JungRoutine.init(snippets: [playerMessage], userResponseOptions: nil, sender: .Player)
+                
+                // 1 - send the user message to the chat
+                let rm = JungRoutineToEmission(routine: BehaviorSubject(value: playerPostRoutine))
+                self.talkbox?.kindExplanationPublisher.onNext(rm)
             }
         }
         
@@ -273,7 +318,7 @@ class JungChatLogger: KindActionTriggerView {
     fileprivate func postMessageToJungChat(message: String) {
         // do not post empty strings
         if !message.isEmpty {
-             DispatchQueue.main.async {
+            DispatchQueue.main.async {
                 self.messagesCollection.append(message)
             }
         }

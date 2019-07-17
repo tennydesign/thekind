@@ -185,6 +185,10 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     }
     
     
+    @IBAction func loadKindManager(_ sender: UIButton) {
+        self.mainViewController?.cardSwipeViewHost.activate()
+    }
+    
     func talk() {
         
     }

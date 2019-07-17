@@ -1,7 +1,7 @@
 PODS:
-  - AWSCore (2.9.9)
-  - AWSRekognition (2.9.9):
-    - AWSCore (= 2.9.9)
+  - AWSCore (2.9.10)
+  - AWSRekognition (2.9.10):
+    - AWSCore (= 2.9.10)
   - BoringSSL-GRPC (0.0.2):
     - BoringSSL-GRPC/Implementation (= 0.0.2)
     - BoringSSL-GRPC/Interface (= 0.0.2)
@@ -139,7 +139,7 @@ PODS:
     - NVActivityIndicatorView/Presenter (= 4.7.0)
   - NVActivityIndicatorView/Presenter (4.7.0)
   - pop (1.0.12)
-  - Protobuf (3.8.0)
+  - Protobuf (3.9.0)
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -198,8 +198,8 @@ SPEC REPOS:
     - RxSwift
 
 SPEC CHECKSUMS:
-  AWSCore: 705dbb60efeec05bc6bbee416e7f5e9837af0749
-  AWSRekognition: a164698ac033c42c3f1de42dd426bc01ab19c625
+  AWSCore: 22b6bbc6761ca9981d878155d11bc02edd681a64
+  AWSRekognition: f02321aec5cf2c004508c9dcdc80e28a4fec575f
   BoringSSL-GRPC: 2a230d9cd93e7ce39916044f645cebb31f37dde6
   Firebase: 0c8cf33f266410c61ab3e2265cfa412200351d9c
   FirebaseAnalytics: ece1aa57a4f43c64d53a648b5a5e05151aae947b
@@ -225,7 +225,7 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
-  Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
+  Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f

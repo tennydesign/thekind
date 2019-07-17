@@ -8,7 +8,8 @@
 
 import UIKit
 import GoogleSignIn
-//TODO: REFACTOR THIS
+import RxCocoa
+import RxSwift
 
 
 class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerViewDataSource {
@@ -76,7 +77,11 @@ class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Confirm year.", actionView: self)
         
         delay(bySeconds: 0.3, dispatchLevel: .main) {
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
+           let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
+            if let routine = routine {
+                let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+                self.talkbox?.kindExplanationPublisher.onNext(rm)
+            }
         }
     }
     
@@ -114,7 +119,11 @@ class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         let txt = "I understand you are about \(age) years old.-We are almost finished with the setup."
         let actions: [KindActionType] = [.none,.activate]
         let actionViews: [ActionViewName] = [.none,.ChooseDriverView]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
         
         // Move next.
         self.fadeOutView()

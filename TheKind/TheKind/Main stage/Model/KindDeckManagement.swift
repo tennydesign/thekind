@@ -26,7 +26,7 @@ class KindDeckManagement {
     }
     var isBrowsingAnotherUserKindDeck = false // This is used to change the behaviour of the browsing kinds screen. Todo: Find a better automatic flagger condition to this.
     
-    //Computed properties.
+
     var kindsdict: [String: Any] {
         get {
             return ["userKindDeck": userKindDeck]
@@ -34,7 +34,7 @@ class KindDeckManagement {
     }
 
     
-    //Reactive
+
     var updateDeckOnClient: (()->())?
     var updateMainKindOnClient: (()->())?
     
@@ -81,12 +81,12 @@ class KindDeckManagement {
 
     
     func safeAddMainKindToDeck(kindID: Int, completion:@escaping (Bool)->()) {
-        // This will make sure we never have two or more Main kinds in a deck.
         let twelveMainKinds = GameKinds.twelveKindsOriginalArray.map {$0.kindId.rawValue}
+        // This will delete the previous mainKind in the deck.
         if twelveMainKinds.contains(kindID) {
             cleanPreviousMainKindsFromDeck()
         }
-        
+        //This will add the new mainKind to the deck.
         if !userKindDeck.contains(kindID) {
             userKindDeck.append(kindID)
             self.updateKindDeck { (err) in
@@ -105,8 +105,6 @@ class KindDeckManagement {
         
     }
     
-
-    //TODO: Implement here the array manipulation
     
     func addKindToDeck(kindId: Int, completion: (()->())?) {
         let db = Firestore.firestore()
@@ -150,12 +148,14 @@ class KindDeckManagement {
     }
     
     
-    //SAVE
-    //MAINKIND
-    func saveMainKind(completion: ((Error?)->())?) {
+    //TODO: This function is only good for onboarding.
+    //After this use safeAddMainKindToDeck() ... probably need refactoring.
+    func saveMainKindOnboarding(completion: ((Error?)->())?) {
         let db = Firestore.firestore()
         guard let mainkind = userMainKind else {return}
+        
         let mainKindDict = ["userMainKind":mainkind]
+        
         guard let uid = Auth.auth().currentUser?.uid else {return}
         db.collection(KindDeckDocument.alldecks.rawValue).document(uid).updateData(mainKindDict) { (err) in
             if let err = err {

@@ -10,7 +10,8 @@
 import Foundation
 import UIKit
 import SpriteKit
-
+import RxCocoa
+import RxSwift
 //TODO: HAVE A SWITCH FOR TILES THAT ARE PHOTOS NOT ICONS.
 
 class GameBoard: KindActionTriggerView {
@@ -89,7 +90,12 @@ class GameBoard: KindActionTriggerView {
         
         let options = self.talkbox?.createUserOptions(opt1: "No... keep in wired-in mode.", opt2: "Yes... introduce me to someone.", actionViews: (ActionViewName.GameBoardSceneControlView,ActionViewName.GameBoardSceneControlView))
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
         
     }
     

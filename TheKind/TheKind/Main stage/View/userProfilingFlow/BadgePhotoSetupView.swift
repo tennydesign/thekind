@@ -7,7 +7,8 @@
 
 
 import UIKit
-
+import RxCocoa
+import RxSwift
 //TODO: Screen is blinking after user chooses photo.
 
 class BadgePhotoSetupView: KindActionTriggerView {
@@ -55,7 +56,11 @@ class BadgePhotoSetupView: KindActionTriggerView {
         let txt = "First, take a selife.-This will help when meeting other people.-Justtap the camera above."
         let actions: [KindActionType] = [.none,.fadeInView, .none]
         let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView, .none]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
 
@@ -83,7 +88,11 @@ class BadgePhotoSetupView: KindActionTriggerView {
         let actionViews: [ActionViewName] = [.none, .DobOnboardingView]
         
         delay(bySeconds: 0.3, dispatchLevel: .main) {
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil))
+            let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
+            if let routine = routine {
+                let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+                self.talkbox?.kindExplanationPublisher.onNext(rm)
+            }
         }
     }
     

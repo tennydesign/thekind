@@ -102,16 +102,18 @@
 		A0C5D23F212A4A7600BF1B0C /* TheKindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5D23E212A4A7600BF1B0C /* TheKindTests.swift */; };
 		A0C5D24A212A4A7600BF1B0C /* TheKindUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5D249212A4A7600BF1B0C /* TheKindUITests.swift */; };
 		A0C5D2C7212B511E00BF1B0C /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5D2C6212B511E00BF1B0C /* LandingViewController.swift */; };
+		A0C9FA1C22DE5BD500BB3B67 /* Ext_Explainers_BrowseKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C9FA1B22DE5BD500BB3B67 /* Ext_Explainers_BrowseKind.swift */; };
 		A0CBA6782294BB0D0088F581 /* TestLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = A0CBA6772294BB0C0088F581 /* TestLocations.gpx */; };
 		A0D086EB215EA61300011A54 /* AcylicalHand-Small-SVG.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0D086EA215EA61200011A54 /* AcylicalHand-Small-SVG.ttf */; };
 		A0D960CD21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D960CB21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift */; };
 		A0D960CE21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0D960CC21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib */; };
+		A0E4ADF322DE8E6F00B403EF /* Ext_Explainers_CardSwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E4ADF222DE8E6F00B403EF /* Ext_Explainers_CardSwipeView.swift */; };
 		A0E9C0462215D05200C949D4 /* KindMatchControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E9C0452215D05200C949D4 /* KindMatchControl.swift */; };
 		A0E9C0482215D27000C949D4 /* GameBoardSceneControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E9C0472215D27000C949D4 /* GameBoardSceneControlView.swift */; };
 		A0E9C04A22162D0D00C949D4 /* CardSwipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0E9C04922162D0D00C949D4 /* CardSwipeView.xib */; };
 		A0E9C04C22162D2400C949D4 /* CardSwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E9C04B22162D2400C949D4 /* CardSwipeView.swift */; };
 		A0E9C04E2216415E00C949D4 /* KindSwipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0E9C04D2216415E00C949D4 /* KindSwipeView.xib */; };
-		A0E9C0502216416D00C949D4 /* KindSwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E9C04F2216416D00C949D4 /* KindSwipeView.swift */; };
+		A0E9C0502216416D00C949D4 /* KindCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E9C04F2216416D00C949D4 /* KindCardView.swift */; };
 		A0F223A621B88DB10096C25D /* KindButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F223A521B88DB10096C25D /* KindButton.swift */; };
 		A0F223A821B88E0F0096C25D /* KindTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F223A721B88E0F0096C25D /* KindTextField.swift */; };
 		A0FBB735221395C700405440 /* GameBoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FBB734221395C700405440 /* GameBoardModel.swift */; };
@@ -240,16 +242,18 @@
 		A0C5D249212A4A7600BF1B0C /* TheKindUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheKindUITests.swift; sourceTree = "<group>"; };
 		A0C5D24B212A4A7600BF1B0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0C5D2C6212B511E00BF1B0C /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
+		A0C9FA1B22DE5BD500BB3B67 /* Ext_Explainers_BrowseKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Explainers_BrowseKind.swift; sourceTree = "<group>"; };
 		A0CBA6772294BB0C0088F581 /* TestLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestLocations.gpx; sourceTree = "<group>"; };
 		A0D086EA215EA61200011A54 /* AcylicalHand-Small-SVG.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AcylicalHand-Small-SVG.ttf"; sourceTree = "<group>"; };
 		A0D960CB21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kindCollectioViewCell.swift; sourceTree = "<group>"; };
 		A0D960CC21C1A7AB00DF1CB0 /* kindCollectioViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = kindCollectioViewCell.xib; sourceTree = "<group>"; };
+		A0E4ADF222DE8E6F00B403EF /* Ext_Explainers_CardSwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Explainers_CardSwipeView.swift; sourceTree = "<group>"; };
 		A0E9C0452215D05200C949D4 /* KindMatchControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindMatchControl.swift; sourceTree = "<group>"; };
 		A0E9C0472215D27000C949D4 /* GameBoardSceneControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardSceneControlView.swift; sourceTree = "<group>"; };
 		A0E9C04922162D0D00C949D4 /* CardSwipeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardSwipeView.xib; sourceTree = "<group>"; };
 		A0E9C04B22162D2400C949D4 /* CardSwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSwipeView.swift; sourceTree = "<group>"; };
 		A0E9C04D2216415E00C949D4 /* KindSwipeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KindSwipeView.xib; sourceTree = "<group>"; };
-		A0E9C04F2216416D00C949D4 /* KindSwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindSwipeView.swift; sourceTree = "<group>"; };
+		A0E9C04F2216416D00C949D4 /* KindCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindCardView.swift; sourceTree = "<group>"; };
 		A0F223A521B88DB10096C25D /* KindButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindButton.swift; sourceTree = "<group>"; };
 		A0F223A721B88E0F0096C25D /* KindTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KindTextField.swift; sourceTree = "<group>"; };
 		A0FBB734221395C700405440 /* GameBoardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardModel.swift; sourceTree = "<group>"; };
@@ -385,9 +389,10 @@
 				A025F6E3221B3FD60010BDA1 /* CustomSwipeOverlay.xib */,
 				A025F6E5221B403C0010BDA1 /* CustomSwipeOverlay.swift */,
 				A0E9C04D2216415E00C949D4 /* KindSwipeView.xib */,
-				A0E9C04F2216416D00C949D4 /* KindSwipeView.swift */,
+				A0E9C04F2216416D00C949D4 /* KindCardView.swift */,
 				A025F6DE22172D450010BDA1 /* Cell */,
 				A025F6E7221B47960010BDA1 /* KeepParticle.sks */,
+				A0E4ADF222DE8E6F00B403EF /* Ext_Explainers_CardSwipeView.swift */,
 			);
 			path = "SwipeCards stage";
 			sourceTree = "<group>";
@@ -652,6 +657,7 @@
 				A02D719E21C42FA300EBBD12 /* BrowseKindCardView.swift */,
 				A02D71A021C4300E00EBBD12 /* BrowseKindCardView.xib */,
 				A0D960CF21C1A7DA00DF1CB0 /* Cell */,
+				A0C9FA1B22DE5BD500BB3B67 /* Ext_Explainers_BrowseKind.swift */,
 			);
 			path = ChooseDriverAndKindViews;
 			sourceTree = "<group>";
@@ -1008,6 +1014,7 @@
 			files = (
 				A0C5D22F212A4A7500BF1B0C /* TheKind.xcdatamodeld in Sources */,
 				A09A0DB7228F9AFF002FC533 /* CircleListTableViewCell.swift in Sources */,
+				A0C9FA1C22DE5BD500BB3B67 /* Ext_Explainers_BrowseKind.swift in Sources */,
 				A0F223A821B88E0F0096C25D /* KindTextField.swift in Sources */,
 				A0FBB735221395C700405440 /* GameBoardModel.swift in Sources */,
 				A002F48421B9EFAE006E8660 /* JungChatBubbleCollectionViewCell.swift in Sources */,
@@ -1031,7 +1038,7 @@
 				A09A0DBA228FBBA9002FC533 /* MapSnapShot.swift in Sources */,
 				A0D960CD21C1A7AB00DF1CB0 /* kindCollectioViewCell.swift in Sources */,
 				A002F49121BDD01F006E8660 /* LandingViewControllerViewModel.swift in Sources */,
-				A0E9C0502216416D00C949D4 /* KindSwipeView.swift in Sources */,
+				A0E9C0502216416D00C949D4 /* KindCardView.swift in Sources */,
 				A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */,
 				A025F6E6221B403C0010BDA1 /* CustomSwipeOverlay.swift in Sources */,
 				A02D71A521C6BC7200EBBD12 /* OnBoardingViewController.swift in Sources */,
@@ -1045,6 +1052,7 @@
 				A0C5D2C7212B511E00BF1B0C /* LandingViewController.swift in Sources */,
 				A046420B21CC3B6F00E8817C /* JungAWSRecognitionBadge.swift in Sources */,
 				A0301D702190C32300E023F7 /* GameBoardScene.swift in Sources */,
+				A0E4ADF322DE8E6F00B403EF /* Ext_Explainers_CardSwipeView.swift in Sources */,
 				A02D719F21C42FA300EBBD12 /* BrowseKindCardView.swift in Sources */,
 				A0E9C0482215D27000C949D4 /* GameBoardSceneControlView.swift in Sources */,
 				A05150F821E44A9400795172 /* KindUserSettingsManager.swift in Sources */,

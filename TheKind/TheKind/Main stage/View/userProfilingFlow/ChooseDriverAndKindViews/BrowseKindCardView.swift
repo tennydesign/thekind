@@ -35,7 +35,11 @@ class BrowseKindCardView: KindActionTriggerView {
     
     
     var currentCellToTint: kindCollectioViewCell?
-    var availableKindsForDriver: [KindCard] = []
+    var kindsList: [KindCard] = [] {
+        didSet {
+            reloadAndResetCollectionView()
+        }
+    }
     
 
     
@@ -77,15 +81,7 @@ class BrowseKindCardView: KindActionTriggerView {
 
     override func talk() {
         if !KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
-            let txt = "Choose your kind. -Tap the icon to know more or go back to change your main driver."
-            let actions: [KindActionType] = [.none, .none]
-            let actionViews: [ActionViewName] = [.none,.none]
-            var options: (Snippet,Snippet)?
-            if let kindName = availableKindsForDriver.first?.kindName.rawValue {
-                options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I'm like \(kindName)", actionView: self)
-            }
-            
-            self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
+            chooseMainKindExplainer()
         }
     }
     
@@ -106,14 +102,17 @@ class BrowseKindCardView: KindActionTriggerView {
      
         self.alpha=1
         mainViewController?.chooseKindCardViewHost.isHidden = false
-        availableKindsForDriver = kindsForDriver
-        reloadAndResetCollectionView()
+        kindsList = kindsForDriver
         
         fillAndPresentLabelWith(selectedIndex)
         //Switch between user is browsing or choosing carousels.
 
         talk()
 
+    }
+    
+    func loadKindList(completion: (()->())?) {
+        
     }
     
     override func deactivate() {
@@ -124,11 +123,8 @@ class BrowseKindCardView: KindActionTriggerView {
     override func rightOptionClicked() {
         print("right clicked")
         if !KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
-            let kind = self.availableKindsForDriver[selectedIndex]
+            let kind = self.kindsList[selectedIndex]
             let kindName = kind.kindName.rawValue
-            let txt = "You chose\(kindName). -Now, let me show you the map.-Use it to find circles to join."
-            let actions: [KindActionType] = [.activate, .deactivate, .activate]
-            let actionViews: [ActionViewName] = [.HudView,.BrowseKindView, .MapView]
             
             // update user settings
             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.kind.rawValue] = kind.kindId.rawValue
@@ -136,12 +132,12 @@ class BrowseKindCardView: KindActionTriggerView {
             
             // update deck.
             KindDeckManagement.sharedInstance.userMainKind = kind.kindId.rawValue
-            KindDeckManagement.sharedInstance.saveMainKind() { (err) in
+            KindDeckManagement.sharedInstance.saveMainKindOnboarding() { (err) in
                 if let err = err {
-                    print("KindDeckManagement.sharedInstance.saveMainKind(): \(err)")
+                    print("KindDeckManagement.sharedInstance.saveMainKindOnboarding(): \(err)")
                     return
                 }
-                self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+                self.onboardingKindChosenExplainer(kindName: kindName)
             }
   
         }
@@ -157,70 +153,32 @@ class BrowseKindCardView: KindActionTriggerView {
     
     private func backToGameBoard() {
         self.fadeOutView()
-        let actions: [KindActionType] = [.talk]
-        let actionViews: [ActionViewName] = [ActionViewName.GameBoardSceneControlView]
-        
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        backToTheGameBoardExplainer()
         KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck = false
     }
     
     private func backToChooseDriver() {
         self.fadeOutView()
-        let actions: [KindActionType] = [.activate]
-        let actionViews: [ActionViewName] = [.ChooseDriverView]
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        onboardingBackToChooseDriverExplainer()
     }
-    
-// Old -nonRx
-//    func userIsBrowsingGameBoardKindsTalk() {
-//        let kindName = self.availableKindsForDriver[selectedIndex].kindName.rawValue
-//        let txt = "\(kindName) says: You can transform anything...-and turn any ordinary situations into extraordinary ones."
-//        let actions: [KindActionType] = [.none,.none]
-//        let actionViews: [ActionViewName] = [.none,.none]
-//
-//
-//        let options = self.talkbox?.createUserOptions(opt1: "Back to the board", opt2: "Introduce us.", actionViews: (ActionViewName.BrowseKindView,ActionViewName.KindMatchControlView))
-//
-//        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
-//    }
-    
-//   EXECUTED WHEN CAROUSEL IS SHOWING USER KINDS (TELL ME MORE ABOUT THIS KIND).
-//   Rx version
+
     func userIsBrowsingGameBoardKindsTalk() {
-        let kindName = self.availableKindsForDriver[selectedIndex].kindName.rawValue
-        let txt = "\(kindName) says: You can transform any sitation into an ideal one."
-        let actions: [KindActionType] = [.none]
-        let actionViews: [ActionViewName] = [.none]
-        
-        
-        let options = self.talkbox?.createUserOptions(opt1: "Back to the board", opt2: "Introduce us.", actionViews: (ActionViewName.BrowseKindView,ActionViewName.KindMatchControlView))
-        
-        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
-        
-        if let routine = routine {
-            let rm = RoutineToEmission(routine: BehaviorSubject(value: routine))
-            self.talkbox?.kindExplanationPublisher.onNext(rm)
-        }
+        let kindName = self.kindsList[selectedIndex].kindName.rawValue
+        userIsBrowsingAnotherUserKindsExplainer(kindName: kindName)
     }
     
     
     // EXECUTED WHEN USER IS CHOOSING MAIN USER KIND FROM CAROUSEL (ONBOARDING)
     func userIsSelectingMainKindTalk() {
-        let kindName = self.availableKindsForDriver[selectedIndex].kindName.rawValue
-        let txt = "\(kindName) says: You can transform anything...-and turn any ordinary situations into extraordinary ones."
-        let actions: [KindActionType] = [.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none]
+        let kindName = self.kindsList[selectedIndex].kindName.rawValue
+        userIsBrowsingToSelectOwnKindExplainer(kindName: kindName)
         
-        
-        let options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I'm like \(kindName)", actionView: self)
-        
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
     }
     
     
     
     fileprivate func fillAndPresentLabelWith(_ itemIndex: Int) {
-        let kindName = self.availableKindsForDriver[itemIndex].kindName.rawValue
+        let kindName = self.kindsList[itemIndex].kindName.rawValue
         self.kindNameLabel.attributedText = formatLabelTextWithLineSpacing(text:kindName)
         self.kindNameLabel.fadeIn(0.5)
         
@@ -234,7 +192,7 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
  
-        return availableKindsForDriver.count
+        return kindsList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -244,7 +202,7 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
 //        cell.icon.image = kinds[indexPath.row].image?.withRenderingMode(.alwaysTemplate)
 //        cell.icon_color.image = kinds[indexPath.row].image
         
-        guard let image = UIImage(named: availableKindsForDriver[indexPath.row].iconImageName.rawValue) else {fatalError("cant find image for kind")}
+        guard let image = UIImage(named: kindsList[indexPath.row].iconImageName.rawValue) else {fatalError("cant find image for kind")}
         cell.icon.image = image.withRenderingMode(.alwaysTemplate)
         cell.icon_color.image = image
         if indexPath.row == 0 {
@@ -276,7 +234,6 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
         self.kindNameLabel.alpha = 0
         if scrollView.panGestureRecognizer.translation(in: scrollView.superview).x > 0 {
             //print("right")
-            
         } else {
             //print("left")
         }
@@ -291,6 +248,7 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
             self.selectedIndex = itemIndex
             self.fillAndPresentLabelWith(selectedIndex)
             userIsBrowsingGameBoardKindsTalk()
+            print("stopping")
         }
         
     }

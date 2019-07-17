@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import RxCocoa
+import RxSwift
 // TODO: ADJUST SCREEN FOR X-FAMILY
 class ChooseDriverView: KindActionTriggerView {
 
@@ -64,7 +65,11 @@ class ChooseDriverView: KindActionTriggerView {
         
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I identify with this one.", actionView: self)
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
     
     override func activate() {
@@ -98,7 +103,12 @@ class ChooseDriverView: KindActionTriggerView {
         KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.driver.rawValue] = driverName
          KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
         
-        self.talkbox?.displayRoutine(routine: self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil))
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
+        
+        if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
     }
 }
 
