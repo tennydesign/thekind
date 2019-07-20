@@ -134,6 +134,7 @@ struct KindCard {
     var antagonists: [KindCard]?
     var kindName: KindNameEnum
     let iconImageName: KindImageName
+    let description: KindDescription? = nil
 }
 
 enum DriversEnum: String {
@@ -296,6 +297,57 @@ enum KindImageName: String {
     moderator = "moderator"
 }
 
+//TODO: Write descriptions
+enum KindDescription: String {
+    case angel = "angel",
+    trailblazer = "trailblazer",
+    entertainer = "entertainer",
+    leader = "leader",
+    grinder = "grinder",
+    idealist = "idealist",
+    teamplayer = "team_player",
+    visionary = "visionary",
+    founder = "founder",
+    explorer = "explorer",
+    mentor = "mentor",
+    rebel = "rebel",
+    agnostic = "agnostic",
+    believer = "believer",
+    guided = "guided",
+    simulation = "simulation",
+    onelikethesky = "onelikethesky",
+    aequanimus = "aequanimus",
+    keeper = "keeper",
+    nomad = "nomad",
+    servant = "servant",
+    blindfolded = "blindfolded",
+    original = "original",
+    player = "player",
+    bonvivant = "bonvivant",
+    achiever = "achiever",
+    director = "director",
+    controller = "controller",
+    enthusiast = "enthusiast",
+    optmistic = "optmistic",
+    empathetic = "empathetic",
+    poet = "poet",
+    still = "still",
+    connector = "connector",
+    shapeshifter = "shapeshifter",
+    ingenius = "ingenius",
+    artist = "artist",
+    realist = "realist",
+    ally = "ally",
+    champion = "champion",
+    perfectionist = "perfectionist",
+    juggler = "juggler",
+    adventurer =  "adventurer",
+    jumper = "jumper",
+    seeker = "seeker",
+    traditionalist = "traditionalist",
+    modernist = "modernist",
+    moderator = "moderator"
+}
 
 
 

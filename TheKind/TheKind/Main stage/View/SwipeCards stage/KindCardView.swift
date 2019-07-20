@@ -14,6 +14,7 @@ class KindCardView: UIView {
 
     @IBOutlet var kindDescriptionLabel: UILabel!
     @IBOutlet var imageView: UIImageView!
+    var kindId: Int!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

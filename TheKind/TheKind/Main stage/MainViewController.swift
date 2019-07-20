@@ -102,33 +102,6 @@ class MainViewController: UIViewController {
     
     @IBOutlet var confirmationView: ConfirmationView!
     
-    fileprivate func initMainViewControllerForViews() {
-        hudView.mainViewController = self
-        jungChatLogger.mainViewController = self
-        badgePhotoSetupViewHost.mainViewController = self
-        userNameViewHost.mainViewController = self
-        mapViewHost.mainViewController = self
-        chooseKindCardViewHost.mainViewController = self
-        gameBoardViewHost.mainViewController = self
-        cardSwipeViewHost.mainViewController = self
-        dobOnboardingViewHost.mainViewController = self
-        chooseDriverView.mainViewController = self
-        
-        
-    }
-    
-    fileprivate func initTalkboxForViews() {
-        jungChatLogger.talkbox = talkbox
-        badgePhotoSetupViewHost.talkbox = talkbox
-        dobOnboardingViewHost.talkbox = talkbox
-        userNameViewHost.talkbox = talkbox
-        chooseDriverView.talkbox = talkbox
-        chooseKindCardViewHost.talkbox = talkbox
-        mapViewHost.talkbox = talkbox
-        gameBoardViewHost.talkbox = talkbox
-        cardSwipeViewHost.talkbox = talkbox
-    }
-    
     //First view of the sequence
     var firstViewToPresent: ActionViewName = ActionViewName.UserNameView
     var introSnippets : [Snippet] = []
@@ -138,25 +111,21 @@ class MainViewController: UIViewController {
         initMainViewControllerForViews()
         initTalkboxForViews()
 
-        self.adaptHUDAndPanelToIphoneXFamily()
-
-        //self.updateViewTagWithCurrentState()
-     //   self.loaderAnimation(present: true) {}
-        KindDeckManagement.sharedInstance.initializeDeckObserver()
-
-        self.checkCurrentViewForUser() { onBoard in
-            if onBoard {
-                delay(bySeconds: 0.1, dispatchLevel: .main) {
+        // To wait till all layout work has been done.
+        DispatchQueue.main.async {
+            self.adaptHUDAndPanelToIphoneXFamily()
+            KindDeckManagement.sharedInstance.observeUserKindDeck()
+            self.checkCurrentViewForUser() { firstUse in
+                if firstUse {
                     self.intro()
-                }
-            } else { //returning user
-                delay(bySeconds: 0.1, dispatchLevel: .main) {
+                } else { //returning user
                     self.welcomeBack()
                 }
             }
         }
 
     }
+    
     
     fileprivate func checkCurrentViewForUser(completion: ((Bool)->())?) {
         //update tag:
@@ -172,15 +141,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    
-    fileprivate func loadUserDeck() {
-        //load user deck
-        KindDeckManagement.sharedInstance.getCurrentUserDeck { (success) in
-            //print(KindDeckManagement.sharedInstance.userKindDeck)
-        }
-
-    }
-    
     func adaptHUDAndPanelToIphoneXFamily() {
         if UIScreen.isPhoneXfamily {
             //UIView.animate(withDuration: 0.3) {
@@ -191,32 +151,7 @@ class MainViewController: UIViewController {
         }
         
     }
-    
-//    func loaderAnimation(present: Bool, completion: (()->())?) {
-//        if present {
-//               loaderAnimationView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-//                loaderAnimationView.center = self.view.center
-//                loaderAnimationView.alpha = 1
-//                loaderAnimationView.contentMode = .scaleAspectFill
-//                loaderAnimationView.tag = 51
-//                UIApplication.shared.keyWindow?.addSubview(loaderAnimationView)
-//                loaderAnimationView.animationSpeed = 1
-//                loaderAnimationView.play()
-//                completion?()
-//        } else {
-//            UIView.animate(withDuration: 0.4, animations: {
-//                self.loaderAnimationView.alpha = 0
-//            }) { (completed) in
-//                if let loaderAnimation = UIApplication.shared.keyWindow?.viewWithTag(51) as? AnimationView {
-//                   loaderAnimation.removeFromSuperview()
-//                }
-//                completion?()
-//            }
-//
-//        }
-//    }
 
-    
     fileprivate func intro() {
         let txt = "Hi. Welcome to The Kind.-My name is Jung.-I'm pretty good at introducing people to each other-...and can help you make friends and have great conversations"
         let actions: [KindActionType] = [.none, .activate, .none, .activate]
@@ -277,6 +212,33 @@ class MainViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent // .default
+    }
+    
+    fileprivate func initMainViewControllerForViews() {
+        hudView.mainViewController = self
+        jungChatLogger.mainViewController = self
+        badgePhotoSetupViewHost.mainViewController = self
+        userNameViewHost.mainViewController = self
+        mapViewHost.mainViewController = self
+        chooseKindCardViewHost.mainViewController = self
+        gameBoardViewHost.mainViewController = self
+        cardSwipeViewHost.mainViewController = self
+        dobOnboardingViewHost.mainViewController = self
+        chooseDriverView.mainViewController = self
+        
+        
+    }
+    
+    fileprivate func initTalkboxForViews() {
+        jungChatLogger.talkbox = talkbox
+        badgePhotoSetupViewHost.talkbox = talkbox
+        dobOnboardingViewHost.talkbox = talkbox
+        userNameViewHost.talkbox = talkbox
+        chooseDriverView.talkbox = talkbox
+        chooseKindCardViewHost.talkbox = talkbox
+        mapViewHost.talkbox = talkbox
+        gameBoardViewHost.talkbox = talkbox
+        cardSwipeViewHost.talkbox = talkbox
     }
     
     

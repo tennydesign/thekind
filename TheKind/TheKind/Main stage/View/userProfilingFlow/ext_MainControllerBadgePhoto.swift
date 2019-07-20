@@ -28,7 +28,6 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         jungChatLogger.resetAnswerViewWidthAnchor() //0
         //jungChatLogger.resetJungChat()
-        self.talkbox.clearJungChat()
         dismiss(animated: true)
     }
     
@@ -50,7 +49,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         //self.jungChatLogger.HoldToAnswerViewWidthAnchor.constant = 0
         jungChatLogger.resetAnswerViewWidthAnchor() //0
         //jungChatLogger.resetJungChat()
-        self.talkbox.clearJungChat()
+        //self.talkbox.clearJungChat()
 
         let actions: [KindActionType] = [.deactivate]
         let actionViews: [ActionViewName] = [.HudView]

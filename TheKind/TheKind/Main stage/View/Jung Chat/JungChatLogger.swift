@@ -103,15 +103,15 @@ class JungChatLogger: KindActionTriggerView {
     }
 
     func resetJungChat() {
-        DispatchQueue.main.async {
+        //DispatchQueue.main.async {
             self.messagesCollection = ["","","","","",""]
             self.resetAnswerViewWidthAnchor()
-        }
+        //}
         
     }
     
     var animationCount: Int = 0
-    var tempoInBetweenPosts: Double = 2
+    var tempoInBetweenPosts: Double = 1
     var delayJungPostInSecs: Double = 0
     
     
@@ -122,17 +122,10 @@ class JungChatLogger: KindActionTriggerView {
             .flatMapLatest {
                 $0.routine
             }
-            .distinctUntilChanged { a, b in
-                if a.sender == .Clear || b.sender == .Clear {
-                    // then its distinct.
-                    return true
-                } else {
-                    // check if messages are distinct, avoid duplicates.
-                    return (a == b)
-                }
-            }
+            .distinctUntilChanged() // if you clear this will pass
             .subscribe(onNext: { jungRoutine in
                 var labelsUpdated = false
+                print("Client routine:", jungRoutine)
                 self.hideOptionLabels(true, completion: {
                     // 2 - update (or don't touch) labels.
                     labelsUpdated = self.updateOptionLabels(jungRoutine.userResponseOptions, rightLabel: self.rightAnswerLabel, leftLabel: self.leftAnswerLabel)

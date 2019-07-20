@@ -52,9 +52,6 @@ class JungTalkBox {
                 $0.routine
             }
             .subscribe(onNext: { routine in
-                print("THIS---->",routine.snippets?[0].message ?? "No snippet")
-
-                //Sends it to JungChatLogger // old inject.
                 let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
                 self.jungChatUIRoutinePublisher.onNext(rm)
                 
@@ -177,9 +174,9 @@ class JungTalkBox {
         
     }
     
-    func clearJungChat() {
-        let rm = JungRoutineToEmission(routine: BehaviorSubject(value: jungClearRoutine))
-        kindExplanationPublisher.onNext(rm)
+    func emmitSignalToClearUI() {
+        let rmClear = JungRoutineToEmission(routine: BehaviorSubject(value: jungClearRoutine))
+        kindExplanationPublisher.onNext(rmClear)
     }
     
 }

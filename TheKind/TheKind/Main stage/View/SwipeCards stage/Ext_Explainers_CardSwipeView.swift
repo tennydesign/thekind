@@ -12,31 +12,41 @@ import RxSwift
 
 extension CardSwipeView {
     
-    func manageKindFromKindDeckExplainer() {
-        let txt = "The Poet kind says: There should be no filter between reality and emotions."
+    func manageKindFromKindDeckExplainer(kind: KindCard) {
+        let txt = "The \(kind.kindName) \(kind.kindId.rawValue) kind says... [expainer for \(kind.kindName) goes here]"
         let actions: [KindActionType] = [.none]
         let actionViews: [ActionViewName] = [.none]
-        let options = self.talkbox?.createUserOptions(opt1: "Tell me more.", opt2: "Release kind.", actionView: self)
+        
+        var options:(Snippet,Snippet)?
+        options = self.talkbox?.createUserOptions(opt1: "Tell me more.", opt2: "Release kind.", actionView: self)
         
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: options)
         
+        //self.talkbox?.emmitSignalToClearUI()
         if let routine = routine {
             let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
             self.talkbox?.kindExplanationPublisher.onNext(rm)
         }
-        
     }
 
     
     func kindCardIntroExplainer() {
-        guard let currentlyShowingKindCard = currentlyShowingKindCard else {return}
-        let txt = "The \(currentlyShowingKindCard.kindName.rawValue) says: There should be no filter between reality and emotions."
+        
+        guard let kind = cardOnTop else {return}
+        let txt = "The \(kind.kindName) \(kind.kindId.rawValue) kind says... [expainer for \(kind.kindName) goes here]"
         let actions: [KindActionType] = [.none]
         let actionViews: [ActionViewName] = [.none]
-        let options = self.talkbox?.createUserOptions(opt1: "Keep it.", opt2: "Don't keep it.", actionView: self)
+        var options:(Snippet,Snippet)?
+        
+        if !deckIsFull {
+            options = self.talkbox?.createUserOptions(opt1: "Keep it.", opt2: "Don't keep it.", actionView: self)
+        } else {
+            options = nil
+        }
         
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: options)
         
+        //self.talkbox?.emmitSignalToClearUI()
         if let routine = routine {
             let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
             self.talkbox?.kindExplanationPublisher.onNext(rm)
@@ -76,6 +86,18 @@ extension CardSwipeView {
         let actionViews: [ActionViewName] = [.none]
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
         if let routine = routine {
+            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+            self.talkbox?.kindExplanationPublisher.onNext(rm)
+        }
+    }
+    
+    func deckIsFullExplainer(){
+        let txt = "Your deck is maximized release a card to continue."
+        let actions: [KindActionType] = [.none]
+        let actionViews: [ActionViewName] = [.none]
+        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
+        if let routine = routine {
+            self.talkbox?.emmitSignalToClearUI()
             let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
             self.talkbox?.kindExplanationPublisher.onNext(rm)
         }

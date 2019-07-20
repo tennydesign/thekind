@@ -10,12 +10,31 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import RxSwift
+import RxRelay
+
+//HERE BUILDING THIS
+struct DeckToEmmit {
+    var deck: [Int]
+}
 
 class KindDeckManagement {
     
     //Singleton
     static let sharedInstance = KindDeckManagement()
-    var userKindDeck: [Int] = []
+    var userKindDeck: DeckToEmmit = DeckToEmmit(deck: [])
+    var deadPileDeck: DeckToEmmit = DeckToEmmit(deck: [])
+    private var deckPublisher: PublishSubject<[Int]> = PublishSubject()
+    
+    var deckObserver: Observable<[Int]> {
+        return deckPublisher.asObservable()
+    }
+    
+    private var mainKindPublisher: PublishSubject<Int> = PublishSubject()
+    
+    var mainKindPObserver: Observable<Int> {
+        return mainKindPublisher.asObservable()
+    }
     
     var userMainKind: Int?
     var isMainKind: Bool {
@@ -29,7 +48,7 @@ class KindDeckManagement {
 
     var kindsdict: [String: Any] {
         get {
-            return ["userKindDeck": userKindDeck]
+            return ["userKindDeck": userKindDeck.deck]
         }
     }
 
@@ -38,18 +57,15 @@ class KindDeckManagement {
     var updateDeckOnClient: (()->())?
     var updateMainKindOnClient: (()->())?
     
-    private init() {}
- 
-    
-    
-    func initializeDeckObserver() {
-        self.observeUserKindDeck()
+    private init() {
+        
     }
-    
+ 
+
     
     func cleanPreviousMainKindsFromDeck() {
         let twelveMainKinds = GameKinds.twelveKindsOriginalArray.map {$0.kindId.rawValue}
-        userKindDeck = userKindDeck.filter { !twelveMainKinds.contains($0) }
+        userKindDeck.deck = userKindDeck.deck.filter { !twelveMainKinds.contains($0) }
     }
     
     func updateKindDeck(completion: ((Error?)->())?) {
@@ -61,6 +77,7 @@ class KindDeckManagement {
                     //Create deck from scratch
                     self.createUserKindDeck(completion: { (err) in
                         if let err = err {
+                            print(err)
                             completion?(err)
                         }
                         //print("New Kind Deck Document created successfully")
@@ -87,8 +104,8 @@ class KindDeckManagement {
             cleanPreviousMainKindsFromDeck()
         }
         //This will add the new mainKind to the deck.
-        if !userKindDeck.contains(kindID) {
-            userKindDeck.append(kindID)
+        if !userKindDeck.deck.contains(kindID) {
+            userKindDeck.deck.append(kindID)
             self.updateKindDeck { (err) in
                 if let err = err {
                     print(err)
@@ -106,44 +123,56 @@ class KindDeckManagement {
     }
     
     
-    func addKindToDeck(kindId: Int, completion: (()->())?) {
-        let db = Firestore.firestore()
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        let kindDeckRef = db.collection(KindDeckDocument.alldecks.rawValue).document(uid)
-        //ArrayUnion() adds elements to an array but only elements not already present.
-        kindDeckRef.updateData(["userKindDeck" : FieldValue.arrayUnion([kindId])]) { (err) in
-            if let err = err {
-                print(err)
-                return
-            }
-            completion?()
-        }
-        
-    }
+//    func addKindToDeck(kindId: Int, completion: (()->())?) {
+//        let db = Firestore.firestore()
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
+//        let kindDeckRef = db.collection(KindDeckDocument.alldecks.rawValue).document(uid)
+//        //ArrayUnion() adds elements to an array but only elements not already present.
+//        kindDeckRef.updateData(["userKindDeck" : FieldValue.arrayUnion([kindId])]) { (err) in
+//            if let err = err {
+//                print(err)
+//                return
+//            }
+//            completion?()
+//        }
+//
+//    }
     
-    func removeKindFromDeck(kindId: Int, completion: (()->())?) {
-        let db = Firestore.firestore()
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        let circlesRef = db.collection("kindcircles").document(uid)
-        circlesRef.updateData(["userKindDeck" : FieldValue.arrayRemove([kindId])]) { (err) in
-            if let err = err {
-                print(err)
-                return
-            }
-            completion?()
-        }
-    }
+//    func removeKindFromDeck(kindId: Int, completion: (()->())?) {
+//        let db = Firestore.firestore()
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
+//        let circlesRef = db.collection("kindcircles").document(uid)
+//        circlesRef.updateData(["userKindDeck" : FieldValue.arrayRemove([kindId])]) { (err) in
+//            if let err = err {
+//                print(err)
+//                return
+//            }
+//            completion?()
+//        }
+//    }
     
     
-    private func createUserKindDeck(completion: @escaping (Error?)->()) {
+    private func createUserKindDeck(completion: ((Error?)->())?) {
         let db = Firestore.firestore()
         guard let uid = Auth.auth().currentUser?.uid else {return}
         db.collection(KindDeckDocument.alldecks.rawValue).document(uid).setData(kindsdict, merge: true, completion: { (err) in
             if let err = err {
-                completion(err)
+                completion?(err)
                 return
             }
-            completion(nil)
+            completion?(nil)
+        })
+    }
+    
+    private func createDeadPileDeck(completion: ((Error?)->())?) {
+        let db = Firestore.firestore()
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        db.collection(KindDeckDocument.alldecks.rawValue).document(uid).setData(["deadPileDeck":""], merge: true, completion: { (err) in
+            if let err = err {
+                completion?(err)
+                return
+            }
+            completion?(nil)
         })
     }
     
@@ -179,6 +208,7 @@ class KindDeckManagement {
     }
     
     
+    
     private func createMainCardEntry(_ mainKindDict: [String:Int], completion: @escaping (Error?)->()) {
         let db = Firestore.firestore()
         guard let uid = Auth.auth().currentUser?.uid else {return}
@@ -191,40 +221,11 @@ class KindDeckManagement {
         })
     }
     
-    
-    
-    //RETRIEVE
-    func getCurrentUserDeck(completion:@escaping (Bool)->()) {
-        let db = Firestore.firestore()
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        db.collection(KindDeckDocument.alldecks.rawValue).document(uid).getDocument {  (document,err) in
-            if let err = err {
-                print(err)
-                completion(false)
-                return
-            }
-            guard let data = document?.data() else
-            {
-                print("no data")
-                completion(false)
-                return
-            }
-            
-            guard let kindDeck = data["userKindDeck"] as? [Int] else {fatalError("couldn't return deck as [Int]")}
-            self.userKindDeck = kindDeck
-            completion(true)
-            self.updateDeckOnClient?()
 
-
-        }
-        
-    }
-    
-
-    //HERE: OBSERVE MAINKIND!
     func observeUserKindDeck() {
         let db = Firestore.firestore()
         guard let uid = Auth.auth().currentUser?.uid else {return}
+        print("OBESERVER SET")
         db.collection(KindDeckDocument.alldecks.rawValue).document(uid).addSnapshotListener { (snapshot, err) in
             if let err = err {
                 print(err)
@@ -235,20 +236,47 @@ class KindDeckManagement {
                 return
             }
             
-            //Only update client if (and where) there are differences.
+             print("OBESERVER FIRED")
             
             if let kindDeck = data["userKindDeck"] as? [Int] {
-                if kindDeck != self.userKindDeck {
-                    self.userKindDeck = kindDeck
-                    self.updateDeckOnClient?()
+                self.userKindDeck.deck = kindDeck
+                //this is not being used.
+                self.deckPublisher.onNext(self.userKindDeck.deck)
+            } else {
+                //create
+                self.createUserKindDeck { err in
+                    self.userKindDeck.deck = []
+                    if let err = err {
+                        print(err)
+                        return
+                    }
+                    self.deckPublisher.onNext([-2])
+                    
+                }
+            }
+            
+            if let deadPileDeck = data["deadPileDeck"] as? [Int] {
+                self.deadPileDeck.deck = deadPileDeck
+                //this is not bing used.
+                self.deckPublisher.onNext(self.deadPileDeck.deck)
+            } else {
+                //create
+                self.createDeadPileDeck { err in
+                    self.deadPileDeck.deck = []
+                    if let err = err {
+                        print(err)
+                        return
+                    }
+                    self.deckPublisher.onNext([-1])
+                    
                 }
             }
             
             if let mainkind = data["userMainKind"] as? Int {
-                if mainkind != self.userMainKind {
-                    self.userMainKind = mainkind
-                    self.updateMainKindOnClient?()
-                }
+                self.userMainKind = mainkind
+                self.updateMainKindOnClient?()
+                self.mainKindPublisher.onNext(mainkind)
+                
             }
 
         }
