@@ -32,8 +32,19 @@ class CardSwipeView: UIView {
         get {
             let allcardsIDs = GameKinds.minorKindsOriginalArray.compactMap({$0.kindId.rawValue})
             let allRemainingCardsAfterPicked = allcardsIDs.filter {!KindDeckManagement.sharedInstance.userKindDeck.deck.contains($0)}
-            let remaningAfterDiscarded = allRemainingCardsAfterPicked.filter {!discardedDeck.contains($0)}
+            var remaningAfterDiscarded = allRemainingCardsAfterPicked.filter {!discardedDeck.contains($0)}
             // turns [Int] into [KindCard]
+            
+            //brings it to first position.
+            if let kindToFirst = kindJustReleased {
+                if let indexJustReleased = remaningAfterDiscarded.firstIndex(of: kindToFirst) {
+                    remaningAfterDiscarded.remove(at: indexJustReleased)
+                    remaningAfterDiscarded.insert(kindToFirst, at: 0)
+                }
+                //reset release index
+                kindJustReleased = nil
+            }
+            
             let cardsToPresent = remaningAfterDiscarded.compactMap{ cardId in
                 GameKinds.createKindCard(id: cardId)
             }
@@ -42,6 +53,7 @@ class CardSwipeView: UIView {
     }
     
     var cardOnTop:KindCard?
+    var kindJustReleased: Int?
     
     var displayedCard: KindCard?
     var disposeBag = DisposeBag()
@@ -347,6 +359,9 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
                 KindDeckManagement.sharedInstance.userKindDeck.deck.remove(at: indexPath.row)
                 //self.kolodaView.resetCurrentCardIndex()
                 //tries to update the deck
+                kindJustReleased = kindIdToRemove
+                self.kolodaView.resetCurrentCardIndex()
+                
                 KindDeckManagement.sharedInstance.updateKindDeck { (err) in
                     if let err = err {
                         print("remove kind error: \(err)")
@@ -363,10 +378,11 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
                         // Otherwise it will refresh (blink) and user will only see the same card
                         // that was already there before, and its not the deleted one.
                         //Little gain for a blink.
-
-                        if self.availableDeck.count == 1 {
-                            self.kolodaView.resetCurrentCardIndex()
-                        }
+                        
+                       // if self.availableDeck.count == 1 {
+                            //self.kolodaView.reloadData()
+                        
+                       // }
                     }
                   
                     self.removedKindFromDeckExplainer()
@@ -406,28 +422,19 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
     }
     
     func activateDeckObserver() {
-//        KindDeckManagement.sharedInstance.deckObserver.share()
-//            //.skip(1)
-//            .subscribe(onNext:{ [weak self] cards in
-//
-//            })
-//            .disposed(by: disposeBag)
+        KindDeckManagement.sharedInstance.deckObserver.share()
+            //.skip(1)
+            .subscribe(onNext:{ [weak self] cards in
+                print("returned: ",cards)
+            })
+            .disposed(by: disposeBag)
 //
     }
     
 //    func activateCollectionViewUpdater() {
 //        collectionViewUpdaterPublisher.asObserver()
 //            .subscribe(onNext: { [weak self] update in
-//               // DispatchQueue.main.async {
-//                    switch update.instruction {
-//                    case .insert:
-//                        self?.chosenKindsCollectionView.insertItems(at: [update.indexPath])
-//                    case .delete:
-//                        self?.chosenKindsCollectionView.deleteItems(at: [update.indexPath])
-//                    case .scrollToItem:
-//                        self?.chosenKindsCollectionView.scrollToItem(at: update.indexPath, at: .right, animated: true)
-//                    }
-//               // }
+//
 //            })
 //            .disposed(by: disposeBag)
 //    }
