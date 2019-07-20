@@ -317,7 +317,7 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
         kolodaView.delegate = self
         chosenKindsCollectionView.dataSource = self
         chosenKindsCollectionView.delegate = self
-        kolodaView.appearanceAnimationDuration = 0.3
+        kolodaView.appearanceAnimationDuration = 0.2
         chosenKindsCollectionView?.register(UINib(nibName: "ChosenKindCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ChosenKindCollectionViewCell")
         
         activateDeckObserver()

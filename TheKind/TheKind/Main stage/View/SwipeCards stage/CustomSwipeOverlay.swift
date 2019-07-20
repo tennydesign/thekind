@@ -36,7 +36,6 @@ class CustomSwipeOverlay: OverlayView {
                 scene.scaleMode = .fill
                 scene.backgroundColor = UIColor.clear.withAlphaComponent(0)
                 skView.alpha = 0.7
-                
                 guard let heartCascadeNode = SKEmitterNode(fileNamed: "KeepParticle") else {return}
                 heartCascadeNode.name = "keep"
                 heartCascadeNode.position = CGPoint(x: scene.size.width/2, y: scene.size.height/2 )

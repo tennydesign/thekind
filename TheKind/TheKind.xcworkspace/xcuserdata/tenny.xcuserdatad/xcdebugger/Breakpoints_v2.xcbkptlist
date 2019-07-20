@@ -111,28 +111,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheKind/Main stage/Model/KindDeckManagement.swift"
-            timestampString = "585332785.698554"
+            timestampString = "585336072.693002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "239"
             endingLineNumber = "239"
             landmarkName = "observeUserKindDeck()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TheKind/Main stage/View/SwipeCards stage/CardSwipeView.swift"
-            timestampString = "585332785.698631"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "koloda(_:viewForCardAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
