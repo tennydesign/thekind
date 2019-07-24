@@ -119,10 +119,11 @@ class JungChatLogger: KindActionTriggerView {
     fileprivate func jungChatRoutineObserverActivation() {
         
         talkbox.jungChatUIRoutineObserver.share()
+            .throttle(1,scheduler: MainScheduler.instance)
             .flatMapLatest {
                 $0.routine
             }
-            .distinctUntilChanged() // if you clear this will pass
+            .distinctUntilChanged()
             .subscribe(onNext: { jungRoutine in
                 var labelsUpdated = false
                 print("Client routine:", jungRoutine)

@@ -248,7 +248,11 @@ extension BrowseKindCardView: UICollectionViewDelegate, UICollectionViewDataSour
         if !self.kindCollectionView.isDragging {
             self.selectedIndex = itemIndex
             self.fillAndPresentLabelWith(selectedIndex)
-            userIsBrowsingGameBoardKindsTalk()
+            if KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
+                userIsBrowsingGameBoardKindsTalk()
+            } else {
+                userIsSelectingMainKindTalk()
+            }
             print("stopping")
         }
         

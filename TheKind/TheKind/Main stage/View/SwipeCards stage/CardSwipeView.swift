@@ -162,6 +162,10 @@ extension CardSwipeView: KolodaViewDelegate {
     }
     
     fileprivate func addCardToKindDeck(_ kindCard: KindCard) {
+        guard KindDeckManagement.sharedInstance.userKindDeck.deck.count > 0 else {
+            print("you can't add other cards without having chosen a mainkind")
+            return
+        }
         KindDeckManagement.sharedInstance.userKindDeck.deck.insert(kindCard.kindId.rawValue, at: 0)
         
         KindDeckManagement.sharedInstance.updateKindDeck(type: .userKindDeck) { err in
