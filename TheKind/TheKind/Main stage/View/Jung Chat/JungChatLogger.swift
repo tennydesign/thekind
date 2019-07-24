@@ -135,8 +135,10 @@ class JungChatLogger: KindActionTriggerView {
                         self.postJungRoutine(jungRoutine: jungRoutine, labelsUpdated: labelsUpdated)
                     } else if jungRoutine.sender == .Player { // POSTS IMMEDIATELY
                         self.postPlayerRoutine(jungRoutine: jungRoutine, labelsUpdated: labelsUpdated)
-                    } else if jungRoutine.sender == .Clear {
+                    } else if jungRoutine.sender == .ClearAll {
                         self.resetJungChat()
+                    } else if jungRoutine.sender == .ClearButtons {
+                        self.hideOptionLabels(true, completion: nil)
                     }
                 })
                 
@@ -164,7 +166,7 @@ class JungChatLogger: KindActionTriggerView {
     private func postPlayerRoutine(jungRoutine: JungRoutine, labelsUpdated: Bool) {
         guard let message = jungRoutine.snippets?.first?.message,
             let snippet = jungRoutine.snippets?.first else {return}
-        
+    
         self.postMessageToJungChat(message: message)
         self.talkbox.executeSnippetAction(snippet)
         // release jung lock.
@@ -419,7 +421,7 @@ extension JungChatLogger: UICollectionViewDelegate,UICollectionViewDataSource,UI
         } else if (indexPath.row == mostRecentChatMessageIndex - 1) {
             return 0.6
         } else if (indexPath.row == mostRecentChatMessageIndex - 2){
-            return 0.4
+            return 0.2
         } else {
             return 0
         }

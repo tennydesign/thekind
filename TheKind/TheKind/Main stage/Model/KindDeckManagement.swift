@@ -66,6 +66,7 @@ class KindDeckManagement {
         mainKindObserverActivation()
     }
     
+    
     // OBSERVERS
     func mainKindObserverActivation() {
         self.mainKindObserver.share()
@@ -121,7 +122,7 @@ class KindDeckManagement {
         }
     }
     
-    //KINDDECKS
+    //KINDDECK MANAGEMENT
  
     func resetDeadPileDeck() {
         deadPileDeck.deck = []

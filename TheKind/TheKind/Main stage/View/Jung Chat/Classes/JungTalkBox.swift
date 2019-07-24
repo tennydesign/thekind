@@ -20,7 +20,11 @@ struct JungRoutineToEmission {
 class JungTalkBox {
     
     var jungClearRoutine: JungRoutine {
-        return JungRoutine(snippets: nil, userResponseOptions: nil, sender: .Clear)
+        return JungRoutine(snippets: nil, userResponseOptions: nil, sender: .ClearAll)
+    }
+    
+    var jungClearButtonsRoutine: JungRoutine {
+       return JungRoutine(snippets: nil, userResponseOptions: nil, sender: .ClearButtons)
     }
     
     var kindExplanationPublisher = PublishSubject<JungRoutineToEmission>()

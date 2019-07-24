@@ -79,6 +79,12 @@ extension CardSwipeView {
         }
     }
     
+    func cleanBtnsExplainer() {
+        guard let routine = self.talkbox?.jungClearButtonsRoutine else { return  }
+        let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
+        self.talkbox?.kindExplanationPublisher.onNext(rm)
+    }
+    
     func failedToRemoveKindFromDeckExplainer(){
         print("YOU CANT REMOVE THE MAIN KIND FROM HERE!!!!!!!!!!!")
         let txt = "You can only remove the main kind from the settings menu."

@@ -34,7 +34,7 @@ struct Snippet: SnippetProtocol {
 
 // ===> Player means no animation and quick deliver <===
 enum Sender {
-    case Jung, Player, Clear
+    case Jung, Player, ClearAll, ClearButtons
 }
 
 // ===> Refer to KindActionTriggerView for how the delegate uses this enum <====

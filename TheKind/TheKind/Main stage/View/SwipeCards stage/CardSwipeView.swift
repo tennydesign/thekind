@@ -15,13 +15,12 @@ import RxRelay
 
 class CardSwipeView: UIView {
 
-//    private var collectionViewUpdaterPublisher: PublishSubject<collectionViewUpdateEmmit> = PublishSubject()
-    var deckIsFull: Bool {
-        return KindDeckManagement.sharedInstance.userKindDeck.deck.count >= 12
-    }
-    // I need to save the Morto too cause when refreshing, cards are popping back in.
-
+    let USERDECK_QTY_MAX_OF_CARDS = 12
     
+    var deckIsFull: Bool {
+        return KindDeckManagement.sharedInstance.userKindDeck.deck.count >= USERDECK_QTY_MAX_OF_CARDS
+    }
+
     var availableDeck: [KindCard] {
         get {
             return originalDeckMinusOwnedMinusDiscarded()
@@ -92,7 +91,7 @@ extension CardSwipeView: KolodaViewDataSource {
             customView?.imageView.tintColor = GOLDCOLOR
             customView?.kindDescriptionLabel.text = displayedCard.kindName.rawValue
             customView?.kindId = displayedCard.kindId.rawValue
-            
+            cardOnTop = GameKinds.createKindCard(id: customView!.kindId)
             kindCardIntroExplainer()
             
         } else {
@@ -102,7 +101,7 @@ extension CardSwipeView: KolodaViewDataSource {
         }
         
         
-        cardOnTop = GameKinds.createKindCard(id: customView!.kindId)
+        
         
         
         return customView!
@@ -177,6 +176,7 @@ extension CardSwipeView: KolodaViewDelegate {
         }
     }
     
+    //SWIPE
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection) {
    
         if let kindCard = cardOnTop {
@@ -212,7 +212,7 @@ extension CardSwipeView: KolodaViewDelegate {
         if availableDeck.count == 0 {
             return false
         }
-        if KindDeckManagement.sharedInstance.userKindDeck.deck.count == 12 {
+        if deckIsFull {
             deckIsFullExplainer()
             return false
         }
@@ -346,7 +346,7 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
     func mainKindObserverActivation() {
         KindDeckManagement.sharedInstance.mainKindObserver.share()
             .subscribe(onNext: { [weak self] (kindId) in
-                delay(bySeconds: 1, closure: { //need the 1 sec or the colllection view don't update. 
+                delay(bySeconds: 1, closure: { //need the 1 sec or the colllection view don't update.
                     self?.chosenKindsCollectionView.reloadData()
                 })
             })
@@ -403,11 +403,9 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
                             self.chosenKindsCollectionView.deleteItems(at: [indexPath])
                         }, completion: { (completed) in
                             self.deselectAllItemsInChosenKindCollection()
+                            
                         })
                     }
-                  
-                    self.removedKindFromDeckExplainer()
-                    
                 }
             } else {
                 failedToRemoveKindFromDeckExplainer()
