@@ -58,7 +58,6 @@ public class KindUserSettingsManager {
     
     var loggedUserName: String?
     
-    var updateHUDWithUserSettings: (()->())?
     var userSignedIn: (()->())?
     var userFields: [String: Any] = [:]
     var loggedUser: KindUser?
@@ -94,7 +93,6 @@ public class KindUserSettingsManager {
             } else {
                 // Update all interface controls with retrieved data.
                 self.loggedUserName = self.loggedUser?.name ?? ""
-                self.updateHUDWithUserSettings?()
 
             }
 
@@ -111,7 +109,7 @@ public class KindUserSettingsManager {
     
     // OBSERVE!
     // Use a real observer here, just so all screens can  subscribe.
-    
+    // User Settings is the main user data storage.
     func userSettingsObserver() {
         let db = Firestore.firestore()
         db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).addSnapshotListener { (document, err) in
@@ -129,33 +127,19 @@ public class KindUserSettingsManager {
             let kindUser = KindUser(document: document!)
             self.loggedUser = kindUser
             
+            //update main deck with current mainkind info
+            if let mainkind = kindUser.kind {
+                if KindDeckManagement.sharedInstance.userMainKind != mainkind {
+                    KindDeckManagement.sharedInstance.mainKindPublisher.onNext(mainkind)
+                }
+            }
+            
             // Let the client know there was data retrieval
             self.userSettingsRxBehaviorRelayPublisher.accept(kindUser)
         }
 
     }
-    
-//    func observeUserSettings() {
-//        let db = Firestore.firestore()
-//        db.collection("usersettings").document((Auth.auth().currentUser?.uid)!).addSnapshotListener { (document, err) in
-//            if let err = err {
-//                print(err)
-//                return
-//            }
-//            guard let data = document?.data() else {
-//                print("no snapshot data on observerUserSettings")
-//                return
-//            }
-//            self.userFields = data
-//
-//            //save user also as KindUser object. Always updating when it changes.
-//            let kindUser = KindUser(document: document!)
-//            self.loggedUser = kindUser
-//
-//            // Let the client know there were data retrieval
-//            self.updateHUDWithUserSettings?()
-//         }
-//    }
+
     
     //SAVE
     func updateUserSettings(completion: ((Error?)->())?) {
@@ -325,30 +309,3 @@ public class KindUserSettingsManager {
     }
 
 }
-
-
-
-//    func retrieveUserPhoto(userId: String, completion: @escaping ((URL?)->())) {
-//        let db = Firestore.firestore()
-//        db.collection("usersettings").document(userId).getDocument {  (document,err) in
-//            if let err = err {
-//                print(err)
-//                completion(nil)
-//                return
-//            }
-//            guard let data = document?.data() else
-//            {
-//                print("no data")
-//                completion(nil)
-//                return
-//            }
-//            guard let photoURL = data[UserFieldTitle.photoURL.rawValue] as? String else {
-//                completion(nil)
-//                return
-//            }
-//
-//            let url = URL(string: photoURL)
-//
-//            completion(url)
-//        }
-//    }

@@ -27,6 +27,17 @@
                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ir1-a4-shR">
                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drU-za-x1t">
+                            <rect key="frame" x="69" y="105.5" width="62" height="69"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="69" id="cEg-71-0Vn"/>
+                                <constraint firstAttribute="width" constant="62" id="ncC-cy-YoJ"/>
+                            </constraints>
+                            <state key="normal" title="Browse again" image="reload"/>
+                            <connections>
+                                <action selector="showMortuBtnClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="HyI-zu-A6Z"/>
+                            </connections>
+                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fg-Wg-ecg">
                             <rect key="frame" x="5" y="200" width="190" height="25"/>
                             <constraints>
@@ -43,10 +54,12 @@
                         <constraint firstItem="5fg-Wg-ecg" firstAttribute="top" secondItem="Ir1-a4-shR" secondAttribute="bottom" id="3II-nf-mbb"/>
                         <constraint firstAttribute="height" constant="200" id="9Zg-L5-iTb"/>
                         <constraint firstItem="5fg-Wg-ecg" firstAttribute="centerX" secondItem="xfd-dw-5WX" secondAttribute="centerX" id="CYp-sD-git"/>
+                        <constraint firstItem="drU-za-x1t" firstAttribute="centerY" secondItem="xfd-dw-5WX" secondAttribute="centerY" constant="40" id="EOg-Qb-pIV"/>
                         <constraint firstItem="Ir1-a4-shR" firstAttribute="centerX" secondItem="xfd-dw-5WX" secondAttribute="centerX" id="FLM-VE-egk"/>
                         <constraint firstItem="Ir1-a4-shR" firstAttribute="width" secondItem="xfd-dw-5WX" secondAttribute="width" id="OpA-oD-P7N"/>
                         <constraint firstItem="Ir1-a4-shR" firstAttribute="height" secondItem="xfd-dw-5WX" secondAttribute="height" id="RtJ-MG-WiH"/>
                         <constraint firstAttribute="width" constant="200" id="iu2-iJ-qmh"/>
+                        <constraint firstItem="drU-za-x1t" firstAttribute="centerX" secondItem="xfd-dw-5WX" secondAttribute="centerX" id="oXK-Hg-xuI"/>
                         <constraint firstItem="Ir1-a4-shR" firstAttribute="centerY" secondItem="xfd-dw-5WX" secondAttribute="centerY" id="xBJ-zw-XSp"/>
                     </constraints>
                 </view>
@@ -61,8 +74,12 @@
             <connections>
                 <outlet property="imageView" destination="Ir1-a4-shR" id="fuq-sg-d6W"/>
                 <outlet property="kindDescriptionLabel" destination="5fg-Wg-ecg" id="1GW-7u-C38"/>
+                <outlet property="showMortuBtn" destination="drU-za-x1t" id="nK0-5t-1eP"/>
             </connections>
             <point key="canvasLocation" x="-148.80000000000001" y="117.84107946026987"/>
         </view>
     </objects>
+    <resources>
+        <image name="reload" width="86" height="96"/>
+    </resources>
 </document>

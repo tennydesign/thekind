@@ -28,7 +28,7 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     @IBOutlet var kindIconImageView: UIImageView! {
         didSet {
             // To take the color away.
-            kindIconImageView.image = kindIconImageView.image?.withRenderingMode(.alwaysTemplate)
+            //kindIconImageView.image = kindIconImageView.image?.withRenderingMode(.alwaysTemplate)
         }
     }
     @IBOutlet var viewForAvatar: UIView!
@@ -57,14 +57,6 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
         Bundle.main.loadNibNamed("HUDview", owner: self, options: nil)
         addSubview(hudView)
         userSettingsSubscription()
-        //updateHUDWithUserSettingsObserver() - Old.
-        
-        KindDeckManagement.sharedInstance.updateMainKindOnClient = { [unowned self] in
-            if let kindId = KindDeckManagement.sharedInstance.userMainKind {
-                self.showKindOnHUD(kindId)
-            }
-        }
-        
 
     }
     
@@ -73,22 +65,13 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
         //gradient.frame = bounds
     }
     
-    fileprivate func updateHUDWithUserSettingsObserver() {
-        KindUserSettingsManager.sharedInstance.updateHUDWithUserSettings = { [unowned self] in
-            self.updateUserPhotoWithCurrentState()
-            
-            // update kind
-        }
-        
-        
-    }
-    
     fileprivate func userSettingsSubscription() {
         //KindUserSettingsManager.sharedInstance.userSettingsRxBehaviorRelayPublisher
         KindUserSettingsManager.sharedInstance.userSettingsRxObserver
             .share().subscribe(onNext: { [weak self] kindUser in
-                if kindUser != nil {
+                if let user = kindUser {
                     self?.updateUserPhotoWithCurrentState()
+                    self?.showKindOnHUD(kindUser: user)
                 }
             })
             .disposed(by: bag)
@@ -132,7 +115,8 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     }
     
 
-    func showKindOnHUD(_ id: Int) {
+    func showKindOnHUD(kindUser: KindUser) {
+        guard let id = kindUser.kind else { return }
         guard let kind = GameKinds.createKindCard(id: id) else {fatalError("In showKindOnHUD")}
         kindIconImageView.image = UIImage(named: kind.iconImageName.rawValue)
         self.viewForKindCard.fadeIn(1)
@@ -203,15 +187,3 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     
     
 }
-
-
-
-
-
-//        gradient = CAGradientLayer()
-//        gradient.frame = self.bounds
-//        gradient.colors = [UIColor.black.cgColor, UIColor.black.withAlphaComponent(0.8).cgColor, UIColor.clear.cgColor]
-//        gradient.locations = [0, 0.55, 1]
-//        gradient.startPoint = CGPoint(x:0.0,y:0.0)
-//        gradient.endPoint = CGPoint(x:0.0,y:1.0)
-//        layer.insertSublayer(gradient, at: 0)

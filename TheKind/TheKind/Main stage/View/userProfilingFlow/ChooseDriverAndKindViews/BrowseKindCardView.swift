@@ -20,7 +20,7 @@ class BrowseKindCardView: KindActionTriggerView {
     static var activeDistance: CGFloat = 160
     static var zoomFactor: CGFloat = 3.5
     //==============
-
+    var disposeBag = DisposeBag()
     
     
     @IBOutlet var kindNameLabel: UILabel! {
@@ -107,6 +107,7 @@ class BrowseKindCardView: KindActionTriggerView {
         fillAndPresentLabelWith(selectedIndex)
         //Switch between user is browsing or choosing carousels.
 
+        
         talk()
 
     }
@@ -128,20 +129,19 @@ class BrowseKindCardView: KindActionTriggerView {
             
             // update user settings
             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.kind.rawValue] = kind.kindId.rawValue
-            KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
-            
-            // update deck.
-            KindDeckManagement.sharedInstance.userMainKind = kind.kindId.rawValue
-            KindDeckManagement.sharedInstance.saveMainKindOnboarding() { (err) in
+            KindUserSettingsManager.sharedInstance.updateUserSettings { err in
                 if let err = err {
-                    print("KindDeckManagement.sharedInstance.saveMainKindOnboarding(): \(err)")
+                    print(err)
                     return
                 }
                 self.onboardingKindChosenExplainer(kindName: kindName)
             }
+
+ 
   
         }
     }
+
     
     override func leftOptionClicked() {
         if KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {

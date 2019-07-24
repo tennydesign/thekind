@@ -79,12 +79,12 @@
                   moduleName = "TheKind"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tenny/Dropbox/TENNY%20PINHEIRO/Ventures/IOS/%233%20PROJECTS/TheKind_1.0/TheKind/TheKind/Main%20stage/View/MapView/Model/CircleAnnotationManagement.swift"
-                  timestampString = "585332786.198971"
+                  timestampString = "585643101.5097179"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "70"
                   endingLineNumber = "70"
-                  offsetFromSymbolStart = "2147">
+                  offsetFromSymbolStart = "1376">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -94,12 +94,12 @@
                   moduleName = "TheKind"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tenny/Dropbox/TENNY%20PINHEIRO/Ventures/IOS/%233%20PROJECTS/TheKind_1.0/TheKind/TheKind/Main%20stage/View/MapView/Model/CircleAnnotationManagement.swift"
-                  timestampString = "585332786.200747"
+                  timestampString = "585643101.511207"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "71"
                   endingLineNumber = "71"
-                  offsetFromSymbolStart = "804">
+                  offsetFromSymbolStart = "492">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -107,16 +107,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TheKind/Main stage/Model/KindDeckManagement.swift"
-            timestampString = "585336072.693002"
+            filePath = "TheKind/Main stage/View/SwipeCards stage/KindCardView.swift"
+            timestampString = "585644023.249688"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
-            landmarkName = "observeUserKindDeck()"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "showMortuBtnClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -23,18 +23,18 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="peH-9v-My9">
                     <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="correct" translatesAutoresizingMaskIntoConstraints="NO" id="bkn-J9-opo">
-                            <rect key="frame" x="154.5" y="191" width="66" height="65"/>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="keepcard" translatesAutoresizingMaskIntoConstraints="NO" id="bkn-J9-opo">
+                            <rect key="frame" x="157.5" y="293.5" width="60" height="60"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="65" id="Tzr-8M-Aj7"/>
-                                <constraint firstAttribute="width" constant="66" id="ZBz-s3-gXe"/>
+                                <constraint firstAttribute="height" constant="60" id="Tzr-8M-Aj7"/>
+                                <constraint firstAttribute="width" constant="60" id="ZBz-s3-gXe"/>
                             </constraints>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="bkn-J9-opo" firstAttribute="centerX" secondItem="peH-9v-My9" secondAttribute="centerX" id="VVY-dL-aZm"/>
-                        <constraint firstItem="bkn-J9-opo" firstAttribute="centerY" secondItem="peH-9v-My9" secondAttribute="centerY" constant="-100" id="WOi-XE-lXM"/>
+                        <constraint firstItem="bkn-J9-opo" firstAttribute="centerY" secondItem="peH-9v-My9" secondAttribute="centerY" id="WOi-XE-lXM"/>
                     </constraints>
                 </view>
             </subviews>
@@ -51,12 +51,13 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="keepcardImageView" destination="bkn-J9-opo" id="nf9-ip-vny"/>
                 <outlet property="skView" destination="7G3-bO-KFY" id="Rcn-Fq-tT8"/>
             </connections>
             <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
         </view>
     </objects>
     <resources>
-        <image name="correct" width="132" height="131"/>
+        <image name="keepcard" width="100" height="100"/>
     </resources>
 </document>

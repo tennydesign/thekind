@@ -12,6 +12,13 @@ import Koloda
 
 class KindCardView: UIView {
 
+    @IBOutlet weak var showMortuBtn: UIButton! {
+        didSet {
+            let image = showMortuBtn.image(for: .normal)?.withRenderingMode(.alwaysTemplate)
+            showMortuBtn.imageView?.tintColor = MEDGREYCOLOR
+            showMortuBtn.setImage(image, for: .normal)
+        }
+    }
     @IBOutlet var kindDescriptionLabel: UILabel!
     @IBOutlet var imageView: UIImageView!
     var kindId: Int!
@@ -26,6 +33,9 @@ class KindCardView: UIView {
         commonInit()
     }
     
+    @IBAction func showMortuBtnClicked(_ sender: Any) {
+        KindDeckManagement.sharedInstance.deckPublisher.onNext([-1])
+    }
     
     fileprivate func commonInit() {
 

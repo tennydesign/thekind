@@ -11,8 +11,18 @@ import SpriteKit
 import Koloda
 
 class CustomSwipeOverlay: OverlayView {
+    
+    @IBOutlet weak var keepcardImageView: UIImageView! {
+        didSet {
+            let image = keepcardImageView.image?.withRenderingMode(.alwaysTemplate)
+            keepcardImageView.image = image
+            keepcardImageView.tintColor = PINKCOLOR
+        }
+    }
     let scene = SKScene()
     var loadedParticles: Bool = false
+    
+    
     @IBOutlet lazy var skView: SKView! = { [unowned self] in
         let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         var skview = SKView(frame: frame)
@@ -31,38 +41,48 @@ class CustomSwipeOverlay: OverlayView {
         didSet {
             switch overlayState {
             case .left? :
-                let size = CGSize(width: skView.bounds.width, height: skView.bounds.height)
-                scene.size = size
-                scene.scaleMode = .fill
-                scene.backgroundColor = UIColor.clear.withAlphaComponent(0)
-                skView.alpha = 0.7
-                guard let heartCascadeNode = SKEmitterNode(fileNamed: "KeepParticle") else {return}
-                heartCascadeNode.name = "keep"
-                heartCascadeNode.position = CGPoint(x: scene.size.width/2, y: scene.size.height/2 )
-
-                
-                if scene.childNode(withName: "keep") == nil {
-                    scene.addChild(heartCascadeNode)
-                    skView.presentScene(scene)
-                }
+                let image = UIImage(named:"dontkeepcard")?.withRenderingMode(.alwaysTemplate)
+                keepcardImageView.image = image
+                keepcardImageView.tintColor = GOLDCOLOR
+                keepcardImageView.alpha = 0
+//                let size = CGSize(width: skView.bounds.width, height: skView.bounds.height)
+//                scene.size = size
+//                scene.scaleMode = .fill
+//                scene.backgroundColor = UIColor.clear.withAlphaComponent(0)
+//                skView.alpha = 0.7
+//                guard let heartCascadeNode = SKEmitterNode(fileNamed: "KeepParticle") else {return}
+//                heartCascadeNode.name = "keep"
+//                heartCascadeNode.position = CGPoint(x: scene.size.width/2, y: scene.size.height/2 )
+//
+//
+//                if scene.childNode(withName: "keep") == nil {
+//                    scene.addChild(heartCascadeNode)
+//                    skView.presentScene(scene)
+//                }
                 
             case .right? :
-                skView.alpha = 0
-                let size = CGSize(width: skView.bounds.width, height: skView.bounds.height)
-                scene.size = size
-                scene.scaleMode = .aspectFill
-                scene.backgroundColor = UIColor.clear
-                if let keep = scene.childNode(withName: "keep") {
-                    keep.removeFromParent()
-                }
-                skView.presentScene(scene)
+                let image = UIImage(named:"keepcard")?.withRenderingMode(.alwaysTemplate)
+                keepcardImageView.image = image
+                keepcardImageView.tintColor = PINKCOLOR
+                keepcardImageView.alpha = 100
+
+//                skView.alpha = 0
+//                let size = CGSize(width: skView.bounds.width, height: skView.bounds.height)
+//                scene.size = size
+//                scene.scaleMode = .aspectFill
+//                scene.backgroundColor = UIColor.clear
+//                if let keep = scene.childNode(withName: "keep") {
+//                    keep.removeFromParent()
+//                }
+//                skView.presentScene(scene)
                 
             default:
-                skView.alpha = 0
-                let scene = SKScene(size:  self.bounds.size)
-                scene.scaleMode = .aspectFill
-                scene.backgroundColor = UIColor.clear
-                skView.presentScene(scene)
+                    ()
+//                skView.alpha = 0
+//                let scene = SKScene(size:  self.bounds.size)
+//                scene.scaleMode = .aspectFill
+//                scene.backgroundColor = UIColor.clear
+//                skView.presentScene(scene)
             }
             
         }

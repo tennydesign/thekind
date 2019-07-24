@@ -28,27 +28,17 @@ class CardSwipeView: UIView {
         return KindDeckManagement.sharedInstance.userKindDeck.deck.count >= 12
     }
     // I need to save the Morto too cause when refreshing, cards are popping back in.
+
+    
     var availableDeck: [KindCard] {
         get {
-            let allcardsIDs = GameKinds.minorKindsOriginalArray.compactMap({$0.kindId.rawValue})
-            let allRemainingCardsAfterPicked = allcardsIDs.filter {!KindDeckManagement.sharedInstance.userKindDeck.deck.contains($0)}
-            var remaningAfterDiscarded = allRemainingCardsAfterPicked.filter {!discardedDeck.contains($0)}
-            // turns [Int] into [KindCard]
-            
-            //brings it to first position.
-            if let kindToFirst = kindJustReleased {
-                if let indexJustReleased = remaningAfterDiscarded.firstIndex(of: kindToFirst) {
-                    remaningAfterDiscarded.remove(at: indexJustReleased)
-                    remaningAfterDiscarded.insert(kindToFirst, at: 0)
-                }
-                //reset release index
-                kindJustReleased = nil
-            }
-            
-            let cardsToPresent = remaningAfterDiscarded.compactMap{ cardId in
-                GameKinds.createKindCard(id: cardId)
-            }
-            return cardsToPresent
+            return originalDeckMinusOwnedMinusDiscarded()
+        }
+    }
+    
+    var discardedDeck: [Int] {
+        get {
+            return KindDeckManagement.sharedInstance.deadPileDeck.deck
         }
     }
     
@@ -58,7 +48,7 @@ class CardSwipeView: UIView {
     var displayedCard: KindCard?
     var disposeBag = DisposeBag()
     
-    var discardedDeck: [Int] = []
+
     var selectedKindFromUserDeck = -1 //deselected
     
     var mainViewController: MainViewController?
@@ -104,6 +94,7 @@ extension CardSwipeView: KolodaViewDataSource {
         isDescribingProposedCard = true
 
         if let displayedCard = availableDeck.first {
+            customView?.showMortuBtn.isHidden = true
             let displayedCardImage = UIImage(named: displayedCard.iconImageName.rawValue)!
             customView?.imageView.image = displayedCardImage.withRenderingMode(.alwaysTemplate)
             customView?.imageView.tintColor = GOLDCOLOR
@@ -113,7 +104,8 @@ extension CardSwipeView: KolodaViewDataSource {
             kindCardIntroExplainer()
             
         } else {
-            customView?.kindDescriptionLabel.text = "No more cards available"
+            customView?.showMortuBtn.isHidden = false
+            customView?.kindDescriptionLabel.text = "Reload"
             customView?.kindId = -1
         }
         
@@ -152,40 +144,52 @@ extension CardSwipeView: KolodaViewDelegate {
 
     }
     
+    fileprivate func discardCard(_ kindCard: KindCard) {
+        //discardedDeck.append(kindCard.kindId.rawValue)
+        
+        
+        KindDeckManagement.sharedInstance.deadPileDeck.deck.insert(kindCard.kindId.rawValue, at: 0)
+        
+        KindDeckManagement.sharedInstance.updateKindDeck(type: .deadPileDeck) { err in
+            if let err = err {
+                print(err)
+                return
+            }
+            DispatchQueue.main.async {
+                self.deselectAllItemsInChosenKindCollection()
+            }
+        }
+    }
+    
+    fileprivate func addCardToKindDeck(_ kindCard: KindCard) {
+        KindDeckManagement.sharedInstance.userKindDeck.deck.insert(kindCard.kindId.rawValue, at: 0)
+        
+        KindDeckManagement.sharedInstance.updateKindDeck(type: .userKindDeck) { err in
+            if let err = err {
+                print(err)
+                return
+            }
+            let indexPath = IndexPath(item: 0, section: 0) // first position.
+            DispatchQueue.main.async {
+                self.chosenKindsCollectionView.performBatchUpdates({
+                    self.chosenKindsCollectionView.insertItems(at: [indexPath])
+                    self.chosenKindsCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
+                }, completion: { (completed) in
+                    self.deselectAllItemsInChosenKindCollection()
+                })
+            }
+        }
+    }
+    
     func koloda(_ koloda: KolodaView, didSwipeCardAt index: Int, in direction: SwipeResultDirection) {
    
         if let kindCard = cardOnTop {
             if direction == SwipeResultDirection.left {
-                
-            KindDeckManagement.sharedInstance.userKindDeck.deck.insert(kindCard.kindId.rawValue, at: 0)
-                
-                KindDeckManagement.sharedInstance.updateKindDeck { err in
-                    if let err = err {
-                        print(err)
-                        return
-                    }
-                    let indexPath = IndexPath(item: index, section: 0)
-//                    self.collectionViewUpdaterPublisher.onNext(collectionViewUpdateEmmit(indexPath: indexPath, instruction: .insert))
-//                    self.collectionViewUpdaterPublisher.onNext(collectionViewUpdateEmmit(indexPath: indexPath, instruction: .scrollToItem))
-                    DispatchQueue.main.async {
-                        //delay(bySeconds: 0.2, closure: {
-                            self.chosenKindsCollectionView.performBatchUpdates({
-                                self.chosenKindsCollectionView.insertItems(at: [indexPath])
-                                self.chosenKindsCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
-                            }, completion: { (completed) in
-                                self.deselectAllItemsInChosenKindCollection()
-                            })
-
-                        //})
-                    }
-                }
+                discardCard(kindCard)
             
             // SWIPE RIGHT
             } else if direction == SwipeResultDirection.right {
-                discardedDeck.append(kindCard.kindId.rawValue)
-                DispatchQueue.main.async {
-                    self.deselectAllItemsInChosenKindCollection()
-                }
+                addCardToKindDeck(kindCard)
             }
         }
         
@@ -321,13 +325,42 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
         chosenKindsCollectionView?.register(UINib(nibName: "ChosenKindCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ChosenKindCollectionViewCell")
         
         activateDeckObserver()
-        //activateCollectionViewUpdater()
         
         self.fadeIn(0.5)
-        //self.chosenKindsCollectionView.reloadData()
         self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
-        self.discardedDeck = []
+        
+        mainKindObserverActivation()
     
+    }
+    
+    func activateDeckObserver() {
+        KindDeckManagement.sharedInstance.deckObserver.share()
+            //.skip(1)
+            .subscribe(onNext:{ [weak self] cards in
+                if cards.first == -1 { // reload discarded
+                    self?.kindJustReleased = nil
+                    //HERE getting rid of this.
+                    KindDeckManagement.sharedInstance.resetDeadPileDeck()
+                    self?.kolodaView.resetCurrentCardIndex()
+                }
+            })
+            .disposed(by: disposeBag)
+        //
+    }
+    
+    func mainKindObserverActivation() {
+        KindDeckManagement.sharedInstance.mainKindObserver.share()
+            .subscribe(onNext: { [weak self] (kindId) in
+                self?.reloadChosenKindsCollectionView()
+            })
+            .disposed(by: disposeBag)
+        
+    }
+    
+    func reloadChosenKindsCollectionView() {
+        DispatchQueue.main.async {
+            self.chosenKindsCollectionView.reloadData()
+        }
     }
     
     func deactivate() {
@@ -362,7 +395,7 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
                 kindJustReleased = kindIdToRemove
                 self.kolodaView.resetCurrentCardIndex()
                 
-                KindDeckManagement.sharedInstance.updateKindDeck { (err) in
+                KindDeckManagement.sharedInstance.updateKindDeck(type:.userKindDeck) { (err) in
                     if let err = err {
                         print("remove kind error: \(err)")
                         return
@@ -374,15 +407,6 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
                         }, completion: { (completed) in
                             self.deselectAllItemsInChosenKindCollection()
                         })
-                        // Just refresh deck if no other cards are available.
-                        // Otherwise it will refresh (blink) and user will only see the same card
-                        // that was already there before, and its not the deleted one.
-                        //Little gain for a blink.
-                        
-                       // if self.availableDeck.count == 1 {
-                            //self.kolodaView.reloadData()
-                        
-                       // }
                     }
                   
                     self.removedKindFromDeckExplainer()
@@ -421,23 +445,28 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
         
     }
     
-    func activateDeckObserver() {
-        KindDeckManagement.sharedInstance.deckObserver.share()
-            //.skip(1)
-            .subscribe(onNext:{ [weak self] cards in
-                print("returned: ",cards)
-            })
-            .disposed(by: disposeBag)
-//
-    }
     
-//    func activateCollectionViewUpdater() {
-//        collectionViewUpdaterPublisher.asObserver()
-//            .subscribe(onNext: { [weak self] update in
-//
-//            })
-//            .disposed(by: disposeBag)
-//    }
+    fileprivate func originalDeckMinusOwnedMinusDiscarded() -> [KindCard] {
+        let allcardsIDs = GameKinds.minorKindsOriginalArray.compactMap({$0.kindId.rawValue})
+        let allRemainingCardsAfterPicked = allcardsIDs.filter {!KindDeckManagement.sharedInstance.userKindDeck.deck.contains($0)}
+        var remaningAfterDiscarded = allRemainingCardsAfterPicked.filter {!discardedDeck.contains($0)}
+        // turns [Int] into [KindCard]
+        
+        //brings it to first position.
+        if let kindToFirst = kindJustReleased {
+            if let indexJustReleased = remaningAfterDiscarded.firstIndex(of: kindToFirst) {
+                remaningAfterDiscarded.remove(at: indexJustReleased)
+                remaningAfterDiscarded.insert(kindToFirst, at: 0)
+            }
+            //reset release index
+            kindJustReleased = nil
+        }
+        
+        let cardsToPresent = remaningAfterDiscarded.compactMap{ cardId in
+            GameKinds.createKindCard(id: cardId)
+        }
+        return cardsToPresent
+    }
 }
 
 

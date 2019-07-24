@@ -39,7 +39,7 @@ extension CardSwipeView {
         var options:(Snippet,Snippet)?
         
         if !deckIsFull {
-            options = self.talkbox?.createUserOptions(opt1: "Keep it.", opt2: "Don't keep it.", actionView: self)
+            options = self.talkbox?.createUserOptions(opt1: "Don't keep it.", opt2: "Keep it.", actionView: self)
         } else {
             options = nil
         }
