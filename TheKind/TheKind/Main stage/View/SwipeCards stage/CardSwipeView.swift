@@ -12,14 +12,6 @@ import Koloda
 import RxSwift
 import RxRelay
 
-//enum collectionViewUpdateEnum {
-//    case insert, delete, scrollToItem
-//}
-//
-//struct collectionViewUpdateEmmit {
-//    var indexPath: IndexPath
-//    var instruction: collectionViewUpdateEnum
-//}
 
 class CardSwipeView: UIView {
 
@@ -232,7 +224,7 @@ extension CardSwipeView: KolodaViewDelegate {
 
 // ===== REFERS TO THE COLLECTION VIEW OF CHOSEN KINDS
 // ====================================================
-
+//HERE: The collectionview is not refreshing when changing KIND.
 extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return KindDeckManagement.sharedInstance.userKindDeck.deck.count
@@ -341,9 +333,8 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
         KindDeckManagement.sharedInstance.deckObserver.share()
             //.skip(1)
             .subscribe(onNext:{ [weak self] cards in
-                if cards.first == -1 { // reload discarded
+                if cards.first == -1 { // reload discarded cards pressed by user. 
                     self?.kindJustReleased = nil
-                    //HERE getting rid of this.
                     KindDeckManagement.sharedInstance.resetDeadPileDeck()
                     self?.kolodaView.resetCurrentCardIndex()
                 }
@@ -355,7 +346,9 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
     func mainKindObserverActivation() {
         KindDeckManagement.sharedInstance.mainKindObserver.share()
             .subscribe(onNext: { [weak self] (kindId) in
-                self?.reloadChosenKindsCollectionView()
+                delay(bySeconds: 1, closure: { //need the 1 sec or the colllection view don't update. 
+                    self?.chosenKindsCollectionView.reloadData()
+                })
             })
             .disposed(by: disposeBag)
         

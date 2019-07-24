@@ -133,13 +133,6 @@ class KindDeckManagement {
         }
     }
     
-    fileprivate func cleanPreviousMainKindsFromDeck() {
-        let twelveMainKinds = GameKinds.twelveKindsOriginalArray.map {$0.kindId.rawValue}
-        userKindDeck.deck = userKindDeck.deck.filter { !twelveMainKinds.contains($0) }
-    }
-    
-    //MAIN UPDATE FUNCTION
-    
     func updateKindDeck(type: DeckTypeEnum, completion: ((Error?)->())?) {
         let db = Firestore.firestore()
         guard let uid = Auth.auth().currentUser?.uid else {return}
@@ -196,6 +189,16 @@ class KindDeckManagement {
         }
     }
     
+    
+    
+    //Private functions
+    
+    fileprivate func cleanPreviousMainKindsFromDeck() {
+        let twelveMainKinds = GameKinds.twelveKindsOriginalArray.map {$0.kindId.rawValue}
+        userKindDeck.deck = userKindDeck.deck.filter { !twelveMainKinds.contains($0) }
+    }
+    
+    
     fileprivate func createUserKindDeck(completion: ((Error?)->())?) {
         let db = Firestore.firestore()
         guard let uid = Auth.auth().currentUser?.uid else {return}
@@ -218,34 +221,6 @@ class KindDeckManagement {
             }
             completion?(nil)
         })
-    }
-    
-
-    //MAINKIND
-    
-    fileprivate func safeAddMainKindToDeck(kindID: Int, completion:@escaping (Bool)->()) {
-        let twelveMainKinds = GameKinds.twelveKindsOriginalArray.map {$0.kindId.rawValue}
-        // This will delete the previous mainKind in the deck.
-        if twelveMainKinds.contains(kindID) {
-            cleanPreviousMainKindsFromDeck()
-        }
-        //This will add the new mainKind to the deck.
-        if !userKindDeck.deck.contains(kindID) {
-            userKindDeck.deck.append(kindID)
-            self.updateKindDeck(type: .userKindDeck) { (err) in
-                if let err = err {
-                    print(err)
-                    completion(false)
-                }
-                
-                completion(true)
-                return
-            }
-        } else {
-            print("safeAddKindToDeck: kind already exists")
-            completion(false)
-        }
-        
     }
     
     fileprivate func updateMainKind(completion: ((Error?)->())?) {
@@ -276,9 +251,31 @@ class KindDeckManagement {
         }
         
     }
-
     
-
+    fileprivate func safeAddMainKindToDeck(kindID: Int, completion:@escaping (Bool)->()) {
+        let twelveMainKinds = GameKinds.twelveKindsOriginalArray.map {$0.kindId.rawValue}
+        // This will delete the previous mainKind in the deck.
+        if twelveMainKinds.contains(kindID) {
+            cleanPreviousMainKindsFromDeck()
+        }
+        //This will add the new mainKind to the deck.
+        if !userKindDeck.deck.contains(kindID) {
+            userKindDeck.deck.append(kindID)
+            self.updateKindDeck(type: .userKindDeck) { (err) in
+                if let err = err {
+                    print(err)
+                    completion(false)
+                }
+                
+                completion(true)
+                return
+            }
+        } else {
+            print("safeAddKindToDeck: kind already exists")
+            completion(false)
+        }
+        
+    }
 
 }
 
