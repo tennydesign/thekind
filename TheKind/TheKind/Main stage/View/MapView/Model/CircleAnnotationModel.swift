@@ -15,20 +15,6 @@ import FirebaseFirestore
 
 struct CircleAnnotationSet {
     
-//    static func == (lhs: CircleAnnotationSet, rhs: CircleAnnotationSet) -> Bool {
-//        return (lhs.circleId == rhs.circleId)
-//    }
-//
-////    static func == (lhs: CircleAnnotationSet, rhs: CircleAnnotationSet) -> Bool {
-////        return (lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude &&
-////        lhs.circlePlotName == rhs.circlePlotName && lhs.isPrivate == rhs.isPrivate &&
-////        lhs.circleId == rhs.circleId && lhs.admin == rhs.admin && lhs.users == rhs.users &&
-////        lhs.dateCreated == rhs.dateCreated)
-////    }
-//
-//    static func != (lhs: CircleAnnotationSet, rhs: CircleAnnotationSet) -> Bool {
-//        return !(lhs.circleId == rhs.circleId)
-//    }
 
     //somethings off here. 
     var location: CLLocationCoordinate2D! {

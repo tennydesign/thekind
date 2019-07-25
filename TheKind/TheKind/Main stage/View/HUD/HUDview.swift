@@ -23,6 +23,8 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     @IBOutlet var hudView: UIView!
     @IBOutlet var hudCenterDisplay: UIView!
     
+    @IBOutlet weak var hudRightDisplay: UIView!
+    @IBOutlet weak var hudLeftDisplay: UIView!
     @IBOutlet var circleNameStack: UIStackView!
     @IBOutlet var listViewStack: UIStackView!
     @IBOutlet var kindIconImageView: UIImageView! {
@@ -57,7 +59,18 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
         Bundle.main.loadNibNamed("HUDview", owner: self, options: nil)
         addSubview(hudView)
         userSettingsSubscription()
+        
+        kindIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleKindImageTapGesture)))
 
+    }
+    
+    func navigateBack() {
+        
+    }
+    
+    @objc func handleKindImageTapGesture() {
+        print("handleKindImageTapGesture")
+        self.mainViewController?.chooseDriverView.activate()
     }
     
     override func layoutSubviews() {
@@ -125,10 +138,6 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     func activate() {
         self.fadeIn(0.5)
         self.hudView.fadeIn(0.5)
-        
-        if self.userPictureImageVIew.image != nil {
-            revealUserPhoto()
-       }
     }
     
     func revealUserPhoto() {
@@ -155,7 +164,9 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
     }
     
     func talk() {
-        
+        if self.userPictureImageVIew.image != nil {
+            revealUserPhoto()
+        }
     }
     
     func fadeInView() {

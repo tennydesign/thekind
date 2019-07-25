@@ -104,7 +104,11 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
     
     override func activate() {
 
+        //Bundle.main.loadNibNamed("UserNameView", owner: self, options: nil)
         Bundle.main.loadNibNamed("UserNameView", owner: self, options: nil)
+        //guard let view = xibViews?.first as? UIView else {return}
+        //self.addSubview(view)
+        //self.mainViewController?.main_content_view = mainView
         addSubview(mainView)
         setupUserNameTextField()
         

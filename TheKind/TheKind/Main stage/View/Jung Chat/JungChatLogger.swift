@@ -168,7 +168,9 @@ class JungChatLogger: KindActionTriggerView {
             let snippet = jungRoutine.snippets?.first else {return}
     
         self.postMessageToJungChat(message: message)
-        self.talkbox.executeSnippetAction(snippet)
+        //self.talkbox.executeSnippetAction(snippet)
+        self.talkbox.loadMainViewContentSnippetAction(snippet)
+    
         // release jung lock.
         self.talkbox.isProcessingSpeech = false
         self.routineHasPosted?()
@@ -216,7 +218,8 @@ class JungChatLogger: KindActionTriggerView {
                 self.postMessageToJungChat(message: snippets[messageIndex].message)
             }
 
-            self.talkbox.executeSnippetAction(snippets[messageIndex])
+            //self.talkbox.executeSnippetAction(snippets[messageIndex])
+            self.talkbox.loadMainViewContentSnippetAction(snippets[messageIndex])
             self.animationCount -= 1
             // 3 - Stops timer
             if messageIndex == snippets.count-1 {

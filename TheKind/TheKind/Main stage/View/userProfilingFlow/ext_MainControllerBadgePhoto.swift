@@ -77,7 +77,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
                     self.hudView.userPictureImageVIew.image = image
 
                     let txt = result.rawValue + "-Let me show how you look like.-Look up ☝️."
-                    let actions: [KindActionType] = [.none, .none, .activate]
+                    let actions: [KindActionType] = [.none, .none, .talk]
                     let actionViews: [ActionViewName] = [.none, .none,.HudView]
 
                     // TODO: all should look like this one.

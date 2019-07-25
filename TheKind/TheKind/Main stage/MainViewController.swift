@@ -16,6 +16,8 @@ import RxCocoa
 
 class MainViewController: UIViewController {
     
+    @IBOutlet weak var mainContentView: MainContentView!
+    
     var isOnboarding: Bool!
     @IBOutlet var bottomConstraintPanelMover: NSLayoutConstraint!
     var maxMapBottomPanelPosition: CGFloat!
@@ -121,6 +123,7 @@ class MainViewController: UIViewController {
                 } else { //returning user
                     self.welcomeBack()
                 }
+                self.hudView.activate()
             }
         }
 
@@ -154,7 +157,7 @@ class MainViewController: UIViewController {
 
     fileprivate func intro() {
         let txt = "Hi. Welcome to The Kind.-My name is Jung.-I'm pretty good at introducing people to each other-...and can help you make friends and have great conversations"
-        let actions: [KindActionType] = [.none, .activate, .none, .activate]
+        let actions: [KindActionType] = [.none, .talk, .none, .loadView]
         let actionViews: [ActionViewName] = [.none, .HudView, .none, self.firstViewToPresent]
 
         //new-rx
@@ -169,8 +172,8 @@ class MainViewController: UIViewController {
     
     fileprivate func welcomeBack() {
         let txt = "Hi \(KindUserSettingsManager.sharedInstance.loggedUserName ?? "") -Welcome back."
-        let actions: [KindActionType] = [.activate,.activate]
-        let actionViews: [ActionViewName] = [.HudView,self.firstViewToPresent]
+        let actions: [KindActionType] = [.none,.loadView]
+        let actionViews: [ActionViewName] = [.none,self.firstViewToPresent]
         
         //new-rx
         let routine = self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
@@ -204,6 +207,7 @@ class MainViewController: UIViewController {
         UIView.animate(withDuration: 0.4, animations: {
             self.hudView.hudCenterDisplay.alpha = on ? 1 : 0
             self.hudView.hudGradient.alpha = on ? 1 : 0
+            self.hudView.hudControls.alpha =  on ? 1 : 0
         }) { (completed) in
             self.hudView.isUserInteractionEnabled = on ? true : false
             completion?()
@@ -219,14 +223,14 @@ class MainViewController: UIViewController {
         jungChatLogger.mainViewController = self
         badgePhotoSetupViewHost.mainViewController = self
         userNameViewHost.mainViewController = self
-        mapViewHost.mainViewController = self
+        //mapViewHost.mainViewController = self
         chooseKindCardViewHost.mainViewController = self
         gameBoardViewHost.mainViewController = self
         cardSwipeViewHost.mainViewController = self
         dobOnboardingViewHost.mainViewController = self
         chooseDriverView.mainViewController = self
-        
-        
+        //
+        mainContentView.mainViewController2 = self
     }
     
     fileprivate func initTalkboxForViews() {
@@ -236,10 +240,14 @@ class MainViewController: UIViewController {
         userNameViewHost.talkbox = talkbox
         chooseDriverView.talkbox = talkbox
         chooseKindCardViewHost.talkbox = talkbox
-        mapViewHost.talkbox = talkbox
+        //mapViewHost.talkbox = talkbox
         gameBoardViewHost.talkbox = talkbox
         cardSwipeViewHost.talkbox = talkbox
+        //
+        mainContentView.talkBox2 = talkbox
+        mainContentView.activate()
     }
+    
     
     
 }

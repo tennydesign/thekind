@@ -20,6 +20,10 @@ class GameBoardSceneControlView: UIView, KindActionTriggerViewProtocol {
         
     }
     
+    func navigateBack() {
+        
+    }
+    
     var talkbox: JungTalkBox?
     var delegate: ControlGameBoardProtocol?
     var mainViewController: MainViewController?

@@ -84,6 +84,7 @@ class BrowseKindCardView: KindActionTriggerView {
             chooseMainKindExplainer()
         }
     }
+
     
     override func activate() {
         Bundle.main.loadNibNamed("BrowseKindCardView", owner: self, options: nil)
@@ -107,7 +108,6 @@ class BrowseKindCardView: KindActionTriggerView {
         fillAndPresentLabelWith(selectedIndex)
         //Switch between user is browsing or choosing carousels.
 
-        
         talk()
 
     }
@@ -124,6 +124,7 @@ class BrowseKindCardView: KindActionTriggerView {
     override func rightOptionClicked() {
         print("right clicked")
         if !KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
+          
             let kind = self.kindsList[selectedIndex]
             let kindName = kind.kindName.rawValue
             
@@ -136,9 +137,6 @@ class BrowseKindCardView: KindActionTriggerView {
                 }
                 self.onboardingKindChosenExplainer(kindName: kindName)
             }
-
- 
-  
         }
     }
 

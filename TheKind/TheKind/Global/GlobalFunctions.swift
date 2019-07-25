@@ -23,6 +23,7 @@ let GOLDCOLOR: UIColor = UIColor(r: 210, g: 183, b: 102)
 let FULLWHITECOLOR : UIColor = UIColor.white
 let OVERLAYCOLORWITHALPHA: UIColor = FULLBLACKCOLOR.withAlphaComponent(0.7)
 
+
 // This var is true when user clicks to see the carousel of another user.
 // It is used to distinguish two functions for the same view
 // 1) ChooseKind 2) UserCarousel. 

@@ -16,6 +16,8 @@
                 <outlet property="hudCenterDisplay" destination="w7s-xp-QZX" id="pf2-Zr-SxQ"/>
                 <outlet property="hudControls" destination="kMP-A5-S8t" id="4c6-bf-0AT"/>
                 <outlet property="hudGradient" destination="L0H-Rh-d5e" id="yKJ-HB-5zb"/>
+                <outlet property="hudLeftDisplay" destination="HIt-8J-2dn" id="Y7e-rh-4MD"/>
+                <outlet property="hudRightDisplay" destination="8vQ-xq-ppk" id="wXB-T6-6qg"/>
                 <outlet property="hudView" destination="iN0-l3-epB" id="jPe-iw-p3F"/>
                 <outlet property="kindIconImageView" destination="rOu-ac-IIP" id="Dky-zX-R0v"/>
                 <outlet property="listViewStack" destination="Keu-g5-6U1" id="i9c-qF-piO"/>

@@ -16,9 +16,12 @@ extension BrowseKindCardView {
         let actions: [KindActionType] = [.none, .none]
         let actionViews: [ActionViewName] = [.none,.none]
         var options: (Snippet,Snippet)?
-        if let kindName = kindsList.first?.kindName.rawValue {
-            options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I'm like \(kindName)", actionView: self)
-        }
+        
+        guard let kindName = kindsList.first?.kindName.rawValue else {return}
+
+//        options = self.talkbox?.createUserOptions(opt1: "Back", opt2: "I'm like \(kindName)", actionView: self)
+//
+        options = self.talkbox?.createUserOptions(opt1: "Back", opt2: "I'm like the \(kindName)", actionViews: (.BrowseKindView,.BrowseKindView), actions: (.leftOptionClicked,.rightOptionClicked) , id: nil)
         
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
         
@@ -29,9 +32,10 @@ extension BrowseKindCardView {
     }
     
     func onboardingKindChosenExplainer(kindName: String) {
+        //HERE HUDVIEW AS ACTIVATED
         let txt = "You chose\(kindName). -Now, let me show you the map.-Use it to find circles to join."
-        let actions: [KindActionType] = [.activate, .deactivate, .activate]
-        let actionViews: [ActionViewName] = [.HudView,.BrowseKindView, .MapView]
+        let actions: [KindActionType] = [.none, .deactivate, .activate]
+        let actionViews: [ActionViewName] = [.none,.BrowseKindView, .MapView]
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
         if let routine = routine {
             let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))

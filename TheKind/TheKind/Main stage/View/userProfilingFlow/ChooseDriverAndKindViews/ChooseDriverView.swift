@@ -37,15 +37,6 @@ class ChooseDriverView: KindActionTriggerView {
     lazy var boudingRect = CGSize(width: pickerView.bounds.width, height: pickerView.bounds.height)
     
     func commonInit() {
-//        Bundle.main.loadNibNamed("ChooseDriverView", owner: self, options: nil)
-//        chooseDriverView.frame = self.bounds
-//        chooseDriverView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
-//        addSubview(chooseDriverView)
-//        pickerView.delegate = self
-//        pickerView.dataSource = self
-//        pickerView.selectRow(0, inComponent: 0, animated: false)
-//        lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)).width
-        
 
     }
 
@@ -63,13 +54,17 @@ class ChooseDriverView: KindActionTriggerView {
         let actions: [KindActionType] = [.none, .fadeInView, .none]
         let actionViews: [ActionViewName] = [.none,.ChooseDriverView, .none]
         
-        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I identify with this one.", actionView: self)
+//        let options = self.talkbox?.createUserOptions(opt1: "Back", opt2: "I identify with this one.", actionView: self)
+        let options = self.talkbox?.createUserOptions(opt1: "Back", opt2: "I identify with this one.", actionViews: (.ChooseDriverView,.ChooseDriverView), actions: (.leftOptionClicked,.rightOptionClicked) , id: nil)
+        
         
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
         if let routine = routine {
             let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
             self.talkbox?.kindExplanationPublisher.onNext(rm)
         }
+        
+        self.logCurrentLandingView(tag: ActionViewName.ChooseDriverView.rawValue)
     }
     
     override func activate() {
@@ -82,11 +77,12 @@ class ChooseDriverView: KindActionTriggerView {
         pickerView.selectRow(0, inComponent: 0, animated: false)
         lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)).width
 
+        
         KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.ChooseDriverView.rawValue
         KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
         talk()
 
-        
+        self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
     }
     
     override func deactivate() {
@@ -110,6 +106,11 @@ class ChooseDriverView: KindActionTriggerView {
             self.talkbox?.kindExplanationPublisher.onNext(rm)
         }
     }
+    
+    override func leftOptionClicked() {
+
+    }
+
 }
 
 extension ChooseDriverView: UIPickerViewDelegate, UIPickerViewDataSource {

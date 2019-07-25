@@ -25,18 +25,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1LH-Se-bVM" userLabel="ActionTriggerViewsHosts">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <view tag="103" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7RB-H1-Tgr" userLabel="103-MainBoardHost" customClass="GameBoard" customModule="TheKind" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
-                                    <view tag="105" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eo-O7-Oer" userLabel="105-MapView" customClass="MapActionTriggerView" customModule="TheKind" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <view tag="102" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cym-tF-rfj" userLabel="102-UserNameViewHost" customClass="UserNameView" customModule="TheKind" customModuleProvider="target">
+                                    <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xZ8-CM-mff" userLabel="100-BadgePhotoSetupViewHost" customClass="BadgePhotoSetupView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
@@ -44,8 +33,24 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xZ8-CM-mff" userLabel="100-BadgePhotoSetupViewHost" customClass="BadgePhotoSetupView" customModule="TheKind" customModuleProvider="target">
+                                    <view tag="102" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cym-tF-rfj" userLabel="102-UserNameViewHost" customClass="UserNameView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view tag="103" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7RB-H1-Tgr" userLabel="103-MainBoardHost" customClass="GameBoard" customModule="TheKind" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eo-O7-Oer" userLabel="105-MapView">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view tag="108" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-Wn-hre" userLabel="108-CardSwipeViewHost" customClass="CardSwipeView" customModule="TheKind" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view tag="106" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bvV-Ka-rMx" userLabel="106-ChooseKindCardViewHost" customClass="BrowseKindCardView" customModule="TheKind" customModuleProvider="target">
@@ -56,45 +61,45 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view tag="108" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-Wn-hre" userLabel="108-CardSwipeViewHost" customClass="CardSwipeView" customModule="TheKind" customModuleProvider="target">
+                                    <view tag="1001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpM-yR-rEq" userLabel="main_content_view" customClass="MainContentView" customModule="TheKind" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="cym-tF-rfj" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="2fe-49-kCT"/>
-                                    <constraint firstItem="bvV-Ka-rMx" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="37P-yu-ZKy"/>
-                                    <constraint firstAttribute="trailing" secondItem="cym-tF-rfj" secondAttribute="trailing" id="68A-jn-ejH"/>
-                                    <constraint firstAttribute="trailing" secondItem="xZ8-CM-mff" secondAttribute="trailing" id="6wJ-rj-bF2"/>
+                                    <constraint firstAttribute="trailing" secondItem="YKl-rU-KWD" secondAttribute="trailing" id="0jn-HY-bDZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="eTK-Ov-xyB" secondAttribute="bottom" id="1Vx-ij-GKW"/>
+                                    <constraint firstAttribute="trailing" secondItem="eTK-Ov-xyB" secondAttribute="trailing" id="1oC-4R-kaq"/>
+                                    <constraint firstItem="cym-tF-rfj" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="5fs-ao-QMa"/>
                                     <constraint firstItem="7RB-H1-Tgr" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="9TW-dp-zkN"/>
-                                    <constraint firstItem="mmM-Wn-hre" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="ALp-ym-CVI"/>
-                                    <constraint firstAttribute="trailing" secondItem="YKl-rU-KWD" secondAttribute="trailing" id="Agv-iB-B0W"/>
-                                    <constraint firstItem="eTK-Ov-xyB" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="B2H-ZB-Gqu"/>
-                                    <constraint firstAttribute="trailing" secondItem="bvV-Ka-rMx" secondAttribute="trailing" id="BIo-AF-Ad1"/>
-                                    <constraint firstAttribute="bottom" secondItem="eTK-Ov-xyB" secondAttribute="bottom" id="DGu-TQ-pwB"/>
-                                    <constraint firstAttribute="bottom" secondItem="YKl-rU-KWD" secondAttribute="bottom" id="FNl-Ao-K4U"/>
+                                    <constraint firstAttribute="bottom" secondItem="YKl-rU-KWD" secondAttribute="bottom" id="Azo-KZ-5XC"/>
+                                    <constraint firstItem="cpM-yR-rEq" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="DyG-aA-K3L"/>
                                     <constraint firstAttribute="bottom" secondItem="0eo-O7-Oer" secondAttribute="bottom" id="Ft2-SJ-qTA"/>
-                                    <constraint firstItem="xZ8-CM-mff" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="IU9-tG-oLJ"/>
-                                    <constraint firstItem="xZ8-CM-mff" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="KPD-JP-8qQ"/>
-                                    <constraint firstAttribute="bottom" secondItem="bvV-Ka-rMx" secondAttribute="bottom" id="Kb1-7m-ICz"/>
-                                    <constraint firstItem="mmM-Wn-hre" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="LOy-un-TXT"/>
-                                    <constraint firstItem="YKl-rU-KWD" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="Pwh-gB-UKV"/>
-                                    <constraint firstItem="YKl-rU-KWD" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="Q6c-xi-a6U"/>
-                                    <constraint firstAttribute="bottom" secondItem="xZ8-CM-mff" secondAttribute="bottom" id="RfY-FU-f4c"/>
+                                    <constraint firstItem="xZ8-CM-mff" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="HeQ-yN-O0d"/>
+                                    <constraint firstAttribute="trailing" secondItem="cym-tF-rfj" secondAttribute="trailing" id="LUU-J2-blA"/>
+                                    <constraint firstItem="eTK-Ov-xyB" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="MIm-ir-qV8"/>
                                     <constraint firstItem="7RB-H1-Tgr" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="ScF-2v-YxP"/>
-                                    <constraint firstAttribute="trailing" secondItem="eTK-Ov-xyB" secondAttribute="trailing" id="Sl3-pl-dJ3"/>
+                                    <constraint firstAttribute="trailing" secondItem="cpM-yR-rEq" secondAttribute="trailing" id="SuL-Bx-giw"/>
                                     <constraint firstItem="0eo-O7-Oer" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="WgU-Lp-5cY"/>
-                                    <constraint firstAttribute="bottom" secondItem="mmM-Wn-hre" secondAttribute="bottom" id="YSN-b5-tKG"/>
+                                    <constraint firstItem="xZ8-CM-mff" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="b63-K9-SlC"/>
                                     <constraint firstAttribute="trailing" secondItem="7RB-H1-Tgr" secondAttribute="trailing" id="bY2-bN-W14"/>
-                                    <constraint firstAttribute="trailing" secondItem="mmM-Wn-hre" secondAttribute="trailing" id="d1J-q8-4qs"/>
+                                    <constraint firstItem="cpM-yR-rEq" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="blX-1C-BQ4"/>
+                                    <constraint firstAttribute="bottom" secondItem="xZ8-CM-mff" secondAttribute="bottom" id="dnu-ks-EF2"/>
+                                    <constraint firstAttribute="bottom" secondItem="cym-tF-rfj" secondAttribute="bottom" id="duj-kE-DMW"/>
+                                    <constraint firstAttribute="trailing" secondItem="bvV-Ka-rMx" secondAttribute="trailing" id="dzf-68-hOp"/>
                                     <constraint firstItem="0eo-O7-Oer" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="f0J-yD-k0b"/>
-                                    <constraint firstItem="cym-tF-rfj" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="faB-7g-Krw"/>
-                                    <constraint firstAttribute="bottom" secondItem="cym-tF-rfj" secondAttribute="bottom" id="ifV-Ke-jZA"/>
-                                    <constraint firstItem="bvV-Ka-rMx" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="lQL-If-36A"/>
+                                    <constraint firstItem="bvV-Ka-rMx" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="iQw-xx-PQc"/>
+                                    <constraint firstItem="cym-tF-rfj" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="isv-Jn-S0K"/>
+                                    <constraint firstAttribute="bottom" secondItem="cpM-yR-rEq" secondAttribute="bottom" id="lJg-c0-ap7"/>
+                                    <constraint firstItem="YKl-rU-KWD" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="oC9-Uz-YdY"/>
+                                    <constraint firstAttribute="bottom" secondItem="bvV-Ka-rMx" secondAttribute="bottom" id="p9E-dq-P6c"/>
+                                    <constraint firstItem="bvV-Ka-rMx" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="rAw-gn-Qd6"/>
                                     <constraint firstAttribute="trailing" secondItem="0eo-O7-Oer" secondAttribute="trailing" id="rEi-cc-FZp"/>
                                     <constraint firstAttribute="bottom" secondItem="7RB-H1-Tgr" secondAttribute="bottom" id="sOq-2s-LJA"/>
-                                    <constraint firstItem="eTK-Ov-xyB" firstAttribute="top" secondItem="1LH-Se-bVM" secondAttribute="top" id="ym0-aI-M2o"/>
+                                    <constraint firstAttribute="trailing" secondItem="xZ8-CM-mff" secondAttribute="trailing" id="wQo-Mb-Pzu"/>
+                                    <constraint firstItem="eTK-Ov-xyB" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="yQq-Ea-WCa"/>
+                                    <constraint firstItem="YKl-rU-KWD" firstAttribute="leading" secondItem="1LH-Se-bVM" secondAttribute="leading" id="yZc-oz-CES"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pt-Di-eiT" userLabel="bottom_curtain" customClass="PassthroughView" customModule="TheKind" customModuleProvider="target">
@@ -225,6 +230,7 @@
                         <outlet property="jungChatLogger" destination="4FF-H6-M6b" id="XFY-Ae-FN5"/>
                         <outlet property="jungChatWindow" destination="Psy-SE-XbL" id="94Q-OO-Vc1"/>
                         <outlet property="listCircleView" destination="qEY-O3-jWp" id="abL-35-g42"/>
+                        <outlet property="mainContentView" destination="cpM-yR-rEq" id="qeR-mL-aHZ"/>
                         <outlet property="mapViewHost" destination="0eo-O7-Oer" id="9Vj-Nh-jT4"/>
                         <outlet property="searchView" destination="pf0-Qz-dZ3" id="Ftq-kA-WCG"/>
                         <outlet property="topCurtainView" destination="aGE-Wo-HLs" id="Ap2-30-Rio"/>

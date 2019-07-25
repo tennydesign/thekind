@@ -118,7 +118,7 @@ extension MapActionTriggerView: MGLMapViewDelegate {
     
     func activateOnSelection(_ annotationView: CircleAnnotationView, completion: (()->())?) {
         
-        self.clearJungChatLog()
+
         longPressGesture.isEnabled = false //to avoid circle creation.
     
         UIView.animate(withDuration: 1, animations: {
@@ -126,9 +126,6 @@ extension MapActionTriggerView: MGLMapViewDelegate {
             annotationView.transform = CGAffineTransform(scaleX: self.MAXSCIRCLESCALE, y: self.MAXSCIRCLESCALE)
             annotationView.alpha = 0.32
             
-            // its weird but better if this goes first.
-            // HERE
-            self.mainViewController?.hudView.hudCenterDisplay.alpha = 0
         }) { (Completed) in
             if annotationView.transform.a == self.MAXSCIRCLESCALE {
                 //preparing to transition to annotationView fullscreen mode.
@@ -140,7 +137,7 @@ extension MapActionTriggerView: MGLMapViewDelegate {
                     
                 }, completion: { (completed) in
                     // HERE
-                    self.mainViewController?.setHudDisplayGradientBg(on: false, completion: nil)
+                    self.mainViewController2?.setHudDisplayGradientBg(on: false, completion: nil)
                     completion?()
                 })
             }
@@ -153,12 +150,12 @@ extension MapActionTriggerView: MGLMapViewDelegate {
         mapBoxView.isUserInteractionEnabled = false
         overlayExpandedCircleViews.alpha = 1
         overlayExpandedCircleViews.isUserInteractionEnabled = true
-        mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
+        mainViewController2?.bottomCurtainView.isUserInteractionEnabled = true
         borderProtectionLeft.isUserInteractionEnabled = false
         borderProtectionRight.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5, animations: {
-            self.mainViewController?.hudView.hudCenterDisplay.alpha = 0
-            self.mainViewController?.hudView.listViewStack.alpha = 1
+            //self.mainViewController2?.hudView.hudCenterDisplay.alpha = 0
+            //self.mainViewController2?.hudView.listViewStack.alpha = 1
         })
         
     }
@@ -184,12 +181,12 @@ extension MapActionTriggerView: MGLMapViewDelegate {
         guard let set = annotationView.circleDetails else {return}
         
         self.mapBoxView.isUserInteractionEnabled = true
-        mainViewController?.setHudDisplayGradientBg(on: true) {
+        mainViewController2?.setHudDisplayGradientBg(on: true) {
             self.prepareMapViewsForPresentation { viewsAreReady in
                 UIView.animate(withDuration: 1, animations: {
-                    self.mainViewController?.hudView.alpha = 1
+                    self.mainViewController2?.hudView.alpha = 1
                     annotationView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                    annotationView.alpha = CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation ? 0 : 0.9
+                    annotationView.alpha = CircleAnnotationManagement.sharedInstance.isSelectedTemporaryCircleAnnotation ? 0 : 0.7
                     annotationView.button.alpha = 0
                 }) { (completed) in
                     
@@ -290,11 +287,6 @@ extension MapActionTriggerView: CLLocationManagerDelegate {
             // Maybe refactor non-used views to "isHidden=tue" in addition to alpha (better!)
             if self.mapBoxView.alpha == 0 {
                 self.mapBoxView.fadeIn(0.4)
-//                UIView.animate(withDuration: 0.4, animations: {
-//                    self.mapBoxView.alpha = 1
-//                }, completion: { (completed) in
-//                   // self.talk()
-//                })
             }
         }
         

@@ -46,6 +46,7 @@ enum KindActionType {
     rightOptionClicked,
     leftOptionClicked,
     talk,
+    loadView,
     none
 }
 
@@ -62,6 +63,7 @@ enum ActionViewName: Int {
         BrowseKindView = 106,
         ChooseDriverView = 107,
         CardSwipeView = 108,
+        mainContentView = 1001,
         none = -1
 }
 

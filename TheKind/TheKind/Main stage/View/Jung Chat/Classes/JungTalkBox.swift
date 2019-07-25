@@ -16,6 +16,12 @@ struct JungRoutineToEmission {
     let routine: BehaviorSubject<JungRoutine>
 }
 
+struct SnippetToEmission {
+    let snippet: BehaviorSubject<Snippet>
+}
+
+//create a publisher
+
 
 class JungTalkBox {
     
@@ -30,6 +36,11 @@ class JungTalkBox {
     var kindExplanationPublisher = PublishSubject<JungRoutineToEmission>()
     var kindExplanationObserver: Observable<JungRoutineToEmission> {
         return kindExplanationPublisher.asObservable()
+    }
+    
+    var actionExecutionPublisher = PublishSubject<SnippetToEmission>()
+    var actionExecutionPublisherObserver: Observable<SnippetToEmission> {
+        return actionExecutionPublisher.asObservable()
     }
     
     //To JungChatLogger UI
@@ -56,6 +67,7 @@ class JungTalkBox {
                 $0.routine
             }
             .subscribe(onNext: { routine in
+
                 let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
                 self.jungChatUIRoutinePublisher.onNext(rm)
                 
@@ -114,18 +126,9 @@ class JungTalkBox {
         
     }
     
-    // Create user option labels. Return as touple to
-    func createUserOptions(opt1: String, opt2: String, actionViews: (ActionViewName, ActionViewName), id: Int? = nil) -> (Snippet,Snippet)? {
-        
-        let actionOpt: (KindActionType, KindActionType) = (.leftOptionClicked, .rightOptionClicked)
-        
-        let userOptionA = Snippet.init(message: opt1, action: actionOpt.0, id: id ?? 0, actionView: actionViews.0)
-        let userOptionB = Snippet.init(message: opt2, action: actionOpt.1, id: id ?? 0, actionView: actionViews.1)
-        
-        return (userOptionA,userOptionB)
-        
-    }
- 
+    //CREATE USER OPTIONS
+    
+    // this assumes right and left for the same view
     func createUserOptions(opt1: String, opt2: String, actionView: UIView, id: Int? = nil) -> (Snippet,Snippet)? {
         
         let actionOpt: (KindActionType, KindActionType) = (.leftOptionClicked, .rightOptionClicked)
@@ -139,42 +142,72 @@ class JungTalkBox {
         
     }
     
+    // This one assumes right an left but allow for other views.
+    func createUserOptions(opt1: String, opt2: String, actionViews: (ActionViewName, ActionViewName), id: Int? = nil) -> (Snippet,Snippet)? {
+        
+        let actionOpt: (KindActionType, KindActionType) = (.leftOptionClicked, .rightOptionClicked)
+        
+        let userOptionA = Snippet.init(message: opt1, action: actionOpt.0, id: id ?? 0, actionView: actionViews.0)
+        let userOptionB = Snippet.init(message: opt2, action: actionOpt.1, id: id ?? 0, actionView: actionViews.1)
+        
+        return (userOptionA,userOptionB)
+        
+    }
+    
+    // this one assumes nothing. Full constructor.
+    func createUserOptions(opt1: String, opt2: String, actionViews: (ActionViewName,ActionViewName), actions: (KindActionType,KindActionType), id: Int? = nil) -> (Snippet,Snippet)? {
+        
+        let userOptionA = Snippet.init(message: opt1, action: actions.0 , id: id ?? 0, actionView: actionViews.0)
+        let userOptionB = Snippet.init(message: opt2, action: actions.1 , id: id ?? 0, actionView: actionViews.1)
+
+        return (userOptionA,userOptionB)
+        
+    }
+ 
+
+    
     
 //=============
 // Triggers
 //=============
     
-    func executeSnippetAction(_ snippet: SnippetProtocol) {
-        guard let tag = snippet.actionView?.rawValue else {return}
-        
-
-        if snippet.action == .fadeInView {
-            returnActionTriggerView(by: tag)?.fadeInView()
-        }
-
-        if snippet.action == .fadeOutView {
-            returnActionTriggerView(by: tag)?.fadeOutView()
-        }
- 
-        if snippet.action == .activate {
-            returnActionTriggerView(by: tag)?.activate()
-        }
-        
-        if snippet.action == .deactivate {
-            returnActionTriggerView(by: tag)?.deactivate()
-        }
-
-        if snippet.action == .leftOptionClicked {
-            returnActionTriggerView(by: tag)?.leftOptionClicked()
-        }
-
-        if snippet.action == .rightOptionClicked {
-            returnActionTriggerView(by: tag)?.rightOptionClicked()
-        }
-        
-        if snippet.action == .talk {
-            returnActionTriggerView(by: tag)?.talk()
-        }
+//    func executeSnippetAction(_ snippet: SnippetProtocol) {
+//        guard let tag = snippet.actionView?.rawValue else {return}
+//
+//
+//        if snippet.action == .fadeInView {
+//            returnActionTriggerView(by: tag)?.fadeInView()
+//        }
+//
+//        if snippet.action == .fadeOutView {
+//            returnActionTriggerView(by: tag)?.fadeOutView()
+//        }
+//
+//        if snippet.action == .activate {
+//            returnActionTriggerView(by: tag)?.activate()
+//        }
+//
+//        if snippet.action == .deactivate {
+//            returnActionTriggerView(by: tag)?.deactivate()
+//        }
+//
+//        if snippet.action == .leftOptionClicked {
+//            returnActionTriggerView(by: tag)?.leftOptionClicked()
+//        }
+//
+//        if snippet.action == .rightOptionClicked {
+//            returnActionTriggerView(by: tag)?.rightOptionClicked()
+//        }
+//
+//        if snippet.action == .talk {
+//            returnActionTriggerView(by: tag)?.talk()
+//        }
+//
+//    }
+    
+    func loadMainViewContentSnippetAction(_ snippet: Snippet) {
+        let sn = SnippetToEmission(snippet: BehaviorSubject(value: snippet))
+        actionExecutionPublisher.onNext(sn)
         
     }
     

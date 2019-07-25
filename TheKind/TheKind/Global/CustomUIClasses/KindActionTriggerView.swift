@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-protocol KindActionTriggerViewProtocol {
+@objc protocol KindActionTriggerViewProtocol {
     func talk()
     func activate()
     func deactivate()
@@ -16,9 +18,14 @@ protocol KindActionTriggerViewProtocol {
     func leftOptionClicked()
     func fadeInView()
     func fadeOutView()
+    @objc optional func loadView()
 }
 
+
 class KindActionTriggerView: UIView, KindActionTriggerViewProtocol {
+    
+    var mainViewController2: MainViewController?
+    var talkBox2: JungTalkBox?
     
     var nextView: UIView?
     // ===> POLYMORPHIC ACTIONS <===
@@ -26,6 +33,7 @@ class KindActionTriggerView: UIView, KindActionTriggerViewProtocol {
     //
     func activate() {
     }
+
 
     func deactivate() {
     }
@@ -37,7 +45,7 @@ class KindActionTriggerView: UIView, KindActionTriggerViewProtocol {
     }
     
     func talk() {
-        
+    
     }
     
     func logCurrentLandingView(tag: Int) {
@@ -59,8 +67,8 @@ class KindActionTriggerView: UIView, KindActionTriggerViewProtocol {
             self.isHidden = true
         }
     }
-
-    
     
 }
+
+
 

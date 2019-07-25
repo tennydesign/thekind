@@ -15,6 +15,7 @@ import RxSwift
 
 class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
+    
 
     @IBOutlet var deactivationMessageLabel: UILabel!
     @IBOutlet var borderProtectionLeft: UIView!
@@ -65,8 +66,6 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         }
     }
     
-    var mainViewController: MainViewController?
-    var talkbox: JungTalkBox?
     var latitude: CLLocationDegrees!
     var longitude: CLLocationDegrees!
     var longPressGesture: UIGestureRecognizer!
@@ -160,14 +159,17 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     override func activate() {
         Bundle.main.loadNibNamed("MapView", owner: self, options: nil)
-        mainView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        mainView.alpha = 0
         addSubview(mainView)
-        
+        mainView.frame = self.bounds
+        mainView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
+        mainView.alpha = 0
+
         circleNameTextField.delegate = self
         mapBoxView.delegate = self
         locationManager.delegate = self
-        self.talkbox?.delegate = self
+        
+        self.talkBox2?.delegate = self
+        
         photoStripCollectionView.dataSource = self
         photoStripCollectionView.delegate = self
         
@@ -175,19 +177,19 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         
         //screen adjustments.
         adjustScreenforXFamily()
+
+        let overlay = self.createOverlay(frame: self.frame,
+                                         xOffset: self.frame.midX,
+                                         yOffset: self.frame.midY,
+                                         radius: 90.0)
+        self.overlayExpandedCircleViews.addSubview(overlay)
+        self.overlayExpandedCircleViews.sendSubviewToBack(overlay)
+        
         gesturesAndActionsSetup()
         
         locationServicesSetup()
         
         activateCallBacks()
-        
-        let overlay = self.createOverlay(frame: self.frame,
-                                         xOffset: self.frame.midX,
-                                         yOffset: self.frame.midY,
-                                         radius: 90.0)
-        
-        self.overlayExpandedCircleViews.addSubview(overlay)
-        self.overlayExpandedCircleViews.sendSubviewToBack(overlay)
         
         configMapbox()
         
@@ -196,13 +198,13 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
         self.alpha = 0
         self.isHidden = false
-        self.talkbox?.delegate = self
-        self.mainViewController?.listCircleView.delegate = self
-        self.mainViewController?.jungChatLogger.backgroundColor = UIColor.clear
-        self.mainViewController?.jungChatLogger.bottomGradient.fadeIn(0.3)
+        
+        self.mainViewController2?.listCircleView.delegate = self
+        self.mainViewController2?.jungChatLogger.backgroundColor = UIColor.clear
+        self.mainViewController2?.jungChatLogger.bottomGradient.fadeIn(0.3)
 
         
-        
+        self.logCurrentLandingView(tag: ActionViewName.MapView.rawValue)
         self.fadeInView() //fades in the view, not the map yet.
         
         prepareMapViewsForPresentation() { viewsAreReady in
@@ -259,7 +261,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             group.leave()
             group.enter()
             self.plotCirclesAroundUser(latitude: coordinates.latitude, longitude: coordinates.longitude, completion: { (plotted) in
-                print("executed geoFireTestingQuery")
+                print("1 executed geoFireTestingQuery")
                 group.leave()
             })
         }
@@ -275,9 +277,10 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         }
         
     }
+    
     func plotCirclesAroundUser(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: ((Bool)->())?) {
         CircleAnnotationManagement.sharedInstance.getCirclesWithinRadiusObserver(latitude: latitude, longitude: longitude, radius: 0.6, completion: {
-            print("executed geoFireTestingQuery")
+            print("3 executed geoFireTestingQuery")
             completion?(true)
         })
     }
@@ -304,12 +307,12 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         mapBoxView.setZoomLevel(self.FLYOVERZOOMLEVEL, animated: true)
         mapBoxView.isUserInteractionEnabled = true
         overlayExpandedCircleViews.isUserInteractionEnabled = false
-        mainViewController?.bottomCurtainView.isUserInteractionEnabled = false
+        mainViewController2?.bottomCurtainView.isUserInteractionEnabled = false
         borderProtectionLeft.isUserInteractionEnabled = true
         borderProtectionRight.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.5, animations: {
-            self.mainViewController?.hudView.hudCenterDisplay.alpha = 1
-            self.mainViewController?.hudView.listViewStack.alpha = 1
+            self.mainViewController2?.hudView.hudCenterDisplay.alpha = 1
+            self.mainViewController2?.hudView.listViewStack.alpha = 1
             self.overlayExpandedCircleViews.alpha = 0
         }) { (completed) in
             completion?(true)
@@ -357,13 +360,14 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         CircleAnnotationManagement.sharedInstance.removeAllGeoFireObservers()
         locationManager.stopUpdatingLocation()
         mainView.removeFromSuperview()
+
        // self.fadeOutView()
     }
     
     func clearJungChatLog() {
         //self.mainViewController?.jungChatLogger.resetJungChat()
         //self.talkbox?.clearJungChat()
-        self.mainViewController?.jungChatLogger.hideOptionLabels(true, completion: nil)
+        self.mainViewController2?.jungChatLogger.hideOptionLabels(true, completion: nil)
     }
     
     ///JUNG ACTIONS
@@ -376,7 +380,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 
     
     override func leftOptionClicked() {
-        self.clearJungChatLog()
+        //self.clearJungChatLog()
         self.deActivateOnDeselection(completion: nil)
         
     }
@@ -487,7 +491,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     @IBAction func addUserBtnClicked(_ sender: UIButton) {
         print("add user clicked")
-        mainViewController?.searchView.activate()
+        mainViewController2?.searchView.activate()
     }
  
     // CIRCLE SET OBSERVER
@@ -523,7 +527,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         if set.deleted {
             deActivateOnDeselection() {
                 self.showAccessDeniedLabel(message: "Deactivated by admin.")
-                self.clearJungChatLog()
+                //self.clearJungChatLog()
             }
             return
         }
@@ -580,39 +584,39 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
 extension MapActionTriggerView: ConfirmationViewProtocol {
     
     func setupConfirmationBtn(withMessage: String, detail: String?, action: ConfirmButtonActions) {
-        mainViewController?.confirmationView.delegate = self
-        mainViewController?.confirmationView.actionEnum = action
-        mainViewController?.confirmationView.confirmAction.setTitle(withMessage, for: .normal)
-        mainViewController?.confirmationView.detailsLabel.text = detail ?? ""
-        mainViewController?.confirmationView.activate()
+        mainViewController2?.confirmationView.delegate = self
+        mainViewController2?.confirmationView.actionEnum = action
+        mainViewController2?.confirmationView.confirmAction.setTitle(withMessage, for: .normal)
+        mainViewController2?.confirmationView.detailsLabel.text = detail ?? ""
+        mainViewController2?.confirmationView.activate()
     }
     
     func userConfirmed() {
-        guard let action = mainViewController?.confirmationView.actionEnum else {return}
+        guard let action = mainViewController2?.confirmationView.actionEnum else {return}
         switch action {
         case .removeUserFromCircle:
             guard let user = selectedKindUser, let id = user.uid else {return}
             CircleAnnotationManagement.sharedInstance.removeUserFromCircle(userId: id) {
                 print("user removed from array in Firebase")
-                self.mainViewController?.confirmationView.deactivate()
+                self.mainViewController2?.confirmationView.deactivate()
             }
         case .transferCircleToUser:
             print("hello makeUserAdminForCircleBtn")
             guard let user = selectedKindUser, let id = user.uid else {return}
             CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.admin = id
             saveCircleSetIfNotTemporary() {
-                self.mainViewController?.confirmationView.deactivate()
+                self.mainViewController2?.confirmationView.deactivate()
             }
             
         case .removeCircle:
             CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.deleted = true
             saveCircleSetIfNotTemporary() {
-                self.mainViewController?.confirmationView.deactivate()
+                self.mainViewController2?.confirmationView.deactivate()
             }
         case .makeCircleStealth:
             CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails?.stealthMode = self.circleIsStealthMode
             saveCircleSetIfNotTemporary() {
-                self.mainViewController?.confirmationView.deactivate()
+                self.mainViewController2?.confirmationView.deactivate()
             }
         }
         
@@ -620,7 +624,7 @@ extension MapActionTriggerView: ConfirmationViewProtocol {
     }
     
     func userCancelled() {
-        mainViewController?.confirmationView.deactivate()
+        mainViewController2?.confirmationView.deactivate()
     }
     
     

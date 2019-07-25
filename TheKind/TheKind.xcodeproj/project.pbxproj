@@ -28,6 +28,8 @@
 		A0120E6621C6E345000454EC /* BadgePhotoSetupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */; };
 		A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */; };
 		A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */; };
+		A0183B6122E943C900515A18 /* MainContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0183B6022E943C900515A18 /* MainContentView.xib */; };
+		A0183B6322E943F700515A18 /* MainContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0183B6222E943F700515A18 /* MainContentView.swift */; };
 		A025F6E122172D720010BDA1 /* ChosenKindCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A025F6DF22172D720010BDA1 /* ChosenKindCollectionViewCell.swift */; };
 		A025F6E222172D720010BDA1 /* ChosenKindCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A025F6E022172D720010BDA1 /* ChosenKindCollectionViewCell.xib */; };
 		A025F6E4221B3FD70010BDA1 /* CustomSwipeOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = A025F6E3221B3FD60010BDA1 /* CustomSwipeOverlay.xib */; };
@@ -162,6 +164,8 @@
 		A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgePhotoSetupView.xib; sourceTree = "<group>"; };
 		A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePhotoSetupView.swift; sourceTree = "<group>"; };
 		A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xt_GesturesGameBoardScene.swift; sourceTree = "<group>"; };
+		A0183B6022E943C900515A18 /* MainContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainContentView.xib; sourceTree = "<group>"; };
+		A0183B6222E943F700515A18 /* MainContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentView.swift; sourceTree = "<group>"; };
 		A025F6DF22172D720010BDA1 /* ChosenKindCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChosenKindCollectionViewCell.swift; sourceTree = "<group>"; };
 		A025F6E022172D720010BDA1 /* ChosenKindCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChosenKindCollectionViewCell.xib; sourceTree = "<group>"; };
 		A025F6E3221B3FD60010BDA1 /* CustomSwipeOverlay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomSwipeOverlay.xib; sourceTree = "<group>"; };
@@ -495,6 +499,8 @@
 			isa = PBXGroup;
 			children = (
 				A0320B5E212F2873008A96E2 /* Main.storyboard */,
+				A0183B6022E943C900515A18 /* MainContentView.xib */,
+				A0183B6222E943F700515A18 /* MainContentView.swift */,
 				A0015A2F218CE8DF001DDA20 /* MainViewController.swift */,
 				A025F6EF222229250010BDA1 /* Model */,
 				A0F223B121B8A75E0096C25D /* View */,
@@ -889,6 +895,7 @@
 				A0E9C04E2216415E00C949D4 /* KindSwipeView.xib in Resources */,
 				A0CBA6782294BB0D0088F581 /* TestLocations.gpx in Resources */,
 				A002F48521B9EFAE006E8660 /* JungChatBubbleCollectionViewCell.xib in Resources */,
+				A0183B6122E943C900515A18 /* MainContentView.xib in Resources */,
 				A0301D672190B21100E023F7 /* thedeck.sks in Resources */,
 				A0B5A2D6226FE6E9006985A4 /* SearchView.xib in Resources */,
 				A03A46AA21C6C18200D90190 /* OnBoarding.storyboard in Resources */,
@@ -1053,6 +1060,7 @@
 				A046420B21CC3B6F00E8817C /* JungAWSRecognitionBadge.swift in Sources */,
 				A0301D702190C32300E023F7 /* GameBoardScene.swift in Sources */,
 				A0E4ADF322DE8E6F00B403EF /* Ext_Explainers_CardSwipeView.swift in Sources */,
+				A0183B6322E943F700515A18 /* MainContentView.swift in Sources */,
 				A02D719F21C42FA300EBBD12 /* BrowseKindCardView.swift in Sources */,
 				A0E9C0482215D27000C949D4 /* GameBoardSceneControlView.swift in Sources */,
 				A05150F821E44A9400795172 /* KindUserSettingsManager.swift in Sources */,

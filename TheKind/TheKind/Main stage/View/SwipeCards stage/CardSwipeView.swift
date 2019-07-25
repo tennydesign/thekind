@@ -299,7 +299,9 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
 
 extension CardSwipeView: KindActionTriggerViewProtocol {
 
-    
+    func navigateBack() {
+        
+    }
     func talk() {
         
     }
