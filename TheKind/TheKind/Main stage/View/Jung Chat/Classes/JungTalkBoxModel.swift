@@ -25,9 +25,9 @@ struct JungRoutine: JungRoutineProtocol, Equatable {
 // ===> A snippet is the line to be //printed in the chat window <===
 struct Snippet: SnippetProtocol {
     var message: String //printed message
-    var action: KindActionType // will be executed at the same time Jung "speaks" the line.
+    var action: KindActionTypeEnum // will be executed at the same time Jung "speaks" the line.
     var id: Int // not being used.
-    var actionView: ActionViewName? //view in which the action is executed.
+    var actionView: ViewForActionEnum?
   //  var sender: Sender
     
 }
@@ -38,7 +38,7 @@ enum Sender {
 }
 
 // ===> Refer to KindActionTriggerView for how the delegate uses this enum <====
-enum KindActionType {
+enum KindActionTypeEnum {
     case fadeInView,
     fadeOutView,
     activate,
@@ -46,25 +46,40 @@ enum KindActionType {
     rightOptionClicked,
     leftOptionClicked,
     talk,
-    loadView,
     none
 }
 
-// ADDTRIGGERVIEW: Must add it here. 
-enum ActionViewName: Int {
+
+
+let kindActionViewStorage: [ViewForActionEnum:KindActionTriggerView.Type] =         [.BadgePhotoSetupView: BadgePhotoSetupView.self,
+                                                                                     .GameBoard: GameBoard.self,
+                                                                                     .mapView: MapActionTriggerView.self,
+                                                                                     .GameBoardSceneControlView: GameBoardSceneControlView.self,
+                                                                                     .KindMatchControlView: KindMatchControl.self,
+                                                                                     .DobOnboardingView: DobOnboardingView.self,
+                                                                                     .UserNameView: UserNameView.self,
+                                                                                     .BrowseKindView: BrowseKindCardView.self,
+                                                                                     .ChooseDriverView: ChooseDriverView.self,
+                                                                                     .CardSwipeView: CardSwipeView.self]
+
+enum ViewForActionEnum: Int {
+    
     case BadgePhotoSetupView = 100,
-        GameBoard = 103,
-        GameBoardSceneControlView = 201,
-        KindMatchControlView = 202,
-        HudView = 12,
-        DobOnboardingView = 101,
-        UserNameView = 102,
-        MapView = 105,
-        BrowseKindView = 106,
-        ChooseDriverView = 107,
-        CardSwipeView = 108,
-        mainContentView = 1001,
-        none = -1
+    GameBoard = 103,
+    GameBoardSceneControlView = 201,
+    KindMatchControlView = 202,
+    DobOnboardingView = 101,
+    UserNameView = 102,
+    mapView = 105,
+    BrowseKindView = 106,
+    ChooseDriverView = 107,
+    CardSwipeView = 108,
+    HudView = 12,
+    none = -1
+}
+
+enum ContentContainerEnum {
+    case mainContentView
 }
 
 // ===> This is used by functions to call a snippet parameter that can be generic <===
@@ -72,8 +87,8 @@ enum ActionViewName: Int {
 protocol SnippetProtocol {
     var message: String {get set}
     var id: Int {get set}
-    var action: KindActionType {get set}
-    var actionView: ActionViewName? {get set}
+    var action: KindActionTypeEnum {get set}
+    var actionView: ViewForActionEnum? {get set}
 }
 
 // ===> This is used by functions to call a Routine parameter that can be generic <===

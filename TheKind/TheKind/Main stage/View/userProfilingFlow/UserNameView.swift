@@ -89,8 +89,8 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         
         KindUserSettingsManager.sharedInstance.loggedUserName = username
         let txt = "Great, I will call you \(username) from now on.-You can change it again if you prefer."
-        let actions: [KindActionType] = [.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none]
+        let actions: [KindActionTypeEnum] = [.none,.none]
+        let actionViews: [ViewForActionEnum] = [.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I'm good with that.", actionViews: (.none,.UserNameView))
         
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: options)
@@ -117,7 +117,7 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         setupKeyboardObservers()
         self.talkbox?.delegate = self
         
-        self.logCurrentLandingView(tag: ActionViewName.UserNameView.rawValue)
+        self.logCurrentLandingView(tag: ViewForActionEnum.UserNameView.rawValue)
         self.fadeInView()
         self.talk()
     }
@@ -166,8 +166,8 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.name.rawValue] = username
             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
             //Move forward
-            let actions: [KindActionType] = [.none,.activate]
-            let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView]
+            let actions: [KindActionTypeEnum] = [.none,.activate]
+            let actionViews: [ViewForActionEnum] = [.none,.BadgePhotoSetupView]
             self.fadeOutView()
             
             let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)

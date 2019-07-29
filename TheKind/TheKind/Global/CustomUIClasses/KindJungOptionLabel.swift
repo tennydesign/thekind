@@ -27,8 +27,8 @@ class KindJungOptionLabel:UILabel {
     }
     
     var userOptionId: Int?
-    var action: KindActionType?
-    var actionView: ActionViewName?
+    var action: KindActionTypeEnum?
+    var actionView: ViewForActionEnum?
     
     var userResponseOptionSnippet: Snippet? {
         didSet {

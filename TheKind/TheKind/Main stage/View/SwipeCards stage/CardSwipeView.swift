@@ -13,7 +13,7 @@ import RxSwift
 import RxRelay
 
 
-class CardSwipeView: UIView {
+class CardSwipeView: KindActionTriggerView {
 
     let USERDECK_QTY_MAX_OF_CARDS = 12
     
@@ -65,7 +65,62 @@ class CardSwipeView: UIView {
     fileprivate func commonInit() {
     }
     
-
+    override func talk() {
+        
+    }
+    
+    override func activate() {
+        Bundle.main.loadNibNamed("CardSwipeView", owner: self, options: nil)
+        mainView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        addSubview(mainView)
+        
+        mainView.alpha = 0
+        self.isHidden = false
+        mainView.fadeIn(0.5)
+        
+        kolodaView.dataSource = self
+        kolodaView.delegate = self
+        chosenKindsCollectionView.dataSource = self
+        chosenKindsCollectionView.delegate = self
+        kolodaView.appearanceAnimationDuration = 0.2
+        chosenKindsCollectionView?.register(UINib(nibName: "ChosenKindCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ChosenKindCollectionViewCell")
+        
+        activateDeckObserver()
+        
+        self.fadeIn(0.5)
+        self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
+        
+        mainKindObserverActivation()
+        
+    }
+    
+    override func leftOptionClicked() {
+        if !isDescribingProposedCard {
+            moreInfoOnKind()
+        } else {
+            if !deckIsFull {
+                kolodaView.swipe(.left)
+            } else {
+                deckIsFullExplainer()
+            }
+        }
+    }
+    
+    override func deactivate() {
+        self.fadeOut(0.5) {
+            self.mainView.removeFromSuperview()
+        }
+    }
+    
+    
+    override func rightOptionClicked() {
+        if !isDescribingProposedCard {
+            removeKind()
+            // HERE: Add clear light  bottom collection ad refresh
+        } else {
+            kolodaView.swipe(.right)
+        }
+    }
 
 
 }
@@ -297,38 +352,10 @@ extension CardSwipeView: UICollectionViewDataSource, UICollectionViewDelegate {
     
 }
 
-extension CardSwipeView: KindActionTriggerViewProtocol {
+extension CardSwipeView {
 
     func navigateBack() {
         
-    }
-    func talk() {
-        
-    }
-    
-    func activate() {
-        Bundle.main.loadNibNamed("CardSwipeView", owner: self, options: nil)
-        mainView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        addSubview(mainView)
-        
-        mainView.alpha = 0
-        self.isHidden = false
-        mainView.fadeIn(0.5)
-        
-        kolodaView.dataSource = self
-        kolodaView.delegate = self
-        chosenKindsCollectionView.dataSource = self
-        chosenKindsCollectionView.delegate = self
-        kolodaView.appearanceAnimationDuration = 0.2
-        chosenKindsCollectionView?.register(UINib(nibName: "ChosenKindCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ChosenKindCollectionViewCell")
-        
-        activateDeckObserver()
-        
-        self.fadeIn(0.5)
-        self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
-        
-        mainKindObserverActivation()
-    
     }
     
     func activateDeckObserver() {
@@ -362,21 +389,6 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
         }
     }
     
-    func deactivate() {
-        self.fadeOut(0.5) {
-            self.mainView.removeFromSuperview()
-        }
-    }
-    
-    
-    func rightOptionClicked() {
-        if !isDescribingProposedCard {
-            removeKind()
-            // HERE: Add clear light  bottom collection ad refresh
-        } else {
-            kolodaView.swipe(.right)
-        }
-    }
     
     private func removeKind() {
         if selectedKindFromUserDeck > -1 {
@@ -418,29 +430,12 @@ extension CardSwipeView: KindActionTriggerViewProtocol {
         }
     }
     
-    func leftOptionClicked() {
-        if !isDescribingProposedCard {
-            moreInfoOnKind()
-        } else {
-            if !deckIsFull {
-                kolodaView.swipe(.left)
-            } else {
-                deckIsFullExplainer()
-            }
-        }
-    }
+
 
     private func moreInfoOnKind() {
         moreInfoOnKindExplainer()
     }
-    
-    func fadeInView() {
-        
-    }
-    
-    func fadeOutView() {
-        
-    }
+
     
     
     fileprivate func originalDeckMinusOwnedMinusDiscarded() -> [KindCard] {

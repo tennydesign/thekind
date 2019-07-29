@@ -42,7 +42,7 @@ class KindMatchControl: KindActionTriggerView {
 //        let actions: [KindActionType] = [.none,.none]
 //        let actionViews: [ActionViewName] = [.none,.none]
 
-        let options = self.talkbox?.createUserOptions(opt1: "See Kind deck.", opt2: "Intro us.", actionViews: (ActionViewName.KindMatchControlView,ActionViewName.KindMatchControlView))
+        let options = self.talkbox?.createUserOptions(opt1: "See Kind deck.", opt2: "Intro us.", actionViews: (ViewForActionEnum.KindMatchControlView,ViewForActionEnum.KindMatchControlView))
         
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: nil, actionViews: nil, options: options)
         
@@ -65,8 +65,8 @@ class KindMatchControl: KindActionTriggerView {
     }
     
     override func leftOptionClicked() {
-        let actions: [KindActionType] = [.activate, .none]
-        let actionViews: [ActionViewName] = [ActionViewName.BrowseKindView, ActionViewName.GameBoard]
+        let actions: [KindActionTypeEnum] = [.activate, .none]
+        let actionViews: [ViewForActionEnum] = [ViewForActionEnum.BrowseKindView, ViewForActionEnum.GameBoard]
          KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck = true
         let routine = self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
         

@@ -44,7 +44,7 @@ class BadgePhotoSetupView: KindActionTriggerView {
         Bundle.main.loadNibNamed("BadgePhotoSetupView", owner: self, options: nil)
         addSubview(mainView)
 
-        self.logCurrentLandingView(tag: ActionViewName.BadgePhotoSetupView.rawValue)
+        self.logCurrentLandingView(tag: ViewForActionEnum.BadgePhotoSetupView.rawValue)
         talk()
     }
     
@@ -54,8 +54,8 @@ class BadgePhotoSetupView: KindActionTriggerView {
     
     override func talk() {
         let txt = "First, take a selife.-This will help when meeting other people.-Justtap the camera above."
-        let actions: [KindActionType] = [.none,.fadeInView, .none]
-        let actionViews: [ActionViewName] = [.none,.BadgePhotoSetupView, .none]
+        let actions: [KindActionTypeEnum] = [.none,.fadeInView, .none]
+        let actionViews: [ViewForActionEnum] = [.none,.BadgePhotoSetupView, .none]
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
         if let routine = routine {
             let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
@@ -84,8 +84,8 @@ class BadgePhotoSetupView: KindActionTriggerView {
         
         self.fadeOutView()
         let txt = "-Cool!-I think it looks good too 🙂."
-        let actions: [KindActionType] = [.none,.activate]
-        let actionViews: [ActionViewName] = [.none, .DobOnboardingView]
+        let actions: [KindActionTypeEnum] = [.none,.activate]
+        let actionViews: [ViewForActionEnum] = [.none, .DobOnboardingView]
         
         delay(bySeconds: 0.3, dispatchLevel: .main) {
             let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)

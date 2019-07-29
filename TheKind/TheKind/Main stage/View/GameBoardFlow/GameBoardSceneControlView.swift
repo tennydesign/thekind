@@ -15,8 +15,8 @@ protocol ControlGameBoardProtocol {
     func resetCameraZoom()
 }
 
-class GameBoardSceneControlView: UIView, KindActionTriggerViewProtocol {
-    func deactivate() {
+class GameBoardSceneControlView: KindActionTriggerView {
+    override func deactivate() {
         
     }
     
@@ -42,31 +42,31 @@ class GameBoardSceneControlView: UIView, KindActionTriggerViewProtocol {
         tag = 201
     }
     
-    func talk() {
+    override func talk() {
         delegate?.resetCameraZoom()
     }
     
-    func activate() {
+    override func activate() {
         self.isHidden = false
         self.alpha = 1
         self.mainViewController?.bottomCurtainView.isUserInteractionEnabled = true
     }
     
-    func rightOptionClicked() {
+    override func rightOptionClicked() {
         delegate?.searchBoardAndFindKindToIntroduce()
         
     }
     
-    func leftOptionClicked() {
+    override func leftOptionClicked() {
         
     }
     
     
-    func fadeInView() {
+    override func fadeInView() {
         
     }
     
-    func fadeOutView() {
+    override func fadeOutView() {
         
     }
 }

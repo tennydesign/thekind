@@ -105,7 +105,7 @@ class MainViewController: UIViewController {
     @IBOutlet var confirmationView: ConfirmationView!
     
     //First view of the sequence
-    var firstViewToPresent: ActionViewName = ActionViewName.UserNameView
+    var firstViewToPresent: ViewForActionEnum = ViewForActionEnum.UserNameView
     var introSnippets : [Snippet] = []
 
     override func viewDidLoad() {
@@ -133,9 +133,9 @@ class MainViewController: UIViewController {
     fileprivate func checkCurrentViewForUser(completion: ((Bool)->())?) {
         //update tag:
         let tag = KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] as? Int ?? firstViewToPresent.rawValue
-        if let actionViewNameEnum = ActionViewName(rawValue: tag) {
+        if let actionViewNameEnum = ViewForActionEnum(rawValue: tag) {
             self.firstViewToPresent = actionViewNameEnum
-            if self.firstViewToPresent == ActionViewName.UserNameView {
+            if self.firstViewToPresent == ViewForActionEnum.UserNameView {
                 completion?(true)
             } else {
                 completion?(false)
@@ -157,8 +157,8 @@ class MainViewController: UIViewController {
 
     fileprivate func intro() {
         let txt = "Hi. Welcome to The Kind.-My name is Jung.-I'm pretty good at introducing people to each other-...and can help you make friends and have great conversations"
-        let actions: [KindActionType] = [.none, .talk, .none, .loadView]
-        let actionViews: [ActionViewName] = [.none, .HudView, .none, self.firstViewToPresent]
+        let actions: [KindActionTypeEnum] = [.none, .talk, .none, .activate]
+        let actionViews: [ViewForActionEnum] = [.none, .HudView, .none, self.firstViewToPresent]
 
         //new-rx
         let routine = self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
@@ -172,8 +172,8 @@ class MainViewController: UIViewController {
     
     fileprivate func welcomeBack() {
         let txt = "Hi \(KindUserSettingsManager.sharedInstance.loggedUserName ?? "") -Welcome back."
-        let actions: [KindActionType] = [.none,.loadView]
-        let actionViews: [ActionViewName] = [.none,self.firstViewToPresent]
+        let actions: [KindActionTypeEnum] = [.none,.none]
+        let actionViews: [ViewForActionEnum] = [.none,self.firstViewToPresent]
         
         //new-rx
         let routine = self.talkbox.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
@@ -205,9 +205,10 @@ class MainViewController: UIViewController {
     
     func setHudDisplayGradientBg(on:Bool, completion: (()->())?) {
         UIView.animate(withDuration: 0.4, animations: {
-            self.hudView.hudCenterDisplay.alpha = on ? 1 : 0
-            self.hudView.hudGradient.alpha = on ? 1 : 0
-            self.hudView.hudControls.alpha =  on ? 1 : 0
+           // self.hudView.hudCenterDisplay.alpha = on ? 1 : 0
+           // self.hudView.hudGradient.alpha = on ? 1 : 0
+           // self.hudView.hudLeftDisplay.alpha = on ? 1 : 0
+            //self.hudView.hudControls.alpha =  on ? 1 : 0
         }) { (completed) in
             self.hudView.isUserInteractionEnabled = on ? true : false
             completion?()

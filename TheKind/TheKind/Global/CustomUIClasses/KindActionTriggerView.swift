@@ -22,10 +22,11 @@ import RxCocoa
 }
 
 
-class KindActionTriggerView: UIView, KindActionTriggerViewProtocol {
+class KindActionTriggerView: PassthroughView, KindActionTriggerViewProtocol {
     
     var mainViewController2: MainViewController?
     var talkBox2: JungTalkBox?
+    var viewName: ViewForActionEnum?
     
     var nextView: UIView?
     // ===> POLYMORPHIC ACTIONS <===

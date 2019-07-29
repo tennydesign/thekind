@@ -51,8 +51,8 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
         //jungChatLogger.resetJungChat()
         //self.talkbox.clearJungChat()
 
-        let actions: [KindActionType] = [.deactivate]
-        let actionViews: [ActionViewName] = [.HudView]
+        let actions: [KindActionTypeEnum] = [.deactivate]
+        let actionViews: [ViewForActionEnum] = [.HudView]
         let routine = self.talkbox.routineFromText(dialog: SelfieCheckMSG.wait.rawValue, actions: actions, actionViews: actionViews, options: nil)
 
         if let routine = routine {
@@ -77,8 +77,8 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
                     self.hudView.userPictureImageVIew.image = image
 
                     let txt = result.rawValue + "-Let me show how you look like.-Look up ☝️."
-                    let actions: [KindActionType] = [.none, .none, .talk]
-                    let actionViews: [ActionViewName] = [.none, .none,.HudView]
+                    let actions: [KindActionTypeEnum] = [.none, .none, .talk]
+                    let actionViews: [ViewForActionEnum] = [.none, .none,.HudView]
 
                     // TODO: all should look like this one.
                     let options = self.talkbox.createUserOptions(opt1: "Take another", opt2: "Keep this one", actionViews: (.BadgePhotoSetupView,.BadgePhotoSetupView))

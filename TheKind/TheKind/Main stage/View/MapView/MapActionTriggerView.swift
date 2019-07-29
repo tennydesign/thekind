@@ -193,7 +193,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         
         configMapbox()
         
-        KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.MapView.rawValue
+        KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ViewForActionEnum.mapView.rawValue
         KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
 
         self.alpha = 0
@@ -204,7 +204,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
         self.mainViewController2?.jungChatLogger.bottomGradient.fadeIn(0.3)
 
         
-        self.logCurrentLandingView(tag: ActionViewName.MapView.rawValue)
+        self.logCurrentLandingView(tag: ViewForActionEnum.mapView.rawValue)
         self.fadeInView() //fades in the view, not the map yet.
         
         prepareMapViewsForPresentation() { viewsAreReady in
@@ -352,16 +352,12 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     }
     
     override func deactivate() {
-        self.fadeOut(0.5)
-//        UIView.animate(withDuration: 0.5) {
-//            self.alpha = 0
-//        }
-        self.deActivateOnDeselection(completion: nil)
-        CircleAnnotationManagement.sharedInstance.removeAllGeoFireObservers()
-        locationManager.stopUpdatingLocation()
-        mainView.removeFromSuperview()
-
-       // self.fadeOutView()
+        self.fadeOut(0.5) {
+            self.deActivateOnDeselection(completion: nil)
+            CircleAnnotationManagement.sharedInstance.removeAllGeoFireObservers()
+            self.locationManager.stopUpdatingLocation()
+            self.mainView.removeFromSuperview()
+        }
     }
     
     func clearJungChatLog() {
@@ -391,7 +387,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
          if self.circleIsInEditMode { //save circle
             self.saveCircle()
          } else { // enter circle
-            self.explainerGoToGameBoard()
+            self.explainerNavigator(destination: .GameBoard)
         }
     }
     

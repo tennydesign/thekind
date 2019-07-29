@@ -14,8 +14,8 @@ extension CardSwipeView {
     
     func manageKindFromKindDeckExplainer(kind: KindCard) {
         let txt = "The \(kind.kindName) \(kind.kindId.rawValue) kind says... [expainer for \(kind.kindName) goes here]"
-        let actions: [KindActionType] = [.none]
-        let actionViews: [ActionViewName] = [.none]
+        let actions: [KindActionTypeEnum] = [.none]
+        let actionViews: [ViewForActionEnum] = [.none]
         
         var options:(Snippet,Snippet)?
         options = self.talkbox?.createUserOptions(opt1: "Tell me more.", opt2: "Release kind.", actionView: self)
@@ -34,8 +34,8 @@ extension CardSwipeView {
         
         guard let kind = cardOnTop else {return}
         let txt = "The \(kind.kindName) \(kind.kindId.rawValue) kind says... [expainer for \(kind.kindName) goes here]"
-        let actions: [KindActionType] = [.none]
-        let actionViews: [ActionViewName] = [.none]
+        let actions: [KindActionTypeEnum] = [.none]
+        let actionViews: [ViewForActionEnum] = [.none]
         var options:(Snippet,Snippet)?
         
         if !deckIsFull {
@@ -56,8 +56,8 @@ extension CardSwipeView {
     
     func moreInfoOnKindExplainer() {
         let txt = "Life is like a rollercoaster.-The ups are high and the downs are low.-The rollercoaster of life is what makes it genuine, sensible, intense and worth living."
-        let actions: [KindActionType] = [.none,.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none,.none]
+        let actions: [KindActionTypeEnum] = [.none,.none,.none]
+        let actionViews: [ViewForActionEnum] = [.none,.none,.none]
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Release kind.", actionView: self)
 
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: options)
@@ -70,8 +70,8 @@ extension CardSwipeView {
     
     func removedKindFromDeckExplainer() {
         let txt = "Done."
-        let actions: [KindActionType] = [.none]
-        let actionViews: [ActionViewName] = [.none]
+        let actions: [KindActionTypeEnum] = [.none]
+        let actionViews: [ViewForActionEnum] = [.none]
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
         if let routine = routine {
             let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
@@ -88,8 +88,8 @@ extension CardSwipeView {
     func failedToRemoveKindFromDeckExplainer(){
         print("YOU CANT REMOVE THE MAIN KIND FROM HERE!!!!!!!!!!!")
         let txt = "You can only remove the main kind from the settings menu."
-        let actions: [KindActionType] = [.none]
-        let actionViews: [ActionViewName] = [.none]
+        let actions: [KindActionTypeEnum] = [.none]
+        let actionViews: [ViewForActionEnum] = [.none]
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
         if let routine = routine {
             let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
@@ -99,8 +99,8 @@ extension CardSwipeView {
     
     func deckIsFullExplainer(){
         let txt = "Your deck is maximized release a card to continue."
-        let actions: [KindActionType] = [.none]
-        let actionViews: [ActionViewName] = [.none]
+        let actions: [KindActionTypeEnum] = [.none]
+        let actionViews: [ViewForActionEnum] = [.none]
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
         if let routine = routine {
             self.talkbox?.emmitSignalToClearUI()

@@ -284,7 +284,7 @@ class JungChatLogger: KindActionTriggerView {
                 
                 guard let userResponseOption = userResponseOption else {return}
 
-                let playerMessage = Snippet.init(message: userResponseOption.message, action: userResponseOption.action, id: userResponseOption.id, actionView: userResponseOption.actionView ?? ActionViewName.none)
+                let playerMessage = Snippet.init(message: userResponseOption.message, action: userResponseOption.action, id: userResponseOption.id, actionView: userResponseOption.actionView ?? ViewForActionEnum.none)
                 
                 let playerPostRoutine = JungRoutine.init(snippets: [playerMessage], userResponseOptions: nil, sender: .Player)
                 

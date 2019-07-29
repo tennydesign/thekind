@@ -65,14 +65,14 @@ class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         
         pickerView.selectRow(90, inComponent:0, animated:true)
-        self.logCurrentLandingView(tag: ActionViewName.DobOnboardingView.rawValue)
+        self.logCurrentLandingView(tag: ViewForActionEnum.DobOnboardingView.rawValue)
         self.talk()
     }
     
     override func talk() {
         let txt = "Sorry,not trying to be indiscrete.-But...what is your year of birth?-Choose from the options above."
-        let actions: [KindActionType] = [.none, .none,.fadeInView]
-        let actionViews: [ActionViewName] = [.none,.none, .DobOnboardingView]
+        let actions: [KindActionTypeEnum] = [.none, .none,.fadeInView]
+        let actionViews: [ViewForActionEnum] = [.none,.none, .DobOnboardingView]
         
         let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Confirm year.", actionView: self)
         
@@ -117,8 +117,8 @@ class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
          KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
         
         let txt = "I understand you are about \(age) years old.-We are almost finished with the setup."
-        let actions: [KindActionType] = [.none,.activate]
-        let actionViews: [ActionViewName] = [.none,.ChooseDriverView]
+        let actions: [KindActionTypeEnum] = [.none,.activate]
+        let actionViews: [ViewForActionEnum] = [.none,.ChooseDriverView]
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
         if let routine = routine {
             let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))

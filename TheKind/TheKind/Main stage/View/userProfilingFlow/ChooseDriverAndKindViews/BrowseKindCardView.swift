@@ -92,7 +92,7 @@ class BrowseKindCardView: KindActionTriggerView {
         addSubview(chooseKindCard)
         
          if !KindDeckManagement.sharedInstance.isBrowsingAnotherUserKindDeck {
-            self.logCurrentLandingView(tag: ActionViewName.BrowseKindView.rawValue)
+            self.logCurrentLandingView(tag: ViewForActionEnum.BrowseKindView.rawValue)
         }
             
         guard let driver =  KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.driver.rawValue] as? String else {

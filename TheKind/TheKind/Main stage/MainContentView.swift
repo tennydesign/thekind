@@ -10,22 +10,14 @@ import Foundation
 import UIKit
 import RxSwift
 
+
+//HERE: TIME TO START INTEGRATING THEM ALL.
 class MainContentView: KindActionTriggerView{
-   
+    
     let disposeBag = DisposeBag()
-    
     @IBOutlet var mainView: UIView!
-    
-    var presentingKindActionView: KindActionTriggerView?
-    var viewToPresent: UIView? {
-        didSet {
-            if let viewToPresent = viewToPresent {
-                viewToPresent.frame = self.bounds
-                viewToPresent.autoresizingMask = [.flexibleHeight,.flexibleWidth]
-                self.addSubview(viewToPresent)
-            }
-        }
-    }
+    var mainContentViewContainer: KindActionTriggerView?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -46,59 +38,66 @@ class MainContentView: KindActionTriggerView{
                 return $0.snippet
             }
             .subscribe(onNext: { [weak self] snippet in
-                guard let tag = snippet.actionView?.rawValue else {return}
-        
                 
-                switch snippet.action {
-                    case .leftOptionClicked:
-                        self?.presentingKindActionView?.leftOptionClicked()
-                    case .activate:
-                        self?.presentingKindActionView?.activate()
-                    case .fadeInView:
-                        self?.presentingKindActionView?.fadeInView()
-                    case .fadeOutView:
-                        self?.presentingKindActionView?.fadeOutView()
-                    case .talk:
-                        self?.presentingKindActionView?.talk()
-                    case .none:
-                        ()
-                    case .loadView:
-                        self?.activateView(tag: tag)
-                    case .deactivate:
-                        self?.unload()
-                    case .rightOptionClicked:
-                        self?.presentingKindActionView?.rightOptionClicked()
-                }
+                //extract enum
+                guard let viewEnum = snippet.actionView else {return}
+                //loads view for enum
+                guard let view = self?.loadView(viewEnum) else {return}
+                //works triggers
+                self?.talkBox2?.triggerSnippetAction(view, snippet.action)
+            
             })
             .disposed(by: disposeBag)
+    
+    }
+
+    
+    func loadView(_ actionEnum :ViewForActionEnum) -> KindActionTriggerView? {
+        if viewName == actionEnum { return mainContentViewContainer } //same as view already loaded.
+        //load new one.
+        guard let view = returnViewForAction(actionEnum) else {return nil}
+        self.fadeOut(0.5) {
+            Bundle.main.loadNibNamed("MainContentView", owner: self, options: nil)
+            self.addSubview(self.mainView)
+            self.mainView.frame = self.bounds
+            self.mainView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
+
+            self.mainView.addSubview(view)
+            view.frame = self.bounds
+            view.autoresizingMask = [.flexibleHeight,.flexibleWidth]
+            view.mainViewController2 = self.mainViewController2
+            view.talkBox2 = self.talkBox2
+            view.activate() // the "viewload" only it gives me time to do some other preps, like overlays, loading order etc.
+            
+
+            self.mainContentViewContainer = view
+            self.fadeIn(0.5)
+        }
+        return view
+
+    }
+
+
+    func returnViewForAction(_ viewForAction: ViewForActionEnum) -> KindActionTriggerView? {
+        var view: KindActionTriggerView? = nil
+        guard let typeName = kindActionViewStorage[viewForAction] else {return nil}
+        view = factory(type: typeName)
+        view?.viewName = viewForAction
         
-        print("activated!!!!")
+        return view
     }
     
-    //HERE IMPROVE THIS NUMBER THING.
-    func activateView(tag: Int) {
-        if tag == 105 { // MAP
-            self.loadMapView()
-        }
+    func factory(type:KindActionTriggerView.Type) -> KindActionTriggerView {
+        return type.init()
     }
-        
-    func loadMapView() {
-        //clean it first with unload or won't load.
-        if  presentingKindActionView == nil {
-            let mapview:MapActionTriggerView = MapActionTriggerView()
-            viewToPresent = mapview //.mainView
-            mapview.mainViewController2 = mainViewController2
-            mapview.talkBox2 = talkBox2
-            mapview.activate() // creates mainview
-           
-            presentingKindActionView = mapview
+
+    func removeView() {
+        mainContentViewContainer?.fadeOut(0.5) {
+            self.mainContentViewContainer?.removeFromSuperview()
+            self.mainContentViewContainer = nil
         }
     }
     
-    func unload() {
-        viewToPresent?.removeFromSuperview()
-        presentingKindActionView = nil
-        viewToPresent = nil
-    }
+
     
 }

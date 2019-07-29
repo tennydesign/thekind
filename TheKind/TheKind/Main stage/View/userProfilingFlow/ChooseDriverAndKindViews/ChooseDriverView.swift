@@ -51,8 +51,8 @@ class ChooseDriverView: KindActionTriggerView {
     
     override func talk() {
         let txt = "Now...-What drives you the most?.-We all have a stronger one."
-        let actions: [KindActionType] = [.none, .fadeInView, .none]
-        let actionViews: [ActionViewName] = [.none,.ChooseDriverView, .none]
+        let actions: [KindActionTypeEnum] = [.none, .fadeInView, .none]
+        let actionViews: [ViewForActionEnum] = [.none,.ChooseDriverView, .none]
         
 //        let options = self.talkbox?.createUserOptions(opt1: "Back", opt2: "I identify with this one.", actionView: self)
         let options = self.talkbox?.createUserOptions(opt1: "Back", opt2: "I identify with this one.", actionViews: (.ChooseDriverView,.ChooseDriverView), actions: (.leftOptionClicked,.rightOptionClicked) , id: nil)
@@ -64,7 +64,7 @@ class ChooseDriverView: KindActionTriggerView {
             self.talkbox?.kindExplanationPublisher.onNext(rm)
         }
         
-        self.logCurrentLandingView(tag: ActionViewName.ChooseDriverView.rawValue)
+        self.logCurrentLandingView(tag: ViewForActionEnum.ChooseDriverView.rawValue)
     }
     
     override func activate() {
@@ -78,7 +78,7 @@ class ChooseDriverView: KindActionTriggerView {
         lineWidthAnchor.constant = (estimateFrameFromText(pickerData.first!, bounding: boudingRect, fontSize: 18, fontName: PRIMARYFONT)).width
 
         
-        KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ActionViewName.ChooseDriverView.rawValue
+        KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.currentLandingView.rawValue] = ViewForActionEnum.ChooseDriverView.rawValue
         KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
         talk()
 
@@ -92,8 +92,8 @@ class ChooseDriverView: KindActionTriggerView {
     
     override func rightOptionClicked() {
         let txt = "Ohhh \(selected)...-Great choice!"
-        let actions: [KindActionType] = [.deactivate,.activate]
-        let actionViews: [ActionViewName] = [.ChooseDriverView,.BrowseKindView]
+        let actions: [KindActionTypeEnum] = [.deactivate,.activate]
+        let actionViews: [ViewForActionEnum] = [.ChooseDriverView,.BrowseKindView]
         
         let driverName = (selected.dropLast()).lowercased()
         KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.driver.rawValue] = driverName

@@ -85,10 +85,10 @@ class GameBoard: KindActionTriggerView {
         self.gameBoardScene?.mainViewController?.jungChatLogger.bottomGradient.fadeIn(0.3)
         gameBoardScene?.talkbox = self.talkbox
         let txt = "Let me know if you want me to introduce you to someone."
-        let actions: [KindActionType] = [.none]
-        let actionViews: [ActionViewName] = [.none]
+        let actions: [KindActionTypeEnum] = [.none]
+        let actionViews: [ViewForActionEnum] = [.none]
         
-        let options = self.talkbox?.createUserOptions(opt1: "No... keep in wired-in mode.", opt2: "Yes... introduce me to someone.", actionViews: (ActionViewName.GameBoardSceneControlView,ActionViewName.GameBoardSceneControlView))
+        let options = self.talkbox?.createUserOptions(opt1: "No... keep in wired-in mode.", opt2: "Yes... introduce me to someone.", actionViews: (ViewForActionEnum.GameBoardSceneControlView,ViewForActionEnum.GameBoardSceneControlView))
 
         
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)

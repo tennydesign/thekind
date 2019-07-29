@@ -13,8 +13,8 @@ import RxSwift
 extension BrowseKindCardView {
     func chooseMainKindExplainer() {
         let txt = "Choose your kind. -Tap the icon to know more or go back to change your main driver."
-        let actions: [KindActionType] = [.none, .none]
-        let actionViews: [ActionViewName] = [.none,.none]
+        let actions: [KindActionTypeEnum] = [.none, .none]
+        let actionViews: [ViewForActionEnum] = [.none,.none]
         var options: (Snippet,Snippet)?
         
         guard let kindName = kindsList.first?.kindName.rawValue else {return}
@@ -34,8 +34,8 @@ extension BrowseKindCardView {
     func onboardingKindChosenExplainer(kindName: String) {
         //HERE HUDVIEW AS ACTIVATED
         let txt = "You chose\(kindName). -Now, let me show you the map.-Use it to find circles to join."
-        let actions: [KindActionType] = [.none, .deactivate, .activate]
-        let actionViews: [ActionViewName] = [.none,.BrowseKindView, .MapView]
+        let actions: [KindActionTypeEnum] = [.none, .deactivate, .activate]
+        let actionViews: [ViewForActionEnum] = [.none,.BrowseKindView, .mapView]
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
         if let routine = routine {
             let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
@@ -44,8 +44,8 @@ extension BrowseKindCardView {
     }
     
     func backToTheGameBoardExplainer() {
-        let actions: [KindActionType] = [.talk]
-        let actionViews: [ActionViewName] = [ActionViewName.GameBoardSceneControlView]
+        let actions: [KindActionTypeEnum] = [.talk]
+        let actionViews: [ViewForActionEnum] = [ViewForActionEnum.GameBoardSceneControlView]
         let routine = self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
         
         if let routine = routine {
@@ -55,8 +55,8 @@ extension BrowseKindCardView {
     }
     
     func onboardingBackToChooseDriverExplainer() {
-        let actions: [KindActionType] = [.activate]
-        let actionViews: [ActionViewName] = [.ChooseDriverView]
+        let actions: [KindActionTypeEnum] = [.activate]
+        let actionViews: [ViewForActionEnum] = [.ChooseDriverView]
 
         let routine = self.talkbox?.routineWithNoText(snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: nil)
         
@@ -68,11 +68,11 @@ extension BrowseKindCardView {
     
     func userIsBrowsingAnotherUserKindsExplainer(kindName: String) {
         let txt = "\(kindName) says: You can transform any sitation into an ideal one.-They are all about the power to create things."
-        let actions: [KindActionType] = [.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none]
+        let actions: [KindActionTypeEnum] = [.none,.none]
+        let actionViews: [ViewForActionEnum] = [.none,.none]
         
         
-        let options = self.talkbox?.createUserOptions(opt1: "Back to the board", opt2: "Introduce us.", actionViews: (ActionViewName.BrowseKindView,ActionViewName.KindMatchControlView))
+        let options = self.talkbox?.createUserOptions(opt1: "Back to the board", opt2: "Introduce us.", actionViews: (ViewForActionEnum.BrowseKindView,ViewForActionEnum.KindMatchControlView))
         
         let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
         
@@ -84,8 +84,8 @@ extension BrowseKindCardView {
     
     func userIsBrowsingToSelectOwnKindExplainer(kindName: String) {
         let txt = "\(kindName) says: You can transform anything...-and turn any ordinary situations into extraordinary ones."
-        let actions: [KindActionType] = [.none,.none]
-        let actionViews: [ActionViewName] = [.none,.none]
+        let actions: [KindActionTypeEnum] = [.none,.none]
+        let actionViews: [ViewForActionEnum] = [.none,.none]
         
         
         let options = self.talkbox?.createUserOptions(opt1: "Back to main driver.", opt2: "I'm like \(kindName)", actionView: self)

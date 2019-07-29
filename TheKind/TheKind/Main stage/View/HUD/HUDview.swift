@@ -13,7 +13,7 @@ import RxCocoa
 
 //PassthroughView
 //class HUDview: KindActionTriggerView {
-class HUDview: PassthroughView,KindActionTriggerViewProtocol {
+class HUDview: KindActionTriggerView {
 
     
     @IBOutlet var hudGradient: UIImageView!
@@ -116,17 +116,7 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
             self.fadeOutUserPhoto()
         }
     }
-    
-    
-    
-    func rightOptionClicked() {
-        
-    }
-    
-    func leftOptionClicked() {
-        
-    }
-    
+
 
     func showKindOnHUD(kindUser: KindUser) {
         guard let id = kindUser.kind else { return }
@@ -135,7 +125,7 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
         self.viewForKindCard.fadeIn(1)
     }
     
-    func activate() {
+    override func activate() {
         self.fadeIn(0.5)
         self.hudView.fadeIn(0.5)
     }
@@ -148,7 +138,7 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
         self.viewForAvatar.fadeOut(0.5)
     }
     
-    func deactivate() {
+    override func deactivate() {
         // hide it.
         self.fadeOut(1)
     }
@@ -163,19 +153,12 @@ class HUDview: PassthroughView,KindActionTriggerViewProtocol {
         self.mainViewController?.cardSwipeViewHost.activate()
     }
     
-    func talk() {
+    override func talk() {
         if self.userPictureImageVIew.image != nil {
             revealUserPhoto()
         }
     }
     
-    func fadeInView() {
-        
-    }
-    
-    func fadeOutView() {
-        
-    }
     
     
 }
