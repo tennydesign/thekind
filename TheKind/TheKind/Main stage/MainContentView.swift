@@ -42,20 +42,27 @@ class MainContentView: KindActionTriggerView{
                 //extract enum
                 guard let viewEnum = snippet.actionView else {return}
                 //loads view for enum
-                guard let view = self?.loadView(viewEnum) else {return}
-                //works triggers
-                self?.talkBox2?.triggerSnippetAction(view, snippet.action)
-            
+                self?.loadView(viewEnum) { view in
+                    if let view = view {
+                        self?.talkBox2?.triggerSnippetAction(view, snippet.action)
+                    }
+                }
             })
             .disposed(by: disposeBag)
     
     }
 
     
-    func loadView(_ actionEnum :ViewForActionEnum) -> KindActionTriggerView? {
-        if viewName == actionEnum { return mainContentViewContainer } //same as view already loaded.
+    func loadView(_ actionEnum :ViewForActionEnum, completion: ((KindActionTriggerView?)->())?) {
+     //  print(mainContentViewContainer?.description)
+        guard let view = returnViewForAction(actionEnum) else {return}
+        if mainContentViewContainer?.viewName == actionEnum {
+            completion?(mainContentViewContainer)
+            return
+        } //same as view already loaded.
+        
         //load new one.
-        guard let view = returnViewForAction(actionEnum) else {return nil}
+
         self.fadeOut(0.5) {
             Bundle.main.loadNibNamed("MainContentView", owner: self, options: nil)
             self.addSubview(self.mainView)
@@ -69,12 +76,11 @@ class MainContentView: KindActionTriggerView{
             view.talkBox2 = self.talkBox2
             view.activate() // the "viewload" only it gives me time to do some other preps, like overlays, loading order etc.
             
-
+            view.viewName = actionEnum
             self.mainContentViewContainer = view
             self.fadeIn(0.5)
+            completion?(view)
         }
-        return view
-
     }
 
 
@@ -82,8 +88,6 @@ class MainContentView: KindActionTriggerView{
         var view: KindActionTriggerView? = nil
         guard let typeName = kindActionViewStorage[viewForAction] else {return nil}
         view = factory(type: typeName)
-        view?.viewName = viewForAction
-        
         return view
     }
     

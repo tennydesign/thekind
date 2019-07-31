@@ -448,6 +448,7 @@ class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
             
             CircleAnnotationManagement.sharedInstance.currentlySelectedAnnotationView?.circleDetails = set
             self.deActivateOnDeselection(completion: nil)
+            self.doneExplainer()
             
         }
     }

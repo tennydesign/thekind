@@ -64,8 +64,19 @@ class CircleAnnotationManagement {
     
     
     func updateCircleSettings(completion: @escaping (CircleAnnotationSet?, Bool)->()) {
+   
         let db = Firestore.firestore()
-        guard let set = currentlySelectedAnnotationView?.circleDetails else { return}
+        
+        guard let set = currentlySelectedAnnotationView?.circleDetails else {
+            completion(nil,false)
+            return
+        }
+        
+        if set.circlePlotName.isEmpty {
+            completion(nil,false)
+            return
+        }
+        
         guard let circleDict = set.asDictionary() else {return}
         db.collection("kindcircles").document(set.circleId).updateData(circleDict) { (err) in
             if let err = err {

@@ -97,3 +97,12 @@ protocol JungRoutineProtocol {
  //   var snippets: [Snippet] {get}
     var sender: Sender {get}
 }
+
+struct JungChatExplainer {
+    var txt: String?
+    var actions: [KindActionTypeEnum]?
+    var actionViews: [ViewForActionEnum]?
+    var optButtonText: (String,String)?
+    var optButtonViews: (ViewForActionEnum,ViewForActionEnum)?
+    var optButtonActionType: (KindActionTypeEnum,KindActionTypeEnum)?
+}

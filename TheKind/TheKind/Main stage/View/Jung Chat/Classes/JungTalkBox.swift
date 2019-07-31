@@ -164,7 +164,7 @@ class JungTalkBox {
     
     // ===== NEW CONSTRUCTORS
     
-    func routineGenerator(explainer: JungChatExplainer) -> JungRoutine? {
+    func routineGenerator(explainer: JungChatExplainer, sender: Sender) -> JungRoutine? {
         var messages: [String]?
         var actions: [KindActionTypeEnum]?
         var viewsForActions: [ViewForActionEnum]?
@@ -181,15 +181,18 @@ class JungTalkBox {
             actions = acts
         }
         
+        if let actionViews = explainer.actionViews {
+            viewsForActions = actionViews
+        }
+        
         if messages != nil {
             for index in 0...messages!.count-1 {
                 let snippet = Snippet.init(message: messages![index], action: actions?[index] ?? .none,
-                                           id: 0, actionView: viewsForActions?[index] ?? ViewForActionEnum.none)
+                                           id: 0, actionView: viewsForActions?[index] ?? .none)
                 snippets.append(snippet)
             }
         } else {
-            //HERE: Something is off from explainerNavigator to here. Action not being executed.
-            if actions != nil {
+             if actions != nil {
                 guard viewsForActions?.count == actions?.count else {fatalError("Number of actions must be same as number of views")}
                 for index in 0...actions!.count-1 {
                     let snippet = Snippet.init(message: "", action: actions![index] ,
@@ -199,19 +202,21 @@ class JungTalkBox {
             }
         }
         
-        if let opttxts = explainer.optButtonText, let viewsForAction = explainer.optButtonViews, let optActions = explainer.optActions{
-            options = createUserOptions(opt: opttxts, actionOptions: optActions, actionViews: viewsForAction)
+        if let opttxts = explainer.optButtonText, let actionType = explainer.optButtonActionType, let optviews = explainer.optButtonViews {
+            options = createUserOptions(opt: opttxts, actionType: actionType, actionViews: optviews)
         }
         
-        return JungRoutine.init(snippets: snippets, userResponseOptions: options, sender: .Jung)
+        return JungRoutine.init(snippets: snippets, userResponseOptions: options, sender: sender)
         
     }
+
     
-    
-    func createUserOptions(opt: (String,String), actionOptions:(KindActionTypeEnum, KindActionTypeEnum), actionViews: (ViewForActionEnum,ViewForActionEnum)) -> (Snippet,Snippet)? {
+    func createUserOptions(opt: (String,String), actionType: (KindActionTypeEnum,KindActionTypeEnum),actionViews: (ViewForActionEnum,ViewForActionEnum)) -> (Snippet,Snippet)? {
         
-        let userOptionA = Snippet.init(message: opt.0, action: .leftOptionClicked , id: 0, actionView: actionViews.0)
-        let userOptionB = Snippet.init(message: opt.1, action: .rightOptionClicked , id: 0, actionView: actionViews.1)
+        
+        let userOptionA = Snippet.init(message: opt.0, action: actionType.0 , id: 0, actionView: actionViews.0)
+        let userOptionB = Snippet.init(message: opt.1, action: actionType.1 , id: 0, actionView: actionViews.1)
+        
         
         return (userOptionA,userOptionB)
         
