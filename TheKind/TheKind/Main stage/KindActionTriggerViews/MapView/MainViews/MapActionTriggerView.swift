@@ -13,6 +13,10 @@ import Lottie
 import RxCocoa
 import RxSwift
 
+// HERE COME BACK:
+// THE ENTIRE MAP WAS MIGRATED TO THE NEW MAINVIEWLOADER MODEL, INCLUDING A NEW TALKBOX (2).
+// MUST DO THIS WITH ALL THE OTHERS. 
+
 class MapActionTriggerView: KindActionTriggerView, UIGestureRecognizerDelegate {
     
     

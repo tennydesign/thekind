@@ -122,7 +122,9 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         self.talk()
     }
     
-     override func talk() {
+
+    
+    override func talk() {
         var txt: String = ""
 
         if !(KindUserSettingsManager.sharedInstance.loggedUserName ?? "").isEmpty {
@@ -136,15 +138,7 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
        
         adaptLineToTextSize(userNameTextField)
         
-//        let actions: [KindActionType] = [.none,.none]
-//        let actionViews: [ActionViewName] = [.none,.none]
-        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "I'm good with that.", actionView: self)
-        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: nil, actionViews: nil, options: options)
-        
-        if let routine = routine {
-            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
-            self.talkbox?.kindExplanationPublisher.onNext(rm)
-        }
+        nameTryOutExplainer(txt: txt)
     }
     
 
@@ -156,25 +150,20 @@ class UserNameView: KindActionTriggerView, UITextFieldDelegate {
         self.talkbox?.delegate = nil
     }
     
+
+    
     override func rightOptionClicked() {
         var txt: String = ""
         
         if let username = userNameTextField.text, !(username.trimmingCharacters(in: .whitespaces).isEmpty) {
+            self.fadeOutView()
             KindUserSettingsManager.sharedInstance.loggedUserName = username
-            txt = "Great, nice to meet you \(KindUserSettingsManager.sharedInstance.loggedUserName ?? username).-This setup will only take a few more seconds"
-            
             KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.name.rawValue] = username
             KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
-            //Move forward
-            let actions: [KindActionTypeEnum] = [.none,.activate]
-            let actionViews: [ViewForActionEnum] = [.none,.BadgePhotoSetupView]
-            self.fadeOutView()
             
-            let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
-            if let routine = routine {
-                let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
-                self.talkbox?.kindExplanationPublisher.onNext(rm)
-            }
+            txt = "Great, nice to meet you \(KindUserSettingsManager.sharedInstance.loggedUserName ?? username).-This setup will only take a few more seconds"
+            
+            setupPaceExplainer(txt)
           
         } else {
             talk() // Talk to the user about the updated user name. (repeat the routine)

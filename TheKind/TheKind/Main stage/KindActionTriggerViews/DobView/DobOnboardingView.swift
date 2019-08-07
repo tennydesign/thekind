@@ -38,19 +38,6 @@ class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
     
     let rotationAngle: CGFloat = 90 * (.pi/180)
     func commonInit() {
-//        Bundle.main.loadNibNamed("DobOnboardingView", owner: self, options: nil)
-//        addSubview(mainView)
-//        pickerView.delegate = self
-//        pickerView.dataSource = self
-//
-//        pickerView.transform = CGAffineTransform(rotationAngle: -rotationAngle)
-//
-//        pickerView.frame = CGRect(x: -100, y: 0, width: self.frame.width - 200, height: 100)
-//        pickerView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        pickerView.selectRow(90, inComponent:0, animated:true)
- 
-        
     }
     
     override func activate() {
@@ -68,21 +55,10 @@ class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         self.logCurrentLandingView(tag: ViewForActionEnum.DobOnboardingView.rawValue)
         self.talk()
     }
+
     
     override func talk() {
-        let txt = "Sorry,not trying to be indiscrete.-But...what is your year of birth?-Choose from the options above."
-        let actions: [KindActionTypeEnum] = [.none, .none,.fadeInView]
-        let actionViews: [ViewForActionEnum] = [.none,.none, .DobOnboardingView]
-        
-        let options = self.talkbox?.createUserOptions(opt1: "", opt2: "Confirm year.", actionView: self)
-        
-        delay(bySeconds: 0.3, dispatchLevel: .main) {
-           let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: .Jung, actions: actions, actionViews: actionViews, options: options)
-            if let routine = routine {
-                let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
-                self.talkbox?.kindExplanationPublisher.onNext(rm)
-            }
-        }
+        fetchAgeExplainer()
     }
     
 
@@ -106,6 +82,7 @@ class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
         
     }
     
+    
     override func rightOptionClicked() {
         
         // Last words.
@@ -116,14 +93,7 @@ class DobOnboardingView: KindActionTriggerView, UIPickerViewDelegate,UIPickerVie
          KindUserSettingsManager.sharedInstance.userFields[UserFieldTitle.year.rawValue] = selectedYear
          KindUserSettingsManager.sharedInstance.updateUserSettings(completion: nil)
         
-        let txt = "I understand you are about \(age) years old.-We are almost finished with the setup."
-        let actions: [KindActionTypeEnum] = [.none,.activate]
-        let actionViews: [ViewForActionEnum] = [.none,.ChooseDriverView]
-        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
-        if let routine = routine {
-            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
-            self.talkbox?.kindExplanationPublisher.onNext(rm)
-        }
+        NavigateAwayExplainer(age)
         
         // Move next.
         self.fadeOutView()

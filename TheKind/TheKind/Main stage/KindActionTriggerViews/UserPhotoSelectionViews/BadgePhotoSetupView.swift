@@ -52,15 +52,10 @@ class BadgePhotoSetupView: KindActionTriggerView {
         mainView.removeFromSuperview()
     }
     
+
+    
     override func talk() {
-        let txt = "First, take a selife.-This will help when meeting other people.-Justtap the camera above."
-        let actions: [KindActionTypeEnum] = [.none,.fadeInView, .none]
-        let actionViews: [ViewForActionEnum] = [.none,.BadgePhotoSetupView, .none]
-        let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
-        if let routine = routine {
-            let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
-            self.talkbox?.kindExplanationPublisher.onNext(rm)
-        }
+        takingSelfieExplainer()
     }
     
 
@@ -68,7 +63,7 @@ class BadgePhotoSetupView: KindActionTriggerView {
     override func fadeInView() {
         super.fadeInView()
     }
-    
+
     
     override func rightOptionClicked() {
         
@@ -83,17 +78,7 @@ class BadgePhotoSetupView: KindActionTriggerView {
         KindUserSettingsManager.sharedInstance.uploadUserPicture(profileImageData: uploadData)
         
         self.fadeOutView()
-        let txt = "-Cool!-I think it looks good too 🙂."
-        let actions: [KindActionTypeEnum] = [.none,.activate]
-        let actionViews: [ViewForActionEnum] = [.none, .DobOnboardingView]
-        
-        delay(bySeconds: 0.3, dispatchLevel: .main) {
-            let routine = self.talkbox?.routineFromText(dialog: txt, snippetId: nil, sender: nil, actions: actions, actionViews: actionViews, options: nil)
-            if let routine = routine {
-                let rm = JungRoutineToEmission(routine: BehaviorSubject(value: routine))
-                self.talkbox?.kindExplanationPublisher.onNext(rm)
-            }
-        }
+        badgePhotoConfirmation()
     }
     
     override func leftOptionClicked() {

@@ -30,6 +30,9 @@
 		A017CDD42190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */; };
 		A0183B6122E943C900515A18 /* MainContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0183B6022E943C900515A18 /* MainContentView.xib */; };
 		A0183B6322E943F700515A18 /* MainContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0183B6222E943F700515A18 /* MainContentView.swift */; };
+		A0183B6922F2213C00515A18 /* Ext_Explainers_BadgePhotoSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0183B6822F2213C00515A18 /* Ext_Explainers_BadgePhotoSetup.swift */; };
+		A0183B6C22F2477900515A18 /* xt_Explainer_UserNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0183B6B22F2477900515A18 /* xt_Explainer_UserNameView.swift */; };
+		A0183B6F22F24A6000515A18 /* DobViewExplainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0183B6E22F24A6000515A18 /* DobViewExplainer.swift */; };
 		A025F6E122172D720010BDA1 /* ChosenKindCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A025F6DF22172D720010BDA1 /* ChosenKindCollectionViewCell.swift */; };
 		A025F6E222172D720010BDA1 /* ChosenKindCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A025F6E022172D720010BDA1 /* ChosenKindCollectionViewCell.xib */; };
 		A025F6E4221B3FD70010BDA1 /* CustomSwipeOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = A025F6E3221B3FD60010BDA1 /* CustomSwipeOverlay.xib */; };
@@ -42,7 +45,6 @@
 		A02B24D521E031AA00737ACC /* DobOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02B24D421E031AA00737ACC /* DobOnboardingView.swift */; };
 		A02D719F21C42FA300EBBD12 /* BrowseKindCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D719E21C42FA300EBBD12 /* BrowseKindCardView.swift */; };
 		A02D71A121C4300E00EBBD12 /* BrowseKindCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A02D71A021C4300E00EBBD12 /* BrowseKindCardView.xib */; };
-		A02D71A521C6BC7200EBBD12 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D71A421C6BC7200EBBD12 /* OnBoardingViewController.swift */; };
 		A0301D672190B21100E023F7 /* thedeck.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0301D662190B21100E023F7 /* thedeck.sks */; };
 		A0301D692190B33200E023F7 /* gameboardScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A0301D682190B33200E023F7 /* gameboardScene.sks */; };
 		A0301D6C2190BED500E023F7 /* GameBoard.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0301D6B2190BED500E023F7 /* GameBoard.xib */; };
@@ -57,7 +59,6 @@
 		A0320B56212B8AB6008A96E2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0320B55212B8AB6008A96E2 /* Extensions.swift */; };
 		A0320B5D212E1596008A96E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0320B5C212E1596008A96E2 /* GoogleService-Info.plist */; };
 		A0320B5F212F2873008A96E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0320B5E212F2873008A96E2 /* Main.storyboard */; };
-		A03A46AA21C6C18200D90190 /* OnBoarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A03A46A921C6C18200D90190 /* OnBoarding.storyboard */; };
 		A03D77F321B7518A00DCF627 /* JungTalkBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03D77F221B7518A00DCF627 /* JungTalkBox.swift */; };
 		A03ECF9022717EBE0034C7F1 /* AddNewUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03ECF8E22717EBE0034C7F1 /* AddNewUserTableViewCell.swift */; };
 		A03ECF9122717EBE0034C7F1 /* AddNewUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A03ECF8F22717EBE0034C7F1 /* AddNewUserTableViewCell.xib */; };
@@ -166,6 +167,9 @@
 		A017CDD32190E1B6002B7D9D /* xt_GesturesGameBoardScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xt_GesturesGameBoardScene.swift; sourceTree = "<group>"; };
 		A0183B6022E943C900515A18 /* MainContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainContentView.xib; sourceTree = "<group>"; };
 		A0183B6222E943F700515A18 /* MainContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentView.swift; sourceTree = "<group>"; };
+		A0183B6822F2213C00515A18 /* Ext_Explainers_BadgePhotoSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext_Explainers_BadgePhotoSetup.swift; sourceTree = "<group>"; };
+		A0183B6B22F2477900515A18 /* xt_Explainer_UserNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xt_Explainer_UserNameView.swift; sourceTree = "<group>"; };
+		A0183B6E22F24A6000515A18 /* DobViewExplainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DobViewExplainer.swift; sourceTree = "<group>"; };
 		A025F6DF22172D720010BDA1 /* ChosenKindCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChosenKindCollectionViewCell.swift; sourceTree = "<group>"; };
 		A025F6E022172D720010BDA1 /* ChosenKindCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChosenKindCollectionViewCell.xib; sourceTree = "<group>"; };
 		A025F6E3221B3FD60010BDA1 /* CustomSwipeOverlay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomSwipeOverlay.xib; sourceTree = "<group>"; };
@@ -178,7 +182,6 @@
 		A02B24D421E031AA00737ACC /* DobOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DobOnboardingView.swift; sourceTree = "<group>"; };
 		A02D719E21C42FA300EBBD12 /* BrowseKindCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseKindCardView.swift; sourceTree = "<group>"; };
 		A02D71A021C4300E00EBBD12 /* BrowseKindCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowseKindCardView.xib; sourceTree = "<group>"; };
-		A02D71A421C6BC7200EBBD12 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		A0301D662190B21100E023F7 /* thedeck.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = thedeck.sks; sourceTree = "<group>"; };
 		A0301D682190B33200E023F7 /* gameboardScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = gameboardScene.sks; sourceTree = "<group>"; };
 		A0301D6B2190BED500E023F7 /* GameBoard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameBoard.xib; sourceTree = "<group>"; };
@@ -193,7 +196,6 @@
 		A0320B55212B8AB6008A96E2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A0320B5C212E1596008A96E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A0320B5E212F2873008A96E2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		A03A46A921C6C18200D90190 /* OnBoarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OnBoarding.storyboard; sourceTree = "<group>"; };
 		A03D77F221B7518A00DCF627 /* JungTalkBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JungTalkBox.swift; sourceTree = "<group>"; };
 		A03ECF8E22717EBE0034C7F1 /* AddNewUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewUserTableViewCell.swift; sourceTree = "<group>"; };
 		A03ECF8F22717EBE0034C7F1 /* AddNewUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddNewUserTableViewCell.xib; sourceTree = "<group>"; };
@@ -302,6 +304,8 @@
 			children = (
 				A002F48D21BDC9D6006E8660 /* Bindable.swift */,
 				A0B61C7A2139EE83004DD447 /* GlobalFunctions.swift */,
+				A0C5C06721FE808500846B82 /* KindUserSettingsModel */,
+				A025F6EF222229250010BDA1 /* KindDeckModel */,
 				A0F223A921B88E370096C25D /* CustomUIClasses */,
 			);
 			path = Global;
@@ -315,20 +319,16 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		A002F47721B9EF41006E8660 /* userProfilingFlow */ = {
+		A002F47721B9EF41006E8660 /* UserPhotoSelectionViews */ = {
 			isa = PBXGroup;
 			children = (
+				A0183B6722F220E200515A18 /* Explainers */,
 				A0B6B29D21D1BADA00C58B3F /* ext_MainControllerBadgePhoto.swift */,
 				A0120E6721C6E360000454EC /* BadgePhotoSetupView.swift */,
 				A0120E6521C6E345000454EC /* BadgePhotoSetupView.xib */,
-				A0D960CA21C1A78900DF1CB0 /* ChooseDriverAndKindViews */,
-				A02B24D221E0318500737ACC /* DobOnboardingView.xib */,
-				A02B24D421E031AA00737ACC /* DobOnboardingView.swift */,
-				A05150F521E4002800795172 /* UserNameView.swift */,
-				A05150F321E3FFFC00795172 /* UserNameView.xib */,
-				A02A5D0B21CB348E00F26463 /* Classes */,
+				A02A5D0B21CB348E00F26463 /* AWS_REKOG */,
 			);
-			path = userProfilingFlow;
+			path = UserPhotoSelectionViews;
 			sourceTree = "<group>";
 		};
 		A002F47821B9EFAE006E8660 /* Jung Chat */ = {
@@ -377,12 +377,12 @@
 			path = PhotoCellView;
 			sourceTree = "<group>";
 		};
-		A005041F225FB0A9001B7BC5 /* View */ = {
+		A005041F225FB0A9001B7BC5 /* CustomCircleAnnotation */ = {
 			isa = PBXGroup;
 			children = (
 				A06BF626224EE68200B97A94 /* CircleAnnotationView.swift */,
 			);
-			path = View;
+			path = CustomCircleAnnotation;
 			sourceTree = "<group>";
 		};
 		A0120E6021C6DF68000454EC /* SwipeCards stage */ = {
@@ -401,6 +401,74 @@
 			path = "SwipeCards stage";
 			sourceTree = "<group>";
 		};
+		A0183B6422F21ACF00515A18 /* Explainers */ = {
+			isa = PBXGroup;
+			children = (
+				A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */,
+			);
+			path = Explainers;
+			sourceTree = "<group>";
+		};
+		A0183B6522F21AF200515A18 /* MainViews */ = {
+			isa = PBXGroup;
+			children = (
+				A070760021F2CEAB0013380D /* MapView.xib */,
+				A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */,
+				A005042022616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift */,
+				A06BF620224C577E00B97A94 /* Ext_Handlers_MapActionTriggerView.swift */,
+				A005041F225FB0A9001B7BC5 /* CustomCircleAnnotation */,
+				A005041E225FB070001B7BC5 /* PhotoCellView */,
+			);
+			path = MainViews;
+			sourceTree = "<group>";
+		};
+		A0183B6622F21B2900515A18 /* SupportingViews */ = {
+			isa = PBXGroup;
+			children = (
+				A096B7752280B63C003E52FE /* Confirmation View */,
+				A09A0DB9228FBBA9002FC533 /* MapSnapShot.swift */,
+				A09A0DB0228F5E7C002FC533 /* ListCirclesView */,
+				A0B5A2D4226FE6BE006985A4 /* UserSearchView */,
+			);
+			path = SupportingViews;
+			sourceTree = "<group>";
+		};
+		A0183B6722F220E200515A18 /* Explainers */ = {
+			isa = PBXGroup;
+			children = (
+				A0183B6822F2213C00515A18 /* Ext_Explainers_BadgePhotoSetup.swift */,
+			);
+			path = Explainers;
+			sourceTree = "<group>";
+		};
+		A0183B6A22F2473200515A18 /* UserNameEntryViews */ = {
+			isa = PBXGroup;
+			children = (
+				A05150F321E3FFFC00795172 /* UserNameView.xib */,
+				A05150F521E4002800795172 /* UserNameView.swift */,
+				A0183B6B22F2477900515A18 /* xt_Explainer_UserNameView.swift */,
+			);
+			path = UserNameEntryViews;
+			sourceTree = "<group>";
+		};
+		A0183B6D22F24A2000515A18 /* DobView */ = {
+			isa = PBXGroup;
+			children = (
+				A0183B7022F24A6600515A18 /* Explainers */,
+				A02B24D221E0318500737ACC /* DobOnboardingView.xib */,
+				A02B24D421E031AA00737ACC /* DobOnboardingView.swift */,
+			);
+			path = DobView;
+			sourceTree = "<group>";
+		};
+		A0183B7022F24A6600515A18 /* Explainers */ = {
+			isa = PBXGroup;
+			children = (
+				A0183B6E22F24A6000515A18 /* DobViewExplainer.swift */,
+			);
+			path = Explainers;
+			sourceTree = "<group>";
+		};
 		A025F6DE22172D450010BDA1 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,30 +478,21 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		A025F6EF222229250010BDA1 /* Model */ = {
+		A025F6EF222229250010BDA1 /* KindDeckModel */ = {
 			isa = PBXGroup;
 			children = (
 				A025F6F0222229420010BDA1 /* KindDeckManagement.swift */,
 				A025F6F222248E790010BDA1 /* KindDeckModel.swift */,
 			);
-			path = Model;
+			path = KindDeckModel;
 			sourceTree = "<group>";
 		};
-		A02A5D0B21CB348E00F26463 /* Classes */ = {
+		A02A5D0B21CB348E00F26463 /* AWS_REKOG */ = {
 			isa = PBXGroup;
 			children = (
 				A046420A21CC3B6E00E8817C /* JungAWSRecognitionBadge.swift */,
 			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		A02D71A621C6BDDF00EBBD12 /* old_Onboarding Stage */ = {
-			isa = PBXGroup;
-			children = (
-				A03A46A921C6C18200D90190 /* OnBoarding.storyboard */,
-				A02D71A421C6BC7200EBBD12 /* OnBoardingViewController.swift */,
-			);
-			path = "old_Onboarding Stage";
+			path = AWS_REKOG;
 			sourceTree = "<group>";
 		};
 		A0301D652190B1CA00E023F7 /* GameBoardFlow */ = {
@@ -488,7 +547,6 @@
 			children = (
 				A0C5D22A212A4A7500BF1B0C /* Login.storyboard */,
 				A0C5D2C6212B511E00BF1B0C /* LandingViewController.swift */,
-				A0C5C06721FE808500846B82 /* Model */,
 				A002F48F21BDCE74006E8660 /* ViewModel */,
 				A0320B54212B6BFD008A96E2 /* Views */,
 			);
@@ -502,8 +560,7 @@
 				A0183B6022E943C900515A18 /* MainContentView.xib */,
 				A0183B6222E943F700515A18 /* MainContentView.swift */,
 				A0015A2F218CE8DF001DDA20 /* MainViewController.swift */,
-				A025F6EF222229250010BDA1 /* Model */,
-				A0F223B121B8A75E0096C25D /* View */,
+				A0F223B121B8A75E0096C25D /* KindActionTriggerViews */,
 			);
 			path = "Main stage";
 			sourceTree = "<group>";
@@ -511,16 +568,9 @@
 		A07075F621EFFC940013380D /* MapView */ = {
 			isa = PBXGroup;
 			children = (
-				A09A0DB9228FBBA9002FC533 /* MapSnapShot.swift */,
-				A09A0DB0228F5E7C002FC533 /* ListCirclesView */,
-				A0B5A2D4226FE6BE006985A4 /* UserSearchView */,
-				A070760021F2CEAB0013380D /* MapView.xib */,
-				A0A45E1921F7AED700DDEC6C /* MapActionTriggerView.swift */,
-				A005042022616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift */,
-				A06BF620224C577E00B97A94 /* Ext_Handlers_MapActionTriggerView.swift */,
-				A005041C225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift */,
-				A005041F225FB0A9001B7BC5 /* View */,
-				A005041E225FB070001B7BC5 /* PhotoCellView */,
+				A0183B6522F21AF200515A18 /* MainViews */,
+				A0183B6622F21B2900515A18 /* SupportingViews */,
+				A0183B6422F21ACF00515A18 /* Explainers */,
 				A0A45E2421FBA78300DDEC6C /* Model */,
 			);
 			path = MapView;
@@ -569,13 +619,13 @@
 			path = UserSearchView;
 			sourceTree = "<group>";
 		};
-		A0C5C06721FE808500846B82 /* Model */ = {
+		A0C5C06721FE808500846B82 /* KindUserSettingsModel */ = {
 			isa = PBXGroup;
 			children = (
 				A05150F721E44A9400795172 /* KindUserSettingsManager.swift */,
 				A0547F21222CBE59001EE736 /* HandleLoginWithFirestore.swift */,
 			);
-			path = Model;
+			path = KindUserSettingsModel;
 			sourceTree = "<group>";
 		};
 		A0C5D21A212A4A7500BF1B0C = {
@@ -615,7 +665,6 @@
 				A002F47521B9EEC0006E8660 /* Global */,
 				A0320B57212CDE75008A96E2 /* Login stage */,
 				A0320B58212DB6E6008A96E2 /* Main stage */,
-				A02D71A621C6BDDF00EBBD12 /* old_Onboarding Stage */,
 				A0C5D232212A4A7600BF1B0C /* LaunchScreen.storyboard */,
 				A0C5D235212A4A7600BF1B0C /* Info.plist */,
 				A0C5D22D212A4A7500BF1B0C /* TheKind.xcdatamodeld */,
@@ -688,18 +737,20 @@
 			path = CustomUIClasses;
 			sourceTree = "<group>";
 		};
-		A0F223B121B8A75E0096C25D /* View */ = {
+		A0F223B121B8A75E0096C25D /* KindActionTriggerViews */ = {
 			isa = PBXGroup;
 			children = (
+				A0183B6A22F2473200515A18 /* UserNameEntryViews */,
+				A002F47721B9EF41006E8660 /* UserPhotoSelectionViews */,
+				A0183B6D22F24A2000515A18 /* DobView */,
+				A0D960CA21C1A78900DF1CB0 /* ChooseDriverAndKindViews */,
 				A0120E6021C6DF68000454EC /* SwipeCards stage */,
 				A031885521C33A1E008D1198 /* HUD */,
 				A002F47821B9EFAE006E8660 /* Jung Chat */,
 				A0301D652190B1CA00E023F7 /* GameBoardFlow */,
-				A002F47721B9EF41006E8660 /* userProfilingFlow */,
 				A07075F621EFFC940013380D /* MapView */,
-				A096B7752280B63C003E52FE /* Confirmation View */,
 			);
-			path = View;
+			path = KindActionTriggerViews;
 			sourceTree = "<group>";
 		};
 		A0FBB7382213A9DE00405440 /* Model */ = {
@@ -898,7 +949,6 @@
 				A0183B6122E943C900515A18 /* MainContentView.xib in Resources */,
 				A0301D672190B21100E023F7 /* thedeck.sks in Resources */,
 				A0B5A2D6226FE6E9006985A4 /* SearchView.xib in Resources */,
-				A03A46AA21C6C18200D90190 /* OnBoarding.storyboard in Resources */,
 				A025F6E222172D720010BDA1 /* ChosenKindCollectionViewCell.xib in Resources */,
 				A09A0DB8228F9AFF002FC533 /* CircleListTableViewCell.xib in Resources */,
 				A005DC8822A5B54200572F5C /* TestLocations_wwdc.gpx in Resources */,
@@ -1024,6 +1074,7 @@
 				A0C9FA1C22DE5BD500BB3B67 /* Ext_Explainers_BrowseKind.swift in Sources */,
 				A0F223A821B88E0F0096C25D /* KindTextField.swift in Sources */,
 				A0FBB735221395C700405440 /* GameBoardModel.swift in Sources */,
+				A0183B6F22F24A6000515A18 /* DobViewExplainer.swift in Sources */,
 				A002F48421B9EFAE006E8660 /* JungChatBubbleCollectionViewCell.swift in Sources */,
 				A002F48321B9EFAE006E8660 /* KindJungOptionLabel.swift in Sources */,
 				A005042122616200001B7BC5 /* Ext_Maps_MapActionTriggerView.swift in Sources */,
@@ -1048,7 +1099,6 @@
 				A0E9C0502216416D00C949D4 /* KindCardView.swift in Sources */,
 				A0A45E1A21F7AED700DDEC6C /* MapActionTriggerView.swift in Sources */,
 				A025F6E6221B403C0010BDA1 /* CustomSwipeOverlay.swift in Sources */,
-				A02D71A521C6BC7200EBBD12 /* OnBoardingViewController.swift in Sources */,
 				A0120E6821C6E360000454EC /* BadgePhotoSetupView.swift in Sources */,
 				A04DE173227033500028A1E8 /* UserSearchTableViewCell.swift in Sources */,
 				A08902E122554A8900EE2F79 /* PhotoStripCollectionViewCell.swift in Sources */,
@@ -1058,10 +1108,12 @@
 				A06BF625224EDE3B00B97A94 /* CircleAnnotationManagement.swift in Sources */,
 				A0C5D2C7212B511E00BF1B0C /* LandingViewController.swift in Sources */,
 				A046420B21CC3B6F00E8817C /* JungAWSRecognitionBadge.swift in Sources */,
+				A0183B6922F2213C00515A18 /* Ext_Explainers_BadgePhotoSetup.swift in Sources */,
 				A0301D702190C32300E023F7 /* GameBoardScene.swift in Sources */,
 				A0E4ADF322DE8E6F00B403EF /* Ext_Explainers_CardSwipeView.swift in Sources */,
 				A0183B6322E943F700515A18 /* MainContentView.swift in Sources */,
 				A02D719F21C42FA300EBBD12 /* BrowseKindCardView.swift in Sources */,
+				A0183B6C22F2477900515A18 /* xt_Explainer_UserNameView.swift in Sources */,
 				A0E9C0482215D27000C949D4 /* GameBoardSceneControlView.swift in Sources */,
 				A05150F821E44A9400795172 /* KindUserSettingsManager.swift in Sources */,
 				A005041D225FB01B001B7BC5 /* Ext_Explainers_MapActionTriggerView.swift in Sources */,
