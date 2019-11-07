@@ -5,9 +5,9 @@ The project was absorbed/pivoted to the Persona initiative.
 ![Artboard Copy 2](https://user-images.githubusercontent.com/17029800/68362845-8b1e1b80-00dd-11ea-85a9-13a821cc91a9.png)
 
 Principal techs: 
-- RX Swift
+- Reactive programming
 - Bindables
-- Firestore
+- Firestore + GeoFire
 - Async programming
 - Amazon Rekognition API integration
 - SpriteKit powered gameboard
