@@ -6,6 +6,7 @@ The project was absorbed/pivoted to the Persona initiative.
 
 Principal techs: 
 - RX Swift
+- Bindables
 - Firestore
 - Async programming
 - Amazon Rekognition API integration
