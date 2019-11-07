@@ -8,3 +8,4 @@ Principal techs:
 - Async programming
 - Amazon Rekognition API integration
 - SpriteKit powered gameboard
+- Mapbox (with custom view/pins/animation)
