@@ -9,3 +9,4 @@ Principal techs:
 - Amazon Rekognition API integration
 - SpriteKit powered gameboard
 - Mapbox (with custom view/pins/animation)
+- MVVM coding and my own view-based architecture, avoid relying heavily on viewcontrollers. The architecture in this projects resembles what Apple created later with SWIFT UI (view as principal), but this is 1 year before. Just makes sense. 
