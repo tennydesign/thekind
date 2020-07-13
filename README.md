@@ -14,4 +14,4 @@ The project was absorbed/pivoted to the Persona initiative.
 - Amazon Rekognition API integration
 - SpriteKit powered gameboard
 - Mapbox (with custom view/pins/animation)
-- My own view-centric-loader architecture, to avoid relying heavily on viewcontrollers. The architecture resembles what Apple created later with SWIFT UI (view as principal), but this is 1 year before. (cause MVVM also sucks sometimes)
+- MVVM + My own view-centric-loader architecture, to avoid relying heavily on viewcontrollers. The architecture resembles what Apple created later with SWIFT UI (view as principal), but this is 1 year before.
